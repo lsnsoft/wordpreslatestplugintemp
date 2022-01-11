@@ -506,6 +506,7 @@ final class CPRO_Service_Mautic extends CPRO_Service {
 						'timeout' => 45,
 						'headers' => array(
 							'X-Forwarded-For' => $ip,
+							'Client-Ip'       => $ip,
 						),
 						'body'    => $data,
 						'cookies' => array(),
@@ -548,6 +549,7 @@ final class CPRO_Service_Mautic extends CPRO_Service {
 	private function mautic_get_ip() {
 		$ip      = '';
 		$ip_list = array(
+			'REMOTE_ADDR',
 			'HTTP_CLIENT_IP',
 			'HTTP_X_FORWARDED_FOR',
 			'HTTP_X_FORWARDED',

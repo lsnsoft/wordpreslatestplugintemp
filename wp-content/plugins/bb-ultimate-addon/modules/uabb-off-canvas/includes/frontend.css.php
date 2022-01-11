@@ -6,6 +6,15 @@
  */
 
 $version_bb_check = UABB_Compatibility::$version_bb_check;
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		$font_family = 'Font Awesome 5 Pro';
+	} else {
+		$font_family = 'Font Awesome 5 Free';
+	}
+} else {
+	$font_family = 'Font Awesome 5 Free';
+}
 
 $settings->page_overlay        = UABB_Helper::uabb_colorpicker( $settings, 'page_overlay', true );
 $settings->menu_color          = UABB_Helper::uabb_colorpicker( $settings, 'menu_color', true );
@@ -25,6 +34,29 @@ $settings->icon_bg_color       = UABB_Helper::uabb_colorpicker( $settings, 'icon
 $settings->icon_bg_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'icon_bg_hover_color', true );
 $settings->img_bg_color        = UABB_Helper::uabb_colorpicker( $settings, 'img_bg_color', true );
 $settings->img_bg_hover_color  = UABB_Helper::uabb_colorpicker( $settings, 'img_bg_hover_color', true );
+
+if ( 'button' === $settings->offcanvas_on ) {
+	FLBuilderCSS::dimension_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'button_padding_dimension',
+			'selector'     => ".fl-node-$id .uabb-module-content.uabb-creative-button-wrap a",
+			'unit'         => 'px',
+			'props'        => array(
+				'padding-top'    => 'button_padding_dimension_top',
+				'padding-right'  => 'button_padding_dimension_right',
+				'padding-bottom' => 'button_padding_dimension_bottom',
+				'padding-left'   => 'button_padding_dimension_left',
+			),
+		)
+	);
+	if ( 'full' === $settings->btn_width ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content.uabb-creative-button-wrap a {
+			display: block !important;
+		}
+		<?php
+	}
+}
 ?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-close .uabb-offcanvas-close-icon {
 	<?php
@@ -506,7 +538,7 @@ if ( 'arrows' === $settings->submenu_toggle ) {
 	}
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-menu-toggle:before {
 		content: '\f107';
-		font-family: 'Font Awesome 5 Free';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
 		z-index: 1;
 		font-size: inherit;
 		line-height: 0;
@@ -523,7 +555,7 @@ if ( 'arrows' === $settings->submenu_toggle ) {
 	}
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-menu-toggle:before {
 		content: '\f067';
-		font-family: 'Font Awesome 5 Free';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
 		font-size: 0.7em;
 		z-index: 1;
 		font-weight: 900;

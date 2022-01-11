@@ -91,6 +91,9 @@ function connect_settings_field( $name, $settings, $value ) {
 					if ( 'mymail' === $key && ! defined( 'MAILSTER_VERSION' ) ) {
 						continue;
 					}
+					if ( 'fluentcrm' === $key && ! defined( 'FLUENTCRM_PLUGIN_VERSION' ) ) {
+						continue;
+					}
 					?>
 				<div class="cp-connects-fields cp-element-container cp-md-trigger" data-modal="cp-md-modal-1" data-tags="<?php echo esc_attr( $key ); ?>">
 					<a href="javascript:void(0);" class="cp-connect-service-list cp-connect-service-<?php echo esc_attr( $key ); ?>" data-service="<?php echo esc_attr( $key ); ?>"><img src="<?php echo esc_url( CP_SERVICES_BASE_URL ) . 'assets/images/' . esc_attr( $key ) . '.png'; ?>">

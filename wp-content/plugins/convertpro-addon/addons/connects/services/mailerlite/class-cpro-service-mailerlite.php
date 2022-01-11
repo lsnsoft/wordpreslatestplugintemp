@@ -93,7 +93,7 @@ final class CPRO_Service_MailerLite extends CPRO_Service {
 		} else {
 			// Try to connect and store the connection data.
 			$api = $this->get_api( $fields['api_key'] );
-			$api->setPath( 'groups' );
+			$api->setPath( 'groups?limit=500' );
 			$api->getAll();
 			$get_api_response = $api->getResponseInfo();
 
@@ -170,7 +170,7 @@ final class CPRO_Service_MailerLite extends CPRO_Service {
 	public function render_fields( $account, $settings ) {
 		$account_data = $this->get_account_data( $account );
 		$api          = $this->get_api( $account_data['api_key'] );
-		$api->setPath( 'groups' );
+		$api->setPath( 'groups?limit=500' );
 		$get_lists = json_decode( $api->getAll() );
 		$lists     = array();
 

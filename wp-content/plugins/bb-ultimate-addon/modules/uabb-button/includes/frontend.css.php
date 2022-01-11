@@ -18,6 +18,18 @@ $settings->bg_hover_color   = UABB_Helper::uabb_colorpicker( $settings, 'bg_hove
 $settings->text_color       = UABB_Helper::uabb_colorpicker( $settings, 'text_color' );
 $settings->text_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'text_hover_color' );
 
+if ( 'gradient' === $settings->style ) {
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		// Border - Settings.
+		FLBuilderCSS::border_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'button_border',
+				'selector'     => ".fl-node-$id .uabb-module-content.uabb-creative-button-wrap a",
+			)
+		);
+	}
+}
 // Border Size.
 if ( 'transparent' === $settings->style ) {
 	$border_size = ( '' !== trim( $settings->border_size ) ) ? $settings->border_size : '2';
@@ -401,7 +413,7 @@ if ( 'custom' === $settings->width && '' !== $settings->custom_height ) :
 if ( $global_settings->responsive_enabled ) :
 	?>
 @media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px ) {
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap.uabb-creative-button-reponsive-<?php echo esc_attr( $settings->mob_align ); ?> {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap.uabb-button-reponsive-<?php echo esc_attr( $settings->mob_align ); ?>.uabb-creative-button-reponsive-<?php echo esc_attr( $settings->mob_align ); ?> {
 		text-align: <?php echo esc_attr( $settings->mob_align ); ?>;
 	}
 }
@@ -415,6 +427,9 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 		/* Medium Breakpoint media query */
 	?>
 	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap.uabb-creative-button-tablet-<?php echo esc_attr( $settings->tab_align ); ?> {
+		text-align: <?php echo esc_attr( $settings->tab_align ); ?>;
+	}
 	<?php if ( 'default' === $settings->style ) { ?>
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap a,
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap a:visited {

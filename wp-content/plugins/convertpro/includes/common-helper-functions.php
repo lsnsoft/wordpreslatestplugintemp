@@ -507,7 +507,8 @@ function cp_v2_is_style_visible( $style_id ) {
 
 	$old_post = $post;
 	wp_reset_postdata();
-	$post_id = ( ! is_404() && ! is_search() && ! is_archive() && ! is_home() ) ? $post->ID : '';
+	$get_post_id = isset( $post->ID ) ? $post->ID : '';
+	$post_id     = ( ! is_404() && ! is_search() && ! is_archive() && ! is_home() ) ? $get_post_id : '';
 	if ( class_exists( 'WooCommerce' ) && ( is_shop() ) ) {
 		if ( function_exists( 'wc_get_page_id' ) ) {
 			$post_id = wc_get_page_id( 'shop' );
@@ -1018,6 +1019,7 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 
 			case 'cp_email':
 			case 'cp_text':
+			case 'cp_number':
 				if ( isset( $properties->input_text_name ) && '' !== $properties->input_text_name ) {
 					$template_data = str_replace( '{{name}}', $properties->input_text_name, $template_data );
 				} else {
@@ -1043,6 +1045,13 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 				if ( isset( $properties->required ) ) {
 					$required      = ( 'true' === $properties->required ) ? 'required="required"' : '';
 					$template_data = str_replace( '{{required}}', $required, $template_data );
+				}
+
+				if ( isset( $properties->reg_ex_validation ) && isset( $properties->input_reg_ex_text ) && isset( $properties->input_reg_ex_title ) ) {
+					$reg_ex_pattern = ( 'true' === $properties->reg_ex_validation ) ? 'pattern=' . addslashes( $properties->input_reg_ex_text ) . '' : '';
+					$template_data  = str_replace( '{{pattern}}', $reg_ex_pattern, $template_data );
+					$reg_ex_title   = ( 'true' === $properties->reg_ex_validation ) ? ' title="' . $properties->input_reg_ex_title . '"' : '';
+					$template_data  = str_replace( '{{cp_regx_title}}', $reg_ex_title, $template_data );
 				}
 
 				if ( isset( $properties->email_error_msg ) ) {
@@ -1089,7 +1098,12 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 						}
 
 						foreach ( $optons_arr as $key => $value ) {
-							$output_html .= '<option value="' . $value . '">' . $value . '</option>';
+							$options_dynamic_tags_arr = explode( '||', $value ); // For Dynamic tags - Split by || delimiter.
+
+							$display_options_name = trim( $options_dynamic_tags_arr[0] );
+							$options_tag_name     = ( isset( $options_dynamic_tags_arr[1] ) ) ? trim( $options_dynamic_tags_arr[1] ) : '';
+
+							$output_html .= '<option data-api-tags="' . esc_attr( $options_tag_name ) . '" value="' . $display_options_name . '">' . $display_options_name . '</option>';
 						}
 					}
 					$template_data = str_replace( '{{options}}', $output_html, $template_data );
@@ -1114,13 +1128,19 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 				if ( isset( $properties->radio_options ) ) {
 					$output_html = '';
 					if ( '' !== $properties->radio_options ) {
-						$optons_arr = explode( "\n", $properties->radio_options );
+						$optons_arr   = explode( "\n", $properties->radio_options );
+						$output_html .= '<input type="hidden" class="cp-dynamic-api-tags" name="cp_dynamic_api_tags[' . $panel_id . '-' . $style_id . ']" data-dynamic-api-tags="" value="">'; // For Dynamic tags selected values.
 
 						foreach ( $optons_arr as $key => $value ) {
 							if ( isset( $properties->required ) ) {
 								$required = ( 'true' === $properties->required ) ? 'required="required"' : '';
 							}
-							$output_html .= '<div class="cp-radio-wrap"><label class="cp_radio_label"><input type="radio" name="param[' . $properties->radio_name . ']" ' . $required . ' value="' . $value . '">' . $value . '</label></div>';
+							$options_dynamic_tags_arr = explode( '||', $value ); // For Dynamic tags - Split by || delimiter.
+
+							$display_options_name = trim( $options_dynamic_tags_arr[0] );
+							$options_tag_name     = ( isset( $options_dynamic_tags_arr[1] ) ) ? trim( $options_dynamic_tags_arr[1] ) : '';
+
+							$output_html .= '<div class="cp-radio-wrap"><label class="cp_radio_label"><input type="radio" data-api-tags="' . esc_attr( $options_tag_name ) . '" name="param[' . $properties->radio_name . ']" ' . $required . ' value="' . esc_attr( $display_options_name ) . '">' . $display_options_name . '</label></div>';
 						}
 					}
 					$template_data = str_replace( '{{radio_options}}', $output_html, $template_data );
@@ -1131,14 +1151,19 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 				if ( isset( $properties->checkbox_options ) ) {
 					$output_html = '';
 					if ( '' !== $properties->checkbox_options ) {
-						$optons_arr = explode( "\n", $properties->checkbox_options );
-
+						$optons_arr   = explode( "\n", $properties->checkbox_options );
+						$output_html .= '<input type="hidden" class="cp-dynamic-api-tags" name="cp_dynamic_api_tags[' . $panel_id . '-' . $style_id . ']" data-dynamic-api-tags="" value="">'; // For Dynamic tags selected values.
 						foreach ( $optons_arr as $key => $value ) {
 							if ( isset( $properties->required ) && 'true' === $properties->required ) {
 								$template_data = str_replace( '{{checkbox_required}}', 'cpro-checkbox-required', $template_data );
 							}
 
-							$output_html .= '<div class="cp-checkbox-wrap"><label class="cp_checkbox_label"><input type="checkbox" name="param[' . $properties->checkbox_name . '-' . $key . ']" value="' . esc_html( $value ) . '">' . $value . '</label></div>';
+							$options_dynamic_tags_arr = explode( '||', $value ); // For Dynamic tags - Split by || delimiter.
+
+							$display_options_name = trim( $options_dynamic_tags_arr[0] );
+							$options_tag_name     = ( isset( $options_dynamic_tags_arr[1] ) ) ? trim( $options_dynamic_tags_arr[1] ) : '';
+
+							$output_html .= '<div class="cp-checkbox-wrap"><label class="cp_checkbox_label"><input type="checkbox" data-api-tags="' . esc_attr( $options_tag_name ) . '" name="param[' . $properties->checkbox_name . '-' . $key . ']" value="' . esc_attr( $display_options_name ) . '">' . $display_options_name . '</label></div>';
 						}
 					}
 					$template_data = str_replace( '{{checkbox_options}}', $output_html, $template_data );
@@ -1244,6 +1269,9 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 
 				$default_img_src = '';
 
+				$template_data = str_replace( '{{img_width}}', $properties->width[0], $template_data );
+				$template_data = str_replace( '{{img_height}}', $properties->height[0], $template_data );
+
 				$template_data = str_replace( '{{img_src}}', $img_src, $template_data );
 				$template_data = str_replace( '{{value}}', $default_img_src, $template_data );
 				$template_data = str_replace( '{{name}}', $panel_id, $template_data );
@@ -1344,7 +1372,7 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 						$yt_source .= '&start=' . str_replace( 'sec', '', $video_start_at );
 
 						if ( 'true' === $vid_autoplay && $is_inline_module ) {
-							$yt_source .= '&autoplay=1';
+							$yt_source .= '&autoplay=1&mute=1';
 						}
 
 						if ( isset( $properties->video_controls ) && 'true' !== $properties->video_controls ) {
@@ -1437,7 +1465,21 @@ function cp_get_panel( $properties, $panel_id, $style_id ) {
 					$template_data
 				);
 			} else {
-				$btn_url       = isset( $properties->btn_url ) ? esc_url( $properties->btn_url ) : '';
+				if ( isset( $properties->btn_url ) ) {
+					/*
+					 * As viber link when esc_url() used it return blank.
+					 * eg. viber://chat?number=385958586377
+					 * So sanitized the viber link.
+					*/
+					if ( ( strpos( $properties->btn_url, 'viber:' ) !== false ) ) {
+						$btn_url = sanitize_text_field( $properties->btn_url );
+					} else {
+						$btn_url = esc_url( $properties->btn_url );
+					}
+				} else {
+					$btn_url = '';
+				}
+
 				$template_data = str_replace( '{{data-redirect}}', $btn_url, $template_data );
 
 				$btn_url_target = isset( $properties->btn_url_target ) ? $properties->btn_url_target : '';
@@ -3153,6 +3195,26 @@ function cpro_notify_via_email( $post_data, $email_meta ) {
  * @return void.
  */
 function cpro_send_email( $email, $subject, $template, $settings, $map ) {
+
+	/**
+	* Filter to modify From email section in email notification.
+	* Filter to modify From name section in email notification.
+	*/
+	$cpro_filter_from_email = apply_filters( 'cpro_from_email', null );
+	$cpro_filter_from_name  = apply_filters( 'cpro_from_name', null );
+
+	add_filter(
+		'wp_mail_from',
+		function( $original_email_address ) use ( $cpro_filter_from_email ) {
+			return ( null !== $cpro_filter_from_email ) ? $cpro_filter_from_email : $original_email_address;
+		}
+	);
+	add_filter(
+		'wp_mail_from_name',
+		function( $original_name ) use ( $cpro_filter_from_name ) {
+			return ( null !== $cpro_filter_from_name ) ? $cpro_filter_from_name : $original_name;
+		}
+	);
 
 	$headers = array(
 		'Reply-To: ' . get_bloginfo( 'name' ) . ' <' . $email . '>',

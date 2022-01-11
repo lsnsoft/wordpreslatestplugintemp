@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
 	var rm_container = jQuery(".cp-radio-image-holder");
-	rm_container.click(function(){
+	rm_container.on('click', function(){
 		var $this = jQuery(this);
 		jQuery.each(rm_container,function(index,element){
 			jQuery(this).removeClass('selected');

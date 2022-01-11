@@ -21,7 +21,7 @@
 	if ( menu_toggle_all.length > 0 ) {
 
 		for (var i = 0; i < menu_toggle_all.length; i++) {
-			
+
 			menu_toggle_all[i].setAttribute('data-index', i);
 
 			menu_toggle_all[i].addEventListener( 'click', function( event ) {
@@ -29,25 +29,30 @@
 
 		    	var event_index = this.getAttribute( 'data-index' );
 
-		    	var menuHasChildren = __main_header_all[event_index].querySelectorAll( '.menu-item-has-children, .page_item_has_children' );
+		    	var menuHasChildren = __main_header_all[event_index].querySelectorAll( '.menu-item-has-children' );
 				for ( var i = 0; i < menuHasChildren.length; i++ ) {
 					menuHasChildren[i].classList.remove( 'ast-submenu-expanded' );
-					var menuHasChildrenSubMenu = menuHasChildren[i].querySelectorAll( '.sub-menu, .children' );		
-					for (var j = 0; j < menuHasChildrenSubMenu.length; j++) {		
-						menuHasChildrenSubMenu[j].style.display = 'none';		
+					var menuHasChildrenSubMenu = menuHasChildren[i].querySelectorAll( '.sub-menu' );
+					for (var j = 0; j < menuHasChildrenSubMenu.length; j++) {
+						menuHasChildrenSubMenu[j].style.display = 'none';
 					};
 				}
 
 				var menu_class = this.getAttribute('class') || '';
-		
+
 				if ( menu_class.indexOf('menu-above-header-toggle') !== -1 ) {
-					toggleClass( __main_header_all[event_index], 'toggle-on' );
-					toggleClass( menu_toggle_all[event_index], 'toggled' );
+					if (typeof astraToggleClass === "function") {
+						astraToggleClass( __main_header_all[event_index], 'toggle-on' );
+						astraToggleClass( menu_toggle_all[event_index], 'toggled' );
+					} else {
+						toggleClass( __main_header_all[event_index], 'toggle-on' );
+						toggleClass( menu_toggle_all[event_index], 'toggled' );
+					}
 					if ( __main_header_all[event_index].classList.contains( 'toggle-on' ) ) {
 						//__main_header_all[event_index].style.display = 'block';
 						above_header_nav_all[event_index].style.display = 'block';
 						html.classList.add( 'above-header-toggle-on' );
-					} else {		
+					} else {
 						//__main_header_all[event_index].style.display = '';
 						above_header_nav_all[event_index].style.display = '';
 						html.classList.remove( 'above-header-toggle-on' );
@@ -63,16 +68,16 @@
 				elm.style.maxHeight = Math.abs( vph - rect.top ) + 'px';
 
 		    }, false);
-			
+
 			if( 'undefined' !== typeof __main_header_all[i] ) {
-				var parentList = __main_header_all[i].querySelectorAll( 'ul.ast-above-header-menu li' );
-		 	
+				var parentList = __main_header_all[i].querySelectorAll( '.ast-above-header-menu .menu-item' );
+
 				if ( document.querySelector("header.site-header").classList.contains("ast-menu-toggle-link") ) {
-				 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-header-break-point .ast-above-header-menu .ast-menu-toggle, .ast-header-break-point .ast-above-header-menu .menu-item-has-children > a' );
+				 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-header-break-point .ast-above-header-menu .ast-menu-toggle, .ast-header-break-point .ast-above-header-menu .menu-item-has-children > .menu-link' );
 				} else {
-	               	var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-above-header-menu .ast-menu-toggle' );
+	               	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-above-header-menu .ast-menu-toggle' );
 				}
-				
+
 				// Add Eevetlisteners for Submenu.
 				if (astra_menu_toggle.length > 0) {
 					for (var k = 0; k < astra_menu_toggle.length; k++) {
@@ -90,7 +95,7 @@
 		if ( above_menu_toggle_all.length > 0 && __above_main_header_all.length > 0 && __primary_menu.length == 0  ) {
 
 			for (var i = 0; i < above_menu_toggle_all.length; i++) {
-			 	
+
 			 	var astra_menu_toggle_above_header = __above_main_header_all[i].querySelectorAll( '.ast-menu-toggle' );
 
 				// Add Eventlisteners for Submenu.
@@ -119,7 +124,7 @@
 					top_menu_toggle.classList.remove( 'toggled' );
 				}
 				if ( null != below_header_toggle ) {
-					below_header_toggle.classList.remove( 'toggled' );	
+					below_header_toggle.classList.remove( 'toggled' );
 				}
 
 			}, false);
@@ -143,7 +148,7 @@
 
 				ast_below_header.classList.remove( 'toggle-on' );
 				//ast_below_header.style.display = '';
-				
+
 				if ( null != ast_below_header_nav ) {
 					ast_below_header_nav.style.display = '';
 				}

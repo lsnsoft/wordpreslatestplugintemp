@@ -25,7 +25,10 @@ if ( ! class_exists( 'Astra_Above_Header_Typo_Configs' ) ) {
 	/**
 	 * Register above header Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Above_Header_Typo_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Above Header Typo Configurations.
@@ -192,6 +195,81 @@ if ( ! class_exists( 'Astra_Above_Header_Typo_Configs' ) ) {
 						'lowercase'  => __( 'Lowercase', 'astra-addon' ),
 					),
 				),
+
+				/**
+				 * Option: above Header Content Font Family
+				 */
+
+				array(
+					'name'      => 'font-family-above-header-content',
+					'default'   => astra_get_option( 'font-family-above-header-content' ),
+					'type'      => 'sub-control',
+					'control'   => 'ast-font',
+					'section'   => 'section-above-header',
+					'font_type' => 'ast-font-family',
+					'parent'    => ASTRA_THEME_SETTINGS . '[above-header-content-typography-styling]',
+					'title'     => __( 'Family', 'astra-addon' ),
+					'connect'   => 'font-weight-above-header-content',
+				),
+
+				/**
+				 * Option: above Header Content Font Size
+				 */
+				array(
+					'name'        => 'font-size-above-header-content',
+					'type'        => 'sub-control',
+					'transport'   => 'postMessage',
+					'default'     => astra_get_option( 'font-size-above-header-content' ),
+					'parent'      => ASTRA_THEME_SETTINGS . '[above-header-content-typography-styling]',
+					'title'       => __( 'Size', 'astra-addon' ),
+					'control'     => 'ast-responsive',
+					'section'     => 'section-above-header',
+					'input_attrs' => array(
+						'min' => 0,
+					),
+					'units'       => array(
+						'px' => 'px',
+						'em' => 'em',
+					),
+				),
+
+				/**
+				 * Option: Above Header Content Font Weight
+				 */
+				array(
+					'name'              => 'font-weight-above-header-content',
+					'default'           => astra_get_option( 'font-weight-above-header-content' ),
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_font_weight' ),
+					'type'              => 'sub-control',
+					'control'           => 'ast-font',
+					'section'           => 'section-above-header',
+					'font_type'         => 'ast-font-weight',
+					'parent'            => ASTRA_THEME_SETTINGS . '[above-header-content-typography-styling]',
+					'title'             => __( 'Weight', 'astra-addon' ),
+					'connect'           => 'font-family-above-header-content',
+				),
+
+				/**
+				 * Option: above Header Content Text Transform
+				 */
+				array(
+					'name'      => 'text-transform-above-header-content',
+					'type'      => 'sub-control',
+					'control'   => 'ast-select',
+					'section'   => 'section-above-header',
+					'default'   => astra_get_option( 'text-transform-above-header-content' ),
+					'transport' => 'postMessage',
+					'parent'    => ASTRA_THEME_SETTINGS . '[above-header-content-typography-styling]',
+					'title'     => __( 'Text Transform', 'astra-addon' ),
+					'choices'   => array(
+						''           => __( 'Inherit', 'astra-addon' ),
+						'none'       => __( 'None', 'astra-addon' ),
+						'capitalize' => __( 'Capitalize', 'astra-addon' ),
+						'uppercase'  => __( 'Uppercase', 'astra-addon' ),
+						'lowercase'  => __( 'Lowercase', 'astra-addon' ),
+					),
+				),
+
 			);
 
 			return array_merge( $configurations, $_configs );

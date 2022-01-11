@@ -82,8 +82,10 @@ final class CP_V2_Popups {
 		}
 
 		// Insert the post into the database.
-		$style_id = wp_insert_post( $cp_popup_post );
-
+		// If WPML plugin is active do not run this condition.
+		if ( ! ( function_exists( 'icl_object_id' ) && class_exists( 'SitePress' ) ) ) {
+			$style_id = wp_insert_post( $cp_popup_post );
+		}
 		if ( 0 === $style_id ) {
 			$data = $style_id;
 			wp_send_json_error( $data );
@@ -122,6 +124,9 @@ final class CP_V2_Popups {
 							$exclude_configure = array(
 								'autoload_on_duration',
 								'load_on_duration',
+								'autoload_on_no_page_visit',
+								'load_on_no_page_visit',
+								'load_on_page_visit_type',
 								'modal_exit_intent',
 								'autoload_on_scroll',
 								'load_after_scroll',
@@ -548,6 +553,7 @@ final class CP_V2_Popups {
 					$form_fields_array   = array(
 						'cp_email',
 						'cp_text',
+						'cp_number',
 						'cp_dropdown',
 						'cp_textarea',
 						'cp_radio',
@@ -926,10 +932,6 @@ final class CP_V2_Popups {
 			echo "<input type='hidden' class='panel-settings' data-style_id= '" . esc_attr( $style_id ) . "' data-section='" . esc_attr( $section ) . "' value='" . esc_attr( $panel_settings ) . "' >";
 			echo "<input type='hidden' class='panel-rulesets' data-style_id= '" . esc_attr( $style_id ) . "' data-section='" . esc_attr( $section ) . "' value='" . esc_attr( $panel_rulesets ) . "' >";
 		}
-
-		$cp_settings          = get_option( 'convert_plug_debug' );
-		$after_content_scroll = isset( $cp_settings['after_content_scroll'] ) ? $cp_settings['after_content_scroll'] : '50';
-		echo "<input type='hidden'  id='cp_after_content_scroll' value='" . esc_attr( $after_content_scroll ) . "' >";
 
 		$module_type = get_post_meta( $style_id, 'cp_module_type', true );
 

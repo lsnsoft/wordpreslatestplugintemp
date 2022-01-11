@@ -195,8 +195,8 @@
             createAbtestFrm.find( "#cp-test-sdate" ).val( '' );
             createAbtestFrm.find( "#cp-test-edate" ).val( '' );
             createAbtestFrm.find( "#test_title" ).val( '' );
-            styleSelect.find( 'option' ).removeAttr( 'selected' );
-            createAbtestFrm.find( "input[name=cp_winner_check]" ).removeAttr( 'checked' );
+            styleSelect.find( 'option' ).prop( 'selected', false );
+            createAbtestFrm.find( "input[name=cp_winner_check]" ).prop( 'checked', false );
 
             // Initialize multi select option
             styleSelect.cpselect2( { placeholder: cp_abtest.select_styles } );
@@ -251,7 +251,7 @@
                     if( test_data.winner_style == 'on' ) {
                         createAbtestFrm.find( "input[name=cp_winner_check]" ).attr( 'checked', 'checked' );
                     } else {
-                        createAbtestFrm.find( "input[name=cp_winner_check]" ).removeAttr( 'checked' );
+                        createAbtestFrm.find( "input[name=cp_winner_check]" ).prop( 'checked', false );
                     }
 
 

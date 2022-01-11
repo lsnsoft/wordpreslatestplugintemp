@@ -76,6 +76,18 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 			if ( is_admin() ) {
 				add_filter( 'plugin_row_meta', array( $this, 'plugin_links' ), 10, 4 );
 			}
+
+			add_filter( 'gutenberg_templates_localize_vars', array( $this, 'add_white_label_name' ) );
+		}
+		/**
+		 * Add White Label data
+		 *
+		 * @param array $args White label.
+		 *  @since 2.6.0
+		 */
+		public function add_white_label_name( $args = array() ) {
+			$args['white_label_name'] = $this->get_white_label();
+			return $args;
 		}
 
 		/**
@@ -242,7 +254,10 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		 */
 		public function get_white_label_link( $link = '' ) {
 			if ( is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
-				return Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-agency', 'licence' );
+				$white_label_link = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-agency', 'licence' );
+				if ( ! empty( $white_label_link ) ) {
+					return $white_label_link;
+				}
 			}
 
 			return $link;
@@ -256,16 +271,34 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		 * @return string
 		 */
 		public function is_white_labeled() {
-			if ( ! is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
-				return false;
-			}
+			$white_label = $this->get_white_label();
 
-			$astra_sites_name = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
-			if ( empty( $astra_sites_name ) ) {
+			if ( empty( $white_label ) ) {
 				return false;
 			}
 
 			return true;
+		}
+
+		/**
+		 * Get white label name
+		 *
+		 * @since 2.6.0
+		 *
+		 * @return string
+		 */
+		public function get_white_label() {
+			if ( ! is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
+				return '';
+			}
+
+			$name = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
+
+			if ( ! empty( $name ) ) {
+				return $name;
+			}
+
+			return '';
 		}
 
 	}

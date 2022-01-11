@@ -19,17 +19,17 @@ if ( ! is_user_logged_in() ) {
 	}
 }
 
-$classes[] = 'footer-adv';
-$classes[] = 'footer-adv-layout-1';
-$classes   = implode( ' ', $classes );
+$astra_addon_footer_layout_classes[] = 'footer-adv';
+$astra_addon_footer_layout_classes[] = 'footer-adv-layout-1';
+$astra_addon_footer_layout_classes   = implode( ' ', $astra_addon_footer_layout_classes );
 ?>
 
-<div class="<?php echo esc_attr( $classes ); ?>">
+<div class="<?php echo esc_attr( $astra_addon_footer_layout_classes ); ?>">
 	<div class="footer-adv-overlay">
 		<div class="ast-container">
 			<?php do_action( 'astra_footer_inside_container_top' ); ?>
 			<div class="ast-row">
-				<div class="ast-col-lg-12 ast-col-md-12 ast-col-sm-12 ast-col-xs-12 footer-adv-widget footer-adv-widget-1">
+				<div class="<?php echo astra_attr( 'ast-layout-1-grid' ); ?> footer-adv-widget footer-adv-widget-1">
 					<?php Astra_Ext_Adv_Footer_Markup::get_sidebar( 'advanced-footer-widget-1' ); ?>
 				</div>
 			</div><!-- .ast-row -->

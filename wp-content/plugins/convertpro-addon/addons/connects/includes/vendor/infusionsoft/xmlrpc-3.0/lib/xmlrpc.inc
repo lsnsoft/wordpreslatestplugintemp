@@ -2066,7 +2066,8 @@ class xmlrpcmsg
         }
         // be tolerant to line endings, and extra empty lines
         $ar = preg_split("/\r?\n/", trim(substr($data, 0, $pos)));
-        while (list(, $line) = @each($ar)) {
+
+        foreach ( $ar as $key => $line ) {
             // take care of multi-line headers and cookies
             $arr = explode(':', $line, 2);
             if (count($arr) > 1) {
@@ -2097,7 +2098,7 @@ class xmlrpcmsg
                         foreach ($cookie as $pos => $val) {
                             $val = explode('=', $val, 2);
                             $tag = trim($val[0]);
-                            $val = trim(@$val[1]);
+                            $val = isset( $val[1] ) ? trim( @$val[1] ) : '';
                             /// @todo with version 1 cookies, we should strip leading and trailing " chars
                             if ($pos == 0) {
                                 $cookiename = $tag;
@@ -2292,7 +2293,7 @@ class xmlrpcmsg
         xml_set_default_handler($parser, 'xmlrpc_dh');
 
         // first error check: xml not well formed
-        if (!xml_parse($parser, $data, count($data))) {
+        if ( ! xml_parse( $parser, $data ) ) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
             if ((xml_get_current_line_number($parser)) == 1) {
                 $errstr = 'XML error at line 1, check URL';
@@ -2665,7 +2666,8 @@ class xmlrpcval
         //if (is_object($o) && (get_class($o) == 'xmlrpcval' || is_subclass_of($o, 'xmlrpcval')))
         //{
         reset($this->me);
-        list($typ, $val) = each($this->me);
+        $typ = key( $this->me );
+        $val = current( $this->me );
         return '<value>' . $this->serializedata($typ, $val, $charset_encoding) . "</value>\n";
         //}
     }

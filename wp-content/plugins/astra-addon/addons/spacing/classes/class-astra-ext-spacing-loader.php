@@ -13,7 +13,10 @@ if ( ! class_exists( 'Astra_Ext_Spacing_Loader' ) ) {
 	 *
 	 * @since 1.2.0
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Ext_Spacing_Loader {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -53,18 +56,24 @@ if ( ! class_exists( 'Astra_Ext_Spacing_Loader' ) ) {
 		 */
 		public function theme_defaults( $defaults ) {
 
-			$defaults['site-identity-spacing']        = array(
+			$defaults['header-account-menu-spacing']  = array(
 				'desktop'      => array(
 					'top'    => '',
+					'right'  => '',
 					'bottom' => '',
+					'left'   => '',
 				),
 				'tablet'       => array(
 					'top'    => '',
+					'right'  => '',
 					'bottom' => '',
+					'left'   => '',
 				),
 				'mobile'       => array(
 					'top'    => '',
+					'right'  => '',
 					'bottom' => '',
+					'left'   => '',
 				),
 				'desktop-unit' => 'px',
 				'tablet-unit'  => 'px',
@@ -558,6 +567,54 @@ if ( ! class_exists( 'Astra_Ext_Spacing_Loader' ) ) {
 				'mobile-unit'  => 'px',
 			);
 
+			$defaults['section-hb-language-switcher-item-spacing'] = array(
+				'desktop'      => array(
+					'top'    => '10',
+					'right'  => '10',
+					'bottom' => '10',
+					'left'   => '10',
+				),
+				'tablet'       => array(
+					'top'    => '',
+					'right'  => '',
+					'bottom' => '',
+					'left'   => '',
+				),
+				'mobile'       => array(
+					'top'    => '',
+					'right'  => '',
+					'bottom' => '',
+					'left'   => '',
+				),
+				'desktop-unit' => 'px',
+				'tablet-unit'  => 'px',
+				'mobile-unit'  => 'px',
+			);
+
+			$defaults['section-fb-language-switcher-item-spacing'] = array(
+				'desktop'      => array(
+					'top'    => '10',
+					'right'  => '10',
+					'bottom' => '10',
+					'left'   => '10',
+				),
+				'tablet'       => array(
+					'top'    => '',
+					'right'  => '',
+					'bottom' => '',
+					'left'   => '',
+				),
+				'mobile'       => array(
+					'top'    => '',
+					'right'  => '',
+					'bottom' => '',
+					'left'   => '',
+				),
+				'desktop-unit' => 'px',
+				'tablet-unit'  => 'px',
+				'mobile-unit'  => 'px',
+			);
+
 			return $defaults;
 		}
 
@@ -571,15 +628,19 @@ if ( ! class_exists( 'Astra_Ext_Spacing_Loader' ) ) {
 			/**
 			 * Sections
 			 */
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-site-identity-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-container-layout-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-header-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-above-header-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-below-header-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-sidebar-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-blog-spacing-configs.php';
-			require_once ASTRA_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-footer-small-spacing-configs.php';
-
+			require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-container-layout-spacing-configs.php';
+			if ( astra_addon_existing_header_footer_configs() ) {
+				require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-header-spacing-configs.php';
+				require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-above-header-spacing-configs.php';
+				require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-below-header-spacing-configs.php';
+				require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-footer-small-spacing-configs.php';
+				require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-site-identity-spacing-configs.php';
+			} else {
+				require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-header-builder-menu-configs.php';
+			}
+			require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-sidebar-spacing-configs.php';
+			require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-blog-spacing-configs.php';
+			require_once ASTRA_ADDON_EXT_SPACING_DIR . 'classes/sections/class-astra-customizer-single-post-spacing-configs.php';
 		}
 
 		/**
@@ -588,13 +649,17 @@ if ( ! class_exists( 'Astra_Ext_Spacing_Loader' ) ) {
 		public function preview_scripts() {
 
 			if ( SCRIPT_DEBUG ) {
-				wp_enqueue_script( 'astra-ext-spacing-customize-preview-js', ASTRA_EXT_SPACING_URL . 'assets/js/unminified/customizer-preview.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
+				wp_enqueue_script( 'astra-ext-spacing-customize-preview-js', ASTRA_ADDON_EXT_SPACING_URL . 'assets/js/unminified/customizer-preview.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
 			} else {
-				wp_enqueue_script( 'astra-ext-spacing-customize-preview-js', ASTRA_EXT_SPACING_URL . 'assets/js/minified/customizer-preview.min.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
+				wp_enqueue_script( 'astra-ext-spacing-customize-preview-js', ASTRA_ADDON_EXT_SPACING_URL . 'assets/js/minified/customizer-preview.min.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
 			}
 
 			$localize_array = array(
-				'blog_pro_enabled' => Astra_Ext_Extension::is_active( 'blog-pro' ),
+				'blog_pro_enabled'   => Astra_Ext_Extension::is_active( 'blog-pro' ),
+				'tablet_break_point' => astra_addon_get_tablet_breakpoint(),
+				'mobile_break_point' => astra_addon_get_mobile_breakpoint(),
+				'component_limit'    => astra_addon_builder_helper()->component_limit,
+				'astra_not_updated'  => version_compare( ASTRA_THEME_VERSION, '3.2.0', '<' ),
 			);
 			wp_localize_script( 'astra-ext-spacing-customize-preview-js', 'ast_preview', $localize_array );
 

@@ -1,13 +1,13 @@
 (function($) {
 
 	UABBContentToggle = function( settings )
-	{   
+	{
 		this.settings 	= settings;
 		this.nodeClass  = '.fl-node-' + settings.id;
 		this.select_switch_style = settings.select_switch_style;
 		this.content1 = settings.content1_section;
 		this.content2 = settings.content2_section;
-		this._init();	
+		this._init();
 	};
 
 	UABBContentToggle.prototype = {
@@ -16,9 +16,9 @@
 		node 		: '',
 		nodeClass   : '',
 		select_switch_style  : '',
-		
+
 		_init: function()
-		{	
+		{
 			this._contentToggleHandler();
 
 
@@ -38,7 +38,7 @@
 		 * @method _initAnchorLinks
 		 */
 		_contentToggleHandler: function()
-		{   
+		{
 			var nodeClass  		= jQuery(this.nodeClass);
 			var node_id 		= nodeClass.data( 'node' );
 			var node          	= '.fl-node-' + node_id;
@@ -50,7 +50,7 @@
 			var current_class 	= '';
 			var content1 		= this.content1;
 			var content2 		= this.content2;
-			
+
 
 			switch ( switch_type ) {
 				case 'round1':
@@ -71,7 +71,7 @@
 			}
 
 			var rbs_switch      = nodeClass.find( current_class );
-				if( rbs_switch.is( ':checked' ) ) {
+				if( rbs_switch.hasClass( 'checked' ) ) {
 					if( content1 === 'content' ) {
 						rbs_section_1.hide();
 					}
@@ -118,14 +118,16 @@
 				if( content2 !== 'content_head2' ) {
                 	$( node +' .uabb-rbs-section-2' ).toggle();
 				}
-
-	        	if( $( this ).parent().find( '.uabb-checkbox-clickable' )[0].hasAttribute('checked') ) {
-	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).removeAttr( 'checked' );
+				if( $( this ).parent().find( '.uabb-checkbox-clickable' ).hasClass('checked') ) {
+	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).removeClass( 'checked' );
 	        	} else {
-	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).attr( 'checked', 'checked' );
+	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).addClass( 'checked' );
 	        	}
 
 	        	$(window).resize();
+				var trigger_args = node + ' .uabb-rbs-toggle-sections';
+				// Trigger the Content Toggle Click trigger.
+				UABBTrigger.triggerHook( 'uabb-toggle-click', trigger_args );
 		    });
 		},
 		_openOnLink: function( id ) {
@@ -146,17 +148,17 @@
 				$( node_toggle +' .uabb-rbs-content-2' ).hide();
 				$( node_toggle +' .uabb-rbs-section-1' ).show();
 				$( node_toggle +' .uabb-rbs-section-2' ).hide();
-				$( node_toggle + ' .uabb-checkbox-clickable' ).removeAttr( 'checked' );
+				$( node_toggle + ' .uabb-checkbox-clickable' ).removeClass( 'checked' );
 
 			} else {
 				$( node_toggle +' .uabb-rbs-content-2' ).show();
 				$( node_toggle +' .uabb-rbs-content-1' ).hide();
 				$( node_toggle +' .uabb-rbs-section-2' ).show();
 				$( node_toggle +' .uabb-rbs-section-1' ).hide();
-				$( node_toggle + ' .uabb-checkbox-clickable' ).attr( 'checked', 'checked' );
+				$( node_toggle + ' .uabb-checkbox-clickable' ).addClass( 'checked' );
 			}
 
-		},	
+		},
 	};
-	
+
 })(jQuery);

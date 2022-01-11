@@ -19,7 +19,11 @@ foreach ( $settings->icons as $icon ) {
 	if ( ! empty( $icon->connections->link ) && empty( $icon->link ) && ! FLBuilderModel::is_builder_active() ) {
 		echo '';
 	} else {
-		echo '<a class="adv-icon-link adv-icon-' . esc_attr( $icon_count ) . '" href="' . $icon->link . '" target="' . esc_attr( $icon->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $icon->link_target, $icon->link_nofollow, 0 ) ) . '>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( '' === $icon->link ) {
+			echo '<div class="adv-icon-link adv-icon-' . esc_attr( $icon_count ) . '">';
+		} else {
+			echo '<a class="adv-icon-link adv-icon-' . esc_attr( $icon_count ) . '" href="' . $icon->link . '" target="' . esc_attr( $icon->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $icon->link_target, $icon->link_nofollow, 0 ) ) . ' aria-label="' . esc_attr__( 'Go to', 'uabb' ) . ' ' . $icon->link . '">'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 		$imageicon_array = array(
 
 			/* General Section */
@@ -71,7 +75,11 @@ foreach ( $settings->icons as $icon ) {
 			'img_border_hover_color'  => $settings->border_hover_color,
 		);
 		FLBuilder::render_module_html( 'image-icon', $imageicon_array );
-		echo '</a>';
+		if ( '' === $icon->link ) {
+			echo '</div>';
+		} else {
+			echo '</a>';
+		}
 	}
 	$icon_count++;
 }

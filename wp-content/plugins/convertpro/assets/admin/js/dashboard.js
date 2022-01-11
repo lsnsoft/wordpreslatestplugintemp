@@ -15,7 +15,7 @@ jQuery(document).ready(
             );
         }
 
-        jQuery('.cp-accordion-section-title').click(
+        jQuery('.cp-accordion-section-title').on('click',
             function (e) {
                 // Grab current anchor value
                 var currentAttrValue = jQuery(this).attr('data-title');
@@ -158,12 +158,12 @@ jQuery(document).on(
 
 /* Edit campaign name*/
 
-jQuery(".cp-campaign-edit-link").click(
+jQuery(".cp-campaign-edit-link").on( "click",
     function () {
         jQuery(this).addClass('open-icon');
         jQuery(this).siblings(".cp-edit-campaign-title").addClass('open');
         jQuery(this).siblings(".cp-campaign-name").addClass('hidden');
-        jQuery('.cp-edit-campaign-text').select();
+        jQuery('.cp-edit-campaign-text').trigger('select');
     }
 );
 
@@ -245,6 +245,7 @@ jQuery(document).on(
 
         el_dropdown.data('post-id', el_parent.data('id'));
         el_dropdown.data('post-name', el_parent.data('name'));
+        el_dropdown.data('popup-slug', el_parent.data('popup-slug'));
         el_dropdown.data('term', el_parent.closest('.cp-accordion-section').data('term'));
     }
 );
@@ -265,6 +266,7 @@ jQuery(document).on(
         var el_dropdown = jQuery("#cp-edit-dropdown");
         var post_id = el_dropdown.data('post-id');
         var post_name = el_dropdown.data('post-name');
+        var popup_slug = el_dropdown.data('popup-slug');
         var term = el_dropdown.data('term');
         var el_modal_inner = '',
             post_wrap = '',
@@ -273,7 +275,7 @@ jQuery(document).on(
         if (!$this.hasClass('cp-export-action')) {
             e.preventDefault();
 
-            el_modal.removeClass('cp-campaign-action cp-rename-action cp-duplicate-action');
+            el_modal.removeClass('cp-campaign-action cp-rename-action cp-change-slug-action cp-duplicate-action');
 
             if ($this.hasClass('cp-campaign-action')) {
 
@@ -287,8 +289,24 @@ jQuery(document).on(
                 el_modal_inner.find('.cp-error').removeClass('cpro-open');
 
                 cp_edit_action_modal(el_modal);
-            }
-            else if ($this.hasClass('cp-rename-action')) {
+            } else if ($this.hasClass('cp-change-slug-action')) {
+
+                el_modal.addClass('cp-change-slug-action');
+
+                el_modal_inner = el_modal.find('.change-slug-action');
+
+                el_modal_inner.find("#cp_popup_slug").val(popup_slug);
+                el_modal_inner.find('.cp-error').text('');
+                el_modal_inner.find('.cp-error').removeClass('cpro-open');
+
+                cp_edit_action_modal(el_modal);
+
+                setTimeout(
+                    function () {
+                        el_modal_inner.find("#cp_popup_slug").trigger('focus').trigger('select');
+                    }, 200
+                );
+            } else if ($this.hasClass('cp-rename-action')) {
 
                 el_modal.addClass('cp-rename-action');
 
@@ -302,7 +320,7 @@ jQuery(document).on(
 
                 setTimeout(
                     function () {
-                        el_modal_inner.find("#cp_style_title").focus().select();
+                        el_modal_inner.find("#cp_style_title").trigger('focus').trigger('select');
                     }, 200
                 );
             } else if ($this.hasClass('cp-edit-action')) {
@@ -321,12 +339,12 @@ jQuery(document).on(
 
                 setTimeout(
                     function () {
-                        jQuery("#cp_dup_style_title").val(copy_post_name).focus().select();
+                        jQuery("#cp_dup_style_title").val(copy_post_name).trigger('focus').trigger('select');
                     }, 100
                 );
 
                 el_modal.addClass('cp-duplicate-action');
-                jQuery(".cp-duplicate-btn").removeAttr('disabled');
+                jQuery(".cp-duplicate-btn").prop('disabled', false);
                 cp_edit_action_modal(el_modal);
 
 
@@ -388,7 +406,7 @@ jQuery(document).on(
 );
 
 jQuery(document).on(
-    "click", ".cp-cancel-campaign-btn, .cp-cancel-rename-btn", function (e) {
+    "click", ".cp-cancel-campaign-btn, .cp-cancel-rename-btn, .cp-cancel-change-slug-btn", function (e) {
         jQuery(".cp-md-overlay").trigger('click');
     }
 );
@@ -496,6 +514,63 @@ jQuery(document).on(
                 },
                 error: function (err) {
                     console.log(err);
+                }
+            }
+        );
+    }
+);
+
+
+jQuery(document).on(
+    "click", ".cp-save-change-slug-btn", function (e) {
+        e.preventDefault();
+
+        var el_modal = jQuery('.cp-edit-action-modal');
+        var el_modal_inner = el_modal.find('.change-slug-action');
+
+        var el_dropdown = jQuery("#cp-edit-dropdown");
+        var post_id = el_dropdown.data('post-id');
+        var prev_popup_slug_name = el_dropdown.data('popup-slug');
+        var popup_slug_name = el_modal_inner.find('#cp_popup_slug').val().trim();
+        var security_nonce = jQuery('#cp_change_popup_slug_nonce').val();
+
+        // Get All Popups Slug Names.
+        var popup_slug_lists = jQuery(".cp-popup-row").map(function() {
+            return jQuery(this).data("popup-slug");
+        }).get();
+
+        if (prev_popup_slug_name == popup_slug_name || popup_slug_lists.indexOf(popup_slug_name) !== -1 ) {
+            el_modal_inner.find('.cp-error').text(cp_pro.already_exists_slug_name);
+            el_modal_inner.find('.cp-error').addClass('cpro-open');
+            return;
+        }
+
+        if (popup_slug_name == '' || /\s/g.test(popup_slug_name) ) {
+            el_modal_inner.find('.cp-error').text(cp_pro.empty_slug_name);
+            el_modal_inner.find('.cp-error').addClass('cpro-open');
+            return;
+        }
+
+        jQuery(this).text(cp_pro.saving);
+
+        jQuery.ajax(
+            {
+                url: cp_ajax.url,
+                data: {
+                    action: 'cp_change_popup_slug',
+                    popup_id: post_id,
+                    popup_slug_name: popup_slug_name,
+                    security: security_nonce
+                },
+                type: 'POST',
+                dataType: 'JSON',
+                success: function (result) {
+                    if (result.success) {
+                        location.reload();
+                    }
+                },
+                error: function (err) {
+                    el_modal_inner.find('.cp-error').text(err.data.message);
                 }
             }
         );
@@ -622,7 +697,7 @@ jQuery(document).on(
         // open inline edit container
         jQuery("#cp-edit-title-" + style_id).addClass('open');
         jQuery(this).addClass('open-icon');
-        jQuery('.cp-edit-popup-text').select();
+        jQuery('.cp-edit-popup-text').trigger('select');
     }
 );
 
@@ -742,7 +817,7 @@ jQuery(document).on(
 
 jQuery('.cp-completed-test').addClass('cp-hidden');
 
-jQuery(".cp-test-toggle").click(
+jQuery(".cp-test-toggle").on( "click",
     function () {
 
         jQuery('.cp-completed-test').slideToggle('cp-hidden');
@@ -928,7 +1003,7 @@ jQuery(document).ready(
 
                                     $(".cp-template-select").each(
                                         function (index) {
-                                            $(this).removeAttr('disabled');
+                                            $(this).prop('disabled', false);
                                         }
                                     );
                                     return false;
@@ -938,7 +1013,7 @@ jQuery(document).ready(
                                     btn.attr('data-download', 'yes');
                                     $(".cp-template-select").each(
                                         function (index) {
-                                            $(this).removeAttr('disabled');
+                                            $(this).prop('disabled', false);
                                         }
                                     );
 
@@ -947,7 +1022,7 @@ jQuery(document).ready(
                                     btn.find('span').text(cp_pro.try_again);
                                     $(".cp-template-select").each(
                                         function (index) {
-                                            $(this).removeAttr('disabled');
+                                            $(this).prop('disabled', false);
                                         }
                                     );
                                 }
@@ -1005,7 +1080,7 @@ jQuery(document).ready(
                     jQuery("#cp-campaign-list").addClass('cp-hidden');
                 }
 
-                jQuery('#cp_campaign_name').focus();
+                jQuery('#cp_campaign_name').trigger('focus');
 
             }
         );
@@ -1018,7 +1093,7 @@ jQuery(document).ready(
                     jQuery("#cp-campaign-list").removeClass('cp-hidden');
                     jQuery(".cp-campaign-title-section").addClass('cp-hidden');
                 }
-                jQuery('.select-campaign').focus();
+                jQuery('.select-campaign').trigger('focus');
             }
         );
 
@@ -1034,7 +1109,7 @@ jQuery(document).ready(
 
             setTimeout(
                 function () {
-                    $("#cp_style_title").focus();
+                    $("#cp_style_title").trigger('focus');
                 }, 200
             );
         }
@@ -1361,7 +1436,7 @@ jQuery(document).ready(
 
                             setTimeout(
                                 function () {
-                                    $this.removeAttr('disabled');
+                                    $this.prop('disabled', false);
                                     $this.text(cp_ajax.cleared_cache);
                                     $this.append('<span class="dashicons-yes dashicons"></span>');
                                 }, 600

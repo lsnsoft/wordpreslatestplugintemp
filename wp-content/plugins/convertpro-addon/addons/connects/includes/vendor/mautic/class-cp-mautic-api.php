@@ -23,6 +23,14 @@ class CPRO_Mautic_API {
     public $credentials;
 
     /**
+     * Default Mautic version.
+     *
+     * @since 1.4.4
+     * @var string $default_mv
+     */
+    public $default_mv = '3.0.0';
+
+    /**
      * Constructor.
      */
     public function __construct( $credentials = array() ) {
@@ -220,7 +228,7 @@ class CPRO_Mautic_API {
         );
 
         $contact_created = json_decode( $result['body'] );
-        if ( $contact_created->error ) {
+        if ( isset( $contact_created->error ) && $contact_created->error ) {
             return $result;
         }
         if( isset( $contact_created->contact ) ) {
@@ -229,9 +237,11 @@ class CPRO_Mautic_API {
                 $contact_id =  (int) $contact->id;
 
                 if( ! empty( $segments ) ) {
+                    // Get the Mautic version.
+                    $mautic_version = preg_replace( '/[^0-9\.]/', '', $result['headers']['mautic-version'] );
                     foreach ( $segments as $key => $seg ) {
 
-                        $res = $this->add_to_mautic_segment( (int) $seg, $contact_id, $ip, $auth_key, $body );
+                        $res = $this->add_to_mautic_segment( (int) $seg, $contact_id, $ip, $auth_key, $body, $mautic_version );
                     }
                 }
             }
@@ -288,16 +298,21 @@ class CPRO_Mautic_API {
      * @param string $ip Current IP of user.
      * @param string $auth_key authentication Key.
      * @param array $body body data.
+     * @param string $mautic_version mautic version.
      * @return string
      * @since 1.2.2
      */
-    public function add_to_mautic_segment( $segment_id, $contact_id, $ip, $auth_key, $body ) {
+    public function add_to_mautic_segment( $segment_id, $contact_id, $ip, $auth_key, $body, $mautic_version ) {
 
         $response = array();
 
-        if( is_int( $segment_id ) && is_int ( $contact_id ) ) {
+        if( is_int( $segment_id ) && is_int( $contact_id ) ) {
 
-            $url = $this->credentials['base_url'] . "api/segments/" . $segment_id . "/contact/add/" . $contact_id;
+            if ( version_compare( $mautic_version, $this->default_mv, '>=' ) ) {
+                $url = $this->credentials['base_url'] . "api/segments/" . $segment_id . "/contact/" . $contact_id ."/add";
+            } else {
+                $url = $this->credentials['base_url'] . "api/segments/" . $segment_id . "/contact/add/" . $contact_id;
+            }
 
             $body = array(  
                 "ipAddress" => $_SERVER['REMOTE_ADDR']

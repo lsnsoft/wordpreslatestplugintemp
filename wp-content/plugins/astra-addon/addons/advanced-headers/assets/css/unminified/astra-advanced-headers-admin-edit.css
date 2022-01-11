@@ -18,7 +18,8 @@
 	padding: 0;
 }
 #astra_advanced_headers_settings .handlediv,
-.astra-advanced-headers-meta-box-wrap h2.ui-sortable-handle {
+.astra-advanced-headers-meta-box-wrap h2.ui-sortable-handle,
+.astra-advanced-headers-meta-box-wrap .postbox-header {
 	display: none;
 }
 

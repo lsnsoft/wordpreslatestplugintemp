@@ -225,7 +225,7 @@ final class ConvertPlugHelper {
 					<?php
 					foreach ( $settings['options'] as $key => $value ) {
 						?>
-						<option value="<?php echo esc_attr( $key ); ?>" <?php selected( true, in_array( $key, $settings['default'] ) ); // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict ?>><?php echo esc_html( $value ); ?></option>
+						<option value="<?php echo esc_attr( $key ); ?>" <?php selected( true, in_array( $key, is_array( $settings['default'] ) ? $settings['default'] : array() ) ); // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict ?>><?php echo esc_html( $value ); ?></option>
 						<?php
 					}
 					?>
@@ -329,9 +329,25 @@ final class ConvertPlugHelper {
 						$return_array[ $value->name ] = $value->value;
 					}
 				}
+			} elseif ( 'fluentcrm' === $mailer ) {
+				foreach ( $data as $value ) {
+					if ( 'fluentcrm_tags' === $value->name ) {
+						$return_array[ $value->name ][] = $value->value;
+					} else {
+						$return_array[ $value->name ] = $value->value;
+					}
+				}
 			} elseif ( 'ontraport' === $mailer ) {
 				foreach ( $data as $value ) {
 					if ( 'ontraport_tags' === $value->name ) {
+						$return_array[ $value->name ][] = $value->value;
+					} else {
+						$return_array[ $value->name ] = $value->value;
+					}
+				}
+			} elseif ( 'getresponse' === $mailer ) {
+				foreach ( $data as $value ) {
+					if ( 'getresponse_tags' === $value->name ) {
 						$return_array[ $value->name ][] = $value->value;
 					} else {
 						$return_array[ $value->name ] = $value->value;

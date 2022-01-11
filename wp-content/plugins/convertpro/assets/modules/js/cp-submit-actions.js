@@ -1,7 +1,7 @@
 (function ( $, window, undefined ) {
 
 	var is_form_validated = true;
-
+	var btn_data = '';
 	$(window).ready(function(){
 
 		var styleId = $('.cpro-form input[name="style_id"]').val();
@@ -13,6 +13,7 @@
 			 action  = self.closest(".cp-field-html-data").data('action');
 			$('.cp-current-clicked-btn').removeClass('cp-current-clicked-btn');
 			self.closest(".cp-field-html-data").addClass('cp-current-clicked-btn');
+			btn_data = self.text();
 		});
 
 		/* Field Action on Click */
@@ -42,7 +43,7 @@
 
 			jQuery( this ).find( '.cpro-checkbox-required' ).each( function( index, elem ) {
 				var checkThis = jQuery(this);
-				setTimeout(function() { checkThis.find("input[type=checkbox]").removeAttr( 'required' ); }, 2000);
+				setTimeout(function() { checkThis.find("input[type=checkbox]").prop( 'required', false ); }, 2000);
 				var checked = jQuery(this).find("input[type=checkbox]:checked").length;
 				if( checked == 0 ) {
 					jQuery(this).find("input[type=checkbox]:first").attr( 'required', 'required' );
@@ -184,7 +185,7 @@
 				var google_recaptcha = thisForm.find('.g-recaptcha');
 
 				if( google_recaptcha.length > 0 ) {
-// var client_side_response = grecaptcha.getResponse(); // returns a null if reCaptcha is not validated on client side, else is returns a value.
+
 
 					var client_side_response = thisForm.find( '[name="g-recaptcha-response"]' ).val();
 
@@ -263,7 +264,6 @@
 					type: 'POST',
 					dataType: 'json',
 					success: function( response ) {
-
 						var id      = currentBtn.closest(".cp-popup-wrapper").find('input[name=style_id]').val();
 						var modal   = $( '.cpro-onload[data-class-id=' + id + ']' );
 						var button_field = currentBtn.find('.cp-button-field');
@@ -378,7 +378,6 @@
 											break;
 
 											case "submit_n_goto_url":
-
 												var redirect_url  = currentBtn.closest('.cp-field-html-data').data("redirect");
 												var redirect_target = currentBtn.closest('.cp-field-html-data').data("redirect-target");
 												var get_param = currentBtn.find( '.cp-target' ).data( "get-param" );
@@ -404,10 +403,16 @@
 															}
 														}
 														
-														// close popup if target is new window
-														if( '_blank' == redirect_target ) {
-															jQuery(document).trigger( 'closePopup', [modal,id] );
-														}
+														/*
+														 * Close popup once submitted.
+														 * Reset the form data i.e. empty the form data fields.
+														 */
+														jQuery(document).trigger( 'closePopup', [modal,id] );
+														jQuery( '#cp_popup_id_' + id + ' .cpro-form' ).trigger("reset");
+														currentBtn.find('.cp-button-field').removeAttr('style data-content disabled');
+														currentBtn.find('.cp-target .cp_loader_container').remove();
+														currentBtn.find('.cp-button-field').html( btn_data ).removeClass('cp-button-loading cp-tooltip-top cp-tooltip-bottom');
+														currentBtn.removeClass( 'cp-state-success' );
 													}
 												}, 1200 );
 												
@@ -470,15 +475,12 @@
 															}
 														}
 
-														// close popup if target is new window
-														if( '_blank' == redirect_target ) {
-															jQuery(document).trigger( 'closePopup', [modal,id] );
-														}
+														// close popup once submitted.
+														jQuery(document).trigger( 'closePopup', [modal,id] );
 													}
 												}, 1200 );
 											break;
 										}
-
 									} else {
 										if( currentBtn.find('.cp-target').hasClass('cp-button') ) {
 											currentBtn.addClass('cp-error-tooltip');
@@ -546,6 +548,52 @@
 			e.preventDefault();
 
 		});
+
+		/**
+		 * Dynamic tags support START.
+		 * As per user selection set and send respective tags.
+		 * On the basis of Checkbox, Radio, and Dropdown elements.
+		*/
+		$( '.cp-checkbox-field input[type="checkbox"], .cp-radio-field input[type="radio"]' ).on( 'click', function( event ) {
+			var inputType         = $( this ).attr( 'type' );
+			var inputTypeField    = $( this ).closest( '.cp-' + inputType + '-field' );
+			var dynamicApiTagsValue = inputTypeField.find( '.cp-dynamic-api-tags' ).data( 'dynamic-api-tags' );
+			if ( 'undefined' !== typeof dynamicApiTagsValue ) {
+				var getApiTags          = $( this ).data( 'api-tags' );
+				var updatedValue        = [];
+				var tagsValue           = '';
+				if ( $( this ).is( ":checked" ) ) {
+					if ( '' === dynamicApiTagsValue ) {
+						updatedValue.push( getApiTags );
+					} else {
+						updatedValue = JSON.parse( dynamicApiTagsValue );
+						if ( ! updatedValue.includes( getApiTags ) ) {
+							updatedValue.push( getApiTags );
+						}
+					}
+
+					if ( 'radio' === inputType ) {
+						tagsValue = getApiTags;
+					} else {
+						tagsValue = updatedValue.join( '||' );
+					}
+					inputTypeField.find( '.cp-dynamic-api-tags' ).data( 'dynamic-api-tags', JSON.stringify( updatedValue ) ).val( tagsValue );
+				} else if ( $( this ).is( ":not(:checked)" ) && 'radio' !== inputType ) {
+					updatedValue   = JSON.parse( dynamicApiTagsValue );
+					var removeTags = updatedValue.indexOf( getApiTags );
+					if ( -1 !== removeTags ) {
+						updatedValue.splice( removeTags, 1 );
+					}
+					inputTypeField.find( '.cp-dynamic-api-tags' ).data( 'dynamic-api-tags', JSON.stringify( updatedValue ) ).val( updatedValue.join( '||' ) );
+				}
+			}
+		});
+
+		$( 'select.cp-dropdown-field' ).on( 'change', function( event ) {
+			var selectedValue = $( 'option:selected', this ).data( 'api-tags' );
+			$( this ).closest( '.cp-field-html-data' ).find( '.cp-dynamic-api-tags' ).val( selectedValue );
+		});
+		// Dynamic tags support END.
 
 		$( document ).on( 'click', '.cp-tooltip-close', function( event ) {
 				var $this       = $( this );
@@ -661,7 +709,7 @@
 								checked = jQuery(this).find("input[type=checkbox]:checked").length;
 
 							setTimeout( function( event ) {
-								checkThis.find("input[type=checkbox]").removeAttr( 'required' );
+								checkThis.find("input[type=checkbox]").prop( 'required', false );
 								}, 2000 );
 
 							if( checked == 0 ) {

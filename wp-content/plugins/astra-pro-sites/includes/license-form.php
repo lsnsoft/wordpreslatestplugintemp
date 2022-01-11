@@ -46,8 +46,8 @@ if ( isset( $_POST['bsf_license_manager']['license_key'] ) && empty( $_POST['bsf
 			default:
 				?>
 					<div class="astra-pro-sites-welcome-message">
-						<p><?php esc_html_e( 'This is a premium template available with \'Agency\' packages.', 'astra-sites' ); ?></p>
-						<p><?php esc_html_e( 'If you already own an Agency pack, validate your license key to import the template.', 'astra-sites' ); ?></p>
+						<p><?php esc_html_e( 'This is a premium template available with Essential Bundle and Growth Bundle.', 'astra-sites' ); ?></p>
+						<p><?php esc_html_e( 'If you already own one of these bundles, validate your license key to import the template.', 'astra-sites' ); ?></p>
 					</div>
 					<?php
 				break;

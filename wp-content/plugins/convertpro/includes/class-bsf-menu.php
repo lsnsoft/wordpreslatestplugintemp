@@ -92,9 +92,11 @@ if ( ! class_exists( 'Bsf_Menu' ) ) {
 			if ( is_admin() ) {
 				$_REQUEST['cpro_admin_page_footer_nonce'] = wp_create_nonce( 'cpro_admin_page_footer' );
 				self::$cpro_branding                      = Cp_V2_Loader::get_branding();
+				add_filter( 'bsf_extension_installer_screens', array( $this, 'cpro_addon_extension' ), 10, 2 );
 				add_action( 'current_screen', array( $this, 'cpro_plugin_gettext' ) );
 
 				add_filter( 'bsf_product_name_convertpro', array( $this, 'cpro_plugin_name_atts' ) );
+				add_filter( 'bsf_product_name_convertpro-addon', array( $this, 'cpro_plugin_name_atts' ) );
 				add_filter( 'bsf_product_author_convertpro', array( $this, 'cpro_author_atts' ) );
 				add_filter( 'bsf_product_description_convertpro', array( $this, 'cpro_description_atts' ) );
 				if ( isset( self::$cpro_branding['image_url'] ) && '' !== self::$cpro_branding['image_url'] ) {
@@ -127,6 +129,18 @@ if ( ! class_exists( 'Bsf_Menu' ) ) {
 			self::$view_actions = $view_actions;
 
 			self::$default_menu_position = get_option( 'bsf_menu_position' ) ? esc_attr( get_option( 'bsf_menu_position' ) ) : 'middle';
+		}
+
+		/**
+		 * Filter for Convert Pro Addon installation.
+		 *
+		 * @param array  $ext array arameter.
+		 * @param string $hook string parameter.
+		 * @since 1.5.3
+		 */
+		public function cpro_addon_extension( $ext, $hook ) {
+			$ext[] = 'convert-pro';
+			return $ext;
 		}
 
 		/**
@@ -561,10 +575,14 @@ if ( ! class_exists( 'Bsf_Menu' ) ) {
 		 * @param String $cpro_name Original Product name from Graupi.
 		 * @return string
 		 */
-		public function cpro_plugin_name_atts( $cpro_name = false ) {
+		public function cpro_plugin_name_atts( $cpro_name ) {
 
 			if ( isset( self::$cpro_branding['name'] ) && '' !== self::$cpro_branding['name'] ) {
-				return self::$cpro_branding['name'];
+				if ( 'Convert Pro - Addon' === $cpro_name ) {
+					return self::$cpro_branding['name'] . ' Addon';
+				} else {
+					return self::$cpro_branding['name'];
+				}
 			}
 
 			return $cpro_name;

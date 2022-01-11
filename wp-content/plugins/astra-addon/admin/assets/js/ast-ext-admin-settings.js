@@ -298,7 +298,7 @@
 
 					// Bulk add or remove classes to all modules.
 					$('.ast-addon-list').children( "li" ).addClass( 'active' ).removeClass( 'deactive' );
-					$('.ast-addon-list').children( "li" ).find('.ast-activate-module')
+					$('.ast-addon-list').children( "li" ).not('.ast-disable').find('.ast-activate-module')
 						.addClass('ast-deactivate-module')
 						.text(astraAddonModules.deactivate)
 						.removeClass('ast-activate-module');
@@ -349,7 +349,7 @@
 
 					// Bulk add or remove classes to all modules.
 					$('.ast-addon-list').children( "li" ).addClass( 'deactive' ).removeClass( 'active' );
-					$('.ast-addon-list').children( "li" ).find('.ast-deactivate-module')
+					$('.ast-addon-list').children( "li" ).not('.ast-disable').find('.ast-deactivate-module')
 						.addClass('ast-activate-module')
 						.text(astraAddonModules.activate)
 						.removeClass('ast-deactivate-module');

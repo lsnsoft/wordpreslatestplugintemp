@@ -24,7 +24,9 @@ if ( ! class_exists( 'Astra_Advanced_Footer_Typo_Configs' ) ) {
 	/**
 	 * Register Advanced Footer Typography Customizer Configurations.
 	 */
-	class Astra_Advanced_Footer_Typo_Configs extends Astra_Customizer_Config_Base {
+	// @codingStandardsIgnoreStart
+	class Astra_Advanced_Footer_Typo_Configs extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Advanced Footer Typography Customizer Configurations.
@@ -39,20 +41,6 @@ if ( ! class_exists( 'Astra_Advanced_Footer_Typo_Configs' ) ) {
 			$_config = array(
 
 				/**
-				 * Option: Footer Widget Typography Section heading
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[footer-widget-typography-heading-divider]',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-footer-adv',
-					'title'    => __( 'Typography', 'astra-addon' ),
-					'priority' => 48,
-					'settings' => array(),
-					'required' => array( ASTRA_THEME_SETTINGS . '[footer-adv]', '!=', 'disabled' ),
-				),
-
-				/**
 				 * Option: Footer Widget Title Typography Group
 				 */
 				array(
@@ -60,11 +48,19 @@ if ( ! class_exists( 'Astra_Advanced_Footer_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'footer-widget-title-typography-group' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Widget Title', 'astra-addon' ),
+					'title'     => __( 'Widget Title Font', 'astra-addon' ),
 					'section'   => 'section-footer-adv',
 					'transport' => 'postMessage',
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
 					'priority'  => 48,
-					'required'  => array( ASTRA_THEME_SETTINGS . '[footer-adv]', '!=', 'disabled' ),
+					'context'   => array(
+						astra_addon_builder_helper()->general_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[footer-adv]',
+							'operator' => '!=',
+							'value'    => 'disabled',
+						),
+					),
 				),
 
 				array(
@@ -128,14 +124,14 @@ if ( ! class_exists( 'Astra_Advanced_Footer_Typo_Configs' ) ) {
 
 				array(
 					'name'              => 'footer-adv-wgt-title-line-height',
-					'default'           => '',
+					'default'           => astra_get_option( 'footer-adv-wgt-title-line-height' ),
 					'type'              => 'sub-control',
 					'parent'            => ASTRA_THEME_SETTINGS . '[footer-widget-title-typography-group]',
 					'section'           => 'section-footer-adv',
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'control'           => 'ast-slider',
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,
@@ -151,11 +147,18 @@ if ( ! class_exists( 'Astra_Advanced_Footer_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'footer-widget-content-typography-group' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Widget Content', 'astra-addon' ),
+					'title'     => __( 'Widget Content Font', 'astra-addon' ),
 					'section'   => 'section-footer-adv',
 					'transport' => 'postMessage',
 					'priority'  => 48,
-					'required'  => array( ASTRA_THEME_SETTINGS . '[footer-adv]', '!=', 'disabled' ),
+					'context'   => array(
+						astra_addon_builder_helper()->general_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[footer-adv]',
+							'operator' => '!=',
+							'value'    => 'disabled',
+						),
+					),
 				),
 
 				array(
@@ -219,14 +222,14 @@ if ( ! class_exists( 'Astra_Advanced_Footer_Typo_Configs' ) ) {
 
 				array(
 					'name'              => 'footer-adv-wgt-content-line-height',
-					'default'           => '',
+					'default'           => astra_get_option( 'footer-adv-wgt-content-line-height' ),
 					'type'              => 'sub-control',
 					'parent'            => ASTRA_THEME_SETTINGS . '[footer-widget-content-typography-group]',
 					'section'           => 'section-footer-adv',
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'control'           => 'ast-slider',
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,

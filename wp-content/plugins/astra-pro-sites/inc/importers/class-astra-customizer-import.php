@@ -51,7 +51,7 @@ class Astra_Customizer_Import {
 
 		// Update Astra Theme customizer settings.
 		if ( isset( $options['astra-settings'] ) ) {
-			self::import_settings( $options['astra-settings'] );
+			update_option( 'astra-settings', $options['astra-settings'] );
 		}
 
 		// Add Custom CSS.
@@ -59,37 +59,5 @@ class Astra_Customizer_Import {
 			wp_update_custom_css_post( $options['custom-css'] );
 		}
 
-	}
-
-	/**
-	 * Import Astra Setting's
-	 *
-	 * Download & Import images from Astra Customizer Settings.
-	 *
-	 * @since 1.0.10
-	 *
-	 * @param  array $options Astra Customizer setting array.
-	 * @return void
-	 */
-	public static function import_settings( $options = array() ) {
-
-		array_walk_recursive(
-			$options,
-			function ( &$value ) {
-				if ( ! is_array( $value ) ) {
-
-					if ( Astra_Sites_Helper::is_image_url( $value ) ) {
-						$data = Astra_Sites_Helper::sideload_image( $value );
-
-						if ( ! is_wp_error( $data ) ) {
-							$value = $data->url;
-						}
-					}
-				}
-			}
-		);
-
-		// Updated settings.
-		update_option( 'astra-settings', $options );
 	}
 }

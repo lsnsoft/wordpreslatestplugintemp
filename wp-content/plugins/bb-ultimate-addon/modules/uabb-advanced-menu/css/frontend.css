@@ -102,7 +102,7 @@
     z-index: 5;
 }
 .uabb-creative-menu-mobile-toggle.text {
-	width: 100%;
+	width: auto;
 	text-align: center;
 }
 .uabb-creative-menu-mobile-toggle.hamburger .uabb-creative-menu-mobile-toggle-label,
@@ -140,6 +140,9 @@
 	cursor: pointer;
 	display: block;
     z-index: 99;
+}
+.uabb-creative-menu-mobile-toggle:focus{
+	outline: thin dotted;
 }
 
 /* Overlay */
@@ -358,11 +361,6 @@
 .menu-open.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-left {
     transform: translate3d(0px, 0px, 0px);
     transition: transform 0.8s ease;
-}
-
-.uabb-creative-menu .menu > li > a,
-.uabb-creative-menu .menu > li > .uabb-has-submenu-container a {
-    outline: 0;
 }
 
 .menu-open.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-right {

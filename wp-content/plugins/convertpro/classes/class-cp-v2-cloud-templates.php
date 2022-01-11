@@ -550,9 +550,12 @@ if ( ! class_exists( 'CP_V2_Cloud_Templates' ) ) {
 
 										// @codingStandardsIgnoreStart
 										$modal_data->$key->$nested_key->panel_bg_image[ $img_key ] = $img_meta['path'];
+
+										if( isset( $modal_data->$key->$nested_key->panel_bg_image_sizes ) && is_object( $modal_data->$key->$nested_key->panel_bg_image_sizes ) ) {
+											$modal_data->$key->$nested_key->panel_bg_image_sizes = array($modal_data->$key->$nested_key->panel_bg_image_sizes);
+										}
 										$modal_data->$key->$nested_key->panel_bg_image_sizes[ $img_key ] = $img_meta['sizes'];
 										// @codingStandardsIgnoreEnd
-
 									}
 								}
 							}

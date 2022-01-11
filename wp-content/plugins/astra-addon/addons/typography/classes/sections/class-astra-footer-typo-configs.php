@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Footer_Typo_Configs' ) ) {
 	/**
 	 * Register below header Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Footer_Typo_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Fotter typography Customizer Configurations.
@@ -39,20 +42,6 @@ if ( ! class_exists( 'Astra_Footer_Typo_Configs' ) ) {
 			$_configs = array(
 
 				/**
-				 * Option: Footer Bar typo Section heading
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[footer-bar-typography-heading-divider]',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-footer-small',
-					'title'    => __( 'Typography', 'astra-addon' ),
-					'priority' => 47,
-					'required' => array( ASTRA_THEME_SETTINGS . '[footer-sml-layout]', '!=', 'disabled' ),
-					'settings' => array(),
-				),
-
-				/**
 				 * Option: Footer Bar Typography Group
 				 */
 				array(
@@ -60,11 +49,18 @@ if ( ! class_exists( 'Astra_Footer_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'footer-bar-typography-group' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Content', 'astra-addon' ),
+					'title'     => __( 'Content Font', 'astra-addon' ),
 					'section'   => 'section-footer-small',
 					'transport' => 'postMessage',
 					'priority'  => 47,
-					'required'  => array( ASTRA_THEME_SETTINGS . '[footer-sml-layout]', '!=', 'disabled' ),
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+					'context'   => array(
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[footer-sml-layout]',
+							'operator' => '!=',
+							'value'    => 'disabled',
+						),
+					),
 				),
 
 				/**
@@ -148,12 +144,12 @@ if ( ! class_exists( 'Astra_Footer_Typo_Configs' ) ) {
 					'type'              => 'sub-control',
 					'parent'            => ASTRA_THEME_SETTINGS . '[footer-bar-typography-group]',
 					'section'           => 'section-footer-small',
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-footer-content' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'transport'         => 'postMessage',
 					'control'           => 'ast-slider',
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,

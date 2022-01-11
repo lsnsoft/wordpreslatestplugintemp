@@ -12,7 +12,10 @@ if ( ! class_exists( 'ASTRA_Ext_LearnDash_Markup' ) ) {
 	 *
 	 * @since 1.3.0
 	 */
+	// @codingStandardsIgnoreStart
 	class ASTRA_Ext_LearnDash_Markup {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Varible
@@ -38,7 +41,7 @@ if ( ! class_exists( 'ASTRA_Ext_LearnDash_Markup' ) ) {
 
 			add_action( 'wp', array( $this, 'llms_learning' ) );
 			add_action( 'body_class', array( $this, 'body_class' ) );
-			add_action( 'astra_get_css_files', array( $this, 'add_styles' ) );
+			add_action( 'astra_addon_get_css_files', array( $this, 'add_styles' ) );
 
 			// Add LearnDash icon in Menu.
 			add_action( 'astra_masthead_content', array( $this, 'learndash_profile_link_enabled' ) );
@@ -126,6 +129,13 @@ if ( ! class_exists( 'ASTRA_Ext_LearnDash_Markup' ) ) {
 				$user_id   = get_current_user_id();
 
 				if ( astra_get_option( 'learndash-distraction-free-learning' ) && sfwd_lms_has_access( $course_id, $user_id ) ) {
+
+					// HFB Support for distration free checkout.
+					if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+						remove_action( 'astra_header', array( Astra_Builder_Header::get_instance(), 'prepare_header_builder_markup' ) );
+						remove_action( 'astra_footer', array( Astra_Builder_Footer::get_instance(), 'footer_markup' ), 10 );
+					}
+
 					remove_action( 'astra_header', 'astra_header_markup' );
 					remove_action( 'astra_footer', 'astra_footer_markup' );
 
@@ -140,7 +150,7 @@ if ( ! class_exists( 'ASTRA_Ext_LearnDash_Markup' ) ) {
 		 */
 		public function header_markup() {
 
-			astra_get_template( 'learndash/templates/header.php' );
+			astra_addon_get_template( 'learndash/templates/header.php' );
 		}
 
 		/**
@@ -148,7 +158,7 @@ if ( ! class_exists( 'ASTRA_Ext_LearnDash_Markup' ) ) {
 		 */
 		public function footer_markup() {
 
-			astra_get_template( 'learndash/templates/footer.php' );
+			astra_addon_get_template( 'learndash/templates/footer.php' );
 		}
 
 		/**
@@ -177,8 +187,8 @@ if ( ! class_exists( 'ASTRA_Ext_LearnDash_Markup' ) ) {
 			/*** Start Path Logic */
 
 			/* Define Variables */
-			$uri  = ASTRA_EXT_LEARNDASH_URI . 'assets/css/';
-			$path = ASTRA_EXT_LEARNDASH_DIR . 'assets/css/';
+			$uri  = ASTRA_ADDON_EXT_LEARNDASH_URI . 'assets/css/';
+			$path = ASTRA_ADDON_EXT_LEARNDASH_DIR . 'assets/css/';
 			$rtl  = '';
 
 			if ( is_rtl() ) {

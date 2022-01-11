@@ -1267,7 +1267,7 @@ FLBuilder::register_module(
 							'responsive' => true,
 							'preview'    => array(
 								'type'      => 'css',
-								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label',
+								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label, .uabb-gf-style .gform_wrapper .gfield .gfield_radio .gchoice_label label, .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox label',
 								'important' => true,
 							),
 						),
@@ -1280,7 +1280,7 @@ FLBuilder::register_module(
 							'show_reset'   => true,
 							'preview'      => array(
 								'type'      => 'css',
-								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label',
+								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label, .uabb-gf-style .gform_wrapper .gfield .gfield_radio .gchoice_label label, .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox label',
 								'property'  => 'color',
 								'important' => true,
 							),

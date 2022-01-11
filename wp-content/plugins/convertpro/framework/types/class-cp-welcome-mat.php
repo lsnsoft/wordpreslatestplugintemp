@@ -94,7 +94,6 @@ class CP_Welcome_Mat extends cp_Framework {
 				'load_after_scroll',
 				'show_after_within_scroll_info',
 				'close_after_scroll',
-				'modal_exit_intent',
 				'enable_custom_scroll',
 				'custom_cls_text_head',
 				'custom_cls_text',
@@ -107,6 +106,9 @@ class CP_Welcome_Mat extends cp_Framework {
 				'enable_after_post',
 				'enable_custom_class',
 				'custom_class',
+				'select_inline_location',
+				'number_of_layout',
+				'number_of_layout_heading',
 			),
 			$options
 		);

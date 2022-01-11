@@ -1,3 +1,9 @@
+/* 
+ * Copyright 2014-2017 Aidan Rogers 
+ * https://github.com/godswearhats/jquery-ui-rotatable
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
 /* globals define jQuery */
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
@@ -126,8 +132,8 @@
 
                 this._propagate('start', event)
 
-                $(document).bind('mousemove', this.listeners.rotateElement)
-                $(document).bind('mouseup', this.listeners.stopRotate)
+                $(document).on('mousemove', this.listeners.rotateElement)
+                $(document).on('mouseup', this.listeners.stopRotate)
 
                 return false
             },
@@ -138,8 +144,8 @@
                     return
                 }
 
-                $(document).unbind('mousemove', this.listeners.rotateElement)
-                $(document).unbind('mouseup', this.listeners.stopRotate)
+                $(document).off('mousemove', this.listeners.rotateElement)
+                $(document).off('mouseup', this.listeners.stopRotate)
 
                 this.elementStopAngle = this.elementCurrentAngle
 
@@ -264,11 +270,11 @@
                 }
 
                 if (this.options.wheelRotate) {
-                    this.element.bind('wheel', this.listeners.wheelRotate)
+                    this.element.on('wheel', this.listeners.wheelRotate)
                 }
 
                 handle.draggable({ helper: 'clone', start: this._dragStart, handle: handle })
-                handle.bind('mousedown', this.listeners.startRotate)
+                handle.on('mousedown', this.listeners.startRotate)
 
                 if (!handle.closest(this.element).length) {
                     handle.appendTo(this.element)
@@ -290,7 +296,7 @@
                 this.element.find('.ui-rotatable-handle').remove()
 
                 if (this.options.wheelRotate) {
-                    this.element.unbind('wheel', this.listeners.wheelRotate)
+                    this.element.off('wheel', this.listeners.wheelRotate)
                 }
             },
 

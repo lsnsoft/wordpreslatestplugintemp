@@ -13,8 +13,9 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 	/**
 	 * Meta Boxes setup
 	 */
-	class Astra_Ext_Advanced_Hooks_Meta {
-
+	// @codingStandardsIgnoreStart
+	class Astra_Ext_Advanced_Hooks_Meta { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Instance
@@ -69,6 +70,9 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 				),
 				'hooks'    => array(
 					'title' => __( 'Hooks', 'astra-addon' ),
+				),
+				'content'  => array(
+					'title' => __( 'Inside Post/Page Content', 'astra-addon' ),
 				),
 			);
 
@@ -280,7 +284,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 						),
 						'astra_footer_content_top'    => array(
 							'title'       => 'footer_content_top',
-							'description' => __( 'astra_footer_content_top - Action to add your content or snippet at top of the <footer> tag.', 'astra-addon' ),
+							'description' => __( 'astra_footer_content_top - Action to add your content or snippet at top in the <footer> tag.', 'astra-addon' ),
 						),
 						'astra_footer_inside_container_top' => array(
 							'title'       => 'footer_inside_container_top',
@@ -292,7 +296,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 						),
 						'astra_footer_content_bottom' => array(
 							'title'       => 'footer_content_bottom',
-							'description' => __( 'astra_footer_content_bottom - Action to add your content or snippet at bottom of the <footer> tag.', 'astra-addon' ),
+							'description' => __( 'astra_footer_content_bottom - Action to add your content or snippet at bottom in the <footer> tag.', 'astra-addon' ),
 						),
 						'astra_footer_after'          => array(
 							'title'       => 'footer_after',
@@ -708,6 +712,189 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 				);
 			}
 
+			if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+
+				unset( $hooks['header']['hooks']['astra_main_header_bar_top'] );
+				unset( $hooks['header']['hooks']['astra_masthead_content'] );
+				unset( $hooks['header']['hooks']['astra_masthead_toggle_buttons_after'] );
+				unset( $hooks['header']['hooks']['astra_masthead_toggle_buttons_before'] );
+				unset( $hooks['header']['hooks']['astra_main_header_bar_bottom'] );
+				unset( $hooks['footer']['hooks']['astra_footer_content_top'] );
+				unset( $hooks['footer']['hooks']['astra_footer_inside_container_top'] );
+				unset( $hooks['footer']['hooks']['astra_footer_inside_container_bottom'] );
+				unset( $hooks['footer']['hooks']['astra_footer_content_bottom'] );
+
+				/**
+				 * Above Header
+				 */
+
+				$insert_above_bar_before = array(
+					'astra_header_above_container_before' => array(
+						'title'       => 'header_above_container_before',
+						'description' => __( 'astra_header_above_container_before - Action to add your content or snippet at top of the Above header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_header_above_container_after' at position 3.
+				$above_offset_before      = 3;
+				$mast_head_before         = array_slice( $hooks['header']['hooks'], 0, $above_offset_before, true ) + $insert_above_bar_before + array_slice( $hooks['header']['hooks'], $above_offset_before, null, true );
+				$hooks['header']['hooks'] = $mast_head_before;
+
+				$insert_above_bar_after = array(
+					'astra_header_above_container_after' => array(
+						'title'       => 'header_above_container_after',
+						'description' => __( 'astra_header_above_container_after - Action to add your content or snippet at bottom of the Above header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_header_above_container_after' at position 4.
+				$above_offset_after       = 4;
+				$mast_head_after          = array_slice( $hooks['header']['hooks'], 0, $above_offset_after, true ) + $insert_above_bar_after + array_slice( $hooks['header']['hooks'], $above_offset_after, null, true );
+				$hooks['header']['hooks'] = $mast_head_after;
+
+				/**
+				 * Primary Header
+				 */
+
+				$insert_main_bar_before = array(
+					'astra_header_primary_container_before' => array(
+						'title'       => 'header_primary_container_before',
+						'description' => __( 'astra_header_primary_container_before - Action to add your content or snippet at top of the Primary header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_header_primary_container_after' at position 5.
+				$offset_before            = 5;
+				$mast_head_before         = array_slice( $hooks['header']['hooks'], 0, $offset_before, true ) + $insert_main_bar_before + array_slice( $hooks['header']['hooks'], $offset_before, null, true );
+				$hooks['header']['hooks'] = $mast_head_before;
+
+				$insert_main_bar_after = array(
+					'astra_header_primary_container_after' => array(
+						'title'       => 'header_primary_container_after',
+						'description' => __( 'astra_header_primary_container_after - Action to add your content or snippet at bottom of the Primary header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_header_primary_container_after' at position 6.
+				$offset_after             = 6;
+				$mast_head_after          = array_slice( $hooks['header']['hooks'], 0, $offset_after, true ) + $insert_main_bar_after + array_slice( $hooks['header']['hooks'], $offset_after, null, true );
+				$hooks['header']['hooks'] = $mast_head_after;
+
+				/**
+				 * Below Header
+				 */
+
+				$insert_below_bar_before = array(
+					'astra_header_below_container_before' => array(
+						'title'       => 'header_below_container_before',
+						'description' => __( 'astra_header_below_container_before - Action to add your content or snippet at top of the Below header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'header_below_container_before' at position 7.
+				$below_offset_before      = 7;
+				$mast_head_before         = array_slice( $hooks['header']['hooks'], 0, $below_offset_before, true ) + $insert_below_bar_before + array_slice( $hooks['header']['hooks'], $below_offset_before, null, true );
+				$hooks['header']['hooks'] = $mast_head_before;
+
+				$insert_below_bar_after = array(
+					'astra_header_below_container_after' => array(
+						'title'       => 'header_below_container_after',
+						'description' => __( 'astra_header_below_container_after - Action to add your content or snippet at bottom of the Below header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_header_below_container_after' at position 8.
+				$below_offset_after       = 8;
+				$mast_head_after          = array_slice( $hooks['header']['hooks'], 0, $below_offset_after, true ) + $insert_below_bar_after + array_slice( $hooks['header']['hooks'], $below_offset_after, null, true );
+				$hooks['header']['hooks'] = $mast_head_after;
+
+				/**
+				 * Above Footer
+				 */
+
+				$insert_above_footer_before = array(
+					'astra_footer_above_container_before' => array(
+						'title'       => 'footer_above_container_before',
+						'description' => __( 'astra_footer_above_container_before - Action to add your content or snippet at top of the Above Footer.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_footer_above_container_before' at position 2.
+				$offset_above_footer_before = 2;
+				$mast_footer_before         = array_slice( $hooks['footer']['hooks'], 0, $offset_above_footer_before, true ) + $insert_above_footer_before + array_slice( $hooks['footer']['hooks'], $offset_above_footer_before, null, true );
+				$hooks['footer']['hooks']   = $mast_footer_before;
+
+				$insert_above_footer_after = array(
+					'astra_footer_above_container_after' => array(
+						'title'       => 'footer_above_container_after',
+						'description' => __( 'astra_footer_above_container_after - Action to add your content or snippet at bottom of the Above Footer.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_footer_above_container_after' at position 3.
+				$offset_above_footer_after = 3;
+				$mast_footer_after         = array_slice( $hooks['footer']['hooks'], 0, $offset_above_footer_after, true ) + $insert_above_footer_after + array_slice( $hooks['footer']['hooks'], $offset_above_footer_after, null, true );
+				$hooks['footer']['hooks']  = $mast_footer_after;
+
+				/**
+				 * Footer
+				 */
+
+				$insert_main_footer_before = array(
+					'astra_footer_primary_container_before' => array(
+						'title'       => 'footer_primary_container_before',
+						'description' => __( 'astra_footer_primary_container_before - Action to add your content or snippet at top of the Primary header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_footer_primary_container_before' at position 4.
+				$offset_footer_before     = 4;
+				$mast_footer_before       = array_slice( $hooks['footer']['hooks'], 0, $offset_footer_before, true ) +
+				$insert_main_footer_before +
+				array_slice( $hooks['footer']['hooks'], $offset_footer_before, null, true );
+				$hooks['footer']['hooks'] = $mast_footer_before;
+
+				$insert_main_footer_after = array(
+					'astra_footer_primary_container_after' => array(
+						'title'       => 'footer_primary_container_after',
+						'description' => __( 'astra_footer_primary_container_after - Action to add your content or snippet at bottom of the Primary header.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_footer_primary_container_after' at position 5.
+				$offset_footer_after      = 5;
+				$mast_footer_after        = array_slice( $hooks['footer']['hooks'], 0, $offset_footer_after, true ) + $insert_main_footer_after + array_slice( $hooks['footer']['hooks'], $offset_footer_after, null, true );
+				$hooks['footer']['hooks'] = $mast_footer_after;
+
+				/**
+				 * Below Footer
+				 */
+
+				$insert_below_footer_before = array(
+					'astra_footer_below_container_before' => array(
+						'title'       => 'footer_below_container_before',
+						'description' => __( 'astra_footer_below_container_before - Action to add your content or snippet at top of the Below Footer.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_footer_below_container_before' at position 6.
+				$offset_below_footer_before = 6;
+				$mast_footer_before         = array_slice( $hooks['footer']['hooks'], 0, $offset_below_footer_before, true ) + $insert_below_footer_before + array_slice( $hooks['footer']['hooks'], $offset_below_footer_before, null, true );
+				$hooks['footer']['hooks']   = $mast_footer_before;
+
+				$insert_below_footer_after = array(
+					'astra_footer_below_container_after' => array(
+						'title'       => 'footer_below_container_after',
+						'description' => __( 'astra_footer_below_container_after - Action to add your content or snippet at bottom of the Below Footer.', 'astra-addon' ),
+					),
+				);
+
+				// Add new array 'astra_footer_below_container_after' at position 7.
+				$offset_below_footer_after = 7;
+				$mast_footer_after         = array_slice( $hooks['footer']['hooks'], 0, $offset_below_footer_after, true ) + $insert_below_footer_after + array_slice( $hooks['footer']['hooks'], $offset_below_footer_after, null, true );
+				$hooks['footer']['hooks']  = $mast_footer_after;
+			}
+
 			self::$layouts = apply_filters( 'astra_custom_layouts_layout', $layouts );
 			self::$hooks   = apply_filters( 'astra_custom_layouts_hooks', $hooks );
 
@@ -724,7 +911,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
 			add_action( 'load-post.php', array( $this, 'init_metabox' ) );
 			add_action( 'load-post-new.php', array( $this, 'init_metabox' ) );
-			add_filter( 'astra_location_rule_post_types', array( $this, 'location_rule_post_types' ) );
+			add_filter( 'astra_addon_location_rule_post_types', array( $this, 'location_rule_post_types' ) );
 		}
 
 		/**
@@ -787,11 +974,15 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 		 * Init Metabox
 		 */
 		public function init_metabox() {
+			global $wp_version;
 			add_action( 'add_meta_boxes', array( $this, 'setup_meta_box' ) );
 			add_action( 'edit_form_after_title', array( $this, 'enable_php_markup' ), 1, 1 );
 			add_action( 'admin_footer', array( $this, 'add_navigation_button' ), 1, 1 );
 			add_action( 'edit_form_after_editor', array( $this, 'php_editor_markup' ), 10, 1 );
-			add_action( 'save_post', array( $this, 'save_meta_box' ) );
+
+			if ( isset( $_POST['ast-advanced-hook-layout'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				add_action( 'save_post', array( $this, 'save_meta_box' ) );
+			}
 
 			/**
 			 * Set metabox options
@@ -850,7 +1041,22 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 						'default'  => array(),
 						'sanitize' => 'FILTER_DEFAULT',
 					),
-
+					'ast-advanced-hook-content'   => array(
+						'default'  => array(),
+						'sanitize' => 'FILTER_DEFAULT',
+					),
+					'ast-advanced-display-device' => array(
+						'default'  => array( 'desktop', 'tablet', 'mobile' ),
+						'sanitize' => 'FILTER_DEFAULT',
+					),
+					'ast-advanced-time-duration'  => array(
+						'default'  => array(
+							'enabled'  => '',
+							'start-dt' => '',
+							'end-dt'   => '',
+						),
+						'sanitize' => 'FILTER_DEFAULT',
+					),
 				)
 			);
 
@@ -1059,8 +1265,24 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 							array( $this, 'markup_meta_box' ),      // Callback.
 							$type,                                  // Post_type.
 							'normal',                               // Context.
-							'high'                                  // Priority.
+							'high',                                 // Priority.
+							array(
+								'__back_compat_meta_box' => true,
+							)
 						);
+
+						// Show notice metabox only for block based Custom Layout post.
+						$screen = get_current_screen();
+						if ( true === $screen->is_block_editor() ) {
+							add_meta_box(
+								'advanced-hook-notice',                // Id.
+								__( 'Custom Layout Settings', 'astra-addon' ), // Title.
+								array( $this, 'meta_box_notice' ),      // Callback.
+								$type,                                  // Post_type.
+								'normal',                               // Context.
+								'low'                                   // Priority.
+							);
+						}
 					}
 				}
 			}
@@ -1145,6 +1367,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 				 * Get options.
 				 */
 				$with_php      = ( isset( $meta['ast-advanced-hook-with-php']['default'] ) ) ? $meta['ast-advanced-hook-with-php']['default'] : '';
+				$editor_type   = ( isset( $meta['editor_type']['default'] ) ) ? $meta['editor_type']['default'] : 'wordpress_editor';
 				$enable_label  = __( 'Enable Code Editor', 'astra-addon' );
 				$disable_label = __( 'Enable WordPress Editor', 'astra-addon' );
 
@@ -1156,6 +1379,12 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 					$editor_type = 'code_editor';
 					$icon        = 'dashicons-edit';
 					$label       = $disable_label;
+				}
+
+				if ( isset( $_GET['wordpress_editor'] ) || 'wordpress_editor' === $editor_type ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					$editor_type = 'wordpress_editor';
+					$icon        = 'dashicons-editor-code';
+					$label       = $enable_label;
 				}
 
 				?>
@@ -1224,7 +1453,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 			wp_nonce_field( basename( __FILE__ ), ASTRA_ADVANCED_HOOKS_POST_TYPE );
 			$stored = get_post_meta( $post->ID );
 
-			$advanced_hooks_meta = array( 'ast-advanced-hook-location', 'ast-advanced-hook-exclusion', 'ast-advanced-hook-users', 'ast-advanced-hook-padding', 'ast-advanced-hook-header', 'ast-advanced-hook-footer', 'ast-404-page' );
+			$advanced_hooks_meta = array( 'ast-advanced-time-duration', 'ast-advanced-display-device', 'ast-advanced-hook-location', 'ast-advanced-hook-exclusion', 'ast-advanced-hook-users', 'ast-advanced-hook-padding', 'ast-advanced-hook-header', 'ast-advanced-hook-footer', 'ast-404-page', 'ast-advanced-hook-content' );
 
 			// Set stored and override defaults.
 			foreach ( $stored as $key => $value ) {
@@ -1250,8 +1479,10 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 			$padding           = ( isset( $meta['ast-advanced-hook-padding']['default'] ) ) ? $meta['ast-advanced-hook-padding']['default'] : array();
 			$header            = ( isset( $meta['ast-advanced-hook-header']['default'] ) ) ? $meta['ast-advanced-hook-header']['default'] : array();
 			$footer            = ( isset( $meta['ast-advanced-hook-footer']['default'] ) ) ? $meta['ast-advanced-hook-footer']['default'] : array();
-			$footer            = ( isset( $meta['ast-advanced-hook-footer']['default'] ) ) ? $meta['ast-advanced-hook-footer']['default'] : array();
 			$layout_404        = ( isset( $meta['ast-404-page']['default'] ) ) ? $meta['ast-404-page']['default'] : array();
+			$content           = ( isset( $meta['ast-advanced-hook-content']['default'] ) ) ? $meta['ast-advanced-hook-content']['default'] : array();
+			$display_devices   = ( isset( $meta['ast-advanced-display-device']['default'] ) ) ? $meta['ast-advanced-display-device']['default'] : array();
+			$time_duration     = ( isset( $meta['ast-advanced-time-duration']['default'] ) ) ? $meta['ast-advanced-time-duration']['default'] : array();
 
 			$ast_advanced_hooks = array(
 				'include-locations' => $display_locations,
@@ -1264,10 +1495,25 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 				'header'            => $header,
 				'footer'            => $footer,
 				'layout-404'        => $layout_404,
+				'content'           => $content,
+				'display-devices'   => $display_devices,
+				'time-duration'     => $time_duration,
 			);
 			do_action( 'astra_advanced_hooks_settings_markup_before', $meta );
 			$this->page_header_tab( $ast_advanced_hooks );
 			do_action( 'astra_advanced_hooks_settings_markup_after', $meta );
+		}
+
+		/**
+		 * Display notice for Existing users for Custom layout settings improvements.
+		 *
+		 * @param  object $post Post object.
+		 * @return void
+		 */
+		public function meta_box_notice( $post ) {
+			$link = '<a href="https://wpastra.com/docs/custom-layouts-pro/" target="blank"> Click here </a>';
+			/* translators: %s: blog link */
+			echo sprintf( esc_html__( 'Custom Layout Settings moved to the Sidebar. Access the settings by clicking the Astra icon in the top right corner. %s for more information.', 'astra-addon' ), $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -1290,13 +1536,10 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 			}
 
 			$editor_type = get_post_meta( $post_id, 'editor_type', true );
+			update_post_meta( $post_id, 'editor_type', 'wordpress_editor' );
 
-			if ( isset( $_GET['wordpress_editor'] ) || 'wordpress_editor' == $editor_type ) {
-				update_post_meta( $post_id, 'editor_type', 'wordpress_editor' );
-			} elseif ( isset( $_GET['code_editor'] ) || 'code_editor' == $editor_type ) {
+			if ( strpos( $_POST['_wp_http_referer'], 'code_editor' ) !== false || 'code_editor' === $editor_type ) {
 				update_post_meta( $post_id, 'editor_type', 'code_editor' );
-			} else {
-				update_post_meta( $post_id, 'editor_type', 'wordpress_editor' );
 			}
 
 			/**
@@ -1310,10 +1553,8 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 						unset( $_POST[ $key ][ $index ] );
 					}
 					$meta_value = array_map( 'esc_attr', $_POST[ $key ] );
-				} elseif ( in_array( $key, array( 'ast-advanced-hook-header', 'ast-advanced-hook-footer', 'ast-404-page' ) ) ) {
-					if ( isset( $_POST[ $key ] ) ) {
-						$meta_value = array_map( 'esc_attr', $_POST[ $key ] );
-					}
+				} elseif ( in_array( $key, array( 'ast-advanced-time-duration', 'ast-advanced-display-device', 'ast-advanced-hook-header', 'ast-advanced-hook-footer', 'ast-404-page', 'ast-advanced-hook-content' ) ) ) {
+					$meta_value = isset( $_POST[ $key ] ) ? array_map( 'esc_attr', $_POST[ $key ] ) : array();
 				} elseif ( in_array( $key, array( 'ast-advanced-hook-location', 'ast-advanced-hook-exclusion' ) ) ) {
 					$meta_value = Astra_Target_Rules_Fields::get_format_rule_value( $_POST, $key );
 				} else {
@@ -1380,6 +1621,34 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 			update_post_meta( get_the_ID(), 'ast-advanced-hook-location', $target_rule_404 );
 		}
 
+
+		/**
+		 * Get the timezone string as selected in wp general setting.
+		 *
+		 * @return false|mixed|string|void
+		 */
+		public static function get_wp_timezone_string() {
+
+			$current_offset = get_option( 'gmt_offset' );
+			$tzstring       = get_option( 'timezone_string' );
+
+			if ( false !== strpos( $tzstring, 'Etc/GMT' ) ) {
+				$tzstring = '';
+			}
+
+			if ( empty( $tzstring ) ) {
+				if ( 0 == $current_offset ) {
+					$tzstring = 'UTC+0';
+				} elseif ( $current_offset < 0 ) {
+					$tzstring = 'UTC' . $current_offset;
+				} else {
+					$tzstring = 'UTC+' . $current_offset;
+				}
+			}
+
+			return $tzstring;
+		}
+
 		/**
 		 * Page Header Tabs
 		 *
@@ -1395,17 +1664,23 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 			$padding           = $options['padding'];
 			$header            = $options['header'];
 			$footer            = $options['footer'];
+			$content           = $options['content'];
 			$layout_404        = $options['layout-404'];
+			$display_devices   = $options['display-devices'];
+			$time_duration     = $options['time-duration'];
 
-			$padding_top       = isset( $padding['top'] ) ? $padding['top'] : '';
-			$padding_bottom    = isset( $padding['bottom'] ) ? $padding['bottom'] : '';
-			$header_sticky     = isset( $header['sticky'] ) ? $header['sticky'] : '';
-			$header_shrink     = isset( $header['shrink'] ) ? $header['shrink'] : '';
-			$header_on_devices = isset( $header['sticky-header-on-devices'] ) ? $header['sticky-header-on-devices'] : '';
-			$footer_sticky     = isset( $footer['sticky'] ) ? $footer['sticky'] : '';
-			$footer_on_devices = isset( $footer['sticky-footer-on-devices'] ) ? $footer['sticky-footer-on-devices'] : '';
-			$disable_header    = isset( $layout_404['disable_header'] ) ? $layout_404['disable_header'] : '';
-			$disable_footer    = isset( $layout_404['disable_footer'] ) ? $layout_404['disable_footer'] : '';
+			$padding_top           = isset( $padding['top'] ) ? $padding['top'] : '';
+			$padding_bottom        = isset( $padding['bottom'] ) ? $padding['bottom'] : '';
+			$header_sticky         = isset( $header['sticky'] ) ? $header['sticky'] : '';
+			$header_shrink         = isset( $header['shrink'] ) ? $header['shrink'] : '';
+			$header_on_devices     = isset( $header['sticky-header-on-devices'] ) ? $header['sticky-header-on-devices'] : '';
+			$footer_sticky         = isset( $footer['sticky'] ) ? $footer['sticky'] : '';
+			$footer_on_devices     = isset( $footer['sticky-footer-on-devices'] ) ? $footer['sticky-footer-on-devices'] : '';
+			$disable_header        = isset( $layout_404['disable_header'] ) ? $layout_404['disable_header'] : '';
+			$disable_footer        = isset( $layout_404['disable_footer'] ) ? $layout_404['disable_footer'] : '';
+			$content_location      = isset( $content['location'] ) ? $content['location'] : '';
+			$after_blocks_number   = isset( $content['after_block_number'] ) ? $content['after_block_number'] : '';
+			$before_heading_number = isset( $content['before_heading_number'] ) ? $content['before_heading_number'] : '';
 			?>
 			<table class="ast-advanced-hook-table widefat">
 
@@ -1424,6 +1699,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 								<?php endforeach; ?>
 							<?php endif; ?>
 						</select>
+						<p class="ast-inside-content-notice"><?php esc_html_e( 'This option will be applicable only for the posts/pages created with the block editor.', 'astra-addon' ); ?></p>
 					</td>
 				</tr>
 
@@ -1445,6 +1721,41 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 					<td class="ast-advanced-hook-row-content">
 					<input type="checkbox" name="ast-404-page[disable_footer]"
 								value="enabled" <?php checked( $disable_footer, 'enabled' ); ?> />
+					</td>
+				</tr>
+
+				<tr class="ast-advanced-hook-row ast-layout-content-location-required">
+					<td class="ast-advanced-hook-row-heading">
+						<label><?php esc_html_e( 'Location on post/page', 'astra-addon' ); ?></label>
+						<i class="ast-advanced-hook-heading-help dashicons dashicons-editor-help" title="<?php echo esc_attr__( 'Layout will be inserted at a selected location on page/post in the block editor.', 'astra-addon' ); ?>"></i>
+					</td>
+					<td class="ast-advanced-hook-row-content">
+					<select id="ast-advanced-hook-content-location" name="ast-advanced-hook-content[location]" style="width: 50%;" >
+						<option value="<?php echo esc_attr( 'after_blocks' ); ?>" <?php selected( 'after_blocks', $content_location, true ); ?> ><?php esc_html_e( 'After certain number of blocks', 'astra-addon' ); ?></option>
+						<option value="<?php echo esc_attr( 'before_headings' ); ?>" <?php selected( 'before_headings', $content_location, true ); ?>><?php esc_html_e( 'Before certain number of Heading blocks', 'astra-addon' ); ?></option>
+					</select>
+					</td>
+				</tr>
+				<tr class="ast-advanced-hook-row ast-layout-content-after-blocks">
+					<td class="ast-advanced-hook-row-heading">
+						<label><?php esc_html_e( 'Block Number', 'astra-addon' ); ?></label>
+					</td>
+					<td class="ast-advanced-hook-row-content">
+						<span class="ast-advanced-hook-inline-label"><?php esc_attr_e( 'Add layout after', 'astra-addon' ); ?></span>
+						<input type="number" class="ast-inside-content-number-field" name="ast-advanced-hook-content[after_block_number]"  min="1" oninput="validity.valid||(value='');" value="<?php echo esc_attr( $after_blocks_number ); ?>" >
+						<span class="ast-advanced-hook-inline-label"><?php esc_attr_e( 'Block(s)', 'astra-addon' ); ?></span>
+						<p class="ast-inside-content-blocks-notice"><?php esc_attr_e( 'Layout will be inserted after the selected number of blocks. Example - If you set it 3, the layout will be added after the first 3 blocks.', 'astra-addon' ); ?></p>
+					</td>
+				</tr>
+				<tr class="ast-advanced-hook-row ast-layout-content-before-heading">
+					<td class="ast-advanced-hook-row-heading">
+						<label><?php esc_html_e( 'Heading Block Number', 'astra-addon' ); ?></label>
+					</td>
+					<td class="ast-advanced-hook-row-content">
+						<span class="ast-advanced-hook-inline-label"><?php esc_attr_e( 'Add content before', 'astra-addon' ); ?></span>
+						<input type="number" class="ast-inside-content-number-field" name="ast-advanced-hook-content[before_heading_number]"  min="1" oninput="validity.valid||(value='');" value="<?php echo esc_attr( $before_heading_number ); ?>" >
+						<span class="ast-advanced-hook-inline-label"><?php esc_attr_e( 'Heading Block(s)', 'astra-addon' ); ?></span>
+						<p class="ast-inside-content-heading-notice"><?php esc_attr_e( 'Layout will be inserted before the selected number of Heading blocks. Example - If you set it 3, the layout will be added just before 3rd Heading block on page.', 'astra-addon' ); ?></p>
 					</td>
 				</tr>
 
@@ -1612,7 +1923,7 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 				<tr class="ast-advanced-hook-row ast-target-rules-user ast-layout-required">
 					<td class="ast-advanced-hook-row-heading">
 						<label><?php esc_html_e( 'User Roles', 'astra-addon' ); ?></label>
-						<i class="ast-advanced-hook-heading-help dashicons dashicons-editor-help" title="<?php echo esc_attr__( 'Target header based on user role.', 'astra-addon' ); ?>"></i>
+						<i class="ast-advanced-hook-heading-help dashicons dashicons-editor-help" title="<?php echo esc_attr__( 'Target this Custom Layout based on user role.', 'astra-addon' ); ?>"></i>
 					</td>
 					<td class="ast-advanced-hook-row-content">
 					<?php
@@ -1627,6 +1938,66 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Hooks_Meta' ) ) {
 							$users
 						);
 					?>
+					</td>
+				</tr>
+
+				<tr class="ast-advanced-hook-row ast-target-responsive-display ast-layout-required">
+					<td class="ast-advanced-hook-row-heading">
+						<label><?php esc_html_e( 'Responsive Visibility', 'astra-addon' ); ?></label>
+						<i class="ast-advanced-hook-heading-help dashicons dashicons-editor-help" title="<?php echo esc_attr__( 'Select Device for where this Custom Layout should appear.', 'astra-addon' ); ?>"></i>
+					</td>
+					<td class="ast-advanced-hook-row-content">
+						<ul class="ast-advanced-device-display-wrap">
+							<li>
+								<label>
+									<input type="checkbox" name="ast-advanced-display-device[]" value="desktop" <?php echo in_array( 'desktop', $display_devices, true ) ? 'checked="checked"' : ''; ?> />
+									<?php esc_html_e( 'Desktop', 'astra-addon' ); ?>
+								</label>
+							</li>
+							<li>
+								<label>
+									<input type="checkbox" name="ast-advanced-display-device[]" value="tablet" <?php echo in_array( 'tablet', $display_devices, true ) ? 'checked="checked"' : ''; ?> />
+									<?php esc_html_e( 'Tablet', 'astra-addon' ); ?>
+								</label>
+							</li>
+							<li>
+								<label>
+									<input type="checkbox" name="ast-advanced-display-device[]" value="mobile" <?php echo in_array( 'mobile', $display_devices, true ) ? 'checked="checked"' : ''; ?> />
+									<?php esc_html_e( 'Mobile', 'astra-addon' ); ?>
+								</label>
+							</li>
+						</ul>
+					</td>
+				</tr>
+
+				<tr class="ast-advanced-hook-row ast-target-time-duration-display ast-layout-required">
+					<td class="ast-advanced-hook-row-heading">
+						<label><?php esc_html_e( 'Time Duration', 'astra-addon' ); ?></label>
+						<i class="ast-advanced-hook-heading-help dashicons dashicons-editor-help" title="<?php echo esc_attr__( 'Select Time Duration in which this Custom Layout should appear.', 'astra-addon' ); ?>"></i>
+					</td>
+					<td class="ast-advanced-hook-row-content">
+						<ul class="ast-advanced-time-duration-wrap">
+							<li>
+								<label>
+									<input type="checkbox" id="ast-advanced-time-duration-enabled" name="ast-advanced-time-duration[enabled]" value="enabled" <?php checked( isset( $time_duration['enabled'] ) ? $time_duration['enabled'] : '', 'enabled' ); ?> />
+									<?php esc_html_e( 'Enable', 'astra-addon' ); ?>
+								</label>
+							</li>
+							<li class="ast-advanced-time-duration-enabled">
+								<label for="ast-advanced-time-duration-start-dt"> <?php esc_attr_e( 'Start Date/Time', 'astra-addon' ); ?>:
+								<input placeholder="<?php esc_attr_e( 'Click to pick a date', 'astra-addon' ); ?>" class="ast-advanced-date-time-input" type="text" id="ast-advanced-time-duration-start-dt" name="ast-advanced-time-duration[start-dt]"  value="<?php echo esc_attr( $time_duration['start-dt'] ); ?>" readonly />
+								</label>
+							</li>
+							<li class="ast-advanced-time-duration-enabled">
+								<label for="ast-advanced-time-duration-end-dt"> <?php esc_attr_e( 'End Date/Time', 'astra-addon' ); ?>:
+								<input placeholder="<?php esc_attr_e( 'Click to pick a date', 'astra-addon' ); ?>" class="ast-advanced-date-time-input" type="text" id="ast-advanced-time-duration-end-dt" name="ast-advanced-time-duration[end-dt]" value="<?php echo esc_attr( $time_duration['end-dt'] ); ?>" readonly />
+								</label>
+							</li>
+							<li class="ast-advanced-time-duration-enabled" >
+								<label> <?php esc_html_e( 'Timezone:', 'astra-addon' ); ?> </label>
+								<a target="_blank" href="<?php echo esc_attr( admin_url( 'options-general.php' ) ); ?>"> <?php echo esc_attr( static::get_wp_timezone_string() ); ?> </a>
+							</li>
+						</ul>
 					</td>
 				</tr>
 

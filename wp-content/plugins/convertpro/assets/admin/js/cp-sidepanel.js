@@ -27,9 +27,9 @@ var ConvertProFieldEvents = '';
             customizer_wrapper = $('.cp-customizer-wrapper');
             search_section = $('.cp-section-search');
 
-            $(window).load(this._load);
+            $(window).on( 'load', this._load );
             $(document).ready(this._ready);
-            $(window).resize(this.updateCustomizerHeight);
+            $(window).on('resize',this.updateCustomizerHeight);
 
             $(document).on('click', '#cp-accordion h3', this._openAccordion);
             $(document).on('click', '.cp-panel-link, #cp-accordion > h3', this._changeSize);
@@ -226,7 +226,7 @@ var ConvertProFieldEvents = '';
         _handleDependencies: function () {
             
             var container = $(".active-customizer").find(".cp-element-container");
-
+            var value = '';
             $.each(
                 container,function (index,element) {
                     var $this         = $(this);
@@ -238,8 +238,12 @@ var ConvertProFieldEvents = '';
 
                     if(typeof el_name !== 'undefined' ) {
 
-                        var el_id = $("#cp_"+el_name);            
-                        var value = el_id.val();        
+                        var el_id = $("#cp_"+el_name);
+                        if ( 'panel_toggle_infobar' == el_name || 'panel_toggle' == el_name ) {
+                            value = el_id.attr('value');
+                        } else {
+                            value = el_id.val();
+                        }
                         var displayProp = el_id.closest('.cp-element-container').css('display');            
                         $this.hide();
 
@@ -345,8 +349,23 @@ var ConvertProFieldEvents = '';
             if($(this).hasClass("cp-save") ) {
                 $(".cp-horizontal-nav-action-wrapper .cp-three-bounce").removeClass("cp-hidden");
             }
+            ConvertProSidePanel._removeUnusedGoogleFonts();
             ConvertProSidePanel._saveMapping();
             ConvertProSidePanel._saveStyleSetting('save');
+        },
+
+        _removeUnusedGoogleFonts: function () {
+            var existingFonts = jQuery("#cp_fonts_list").val();
+            if ( '' !== existingFonts ) {
+                var elementsFonts = JSON.parse(existingFonts);
+                var popupWrap = jQuery('.panel-wrapper');
+                for( ef in elementsFonts ) {
+                    if ( ( 'panel_global_font' !== ef ) && ( 0 === popupWrap.find('#'+ef).length )) {
+                        delete elementsFonts[ef];
+                    }
+                }
+                jQuery("#cp_fonts_list").val( JSON.stringify( elementsFonts ) );
+            }
         },
 
         _saveMapping: function () {
@@ -386,7 +405,7 @@ var ConvertProFieldEvents = '';
             $('.cp-save span').text('Saving...');
 
             $(document).trigger("cpro_save_modal_data");
-
+            var panel_opt = ['push_page_down', 'info_bar_sticky', 'panel_toggle_infobar', 'inherit_bg_prop', 'panel_toggle', 'close_overlay_click', 'toggle_minimizer'];
             var save_btn = $('#cp-save-settings'),
             cp_save_btn = $('.progress-btn'),
             form         = $(".cp-cust-form"),
@@ -496,6 +515,13 @@ var ConvertProFieldEvents = '';
                     );
                 }
             }
+
+            $.each(
+                new_format, function (name, value) {
+                    if ( panel_opt.includes(name) ) {
+                        value.value = $('#cp_'+name).attr('value');
+                    }
+                });
 
             $.ajax(
                 {
@@ -946,7 +972,6 @@ var ConvertProFieldEvents = '';
                     id         = wrap.data('id'),
                     switch_input     = wrap.parents('.cp-switch-wrapper').find('#' + id),
                     value             = switch_input.val();
-
                     if('launch' == panel ) {
                         if('1' == value ) {
                             var icon_span = "<span class='dashicons-yes dashicons'></span>";
@@ -1240,11 +1265,11 @@ var ConvertProFieldEvents = '';
         
             /* Get Saved Ruleset */
             var s_ruleset_input = rulsets_wrap.find('.input-hidden-ruleset'),
-            s_ruleset         = jQuery.parseJSON(s_ruleset_input.val());
+            s_ruleset         = JSON.parse(s_ruleset_input.val());
 
             /* Get Default Ruleset */
             var d_ruleset_input = rulsets_wrap.find('.input-hidden-default-ruleset'),
-            d_ruleset         = jQuery.parseJSON(d_ruleset_input.val());
+            d_ruleset         = JSON.parse(d_ruleset_input.val());
 
             s_ruleset[ new_rulset_id ] = d_ruleset[0];        
             s_ruleset[ new_rulset_id ]['name'] = ruleset_name;
@@ -1284,7 +1309,7 @@ var ConvertProFieldEvents = '';
         
             /* Get Saved Ruleset */
             var s_ruleset_input = rulsets_wrap.find('.input-hidden-ruleset'),
-            s_ruleset         = jQuery.parseJSON(s_ruleset_input.val());
+            s_ruleset         = JSON.parse(s_ruleset_input.val());
 
             // Removed selected step from panel object
             delete s_ruleset[ delete_rulset_no ];
@@ -1331,7 +1356,7 @@ var ConvertProFieldEvents = '';
             /* Get Saved Ruleset */
             var rulesets_wrap    = $('.cp-rulsets-wrap'),
             s_ruleset_input = rulesets_wrap.find('.input-hidden-ruleset'),
-            s_ruleset         = jQuery.parseJSON(s_ruleset_input.val());
+            s_ruleset         = JSON.parse(s_ruleset_input.val());
 
             var ruleset_data     = s_ruleset[ ruleset_id ];
 
@@ -1367,6 +1392,9 @@ var ConvertProFieldEvents = '';
                     case 'number':
                     case 'text':
                         field.val(value);
+                        break;
+                    case 'dropdown':
+                        $(".after-number-of-page-visits select option[value="+value+"]").attr("selected","selected");
                         break;
                     }
                 }

@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Nav_Menu_Primary_Header_Layout' ) ) {
 	/**
 	 * Register Mega Menu Customizer Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Nav_Menu_Primary_Header_Layout extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Mega Menu Customizer Configurations.
@@ -38,29 +41,20 @@ if ( ! class_exists( 'Astra_Nav_Menu_Primary_Header_Layout' ) ) {
 
 			$_configs = array(
 
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[primary-menu-spacing-divider]',
-					'section'  => 'section-primary-menu',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'title'    => __( 'Spacing', 'astra-addon' ),
-					'priority' => 109,
-					'settings' => array(),
-				),
-
 				// Option - Megamenu Heading Space.
 				array(
-					'name'           => ASTRA_THEME_SETTINGS . '[primary-header-megamenu-heading-space]',
-					'default'        => astra_get_option( 'primary-header-megamenu-heading-space' ),
-					'type'           => 'control',
-					'transport'      => 'postMessage',
-					'control'        => 'ast-responsive-spacing',
-					'priority'       => 125,
-					'title'          => __( 'Megamenu Heading Space', 'astra-addon' ),
-					'linked_choices' => true,
-					'unit_choices'   => array( 'px', 'em', '%' ),
-					'section'        => 'section-primary-menu',
-					'choices'        => array(
+					'name'              => ASTRA_THEME_SETTINGS . '[primary-header-megamenu-heading-space]',
+					'default'           => astra_get_option( 'primary-header-megamenu-heading-space' ),
+					'type'              => 'control',
+					'transport'         => 'postMessage',
+					'control'           => 'ast-responsive-spacing',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_responsive_spacing' ),
+					'priority'          => 125,
+					'title'             => __( 'Megamenu Heading Space', 'astra-addon' ),
+					'linked_choices'    => true,
+					'unit_choices'      => array( 'px', 'em', '%' ),
+					'section'           => 'section-primary-menu',
+					'choices'           => array(
 						'top'    => __( 'Top', 'astra-addon' ),
 						'right'  => __( 'Right', 'astra-addon' ),
 						'bottom' => __( 'Bottom', 'astra-addon' ),

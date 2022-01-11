@@ -7,7 +7,6 @@
 
         this.infinite          = settings.infinite;
         this.arrows            = settings.arrows;
-        this.arrows_responsive = settings.responsive_arrows;
         this.slidesToScroll    = settings.slidesToScroll;
         this.autoplay          = settings.autoplay;
         this.on_pause_hover    = settings.onhover;
@@ -21,6 +20,8 @@
         this.small_breakpoint  = settings.small_breakpoint;
         this.next_arrow = settings.next_arrow;
         this.prev_arrow = settings.prev_arrow;
+        this.enable_fade = settings.enable_fade;
+        this.enable_dots = settings.enable_dots;
         
         /* Execute when slick initialize */
         $( this.nodeClass ).find( '.uabb-image-carousel' ).on('init', $.proxy( this._adaptiveImageHeight, this ) );
@@ -47,38 +48,39 @@
         medium_breakpoint       : '',
 
         _initImageCarousel: function() {
-            var node = $( this.nodeClass ),
+            var self = this,
+                node = $( self.nodeClass ),
                 img_carousel = node.find( '.uabb-image-carousel' );
 
             img_carousel.uabbslick({
-                dots: false,
-                infinite: this.infinite,
-                arrows: this.arrows,
+                dots: self.enable_dots,
+                fade: self.enable_fade,
+                infinite: self.infinite,
+                arrows: self.arrows,
                 lazyLoad: 'ondemand',
-                slidesToShow: this.desktop,
-                slidesToScroll: this.slidesToScroll,
-                autoplay: this.autoplay,
-                pauseOnHover:this.on_pause_hover,
-                autoplaySpeed: this.autoplaySpeed,
+                slidesToShow: self.desktop,
+                slidesToScroll: self.slidesToScroll,
+                autoplay: self.autoplay,
+                pauseOnHover:self.on_pause_hover,
+                autoplaySpeed: self.autoplaySpeed,
                 adaptiveHeight: true,
-                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class=" '+ this.prev_arrow +' "></i></button>',
-                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="'+ this.next_arrow +' "></i></button>',
+                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class=" '+ self.prev_arrow +' "></i></button>',
+                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="'+ self.next_arrow +' "></i></button>',
                 responsive: [
                     {
-                        breakpoint: this.medium_breakpoint,
+                        breakpoint: self.medium_breakpoint,
                         settings: {
-                            slidesToShow: this.medium
+                            slidesToShow: self.medium
                         }
                     },
                     {
-                        breakpoint: this.small_breakpoint,
+                        breakpoint: self.small_breakpoint,
                         settings: {
-                            slidesToShow: this.small,
-                            arrows: this.arrows_responsive
+                            slidesToShow: self.small,
                         }
                     }
                 ]
-            });
+                });
 
             img_carousel.on('afterChange', $.proxy( this._adaptiveImageHeight, this ) );
         },
@@ -99,7 +101,7 @@
                 }
             });
 
-            node.find('.slick-list.draggable').animate({ height: max_height }, { duration: 200, easing: 'linear' });
+            node.find('.uabb-image-carousel .slick-list.draggable').animate({ height: max_height }, { duration: 200, easing: 'linear' });
             max_height = -1;
         }
     };

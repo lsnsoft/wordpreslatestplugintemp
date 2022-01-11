@@ -1,3 +1,271 @@
+v3.0.24 - 7-January-2022
+- Fix: Fixed an issue with WXR Import versioning.
+
+v3.0.23 - 6-January-2022
+- Fix: Better error and exception handling while importing.
+- Fix: Fixed an issue with redirection while installing Ultimate Addons for Beaver Builder - Lite plugin.
+- Fix: Fixed an issue where the templates library won't refresh in real-time after the sync process.
+- Fix: Presto Player installation showing PHP incompatibility notice while importing a template.
+
+v3.0.22 - 4-January-2022
+- Fix: Improved customizer import process.
+- Fix: Improved import process for Elementor based sites.
+
+v3.0.21 - 3-January-2022
+- Fix: Avoided redirection for Beaver Builder plugin when activated from import screen.
+- Fix: Resolved a few errors with the pre-import PHP compatibility screen.
+
+v3.0.20 - 29-December-2021
+- Fix: Faster import process by deferring image meta processing.
+- Fix: Minor UI fixes.
+
+v3.0.19 - 29-December-2021
+- Fix: Import error due to timeout error for sites where loopback requests are not working.
+- Fix: Styling for default fonts was not working on first load.
+
+v3.0.18 - 28-December-2021
+- Improvement: Added a pre-import screen to notify about incompatible PHP versions for a few plugins.
+- Improvement: Better Color Palettes.
+- Fix: Reset for Color Palette and Typography not working in some cases.
+
+v3.0.17 - 22-December-2021
+- Improvement: More and better color palettes and typography while customizing the demo.
+
+v3.0.16 - 21-December-2021
+- Improvement: Optimised the CartFlows flows import process.
+- Improvement: Added a Required screen prior to import if any system requirements are not met on the user's website.
+- Fix: Fixed an issue with colors not applying to a few Gutenberg-based blocks in WooCommerce demos.
+- Fix: Fixed an issue with White Labeling the import process.
+- Fix: Better import process to avoid errors in import.
+
+v3.0.15 - 15-December-2021
+- Fix: Plugin activation errors for starter template using Ultimate Addons for Gutenberg by disabling default redirect from UAG on the activation
+
+- Fix: Rectified typography for template preview.
+
+v3.0.14 - 15-December-2021
+- Improvement: Show complete error message on screen if plugin installation fails.
+- Fix: browser back button does not work in Starter Templates UI.
+
+v3.0.13 - 15-December-2021
+- Improvement: Better error handling for Fatal errors when activating plugins.
+- Improvement: Check for system requirements when before starting to import the website.
+- Fix: Logo width slider not working correctly in case of RTL languages.
+
+v3.0.12 - 14-December-2021
+- Improvement: Added shareable URLs with the added search text.
+- Fix: Fixed an issue while importing CartFlows content.
+- Fix: Fixed an issue with WooCommerce dependency during the plugin activation step.
+- Fix: Removed the unwanted reset functionality when a user with a new website tries to import any demo.
+
+v3.0.11 - 13-December-2021
+- Fix: Fixed an issue where synchronization of the library was not working on sites where CRON was disabled.
+
+v3.0.10 - 11-December-2021
+- Fix: Timeout errors when activating required plugins.
+- Fix: `folder_exists` error when installing required plugins.
+
+v3.0.9 - 10-December-2021
+- Fix: Fixed an issue with resetting posts requests.
+- Fix: Fixed an undefined variable console error with plugin activation request.
+
+v3.0.8 - 10-December-2021
+- Improvement: Added backward screen navigation for welcome and page builders screen.
+- Improvement: Better handling of errors of final import step.
+- Fix: Retry import restricted to maximum 3 times.
+
+v3.0.7 - 9-December-2021
+- Fix: Fixed an issue with import failure when user activates the license for the first time.
+- Fix: Fixed the errors on final import step.
+
+v3.0.6 - 9-December-2021
+- Fix: Plugin installation failed error fixed after retry action.
+- Fix: Removed unused SVG images.
+
+v3.0.5 - 9-December-2021
+- Fix: Import process stopping after the posts are deleted.
+
+v3.0.4 - 8-December-2021
+- Fix: Log the errors reported on the posts delete step during deleting old site.
+
+v3.0.3 - 8-December-2021
+- Fix: Import failing when "Delete Previously imported sites" checkbox is checked.
+
+v3.0.2 - 8-December-2021
+- Fix: Improvised errors for the Site Reset step while importing.
+
+v3.0.1 - 8-December-2021
+- Improvement: Better handling of errors.
+- Fix: Removed extra sub directory from v3.0.0 update. 
+
+v3.0.0 - 8-December-2021
+- New: All new user interface to make it easier to select and customize the templates when you are building your website.
+- New: Amazing search to find the template suitable for your needs.
+- New: Ability to try the logo, colors and typography before importing.
+- New: Improved stability. We have improved our importer, which already was very stable. Now after this release, imports will rarely fail.
+- New: Brizy starter templates are deprecated in this release, you will still be able to import Brizy starter templates after you enable option in <code>Settings -> General -> Starter Templates</code>
+
+v2.7.5 - 27-October-2021
+- Fix: Elementor blocks not being imported due to missing required plugins.
+
+v2.7.4 - 26-October-2021
+- Fix: Fixed the issue with Elementor blocks contact form not being imported due to invalid form JSON file URL.
+
+v2.7.3 - 19-October-2021
+- Improvement: Validate the whitelisted host's URLs from the import process.
+
+v2.7.2 - 7-October-2021
+- Fix: No route was found matching the URL and request method.
+
+v2.7.1 - 7-October-2021
+- Security Improvement: Validate the site URL before processing the import request.
+- Security Improvement: Updated right file upload permission before importing images.
+
+v2.7.0 - 4-October-2021
+- New: Wireframe blocks for Gutenberg - [Doc](https://wpastra.com/docs/starter-templates-wireframe-blocks/)
+
+v2.6.22
+- Fix: Contact Forms not appearing after the import process is complete.
+
+v2.6.21
+- Improvement: Rectified the condition to load the scripts in other screens.
+- Fix: Starter template button not visible when gutenberg plugin is activated.
+
+v2.6.20
+- Improvement: Better handling of 500 errors on the import screen.
+
+v2.6.19
+- Fix: Fixed the "Customizer data is empty!" AJAX failed request while importing.
+- Fix: The Pixabay image library not visible for the multiple image instances.
+
+v2.6.18
+- Improvement: Avoided loading a few scripts in the customizer screen.
+- Improvement: Free Images from Pixabay can be downloaded from the main grid too with the use of a download icon.
+- Fix: Updated the Quick Links to Upgrade the plugin, page builder wise.
+
+v2.6.17
+- Improvement: Avoided loading the Gutenberg Blocks scripts in the customizer screen.
+- Fix: Fixed the missing 'Create Gallery' button in Media Popup for Elementor editor.
+
+v2.6.16
+- Fix: Fixed the issue where Free Images by Pixabay were not available on Elementor Editor.
+
+v2.6.15
+- Fix: Rectified the failing import process on multisite due to an issue introduced in v2.6.14
+- Fix: Fixed the broken invalid license document links.
+
+v2.6.14
+- Improvement: Compatibility to WordPress 5.8.
+- Improvement: Improved the import process by reducing the body size of the AJAX calls for better performance.
+- Improvement: Added support for dark and light support for block patterns with improved sidebar UI.
+- Fix: Handle the white label support.
+
+v2.6.13 - 06-July-2021
+- Fix: Rectified the 'Free Images by Pixabay' not visible since v2.6.12.
+
+v2.6.12 - 30-June-2021
+- Improvement: Updated the widget reset logic in which old widget moved to the inactive list.
+- Improvement: Quick Links UI improvements.
+- Improvement: Premium Templates UI improvements.
+
+v2.6.11 - 9-June-2021
+- Fix: Single pages not getting imported when no required plugin is associated to it.
+
+v2.6.10 - 3-June-2021
+- Improvement: Gutenberg Template library auto-syncs at regular intervals.
+- Improvement: Updated image download functionality.
+- Improvement: Added common functionality for extracting URLs from content.
+- Improvement: Added filter for debug logs generation.
+
+v2.6.9 - 24-May-2021
+- Fix: Starter Templates popup opens by default on every page load on Gutenberg pages.
+
+v2.6.8 - 22-May-2021
+- Fix: PHP Fatal error on 'Getting Started' page.
+
+v2.6.7 - 21-May-2021
+- Improvement: Added the dark and light mode support for the Elementor popup.
+- Improvement: Added retry import option for few cases.
+- Improvement: Improved error messages for AJAX requests.
+
+v2.6.6 - 19-May-2021
+- Improvement: Changed 'Agency' tag with 'Premium' for templates in library. [Screenshot](https://share.bsf.io/rRuGrRjq)
+- Improvement: All strings with Agency Bundle will now be Growth Bundle. [Screenshot](https://share.bsf.io/v1ubZkLv)
+- Improvement: All strings with Mini Agency Bundle will now be Essential Bundle.
+
+v2.6.5 - 18-May-2021
+- Fix: Avoided the HTML being printed in one of the error message screens.
+- Improvement: Improved error message when the requests fail to reach Starter Templates' servers.
+
+v2.6.4 - 18-May-2021
+- Improvement: Added better error messages to the failed import process.
+
+v2.6.3 - 11-May-2021
+- Improvement: Added Quick links for a few important documents.
+- Improvement: Added dynamic category support for the Gutenberg templates.
+- Improvement: Removed color filter from Elementor block.
+- Improvement: Change the Block Editor name with Gutenberg.
+- Fix: Sync complete notice not closing on click.
+- Fix: Elementor demo does not import if we try to import multiple times.
+
+v2.6.2 - 4-May-2021
+- Improvement: Advanced Options UI improvement.
+- Improvement: Admin UI improvements.
+- Improvement: Added SVG image support.
+- Fix: Image duplication after site import in few cases.
+- Fix: Upload directory hidden for the white-labeled website.
+- Fix: Prevented clicking on import buttons while import is already in progress.
+- Fix: Issue with localization of the script was not called correctly.
+
+v2.6.1 - 10-March-2021
+
+- Improvement: Used better and optimised way to show the initial sites and pages list on Starter Template dashboard.
+- Improvement: Block Templates - Used version.json instead of package.json to manage the dependency.
+- Improvement: Block Templates - Now users can suggest their required templates via suggestion link.
+- Improvement: Block Templates - Added filter to disable the Block Templates. - https://wpastra.com/docs/filter-to-remove-starter-templates-button/
+- Fix: Block Templates - Retained the selected block pattern category filter after switching between Pages/Patterns tabs.
+- Fix: Rectified the invisible icon from the 'View Site' button.
+- Fix: Brizy pages initially not showing any content.
+
+v2.6.0 - 17-February-2021
+- New: Added the single pages and blocks for the Gutenberg. Read more https://wpastra.com/docs/import-gb-pages-patterns/
+
+v2.5.1 - 1-February-2021
+- Improvement: Improved the admin notice first view logic.
+- Improvement: Improved the experience while subscribing to Starter Templates' news.
+
+v2.5.0 - 29-January-2021
+- New: Added an ability to subscribe to Starter Templates' updates.
+- Improvement: Added new API to support asynchronous import for the Starter Templates.
+
+v2.4.0 - 30-December-2020
+- Improvement: Additional compatibility with WordPress 5.6.
+
+v2.3.9 - 9-December-2020
+- Improvement - Compatibility to WordPress 5.6.
+
+v2.3.8 - 23-October-2020
+- Fix: LearnDash grid CSS not loading after site import.
+
+v2.3.7 - 28-September-2020
+- Fix: Prefixed all Starter Templates Icon classes in order to avoid 3rd party conflicts.
+
+v2.3.6 - 23-September-2020
+- Improvement: Added the Pixabay images support for new post, pages, and custom post type screen.
+- Improvement: Better handling of notices in the case of sync process.
+
+v2.3.5 - 27-August-2020
+- Improvement: Added Safe Search checkbox for Pixabay Image Search.
+- Fix: Elementor 3.0.0 and above import compatibility.
+- Fix: Resolved hotlink issue with Single page import.
+- Fix: Resolved edit permission issue while importing on Elementor page.
+
+v2.3.4 - 13-August-2020
+- Improvement - Compatibility to WordPress 5.5.
+
+v2.3.3 - 7-August-2020
+- Improvement: Minor code changes.
+
 v2.3.2 - 29-June-2020
 - Improvement: Added CartFlows Landing page compatibility to LeadDash courses.
 - Improvement: Handle the LearnDash add-ons links if LearnDash is installed and activated.

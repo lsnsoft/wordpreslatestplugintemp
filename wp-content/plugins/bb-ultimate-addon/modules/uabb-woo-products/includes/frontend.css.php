@@ -401,7 +401,18 @@ $settings->title_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'title_
 }
 
 /* Slider */
-<?php if ( 'carousel' === $settings->layout ) { ?>
+<?php
+if ( 'carousel' === $settings->layout ) {
+	if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+		if ( FLBuilder::fa5_pro_enabled() ) {
+			?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-products-carousel ul.slick-dots li button:before {
+	font-family: 'Font Awesome 5 Pro';
+}
+			<?php
+		}
+	}
+	?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-products-carousel .slick-arrow i {
 	<?php
 	$color       = uabb_theme_base_color( $new_arrow_color );
@@ -462,22 +473,34 @@ $settings->title_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'title_
 				}
 			<?php } ?>
 
-			.uabb-woo-products-grid .uabb-woo-product__column-tablet-1 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-tablet-1 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-tablet-1 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-tablet-1 ul.products li.product {
 				width: 100%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-tablet-2 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-tablet-2 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-tablet-2 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-tablet-2 ul.products li.product {
 				width: 50%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-tablet-3 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-tablet-3 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-tablet-3 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-tablet-3 ul.products li.product {
 				width: 33.33%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-tablet-4 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-tablet-4 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-tablet-4 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-tablet-4 ul.products li.product {
 				width: 25%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-tablet-5 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-tablet-5 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-tablet-5 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-tablet-5 ul.products li.product {
 				width: 20%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-tablet-6 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-tablet-6 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-tablet-6 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-tablet-6 ul.products li.product {
 				width: 16.66%;
 			}
 
@@ -540,22 +563,34 @@ $settings->title_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'title_
 				}
 			<?php } ?>
 
-			.uabb-woo-products-grid .uabb-woo-product__column-mobile-1 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-mobile-1 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-mobile-1 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-mobile-1 ul.products li.product {
 				width: 100%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-mobile-2 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-mobile-2 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-mobile-2 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-mobile-2 ul.products li.product {
 				width: 50%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-mobile-3 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-mobile-3 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-mobile-3 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-mobile-3 ul.products li.product {
 				width: 33.33%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-mobile-4 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-mobile-4 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-mobile-4 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-mobile-4 ul.products li.product {
 				width: 25%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-mobile-5 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-mobile-5 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-mobile-5 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-mobile-5 ul.products li.product {
 				width: 20%;
 			}
-			.uabb-woo-products-grid .uabb-woo-product__column-mobile-6 ul.products li.product {
+			.uabb-woo-products-grid .uabb-woo-product__column-mobile-6 ul.products li.product,
+			.woocommerce .uabb-woo-products-grid .uabb-woo-product__column-mobile-6 ul.products li.product,
+			.woocommerce-page .uabb-woo-products-grid .uabb-woo-product__column-mobile-6 ul.products li.product {
 				width: 16.66%;
 			}
 

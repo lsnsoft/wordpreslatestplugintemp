@@ -361,6 +361,7 @@ final class CPRO_Service_MailPoet extends CPRO_Service {
 
 				if ( isset( $custom_fields[ $fname ] ) ) {
 					$data_fields[ 'cf_' . $fid ] = $custom_fields[ $fname ];
+					$user_fields[ $fid ]         = $custom_fields[ $fname ];
 				}
 			}
 
@@ -381,10 +382,12 @@ final class CPRO_Service_MailPoet extends CPRO_Service {
 							$subscriber_data = \MailPoet\API\API::MP( 'v1' )->getSubscriber( $user_fields['email'] );
 						} catch ( Exception $e ) {
 							// New subscriber.
-							$response['error'] = $e->getMessage();
+							if ( ! strpos( $e->getMessage(), 'subscriber does not exist' ) ) {
+								$response['error'] = $e->getMessage();
+							}
 						}
 
-						if ( is_array( $subscriber_data ) && isset( $subscriber_data['id'] ) ) {
+						if ( isset( $subscriber_data['id'] ) && is_array( $subscriber_data ) ) {
 							$subscriber_id = $subscriber_data['id'];
 						}
 
@@ -406,7 +409,7 @@ final class CPRO_Service_MailPoet extends CPRO_Service {
 				$response['error'] = __( 'Something went wrong! Please try again.', 'convertpro-addon' );
 			} else {
 				// update custom subscriber fields.
-				if ( ! empty( $data_fields ) ) {
+				if ( ! $this->is_mailpoet3 && ! empty( $data_fields ) ) {
 					WJ_FieldHandler::handle_all( $data_fields, $subscriber_id );
 				}
 			}

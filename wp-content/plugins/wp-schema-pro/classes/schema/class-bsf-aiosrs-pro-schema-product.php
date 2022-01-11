@@ -45,7 +45,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Product' ) ) {
 				$schema['mpn'] = wp_strip_all_tags( $data['mpn'] );
 			}
 			if ( isset( $data['brand-name'] ) && ! empty( $data['brand-name'] ) ) {
-				$schema['brand']['@type'] = 'Thing';
+				$schema['brand']['@type'] = 'Organization';
 				$schema['brand']['name']  = wp_strip_all_tags( $data['brand-name'] );
 			}
 
@@ -87,8 +87,65 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Product' ) ) {
 				}
 			}
 
+			if ( apply_filters( 'wp_schema_pro_remove_product_reviews', true ) && isset( $data['product-review'] ) && ! empty( $data['product-review'] ) ) {
+				foreach ( $data['product-review'] as $key => $value ) {
+					if ( ( isset( $value['reviewer-name'] ) && ! empty( $value['reviewer-name'] ) ) && ( isset( $value['product-rating'] ) && ! empty( $value['product-rating'] ) ) ) {
+						$schema['review'][ $key ]['@type'] = 'Review';
+						if ( isset( $value['reviewer-name'] ) && ! empty( $value['reviewer-name'] ) ) {
+							$schema['review'][ $key ]['author']['name'] = wp_strip_all_tags( $value['reviewer-name'] );
+							if ( isset( $value['reviewer-type'] ) && ! empty( $value['reviewer-type'] ) ) {
+								$schema['review'][ $key ]['author']['@type'] = wp_strip_all_tags( $value['reviewer-type'] );
+							} else {
+								$schema['review'][ $key ]['author']['@type'] = 'Person';
+							}
+						}
+
+						if ( isset( $value['product-rating'] ) && ! empty( $value['product-rating'] ) ) {
+							$schema['review'][ $key ]['reviewRating']['@type']       = 'Rating';
+							$schema['review'][ $key ]['reviewRating']['ratingValue'] = wp_strip_all_tags( $value['product-rating'] );
+						}
+
+						if ( isset( $value['review-body'] ) && ! empty( $value['review-body'] ) ) {
+							$schema['review'][ $key ]['reviewBody'] = wp_strip_all_tags( $value['review-body'] );
+						}
+					}
+				}
+			}
+
+			// Fetch woocommerce review.
+			if ( defined( 'WC_VERSION' ) && apply_filters( 'wp_schema_pro_add_woocommerce_review', false ) ) {
+					$comments = get_comments(
+						array(
+							'number'      => 5,
+							'post_id'     => $post['ID'],
+							'status'      => 'approve',
+							'post_status' => 'publish',
+							'post_type'   => 'product',
+							'parent'      => 0,
+							'meta_query'  => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+								array(
+									'key'     => 'rating',
+									'type'    => 'NUMERIC',
+									'compare' => '>',
+									'value'   => 0,
+								),
+							),
+						)
+					);
+
+				if ( $comments ) {
+					foreach ( $comments as $key => $comment ) {
+						$schema['review'][ $key ]['@type']                           = 'Review';
+							$schema['review'][ $key ]['reviewRating']['@type']       = 'Rating';
+							$schema['review'][ $key ]['reviewRating']['ratingValue'] = get_comment_meta( $comment->comment_ID, 'rating', true );
+							$schema['review'][ $key ]['author']['@type']             = 'Person';
+							$schema['review'][ $key ]['author']['name']              = get_comment_author( $comment );
+							$schema['review'][ $key ]['reviewBody']                  = get_comment_text( $comment );
+					}
+				}
+			}
+
 			return apply_filters( 'wp_schema_pro_schema_product', $schema, $data, $post );
 		}
-
 	}
 }

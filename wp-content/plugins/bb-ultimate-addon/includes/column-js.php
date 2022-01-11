@@ -146,7 +146,7 @@ function uabb_particle_col_settings_dependency_js( $js, $nodes, $global_settings
 
 								if ( 'no' === branding ) {
 
-									style_selector.find( '.fl-field-control-wrapper' ).append( '<span class="fl-field-description uabb-particle-docs-list"><div class="uabb-docs-particle"> <?php esc_html_e( 'Add custom JSON for the Particles Background below. To generate a completely customized background style follow steps below -', 'uabb' ); ?> </div><div class="uabb-docs-particle"><?php echo( sprintf( /* translators: %s: custom JS link */ wp_kses_post( __( '1. Visit a link %1$s here %2$s and choose required attributes for particles', 'uabb' ) ), '<a class="uabb-docs-particle-link" href="https://vincentgarreau.com/particles.js/" target="_blank">', '</a>' ) ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '2. Once a custom style is created, download JSON from "Download current config (json)" link', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '3. Copy JSON code from the above file and paste it below', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php echo( sprintf( /* translators: %s: doc link */ wp_kses_post( __( 'To know more about creating a custom style, refer to a document %1$s here. %2$$s', 'uabb' ) ), '<a class="uabb-docs-particle-link" href="https://www.ultimatebeaver.com/docs/custom-particle-backgrounds/?utm_source=uabb-pro-backend&utm_medium=column-editor-screen&utm_campaign=particle-backgrounds-column" target="_blank" rel="noopener">', '</a>' ) ); ?></div></span>' );
+									style_selector.find( '.fl-field-control-wrapper' ).append( '<span class="fl-field-description uabb-particle-docs-list"><div class="uabb-docs-particle"> <?php esc_html_e( 'Add custom JSON for the Particles Background below. To generate a completely customized background style follow steps below -', 'uabb' ); ?> </div><div class="uabb-docs-particle"><?php echo( sprintf( /* translators: %s: custom JS link */ wp_kses_post( __( '1. Visit a link %1$s here %2$s and choose required attributes for particles', 'uabb' ) ), '<a class="uabb-docs-particle-link" href="https://vincentgarreau.com/particles.js/" target="_blank">', '</a>' ) ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '2. Once a custom style is created, download JSON from "Download current config (json)" link', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '3. Copy JSON code from the above file and paste it below', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php echo( sprintf( /* translators: %s: doc link */ wp_kses_post( __( 'To know more about creating a custom style, refer to a document %1$s here. %2$s', 'uabb' ) ), '<a class="uabb-docs-particle-link" href="https://www.ultimatebeaver.com/docs/custom-particle-backgrounds/?utm_source=uabb-pro-backend&utm_medium=column-editor-screen&utm_campaign=particle-backgrounds-column" target="_blank" rel="noopener">', '</a>' ) ); ?></div></span>' );
 
 								} else {
 
@@ -204,7 +204,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 	?>
 	;(function($) {
 
-			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
+			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.js' ); ?>';
 
 				window.particle_js_loaded = 0;
 
@@ -268,7 +268,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 								<?php
 								if ( '' !== $json_particles_custom ) {
 									?>
-									particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
+									tsParticles.load( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
 									<?php
 								}
 								?>
@@ -453,7 +453,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 									},
 								"retina_detect": true
 								}
-								particlesJS( 'uabb-particle-' + row_id, config );
+								tsParticles.load( 'uabb-particle-' + row_id, config );
 							}
 						}
 					}

@@ -17,9 +17,9 @@
   display: inherit;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point.above-header-nav-padding-support .ast-above-header-menu li a,
-.ast-fullscreen-above-menu-enable.ast-header-break-point.above-header-nav-padding-support .ast-above-header-menu li:first-child a,
-.ast-fullscreen-above-menu-enable.ast-header-break-point.above-header-nav-padding-support .ast-above-header-menu li:last-child a {
+.ast-fullscreen-above-menu-enable.ast-header-break-point.above-header-nav-padding-support .ast-above-header-menu .menu-item .menu-link,
+.ast-fullscreen-above-menu-enable.ast-header-break-point.above-header-nav-padding-support .ast-above-header-menu .menu-item:first-child .menu-link,
+.ast-fullscreen-above-menu-enable.ast-header-break-point.above-header-nav-padding-support .ast-above-header-menu .menu-item:last-child .menu-link {
   border-bottom: 0;
 }
 
@@ -59,59 +59,43 @@
   justify-content: center;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul li a {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul .menu-item .menu-link {
   width: auto;
   border: 0;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul li > div {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul .menu-item > div {
   position: static;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li a:before {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-link:before {
   content: '';
   margin: 0;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before {
   content: '';
   margin: 0;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before {
   content: '';
   margin: 0;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.children li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation ul.sub-menu li li a:before li a:before li a:before {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before,
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation .sub-menu .menu-item .menu-item .menu-link:before .menu-item .menu-link:before .menu-item .menu-link:before {
   content: '';
   margin-right: 2px;
 }
@@ -120,7 +104,6 @@
   text-align: center;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header .ast-above-header-navigation-wrap .page_item_has_children > .ast-menu-toggle,
 .ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header .ast-above-header-navigation-wrap .menu-item-has-children > .ast-menu-toggle {
   position: relative;
   right: 0;
@@ -149,11 +132,11 @@
   }
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .ast-above-header-menu ul {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .ast-above-header-menu .sub-menu {
   background: transparent !important;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .ast-above-header-menu > li:first-child > a:before {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .ast-above-header-menu > .menu-item:first-child > .menu-link:before {
   border: 0;
 }
 
@@ -170,23 +153,6 @@
   opacity: 1;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .close:after {
-  content: "\e5cd";
-  display: inline-block;
-  font-family: 'Astra';
-  font-size: 22px;
-  font-size: 2rem;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: normal;
-  line-height: 40px;
-  height: 40px;
-  width: 40px;
-  text-align: center;
-  margin: 0;
-}
-
 .ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .widget_shopping_cart .woocommerce-mini-cart__buttons a,
 .ast-fullscreen-above-menu-enable.ast-header-break-point .ast-above-header-navigation-wrap .widget_price_filter .price_slider_amount .button {
   padding: 10px 15px;
@@ -198,8 +164,7 @@
   line-height: 1.2;
 }
 
-.ast-fullscreen-above-menu-enable.ast-header-break-point .header-main-layout-1 .ast-above-header-navigation-wrap .sub-menu,
-.ast-fullscreen-above-menu-enable.ast-header-break-point .header-main-layout-1 .ast-above-header-navigation-wrap .children {
+.ast-fullscreen-above-menu-enable.ast-header-break-point .header-main-layout-1 .ast-above-header-navigation-wrap .sub-menu {
   text-align: center;
 }
 

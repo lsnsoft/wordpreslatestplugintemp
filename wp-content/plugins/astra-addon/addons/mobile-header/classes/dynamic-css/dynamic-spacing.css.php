@@ -8,7 +8,7 @@
 /**
  * Mobile Header options.
  */
-add_filter( 'astra_dynamic_css', 'astra_ext_mobile_header_spacing_dynamic_css' );
+add_filter( 'astra_addon_dynamic_css', 'astra_addon_mobile_header_spacing_dynamic_css' );
 
 /**
  * Dynamic CSS
@@ -17,7 +17,7 @@ add_filter( 'astra_dynamic_css', 'astra_ext_mobile_header_spacing_dynamic_css' )
  * @param  string $dynamic_css_filtered Astra Dynamic CSS Filters.
  * @return string
  */
-function astra_ext_mobile_header_spacing_dynamic_css( $dynamic_css, $dynamic_css_filtered = '' ) {
+function astra_addon_mobile_header_spacing_dynamic_css( $dynamic_css, $dynamic_css_filtered = '' ) {
 
 	$menu_style           = astra_get_option( 'mobile-menu-style' );
 	$primary_menu_spacing = astra_get_option( 'primary-menu-spacing' );
@@ -33,19 +33,19 @@ function astra_ext_mobile_header_spacing_dynamic_css( $dynamic_css, $dynamic_css
 	if ( 'no-toggle' == $menu_style ) {
 		if ( $primary_menu_spacing ) {
 			$desktop_spacing = array(
-				'.ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-bar-navigation .page_item_has_children > .ast-menu-toggle, .ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .page_item_has_children > .ast-menu-toggle, .ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .menu-item-has-children > .ast-menu-toggle' => array(
+				'.ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .menu-item-has-children > .ast-menu-toggle' => array(
 					'padding-left'  => astra_responsive_spacing( $primary_menu_spacing, 'left', 'desktop' ),
 					'padding-right' => astra_responsive_spacing( $primary_menu_spacing, 'right', 'desktop' ),
 				),
 			);
 			$tablet_spacing  = array(
-				'.ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-bar-navigation .page_item_has_children > .ast-menu-toggle, .ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .page_item_has_children > .ast-menu-toggle, .ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .menu-item-has-children > .ast-menu-toggle' => array(
+				'.ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .menu-item-has-children > .ast-menu-toggle' => array(
 					'padding-left'  => astra_responsive_spacing( $primary_menu_spacing, 'left', 'tablet' ),
 					'padding-right' => astra_responsive_spacing( $primary_menu_spacing, 'right', 'tablet' ),
 				),
 			);
 			$mobile_spacing  = array(
-				'.ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-bar-navigation .page_item_has_children > .ast-menu-toggle, .ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .page_item_has_children > .ast-menu-toggle, .ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .menu-item-has-children > .ast-menu-toggle' => array(
+				'.ast-no-toggle-menu-enable.ast-header-break-point .main-header-bar .main-header-menu > .menu-item-has-children > .ast-menu-toggle' => array(
 					'padding-left'  => astra_responsive_spacing( $primary_menu_spacing, 'left', 'mobile' ),
 					'padding-right' => astra_responsive_spacing( $primary_menu_spacing, 'right', 'mobile' ),
 				),

@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Sidebar_Typo_Configs' ) ) {
 	/**
 	 * Register below header Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Sidebar_Typo_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Side bar typography Customizer Configurations.
@@ -39,19 +42,6 @@ if ( ! class_exists( 'Astra_Sidebar_Typo_Configs' ) ) {
 			$_configs = array(
 
 				/**
-				 * Option: SideBar Typography Section divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[sidebar-typography-divider]',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-sidebars',
-					'title'    => __( 'Typography', 'astra-addon' ),
-					'priority' => 24,
-					'settings' => array(),
-				),
-
-				/**
 				 * Option: SideBar title typography Group
 				 */
 				array(
@@ -59,10 +49,12 @@ if ( ! class_exists( 'Astra_Sidebar_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'sidebar-title-typography-group' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Title', 'astra-addon' ),
+					'title'     => __( 'Title Font', 'astra-addon' ),
 					'section'   => 'section-sidebars',
 					'transport' => 'postMessage',
 					'priority'  => 24,
+					'context'   => ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ?
+						astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab,
 				),
 
 				/**
@@ -147,11 +139,11 @@ if ( ! class_exists( 'Astra_Sidebar_Typo_Configs' ) ) {
 					'type'              => 'sub-control',
 					'parent'            => ASTRA_THEME_SETTINGS . '[sidebar-title-typography-group]',
 					'section'           => 'section-sidebars',
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-widget-title' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'control'           => 'ast-slider',
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,
@@ -167,10 +159,13 @@ if ( ! class_exists( 'Astra_Sidebar_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'sidebar-content-typography-group' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Content', 'astra-addon' ),
+					'title'     => __( 'Content Font', 'astra-addon' ),
 					'section'   => 'section-sidebars',
 					'transport' => 'postMessage',
 					'priority'  => 24,
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+					'context'   => ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ?
+						astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab,
 				),
 
 				/**
@@ -255,11 +250,11 @@ if ( ! class_exists( 'Astra_Sidebar_Typo_Configs' ) ) {
 					'parent'            => ASTRA_THEME_SETTINGS . '[sidebar-content-typography-group]',
 					'section'           => 'section-sidebars',
 					'transport'         => 'postMessage',
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-widget-content' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'control'           => 'ast-slider',
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,

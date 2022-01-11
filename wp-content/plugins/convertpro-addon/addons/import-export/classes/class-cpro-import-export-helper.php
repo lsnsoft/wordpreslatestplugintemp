@@ -429,13 +429,14 @@ final class CPRO_Import_Export_Helper {
 			$file = realpath( get_attached_file( $posted_file['id'] ) );
 
 			// Get the name of the directory inside the exported zip.
-			$zip = zip_open( $file );
+			$za     = new ZipArchive();
+			$za_res = $za->open( $file );
 
 			// valid zip file.
-			if ( ! is_resource( $zip ) ) {
+			if ( true !== $za_res ) {
 				$response['error'] = true;
 				/* translators: %s: zip object */
-				$response['msg'] = sprintf( __( 'Failed to Open. Error Code: %s', 'convertpro-addon' ), $zip );
+				$response['msg'] = sprintf( __( 'Failed to Open. Error Code: %s', 'convertpro-addon' ), $za_res );
 				return wp_send_json_success( $response );
 			}
 

@@ -66,7 +66,9 @@ if ( ! class_exists( 'Cp_V2_Services_Loader' ) ) {
 
 			$handle_js = 'jquery';
 			$list      = 'enqueued';
-			if ( wp_script_is( $handle_js, $list ) ) {
+			$cf_script = apply_filters( 'cp_cf_form_script', true );
+
+			if ( wp_script_is( $handle_js, $list ) && $cf_script ) {
 				?>	
 			<script type="text/javascript">
 

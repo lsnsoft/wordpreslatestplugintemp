@@ -70,9 +70,7 @@ if ( ! class_exists( 'Brainstorm_Update_AIOSRS_Pro' ) ) :
 				$product_name = $branding['sp_plugin_name'];
 			}
 			/* translators: %s: search term */
-			$message = sprintf( __( 'Please <a href= %1$s class="bsf-core-license-form-btn" plugin-slug="wp-schema-pro"> activate </a>your copy of the<i> %2$s </i>to get update notifications, access to support features & other resources!', 'wp-schema-pro' ), $url, $product_name );
-
-			return $message;
+			return sprintf( __( 'Please <a href= %1$s class="bsf-core-license-form-btn" plugin-slug="wp-schema-pro"> activate </a>your copy of the<i> %2$s </i>to get update notifications, access to support features & other resources!', 'wp-schema-pro' ), $url, $product_name );
 		}
 
 		/**
@@ -161,11 +159,10 @@ if ( ! class_exists( 'Brainstorm_Update_AIOSRS_Pro' ) ) :
 		/**
 		 * Add Message for license.
 		 *
-		 * @param  string $content       get the link content.
 		 * @param  string $purchase_url  purchase_url.
 		 * @return string                output message.
 		 */
-		public function license_message_aiosrs_pro( $content, $purchase_url ) {
+		public function license_message_aiosrs_pro( $purchase_url ) {
 			$purchase_url = apply_filters( 'uael_licence_url', $purchase_url );
 
 			$message = "<p><a target='_blank' href='" . esc_url( $purchase_url ) . "'>" . esc_html__( 'Get the license >>', 'wp-schema-pro' ) . '</a></p>';

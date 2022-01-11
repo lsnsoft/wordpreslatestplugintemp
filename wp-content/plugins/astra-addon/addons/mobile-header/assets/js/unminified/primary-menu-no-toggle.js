@@ -18,9 +18,9 @@
 
 	for (var i = 0; i < menu_toggle_all.length; i++) {
 
-		var parentList = __main_header_all[i].querySelectorAll( 'ul.main-header-menu li' );
+		var parentList = __main_header_all[i].querySelectorAll( '.main-header-menu .menu-item' );
 
-	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.main-header-menu .ast-menu-toggle' );
+	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.main-header-menu .ast-menu-toggle' );
 
 		// Add Eevetlisteners for Submenu.
 		if (astra_menu_toggle.length > 0) {
@@ -29,7 +29,7 @@
 			};
 		}
 
-		var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.main-header-menu > li > .ast-menu-toggle' );
+		var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.main-header-menu > .menu-item > .ast-menu-toggle' );
 		MenuNoToggle( astra_menu_toggle );
 	}
 	
@@ -71,7 +71,7 @@
 				return;
 			}
 
-			var all_sub_menu = document.querySelectorAll( '.main-header-bar .sub-menu, .main-header-bar .children' );
+			var all_sub_menu = document.querySelectorAll( '.main-header-bar .sub-menu' );
 			for (var k = 0; k < all_sub_menu.length; k++) {		
 				all_sub_menu[k].removeAttribute("style");
 			};
@@ -83,8 +83,8 @@
 			var __main_header_all = document.querySelectorAll( '.main-header-bar-navigation' );
 			var menu_toggle_all   = document.querySelectorAll( '.main-header-bar-navigation' );
 
-			for (var i = 0; i < menu_toggle_all.length; i++) {
-				var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.main-header-menu > li > .ast-menu-toggle' );
+		for (var i = 0; i < menu_toggle_all.length; i++) {
+			var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.main-header-menu > .menu-item > .ast-menu-toggle' );
 
 				if (astra_menu_toggle.length !== 0) {
 					for ( var i = 0; i < astra_menu_toggle.length; i++ ) {

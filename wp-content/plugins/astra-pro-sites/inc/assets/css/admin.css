@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="ast-icon-"], [class*=" ast-icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
@@ -24,22 +24,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-search:before {
+.ast-icon-search:before {
   content: "\e900";
 }
-.icon-heart:before {
+.ast-icon-heart:before {
   content: "\e901";
 }
-.icon-refresh:before {
+.ast-icon-refresh:before {
   content: "\e902";
 }
-.icon-chevron-left:before {
+.ast-icon-chevron-left:before {
   content: "\e904";
 }
-.icon-file:before {
+.ast-icon-file:before {
   content: "\e903";
 }
-.icon-layers:before {
+.ast-icon-layers:before {
   content: "\e905";
 }
 
@@ -109,7 +109,7 @@
 	display: flex;
 	padding: 0 12px 0 12px;
 	border: 0;
-	width: 97px;
+	width: 135px;
 	justify-content: space-between;
 	align-items: center;
 	font-weight: 500;
@@ -143,7 +143,7 @@
 	box-sizing: content-box;
 	border: 1px solid #e4e4e4;
 	margin-top: 10px;
-	min-width: 70px;
+	min-width: 135px;
     background-color: #fff;
     border-radius: 6px;
     box-shadow: 0 3px 6px rgba(0,0,0,.1);
@@ -219,10 +219,7 @@
     border-left: 1px solid #DDDDDD;
     box-shadow: none;
 }
-.appearance_page_starter-templates .search-form:hover,
-.appearance_page_starter-templates .search-form:focus {
-    box-shadow: 0 1px 4px 0 rgba(32,33,36,0.18);
-}
+
 #astra-sites-filters .ui-widget.ui-widget-content {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
@@ -248,7 +245,7 @@
     text-transform: capitalize;
 }
 #astra-sites-filters .ui-autocomplete li:hover {
-	background-color: #eeeeee; 
+	background-color: #eeeeee;
 }
 .appearance_page_starter-templates .wp-filter .search-form.searching #astra-sites__category-filter {
 	border-bottom-left-radius: 0;
@@ -256,11 +253,7 @@
 .searching #wp-filter-search-input {
 	border-bottom-right-radius: 0;
 }
-#astra-sites-filters .ui-autocomplete .ui-state-active {
-    background: #c0c0c0;
-    border-color: #c0c0c0;
-    margin: 0;
-}
+
 #wp-filter-search-input.has-input + .search-icon {
 	display: none;
 }
@@ -397,7 +390,7 @@
     transition-duration: .05s;
     transition-timing-function: ease-in-out;
 }
-.theme-id-container .icon-star {
+.theme-id-container .ast-icon-star {
     padding: 0 15px 0 0;
 }
 .wrap .status {
@@ -668,15 +661,7 @@
 	display: none !important;
 }
 #site-pages {
-    position: fixed;
-    left: 0;
-    right: 0;
-    margin: 0 20px 0 195px;
     z-index: 10;
-}
-
-.folded #site-pages {
-    margin-left: 73px;
 }
 
 .install-theme-info > .notice {
@@ -1042,11 +1027,6 @@ body.loading-content .select-page-builder {
     align-items: center;
     box-shadow: 25px 0 30px rgba(28, 39, 60, 0.09);
     border-bottom: 1px solid #dddddd;
-    position: fixed;
-    top: 32px;
-    right: 0;
-    left: 0;
-    margin-left: 160px;
     z-index: 88;
 }
 .theme-name .title,
@@ -1093,14 +1073,14 @@ body.loading-content .select-page-builder {
 .astra-sites-show-favorite-button.active {
     color: transparent;
 }
-.filter-links li > .astra-sites-show-favorite-button.current:hover .icon-heart,
-.filter-links li > .astra-sites-show-favorite-button.current .icon-heart,
-.filter-links li > .astra-sites-show-favorite-button:hover .icon-heart,
-.astra-sites-show-favorite-button.active .icon-heart {
+.filter-links li > .astra-sites-show-favorite-button.current:hover .ast-icon-heart,
+.filter-links li > .astra-sites-show-favorite-button.current .ast-icon-heart,
+.filter-links li > .astra-sites-show-favorite-button:hover .ast-icon-heart,
+.astra-sites-show-favorite-button.active .ast-icon-heart {
     color: #c34444;
 }
 
-.icon-heart {
+.ast-icon-heart {
     color: #666;
 }
 .header-actions a:focus {
@@ -1188,7 +1168,6 @@ body.loading-content .select-page-builder {
 }
 .astra-sites-welcome a {
     text-decoration: none;
-    color: inherit;
 }
 .astra-sites-welcome a:focus,
 .astra-sites-welcome a {
@@ -1353,8 +1332,9 @@ body.loading-content .select-page-builder {
 }
 
 .astra-sites-result-preview .dashicons {
-    vertical-align: middle;
     font-size: 1rem;
+    height: auto;
+    vertical-align: middle;
 }
 
 .astra-site-import-process-wrap progress::-webkit-progress-value {
@@ -1404,14 +1384,16 @@ body.loading-content .select-page-builder {
 #astra-sites-admin {
     margin-right: 25px;
     margin-left: 25px;
-    margin-top: 40px;
+    margin-top: 45px;
 }
 .astra-previewing-single-pages #wpfooter {
     display: none;
 }
+
 .astra-previewing-single-pages #astra-sites-admin {
-    margin-top: 115px;
+    margin-top: 58px;
 }
+
 #astra-sites-welcome-form-inline select {
     text-align-last: right;
 }
@@ -1522,7 +1504,7 @@ body.loading-content .select-page-builder {
 	right: 0;
 	top: 0;
 	bottom: 0;
-	background: #fff;
+	background: transparent;
 	overflow-y: auto;
 }
 
@@ -1560,6 +1542,8 @@ body.loading-content .select-page-builder {
     border-left: 1px solid #eee;
     color: #aaa;
     font-size: 22px;
+    opacity: 1;
+    visibility: visible;
 }
 .astra-sites-result-preview .close:hover {
     color: #0073aa;
@@ -1625,9 +1609,10 @@ body.loading-content .select-page-builder {
 }
 
 .agency-ribbons {
-	color: #ffffff;
+	color: #000;
 	text-align: center;
-	display: inline-block;
+	display: flex;
+	align-items: center;
 	position: absolute;
 	z-index: 9;
 	top: -7px;
@@ -1638,9 +1623,16 @@ body.loading-content .select-page-builder {
 	right: -7px;
 	border-radius: 2px;
 	line-height: 15px;
-	padding: 5px 9px;
-	background-color: #007cba;
+	padding: 4px 7px;
+	background-color: #FCAF2A;
 	cursor: default;
+
+}
+
+.premium-crown-icon {
+	height: auto;
+	width: 17px;
+	margin-right: 5px;
 }
 
 .theme-browser .theme:hover .theme-actions,
@@ -1791,6 +1783,12 @@ body.loading-content .select-page-builder {
     vertical-align: middle;
 }
 
+#astra-sites-menu-page .nav-tab-wrapper.stick {
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+
 .single-site-footer {
     position: fixed;
     padding: 15px 50px 15px 35px;
@@ -1798,19 +1796,17 @@ body.loading-content .select-page-builder {
     background: #fff;
     right: 0;
     left: 0;
-    margin-left: 160px;
     z-index: 88;
-    box-shadow: 0 -2px 8px rgba( 0, 0, 0, 0.05);
-}
-
-.folded #astra-sites-menu-page .nav-tab-wrapper,
-.folded .single-site-footer {
-    margin-left: 36px;
+    box-shadow: 0 -2px 8px rgb(0 0 0 / 5%);
 }
 
 .site-action-buttons-wrap {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.site-action-buttons-wrap .site-preview-button {
+	margin-right: 5px;
 }
 
 .single-site-pages-header {
@@ -1836,6 +1832,12 @@ body.loading-content .select-page-builder {
 
 .single-site-pages-wrap {
     width: 45%;
+}
+
+@media only screen and (min-width: 768px) {
+    #site-pages {
+        padding: 0 0 0 24px;
+    }
 }
 
 /**
@@ -1872,7 +1874,7 @@ body.loading-content .select-page-builder {
 }
 
 .site-action-buttons-wrap .dashicons {
-    vertical-align: sub;
+    vertical-align: middle;
     font-size: 1rem;
     margin-left: .2em;
 }
@@ -2101,6 +2103,13 @@ body.loading-content .select-page-builder {
     transform: translate(-60%, -60%);
 }
 
+.ast-retry-text {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+
 .astra-previewing-single-pages #wpbody-content {
     position: fixed;
 }
@@ -2114,17 +2123,18 @@ body.loading-content .select-page-builder {
 
 .appearance_page_starter-templates .astra-sites-notice {
     display: block;
+    top: 20px;
+    position: relative;
 }
 
-.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message.success,
-.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message.notice-success {
+.astra-previewing-single-pages .astra-sites-menu-page-wrapper > .notice.astra-sites-sync-library-message.success,
+.astra-previewing-single-pages .astra-sites-menu-page-wrapper > .notice.astra-sites-sync-library-message.notice-success {
     display: none !important;
 }
 
-.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message {
-    top: 85px;
-    display: block !important;
-    width: calc( 100% - 270px );
+.astra-previewing-single-pages .astra-sites-menu-page-wrapper > .notice.astra-sites-sync-library-message {
+
+    width: calc( 100% - 250px );
 }
 
 .astra-previewing-single-pages.folded #wpbody-content > .notice.astra-sites-sync-library-message {
@@ -2150,10 +2160,6 @@ body.loading-content .select-page-builder {
 
 .appearance_page_starter-templates #wpcontent {
 	padding-left: 0;
-}
-
-.appearance_page_starter-templates #wpbody-content {
-    padding-top: 80px;
 }
 
 .appearance_page_starter-templates.auto-fold #wpcontent {
@@ -2239,10 +2245,6 @@ body.loading-content .select-page-builder {
 
 @media screen and (min-width: 783px and max-width: 1180px) {
 
-    .folded #astra-sites-menu-page .nav-tab-wrapper {
-        margin-left: 36px;
-        top: 32px;
-    }
     #astra-sites-filters .search-form {
         width: 100%;
     }
@@ -2266,11 +2268,6 @@ body.loading-content .select-page-builder {
 	    margin: .25rem;
 	    height: 0.4rem;
 	    width: 0.4rem;
-    }
-
-    .folded #astra-sites-menu-page .nav-tab-wrapper {
-        top: 46px;
-        margin-left: 0;
     }
 
     .page-builder-title {
@@ -2309,9 +2306,6 @@ body.loading-content .select-page-builder {
 	    padding: 20px 5px;
 	}
 
-	.astra-previewing-single-pages #astra-sites-admin {
-	    margin-top: 55px;
-	}
 }
 @media only screen and (max-width: 1120px) {
 	.theme-browser .theme:nth-child(odd) {
@@ -2326,11 +2320,7 @@ body.loading-content .select-page-builder {
 	    width: 33.33%;
 	}
 }
-@media only screen and (min-width: 780px) and (max-width: 962px) {
-	#astra-sites-menu-page .nav-tab-wrapper {
-		margin-left: 36px;
-	}
-}
+
 @media only screen and (min-width: 1200px) {
 	#astra-sites-filters .search-form {
 		width: 600px;
@@ -2374,10 +2364,6 @@ body.loading-content .select-page-builder {
     }
 }
 @media screen and (max-width: 782px) {
-    #astra-sites-menu-page .nav-tab-wrapper {
-        margin: 0;
-        top: 46px;
-    }
     #site-pages {
         margin: 0;
     }
@@ -2410,11 +2396,6 @@ body.loading-content .select-page-builder {
     z-index: 99;
 }
 
-@media only screen and (min-width: 780px) and (max-width: 962px) {
-    .single-site-footer {
-        margin-left: 38px;
-    }
-}
 @media screen and (min-width: 481px) {
 	.hide-on-desktop {
 	    display: none;
@@ -2442,7 +2423,7 @@ body.loading-content .select-page-builder {
 	    background: #fff;
 	    padding: 10px;
 	}
-	
+
 	#astra-sites-menu-page .form {
 	    flex: 1;
 	}
@@ -2474,7 +2455,7 @@ body.loading-content .select-page-builder {
 	.astra-previewing-single-pages #wpbody-content {
 		position: relative;
 	}
-	
+
 	.astra-sites-no-sites .content, .astra-sites-no-favorites .content {
 	    flex-direction: column;
 	}
@@ -2520,8 +2501,6 @@ body.loading-content .select-page-builder {
 	    margin-left: -95%;
 	}
 
-	#astra-sites-menu-page .nav-tab-wrapper {position: relative;top: 0;left: 0;}
-
 	.theme-browser .theme:nth-child(odd) {
 	    margin-right: 0;
 	}
@@ -2541,7 +2520,6 @@ body.loading-content .select-page-builder {
 
 	.single-site-footer {
 	    position: relative;
-	    margin-left: -20px;
 	}
 
 	#wpbody-content {
@@ -2574,7 +2552,7 @@ body.loading-content .select-page-builder {
  */
 
 .ast-actioms-wrap {
-    padding: 1em 1em 1em 2.9em;
+    padding: 13px 35px 13px 35px;
     z-index: 30;
     box-sizing: border-box;
     border-top: 1px solid #dcdcdc;
@@ -2825,4 +2803,329 @@ body.loading-content .select-page-builder {
 .dont-use-astra-theme .plugin-card-astra-addon,
 .required-plugins-count-1.dont-use-astra-theme .astra-sites-import-plugins {
     display: none;
+}
+
+.subscription-popup {
+    display: none;
+}
+
+.subscription-form {
+    margin-top: 2em;
+}
+
+.subscription-field select,
+.subscription-field input[type="text"],
+.subscription-field input[type="email"] {
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #8b959d;
+    font-size: 13px;
+    height: 40px;
+    padding: 0 10px;
+}
+
+.subscription-fields .subscription-field {
+    margin-bottom: 1.4em;
+}
+
+.subscription-wp-user-type .label {
+    margin-right: 1em;
+    margin-left: 2px;
+}
+
+.button-subscription-skip:focus {
+    box-shadow: none;
+}
+
+.button-subscription-skip {
+    margin-top: .8em;
+    display: inline-block;
+}
+
+.import-page #astra-sites-subscription-form-two .subscription-field-wrap {
+    margin-bottom: 5px;
+}
+
+#astra-sites-subscription-form-two .subscription-field-wrap {
+    margin-bottom: .8em;
+}
+
+.subscription-actions {
+    display: flex;
+    align-items: center;
+}
+
+.subscription-wp-user-type {
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.subscription-field .subscription-input .error {
+    border-color: red;
+}
+
+.subscription-input input[type="email"] {
+    width: 100%;
+}
+
+.subscription-popup .astra-sites-import-content {
+    height: 250px;
+    padding: 20px 35px 20px 35px;
+}
+
+.subscription-actions .submitting .dashicons,
+.subscription-actions .submitted .dashicons {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subscription-actions .dashicons {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.subscription-actions .submitting .dashicons {
+    animation: rotation 2s infinite linear;
+}
+
+.wp-core-ui .subscription-field select {
+    background-position: right 7px top 55%;
+}
+
+.wp-core-ui .astra-sites-result-preview .subscription-actions .button.button-hero {
+    margin: 0;
+    box-shadow: none;
+    font-size: 14px;
+    min-height: 44px;
+    padding: 0 18px;
+    width: 100%;
+}
+
+.wp-core-ui .subscription-wp-user-type select:focus,
+.subscription-field input[type="text"]:focus,
+.subscription-field input[type="email"]:focus,
+.wp-core-ui .subscription-wp-user-type select:hover,
+.subscription-field input[type="text"]:hover,
+.subscription-field input[type="email"]:hover {
+    border-color: #444C53;
+}
+
+.subscription-input input[type="email"],
+.subscription-input input[type="text"] {
+    color: #444;
+}
+
+.wp-core-ui .subscription-wp-user-type select:focus,
+.subscription-field input[type="text"]:focus,
+.subscription-field input[type="email"]:focus {
+    box-shadow: none;
+}
+
+.wp-core-ui .subscription-wp-user-type select,
+.subscription-wp-user-type .subscription-input {
+    width: 100%;
+    color: #72777c;
+}
+
+.subscription-actions + p {
+    margin: 30px 0 0 0;
+}
+
+.subscription-footer {
+    margin-top: 0.8em;
+    text-align: center;
+}
+
+.subscription-footer p {
+    margin: 0;
+}
+
+.subscription-fields .subscription-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.subscription-fields .subscription-input {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 3px;
+    border: 1px solid #585F66;
+    padding: 0 10px;
+    padding: 14px 14px;
+    box-shadow: none;
+    padding: 6px 12px;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 400;
+    outline: none;
+    background-color: transparent;
+    background-position: right 10px top 55%;
+    margin: 0;
+}
+
+.subscription-label {
+    color: #585F66;
+    margin: 12px 10px;
+    position: absolute;
+    top: 0;
+    font-weight: 400;
+    padding: 0 5px;
+    font-size: 14px;
+    left: 0;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    pointer-events: none;
+}
+
+.subscription-field-wrap {
+    position: relative;
+}
+
+.subscription-fields .subscription-field-wrap:not(.subscription-success, .subscription-error) .subscription-input:hover {
+    border-color: #2271b1;
+}
+
+.subscription-fields .subscription-input:hover,
+.subscription-fields .subscription-input:focus {
+    color: #2c3338;
+}
+
+.subscription-anim .subscription-label {
+    background-color: #f1f3f5;
+    font-size: 12px;
+    line-height: 12px;
+    margin-top: 0;
+    padding: 0 4px;
+    top: -5px;
+    transition: all 0.125s ease;
+    -webkit-transition: all 0.125s ease;
+    color: #2271b1;
+}
+
+.subscription-error .subscription-input,
+.subscription-error .subscription-input:focus {
+    border-color: red;
+}
+
+.subscription-error .subscription-desc {
+    color: red;
+}
+
+.subscription-anim.subscription-error .subscription-label {
+    color: red;
+}
+
+
+.subscription-field-wrap .subscription-desc {
+    padding-left: 2px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.subscription-success .subscription-input,
+.subscription-success .subscription-input:focus {
+    border-color: #66a700;
+}
+
+.subscription-anim.subscription-success .subscription-label {
+    color: #66a700;
+}
+
+.subscription-field-wrap {
+    margin-bottom: 1em;
+}
+
+.subscription-field-wrap.subscription-error .subscription-desc {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subscription-fields {
+    display: flex;
+}
+
+.subscription-fields .subscription-field-wrap {
+    flex: 1;
+}
+
+.subscription-enabled .astra-sites-advanced-options {
+    display: none;
+}
+
+.astra-sites-advanced-options-heading {
+    display: none;
+}
+
+.subscription-enabled .astra-sites-advanced-options-heading {
+    display: inline-block;
+    margin: 0;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.subscription-enabled .astra-sites-subscription-form-one {
+    display: block;
+}
+
+.astra-sites-subscription-form-one {
+    display: none;
+}
+
+.astra-sites-advanced-options-heading .dashicons {
+    opacity: 1;
+    visibility: visible;
+}
+
+.astra-sites-subscription-form-one {
+    margin-top: 1.8em;
+    max-width: 580px;
+}
+
+.import-page .subscription-field-wrap {
+    margin-bottom: .5em;
+}
+
+.import-page .subscription-popup .astra-sites-import-content {
+    height: 285px;
+}
+
+.highlighted-note {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+    .wp-core-ui .astra-sites-result-preview .subscription-actions .button.button-hero {
+        height: auto;
+        word-break: break-word;
+        white-space: initial;
+        line-height: 1.5;
+        padding: 5px 18px;
+    }
+    .astra-sites-result-preview input[type="checkbox"] {
+        height: 1rem;
+        width: 1rem;
+    }
+    .astra-sites-result-preview input[type="checkbox"]:checked:before {
+        height: 1.2rem;
+        width: 1.2rem;
+        margin: -0.1rem -0.2rem;
+    }
+    .subscription-popup .astra-sites-import-content {
+        padding: 20px;
+    }
+    #astra-sites-subscription-form-one .subscription-field-wrap {
+        margin-bottom: .8em;
+    }
+    .subscription-fields {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .subscription-fields .subscription-field-wrap:first-child {
+        padding-right: 20px;
+    }
+
 }

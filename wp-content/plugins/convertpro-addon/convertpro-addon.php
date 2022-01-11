@@ -3,7 +3,7 @@
  * Plugin Name: Convert Pro - Addon
  * Plugin URI: https://www.convertpro.net
  * Description: Convert Pro Addon is a collection of advanced modules and features that you can enable or disable as per your needs. With these modules, you can integrate with third party mailers, view analytics, A/B test your designs, add advanced scripts and view grid lines within the editor.
- * Version: 1.4.3
+ * Version: 1.5.5
  * Author: Brainstorm Force
  * Author URI: http://www.brainstormforce.com
  * Text Domain: convertpro-addon

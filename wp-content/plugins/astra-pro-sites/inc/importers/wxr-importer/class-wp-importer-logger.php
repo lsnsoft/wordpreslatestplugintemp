@@ -1,8 +1,10 @@
 <?php
 /**
  * WordPress Importer
+ * https://github.com/humanmade/WordPress-Importer
  *
- * @package WordPress Importer
+ * Released under the GNU General Public License v2.0
+ * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
  *
  * Describes a logger instance
  *
@@ -19,6 +21,8 @@
  *
  * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
  * for the full interface specification.
+ *
+ * @package WordPress Importer
  */
 
 if ( ! class_exists( 'WP_Importer_Logger' ) ) :

@@ -152,7 +152,7 @@
     });
 
     /* Scroll Event */
-    $( document ).scroll( function(event) {
+    $( document ).on( 'scroll', function(event) {
         cp_track_inline_modules();
     } );
 	

@@ -119,6 +119,22 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Job_Posting' ) ) {
 				}
 			}
 
+			if ( isset( $data['job-location-type'] ) && ! empty( $data['job-location-type'] ) ) {
+				$schema['jobLocationType'] = wp_strip_all_tags( $data['job-location-type'] );
+			}
+
+			if ( isset( $data['remote-location'] ) && ! empty( $data['remote-location'] ) ) {
+				foreach ( $data['remote-location'] as $key => $value ) {
+					$schema['applicantLocationRequirements'][ $key ]['@type'] = 'Country';
+					$schema['applicantLocationRequirements'][ $key ]['name']  = wp_strip_all_tags( $value['applicant-location'] );
+				}
+			} else {
+				if ( isset( $data['applicant-location'] ) && ! empty( $data['applicant-location'] ) ) {
+					$schema['applicantLocationRequirements']['@type'] = 'Country';
+					$schema['applicantLocationRequirements']['name']  = wp_strip_all_tags( $data['applicant-location'] );
+				}
+			}
+
 			if ( isset( $data['salary-currency'] ) && ! empty( $data['salary-currency'] ) ) {
 				$schema['baseSalary']['@type']    = 'MonetaryAmount';
 				$schema['baseSalary']['currency'] = wp_strip_all_tags( $data['salary-currency'] );

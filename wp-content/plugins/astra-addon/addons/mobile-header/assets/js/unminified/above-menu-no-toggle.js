@@ -18,9 +18,9 @@
 
 	for (var i = 0; i < menu_toggle_all.length; i++) {
 
-		var parentList = __main_header_all[i].querySelectorAll( 'ul.ast-above-header-menu li' );
+		var parentList = __main_header_all[i].querySelectorAll( '.ast-above-header-menu .menu-item' );
 
-	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-above-header-menu .ast-menu-toggle' );
+	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-above-header-menu .ast-menu-toggle' );
 
 		// Add Eevetlisteners for Submenu.
 		if (astra_menu_toggle.length > 0) {
@@ -29,7 +29,7 @@
 			};
 		}
 
-	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-above-header-menu > li > .ast-menu-toggle' );
+	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-above-header-menu > .menu-item > .ast-menu-toggle' );
 		AboveMenuNoToggle( astra_menu_toggle );
 	}
 
@@ -70,7 +70,7 @@
 				return;
 			}
 			
-			var all_sub_menu = document.querySelectorAll( '.ast-above-header .sub-menu, .ast-above-header .children' );
+			var all_sub_menu = document.querySelectorAll( '.ast-above-header .sub-menu' );
 			for (var k = 0; k < all_sub_menu.length; k++) {		
 				all_sub_menu[k].removeAttribute("style");
 			};
@@ -83,7 +83,7 @@
 			var menu_toggle_all   = document.querySelectorAll( '.ast-above-header' );
 
 			for (var i = 0; i < menu_toggle_all.length; i++) {
-				var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-above-header-menu > li > .ast-menu-toggle' );
+				var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-above-header-menu > .menu-item > .ast-menu-toggle' );
 
 				if (astra_menu_toggle.length !== 0) {
 					for (var i = 0; i < astra_menu_toggle.length; i++) {

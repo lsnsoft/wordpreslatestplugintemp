@@ -62,6 +62,9 @@ class CP_Slide_In extends cp_Framework {
 				'enable_display_inline',
 				'inline_position',
 				'inline_shortcode',
+				'select_inline_location',
+				'number_of_layout',
+				'number_of_layout_heading',
 			),
 			$options
 		);

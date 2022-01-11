@@ -164,7 +164,7 @@ final class CPRO_Service_SendinBlue extends CPRO_Service {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-
+		$post_data    = ConvertPlugHelper::get_post_data();
 		$account_data = ConvertPlugServices::get_account_data( $account );
 		$api          = $this->get_api( $account_data['api_key'] );
 		$response     = array(
@@ -172,6 +172,8 @@ final class CPRO_Service_SendinBlue extends CPRO_Service {
 			'html'           => '',
 			'mapping_fields' => array(),
 		);
+
+		$double_optin_templates = array();
 
 		if ( 3 === $this->sendinblue_version ) {
 			$result = $api->make_request(
@@ -203,6 +205,20 @@ final class CPRO_Service_SendinBlue extends CPRO_Service {
 				}
 				$result = $temp_result;
 			}
+
+			// Get Template ids for double-optin for Sendinblue V3.
+			$args = array(
+				'templateStatus' => 'true',
+				'limit'          => 1000,
+			);
+
+			$result_template = $api->make_request( 'smtp/templates', $args );
+
+			if ( isset( $result_template['data']['templates'] ) && ! empty( $result_template['data']['templates'] ) ) {
+				foreach ( $result_template['data']['templates'] as $template ) {
+					$double_optin_templates[ $template['id'] ] = $template['name'];
+				}
+			}
 		} else {
 			$result = $api->get_lists( 1, 50 );
 		}
@@ -213,7 +229,23 @@ final class CPRO_Service_SendinBlue extends CPRO_Service {
 			/* translators: %s Message */
 			$response['error'] = sprintf( __( 'Error: Could not connect to SendinBlue. %s', 'convertpro-addon' ), $result['message'] );
 		} else {
-			$response['html'] = $this->render_list_field( $result['data']['lists'], $settings );
+
+			if ( ! isset( $settings['isEdit'] ) || 'false' === $settings['isEdit'] || null === $settings['isEdit'] ) {
+				/* Double optin `yes` show template and redirection URL fields. */
+				if ( isset( $post_data['double_optin'] ) && 'yes' === $post_data['double_optin'] ) {
+					$response['html'] .= $this->render_template_ids( $double_optin_templates, $settings );
+				} else {
+					$response['html'] .= $this->render_list_field( $result['data']['lists'], $settings );
+					$response['html'] .= $this->render_optin_field( '', $settings );
+				}
+			} else {
+				/* Default settings load if set. */
+				$response['html'] .= $this->render_list_field( $result['data']['lists'], $settings );
+				$response['html'] .= $this->render_optin_field( 'checked', $settings );
+				if ( ! empty( $settings['default']['sendinblue_double_optin'] ) && 'on' === $settings['default']['sendinblue_double_optin'] ) {
+					$response['html'] .= $this->render_template_ids( $double_optin_templates, $settings );
+				}
+			}
 
 			/* Sendinblue mapping attributes. */
 			if ( 3 === $this->sendinblue_version ) {
@@ -269,9 +301,95 @@ final class CPRO_Service_SendinBlue extends CPRO_Service {
 			array(
 				'class'   => 'cpro-select',
 				'type'    => 'select',
-				'label'   => _x( 'List', 'An email list from SendinBlue.', 'convertpro-addon' ),
+				'label'   => _x( 'Select a List', 'An email list from SendinBlue.', 'convertpro-addon' ),
 				'default' => $default,
 				'options' => $options,
+			),
+			$settings
+		);
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render markup for the Sendinblue Template Ids for double-optin field.
+	 *
+	 * @since 1.5.0
+	 * @param array  $template_ids Template Ids data from the API.
+	 * @param object $settings Saved module settings.
+	 * @return string The markup for the Sendinblue Template Ids field.
+	 * @access private
+	 */
+	private function render_template_ids( $template_ids, $settings ) {
+
+		$default_template_id     = '';
+		$default_redirection_url = '';
+		if ( isset( $settings['isEdit'] ) && $settings['isEdit'] ) {
+			$default_template_id     = ( isset( $settings['default']['sendinblue_template_ids'] ) ) ? $settings['default']['sendinblue_template_ids'] : '';
+			$default_redirection_url = ( isset( $settings['default']['sendinblue_redirection_url'] ) ) ? $settings['default']['sendinblue_redirection_url'] : '';
+		}
+		ob_start();
+
+		$options = array(
+			'-1' => __( 'Choose...', 'convertpro-addon' ),
+		);
+
+		foreach ( $template_ids as $template_id => $template_id_name ) {
+			$options[ $template_id ] = $template_id_name;
+		}
+
+		ConvertPlugHelper::render_input_html(
+			'sendinblue_template_ids',
+			array(
+				'class'   => 'sendinblue_template_ids',
+				'type'    => 'select',
+				'label'   => _x( 'Select a Template ID', 'An Template list Id from SendinBlue for Double-optin.', 'convertpro-addon' ),
+				'default' => $default_template_id,
+				'options' => $options,
+			),
+			$settings
+		);
+
+		ConvertPlugHelper::render_input_html(
+			'sendinblue_redirection_url',
+			array(
+				'class'   => 'sib_redirection_url',
+				'type'    => 'text-wrap',
+				'label'   => __( 'Redirection URL', 'convertpro-addon' ),
+				'help'    => __( 'URL of the web page that user will be redirected to after clicking on the double opt in URL.', 'convertpro-addon' ),
+				'default' => $default_redirection_url,
+			),
+			$settings
+		);
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render markup for the double-optin field.
+	 *
+	 * @since 1.5.0
+	 * @param string $default default value.
+	 * @param array  $settings Posted data.
+	 * @return string The markup for the double-optin field.
+	 * @access private
+	 */
+	private function render_optin_field( $default, $settings ) {
+
+		if ( isset( $settings['isEdit'] ) && $settings['isEdit'] ) {
+			$default = ( isset( $settings['default']['sendinblue_double_optin'] ) ) ? $settings['default']['sendinblue_double_optin'] : '';
+		}
+
+		ob_start();
+
+		ConvertPlugHelper::render_input_html(
+			'sendinblue_double_optin',
+			array(
+				'class'   => '',
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable Double Opt-in', 'convertpro-addon' ),
+				'help'    => '',
+				'default' => $default,
 			),
 			$settings
 		);
@@ -337,7 +455,23 @@ final class CPRO_Service_SendinBlue extends CPRO_Service {
 					'emailBlacklisted' => false,
 					'smsBlacklisted'   => false,
 				);
-				$result    = $api->make_request( 'contacts', $lead_data, 'post' );
+
+				$default_contact_route = 'contacts';
+
+				$req = $api->make_request( sprintf( 'contacts/%s', rawurlencode( $email ) ) );
+
+				if ( ! isset( $req['data']['listIds'] ) && isset( $settings['sendinblue_double_optin'] ) && 'on' === $settings['sendinblue_double_optin'] ) {
+
+					unset( $lead_data['listIds'] );
+					unset( $lead_data['updateEnabled'] );
+					$lead_data['includeListIds'] = array( absint( $settings['sendinblue_lists'] ) );
+					$lead_data['templateId']     = absint( $settings['sendinblue_template_ids'] );
+					$lead_data['redirectionUrl'] = esc_url( $settings['sendinblue_redirection_url'] );
+
+					$default_contact_route = 'contacts/doubleOptinConfirmation';
+				}
+
+				$result = $api->make_request( $default_contact_route, $lead_data, 'post' );
 
 			} else {
 				$result = $api->create_update_user( $email, $subscriber, 0, array( $settings['sendinblue_lists'] ), array(), 0 );

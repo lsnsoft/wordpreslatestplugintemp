@@ -21,9 +21,7 @@ add_action( 'admin_enqueue_scripts', 'cp_v2_slider_admin_scripts' );
 function cp_v2_slider_admin_scripts( $hook ) {
 	$dev_mode   = get_option( 'cp_dev_mode' );
 	$is_cp_page = strpos( $hook, 'convetplug-v2' );
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'jquery-ui-core' );
-	wp_enqueue_script( 'jquery-ui-slider' );
+
 	if ( '1' === $dev_mode ) {
 		wp_enqueue_script( 'cp-slider', plugins_url( 'slider.js', __FILE__ ), array(), '1.0.0', true );
 		wp_enqueue_style( 'cp-jquery-ui', plugins_url( 'jquery-ui.css', __FILE__ ), array(), '1.0.0' );

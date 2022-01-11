@@ -29,7 +29,10 @@ if ( ! class_exists( 'Astra_Customizer_Sidebar_Spacing_Configs' ) ) {
 	/**
 	 * Register Sidebar Spacing Customizer Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Customizer_Sidebar_Spacing_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Sidebar Spacing Customizer Configurations.
@@ -44,33 +47,24 @@ if ( ! class_exists( 'Astra_Customizer_Sidebar_Spacing_Configs' ) ) {
 			$_configs = array(
 
 				/**
-				 * Option: Divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[divider-section-sidebar-spacing]',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-sidebars',
-					'title'    => __( 'Spacing', 'astra-addon' ),
-					'priority' => 25,
-					'settings' => array(),
-				),
-
-				/**
 				 * Option - Sidebar Space
 				 */
 				array(
-					'name'           => ASTRA_THEME_SETTINGS . '[sidebar-outside-spacing]',
-					'default'        => astra_get_option( 'sidebar-outside-spacing' ),
-					'type'           => 'control',
-					'transport'      => 'postMessage',
-					'control'        => 'ast-responsive-spacing',
-					'section'        => 'section-sidebars',
-					'priority'       => 25,
-					'title'          => __( 'Outside Sidebar', 'astra-addon' ),
-					'linked_choices' => true,
-					'unit_choices'   => array( 'px', 'em', '%' ),
-					'choices'        => array(
+					'name'              => ASTRA_THEME_SETTINGS . '[sidebar-outside-spacing]',
+					'default'           => astra_get_option( 'sidebar-outside-spacing' ),
+					'type'              => 'control',
+					'transport'         => 'postMessage',
+					'control'           => 'ast-responsive-spacing',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_responsive_spacing' ),
+					'section'           => 'section-sidebars',
+					'context'           => ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ?
+						astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab,
+					'priority'          => 25,
+					'title'             => __( 'Outside Sidebar Spacing', 'astra-addon' ),
+					'linked_choices'    => true,
+					'unit_choices'      => array( 'px', 'em', '%' ),
+					'divider'           => array( 'ast_class' => 'ast-bottom-divider' ),
+					'choices'           => array(
 						'top'    => __( 'Top', 'astra-addon' ),
 						'right'  => __( 'Right', 'astra-addon' ),
 						'bottom' => __( 'Bottom', 'astra-addon' ),
@@ -82,17 +76,20 @@ if ( ! class_exists( 'Astra_Customizer_Sidebar_Spacing_Configs' ) ) {
 				 * Option - Two Boxed Sidebar Space
 				 */
 				array(
-					'name'           => ASTRA_THEME_SETTINGS . '[sidebar-inside-spacing]',
-					'default'        => astra_get_option( 'sidebar-inside-spacing' ),
-					'type'           => 'control',
-					'transport'      => 'postMessage',
-					'control'        => 'ast-responsive-spacing',
-					'section'        => 'section-sidebars',
-					'priority'       => 25,
-					'title'          => __( 'Inside Sidebar', 'astra-addon' ),
-					'linked_choices' => true,
-					'unit_choices'   => array( 'px', 'em', '%' ),
-					'choices'        => array(
+					'name'              => ASTRA_THEME_SETTINGS . '[sidebar-inside-spacing]',
+					'default'           => astra_get_option( 'sidebar-inside-spacing' ),
+					'type'              => 'control',
+					'transport'         => 'postMessage',
+					'control'           => 'ast-responsive-spacing',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_responsive_spacing' ),
+					'section'           => 'section-sidebars',
+					'priority'          => 25,
+					'context'           => ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ?
+						astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab,
+					'title'             => __( 'Inside Sidebar Spacing', 'astra-addon' ),
+					'linked_choices'    => true,
+					'unit_choices'      => array( 'px', 'em', '%' ),
+					'choices'           => array(
 						'top'    => __( 'Top', 'astra-addon' ),
 						'right'  => __( 'Right', 'astra-addon' ),
 						'bottom' => __( 'Bottom', 'astra-addon' ),

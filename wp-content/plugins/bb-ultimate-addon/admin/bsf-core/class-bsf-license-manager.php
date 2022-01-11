@@ -143,21 +143,9 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				$path,
 				array(
 					'body'    => $data,
-					'timeout' => '10',
+					'timeout' => '15',
 				)
 			);
-
-			// Try to make a second request to unsecure URL.
-			if ( is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) !== 200 ) {
-				$path     = bsf_get_api_url( true ) . '?referer=deactivate-' . $product_id;
-				$response = wp_remote_post(
-					$path,
-					array(
-						'body'    => $data,
-						'timeout' => '8',
-					)
-				);
-			}
 
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$result = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -183,11 +171,12 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				$_POST['bsf_license_activation']['message'] = 'There was an error when connecting to our license API - <pre class="bsf-pre">' . $response->get_error_message() . '</pre>';
 			}
 
-			// Delete cached license key status.
-			wp_cache_delete( $license_key . '_license_status' );
+			// Delete license key status transient.
+			delete_transient( $product_id . '_license_status' );
 		}
+
 		/**
-		 *  BSF Activate lciense.
+		 *  BSF Activate license.
 		 */
 		public function bsf_activate_license() {
 
@@ -208,19 +197,25 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				return;
 			}
 
-			$license_key              = esc_attr( $_POST['bsf_license_manager']['license_key'] );
-			$product_id               = esc_attr( $_POST['bsf_license_manager']['product_id'] );
-			$user_name                = isset( $_POST['bsf_license_manager']['user_name'] ) ? esc_attr( $_POST['bsf_license_manager']['user_name'] ) : '';
-			$user_email               = isset( $_POST['bsf_license_manager']['user_email'] ) ? esc_attr( $_POST['bsf_license_manager']['user_email'] ) : '';
-			$privacy_consent          = ( isset( $_POST['bsf_license_manager']['privacy_consent'] ) && 'true' === $_POST['bsf_license_manager']['privacy_consent'] ) ? true : false;
-			$terms_conditions_consent = ( isset( $_POST['bsf_license_manager']['terms_conditions_consent'] ) && 'true' === $_POST['bsf_license_manager']['terms_conditions_consent'] ) ? true : false;
+			$post_data = $_POST['bsf_license_manager'];
 
-			// update product license key.
-			$args = array(
-				'purchase_key' => $license_key,
-			);
+			$_POST['bsf_license_activation'] = $this->bsf_process_license_activation( $post_data );
 
-			$this->bsf_update_product_info( $product_id, $args );
+		}
+
+		/**
+		 *  BSF Activate license processing.
+		 *
+		 * @param Array $post_data Post data.
+		 */
+		public function bsf_process_license_activation( $post_data ) {
+
+			$license_key              = esc_attr( $post_data['license_key'] );
+			$product_id               = esc_attr( $post_data['product_id'] );
+			$user_name                = isset( $post_data['user_name'] ) ? esc_attr( $post_data['user_name'] ) : '';
+			$user_email               = isset( $post_data['user_email'] ) ? esc_attr( $post_data['user_email'] ) : '';
+			$privacy_consent          = ( isset( $post_data['privacy_consent'] ) && 'true' === $post_data['privacy_consent'] ) ? true : false;
+			$terms_conditions_consent = ( isset( $post_data['terms_conditions_consent'] ) && 'true' === $post_data['terms_conditions_consent'] ) ? true : false;
 
 			// Check if the key is from EDD.
 			$is_edd = $this->is_edd( $license_key );
@@ -247,46 +242,43 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				$path,
 				array(
 					'body'    => $data,
-					'timeout' => '10',
+					'timeout' => '15',
 				)
 			);
 
-			// Try to make a second request to unsecure URL.
-			if ( is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) !== 200 ) {
-				$path     = bsf_get_api_url( true ) . '?referer=activate-' . $product_id;
-				$response = wp_remote_post(
-					$path,
-					array(
-						'body'    => $data,
-						'timeout' => '8',
-					)
-				);
-			}
+			$res = array();
 
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$result = json_decode( wp_remote_retrieve_body( $response ), true );
 
 				if ( isset( $result['success'] ) && ( true === $result['success'] || 'true' === $result['success'] ) ) {
 					// update license saus to the product.
-					$_POST['bsf_license_activation']['success'] = $result['success'];
-					$_POST['bsf_license_activation']['message'] = $result['message'];
+					$res['success'] = $result['success'];
+					$res['message'] = $result['message'];
 					unset( $result['success'] );
+
+					// Update product key.
+					$result['purchase_key'] = $license_key;
 
 					$this->bsf_update_product_info( $product_id, $result );
 
-					do_action( 'bsf_activate_license_' . $product_id . '_after_success', $result, $response, $_POST );
+					do_action( 'bsf_activate_license_' . $product_id . '_after_success', $result, $response, $post_data );
+
 				} else {
-					$_POST['bsf_license_activation']['success'] = $result['success'];
-					$_POST['bsf_license_activation']['message'] = $result['message'];
+					$res['success'] = $result['success'];
+					$res['message'] = $result['message'];
 				}
 			} else {
-				$_POST['bsf_license_activation']['success'] = false;
-				$_POST['bsf_license_activation']['message'] = 'There was an error when connecting to our license API - <pre class="bsf-pre">' . $response->get_error_message() . '</pre>';
+				$res['success'] = false;
+				$res['message'] = 'There was an error when connecting to our license API - <pre class="bsf-pre">' . $response->get_error_message() . '</pre>';
 			}
 
-			// Delete cached license key status.
-			wp_cache_delete( $license_key . '_license_status' );
+			// Delete license key status transient.
+			delete_transient( $product_id . '_license_status' );
+
+			return $res;
 		}
+
 		/**
 		 *  Is EDD.
 		 *
@@ -302,6 +294,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 
 			return false;
 		}
+
 		/**
 		 *  BSF Update product Info.
 		 *
@@ -326,6 +319,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 
 			update_option( 'brainstrom_products', $brainstrom_products );
 		}
+
 		/**
 		 *  BSF is active license.
 		 *
@@ -366,9 +360,16 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				}
 			}
 
+			// The product is bundled.
 			if ( ! empty( $is_bundled ) ) {
 
-				// The product is bundled.
+				// If the bundled product does not require to activate the license then treat the license is active.
+				$product = get_brainstorm_product( $product_id );
+
+				if ( isset( $product['licence_require'] ) && 'false' === $product['licence_require'] ) {
+					return true;
+				}
+
 				foreach ( $is_bundled as $key => $value ) {
 
 					$product_id = $value;
@@ -401,12 +402,12 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 		 * @param int    $product_id Product ID.
 		 */
 		public function get_remote_license_status( $purchase_key, $product_id ) {
-			// Check if license status is cached.
-			$cache_key = $purchase_key . '_license_status';
-			$cached    = wp_cache_get( $cache_key );
 
-			if ( false !== $cached ) {
-				return (bool) $cached;
+			$transient_key = $product_id . '_license_status';
+
+			// Check if license status is cached.
+			if ( false !== get_transient( $transient_key ) ) {
+				return (bool) get_transient( $transient_key );
 			}
 
 			// Set default license to license status stored in the database.
@@ -458,8 +459,8 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				}
 			}
 
-			// Cache the license status for two hours in a transient.
-			wp_cache_set( $cache_key, $license_status );
+			// Save license status in transient which will expire in 6 hours.
+			set_transient( $transient_key, $license_status, 6 * HOUR_IN_SECONDS );
 
 			return (bool) $license_status;
 		}

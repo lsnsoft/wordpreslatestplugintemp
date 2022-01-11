@@ -719,16 +719,17 @@ var step_id = 0,
             if(for_edit.indexOf('panel-') !== -1 ) {
                 
                 var current_panel = step_id + 1;
-
+                var toggle_type = '';
                 if(module_type == 'info_bar' ) {
                       toggle_id = 'cp-open-infobar-toggle';
+                      toggle_type = '_infobar';
                 } else {
                     toggle_id = 'cp-open-toggle';
                 }
 
                 $('#' + toggle_id).remove();
-
-                if (value == '1' ) {
+                var cp_panel_toggle_ib_si = $('#cp_panel_toggle'+toggle_type).attr('value');
+                if (value == '1' || cp_panel_toggle_ib_si == '1' ) {
                     var cp_panel_position = ' cp-toggle-' + $('#cp_panel_position').val();
                     var toggle_html = '';
 
@@ -738,11 +739,13 @@ var step_id = 0,
                         toggle_html = '<div id="cp-open-toggle" class="cp-open-toggle ' + cp_panel_position + '"><span class="cp-open-toggle-content">Click Here</span><span class="cp-toggle-icon cp-icon-arrow"></span></div>';
                     }
                     
-                    if  ('info_bar' == module_type && 'cp-toggle-top' == cp_panel_position.trim() ) {
-                        $('.panel-wrapper').before(toggle_html);
-                    }
-                    else{
-                         $('.panel-wrapper').after(toggle_html);
+                    if( cp_panel_toggle_ib_si == '1' ) {
+                        if ('info_bar' == module_type && 'cp-toggle-top' == cp_panel_position.trim() ) {
+                            $('.panel-wrapper').before(toggle_html);
+                        }
+                        else{
+                             $('.panel-wrapper').after(toggle_html);
+                        }
                     }
 
                     if(module_type == 'info_bar' ) {
@@ -919,8 +922,8 @@ var step_id = 0,
 
         _applySlideinToggle: function () {
             var field_elm = jQuery("#cp-open-toggle");
-
-            if(jQuery("#cp_panel_toggle").val() == '1' ) {
+            var cp_slide_in_panel_toggle = jQuery("#cp_panel_toggle").attr('value');
+            if( cp_slide_in_panel_toggle == '1' ) {
 
                 $(".cp-accordion-content[data-acc-class='toggle'] .cp-input").each(
                     function ( event ) {
@@ -992,8 +995,8 @@ var step_id = 0,
 
         _applyInfobarToggle: function () {
             var field_elm = jQuery("#cp-open-infobar-toggle");
-
-            if(jQuery("#cp_panel_toggle_infobar").val() == '1' ) {
+            var cp_info_bar_panel_toggle = jQuery("#cp_panel_toggle_infobar").attr('value');
+            if( cp_info_bar_panel_toggle == '1' ) {
 
                 $(".cp-accordion-content[data-acc-class='toggle'] .cp-input").each(
                     function ( event ) {
@@ -1243,6 +1246,8 @@ var step_id = 0,
         _applyPanelOptions: function ( element, set_options, is_switch_step ) {
             var map_style   = element.data("mapstyle");
             var name        = element.attr('name');
+            var panel_otp   = ['panel_toggle', 'info_bar_sticky', 'panel_toggle_infobar', 'push_page_down', 'inherit_bg_prop', 'close_overlay_click', 'toggle_minimizer'];
+            var value       = '';
 
             if(typeof map_style != 'undefined' ) {
                 var parameter = (typeof map_style.parameter === 'undefined' || map_style.parameter === '') ? false : map_style.parameter.replace(/_/g, '-');
@@ -1257,8 +1262,11 @@ var step_id = 0,
                     if('toggle' == target ) {
                         panel_field_id = 'toggle';
                     }
-                        
-                      var value = element.val();
+                    if ( panel_otp.includes( name ) ) {
+                        value = element.attr('value');
+                    } else {
+                        value = element.val();
+                    }
 
                     if(typeof is_switch_step !== 'undefined' && is_switch_step == true ) {
                         value = bmodel.getModalValue(panel_field_id, step_id, name);
@@ -1409,7 +1417,7 @@ var step_id = 0,
                                     if(option_value == '1' ) {
                                         $this.siblings(".cp-switch-input.switch-checkbox").attr("checked", "checked");
                                     } else {
-                                        $this.siblings(".cp-switch-input.switch-checkbox").removeAttr("checked");
+                                        $this.siblings(".cp-switch-input.switch-checkbox").prop("checked", false);
                                     }
                                 }
 
@@ -1644,12 +1652,43 @@ var step_id = 0,
                     if(value == 'true' ) {
                         $(element).attr('required', 'required');
                     } else {
-                        $(element).removeAttr('required');
+                        $(element).prop('required', false);
+                    }
+                break;
+
+                case "input_reg_pattern":
+                    if( 'true' == value ) {
+                        var reg_ex_text = bmodel.getModalValue(for_edit, current_step, 'input_reg_ex_title');
+                        $(element).attr('title', reg_ex_text);
+                        var reg_ex_pattern = bmodel.getModalValue(for_edit, current_step, 'input_reg_ex_text');
+                        $(element).attr('pattern', reg_ex_pattern);
+                    } else {
+                        $(element).removeAttr('title');
+                        $(element).removeAttr('pattern');
+                    }
+                break;
+
+                case 'title':
+                case "pattern":
+                    var reg_ex_value = jQuery('#reg_ex_validation[for=' + for_edit + ']').val();
+
+                    if( 'true' == reg_ex_value ) {
+
+                        var reg_ex_text = bmodel.getModalValue(for_edit, current_step, 'input_reg_ex_title');
+                        if( typeof reg_ex_text == 'undefined' ) {
+                            reg_ex_text = jQuery('#input_reg_ex_title[for=' + for_edit + ']').val();
+                        }
+                        var reg_ex_pattern = bmodel.getModalValue(for_edit, current_step, 'input_reg_ex_text');
+                        if( typeof reg_ex_pattern == 'undefined' ) {
+                            reg_ex_pattern = jQuery('#input_reg_ex_text[for=' + for_edit + ']').val();
+                        }
+
+                        $(element).attr('pattern', reg_ex_pattern);
+                        $(element).attr('title', reg_ex_text);
                     }
                 break;
 
                 case "placeholder":
-
                       var lbl_as_plceholder = bmodel.getModalValue(for_edit, current_step, 'label_as_placeholder');
                     var lbl_text = bmodel.getModalValue(for_edit, current_step, 'input_text_placeholder');
 
@@ -1935,6 +1974,7 @@ var step_id = 0,
             panel_data_string = '',
             angle             = '' ,
             lighter_color     = '',
+            newtarget         = '',
             module_type       = $("#cp_module_type").val();
 
             if(typeof for_edit === 'undefined' || for_edit === '' ) {
@@ -1986,7 +2026,8 @@ var step_id = 0,
                     target = $('#'+for_edit);
                 } else {
                     if(target != 'toggle' && for_edit.indexOf('panel-') == -1 && 'placeholder' !== target ) {
-                              target = $('#'+for_edit).find($.trim(NewParameter[0]));
+                        target    = $('#'+for_edit).find($.trim(NewParameter[0]));
+                        newtarget = '#'+for_edit+' '+$.trim(NewParameter[0]);
                     } else if('placeholder' == target ) {
 
                         ConvertProHelper._setPlaceholderStyle('#'+for_edit, StyleSelector, parameter, value);
@@ -2057,25 +2098,17 @@ var step_id = 0,
                     var paddingval = ConvertProHelper._generateMultiInputResult(parameter, value);        
                     if(onhover ) {
                             $.each(
-                                paddingval, function (index, val) {    
-                                     var newSelector = ConvertProHelper._getHoverSelector(target.selector);
+                                paddingval, function (index, val) {
+                                     var newSelector = ( typeof target == "object" ) ? ConvertProHelper._getHoverSelector(newtarget) : ConvertProHelper._getHoverSelector('#'+for_edit+' '+target);
                                      ConvertProHelper._setHoverStyle(newSelector, StyleSelector, index, val);
                                 }
                             );
                     } else {
-
-                                   // if( 'padding' == parameter ) {
-                                   //     console.log( target );
-                                   //     console.log ( for_edit );
-                                   //     console.log( paddingval );
-                                   //     // console.log( val );
-                                   // }
-
-                                $.each(
-                                    paddingval, function (index, val) {    
-                                        target.css(index, val);
-                                    }
-                                );
+                        $.each(
+                            paddingval, function (index, val) {    
+                                target.css(index, val);
+                            }
+                            );
                     }
                  break;
 
@@ -2086,7 +2119,7 @@ var step_id = 0,
                         if(onhover ) {
                                 $.each(
                                     boxshadow, function (index, val) {
-                                        var newSelector = ConvertProHelper._getHoverSelector(target.selector);
+                                        var newSelector = ( typeof target == "object" ) ? ConvertProHelper._getHoverSelector(newtarget) : ConvertProHelper._getHoverSelector('#'+for_edit+' '+target);
                                         ConvertProHelper._setHoverStyle(newSelector, StyleSelector, parameter, value);
                                     }
                                 );
@@ -2156,13 +2189,14 @@ var step_id = 0,
                 case 'radio-options' :
 
                     var output_html = '';
-                        
+                    var optionRadioDisplay = '';
                     if(value !== '' ) {
                         var options_arr = value.split("\n");
                         var options_arr_length = options_arr.length;
 
                         for ( var options_index = 0; options_index < options_arr_length; options_index++ ) {
-                                  output_html += '<div class="cp-radio-wrap"><label><input type="radio" name="cp-radio" value="'+ options_arr[options_index] +'">'+ options_arr[options_index] + '</label></div>';
+                            optionRadioDisplay = options_arr[options_index].split('||'); // For Dynamic tags - Split by || delimiter.
+                            output_html += '<div class="cp-radio-wrap"><label><input type="radio" name="cp-radio" value="'+ options_arr[options_index] +'">'+ optionRadioDisplay[0] + '</label></div>';
                         }
                     }
                     target.html(output_html);
@@ -2274,15 +2308,15 @@ var step_id = 0,
 
                 case 'checkbox-options' :
                     var output_html = '';
-                        
+                    var optionCheckboxDisplay = '';
                     if(value !== '' ) {
                         var options_arr = value.split("\n");
                         var options_arr_length = options_arr.length;
 
                         for ( var options_index = 0; options_index < options_arr_length; options_index++ ) {
                                   var optons_key = options_arr[options_index].trim().replace(/ /g, '_').replace(/[^a-z0-9_]+/gi, '');
-                                
-                                  output_html += '<div class="cp-checkbox-wrap"><label><input type="checkbox" value="'+ optons_key +'">'+ options_arr[options_index] + '</label></div>';
+                                  optionCheckboxDisplay = options_arr[options_index].split('||'); // For Dynamic tags - Split by || delimiter.
+                                  output_html += '<div class="cp-checkbox-wrap"><label><input type="checkbox" value="'+ optons_key +'">'+ optionCheckboxDisplay[0] + '</label></div>';
                         }
                     }
                     target.html(output_html);
@@ -2691,7 +2725,7 @@ var step_id = 0,
                     ConvertProColor._getHoverGradientDependentValue(target, for_edit);
         break;
 
-                    //button gradient background
+                //button gradient background
                 case 'btn-gradient-type':
                 case 'btn-gradient-angle':
                 case 'btn-gradient-bg1':
@@ -2799,8 +2833,8 @@ var step_id = 0,
                         );
 
                         $('#'+for_edit).addClass('cp-'+value);
-                        var panel_toggle = jQuery("#cp_panel_toggle").val();
-                        var panel_info_toggle = jQuery("#cp_panel_toggle_infobar").val();
+                        var panel_toggle = jQuery("#cp_panel_toggle").attr('value');
+                        var panel_info_toggle = jQuery("#cp_panel_toggle_infobar").attr('value');
 
                         if(panel_toggle == '1' ) {
                                       ConvertProHelper._setPanelPosition(value);
@@ -2811,9 +2845,9 @@ var step_id = 0,
                         }
                             
                         if('info_bar' == module_type ) {
-                                   ConvertProHelper._toggle(for_edit, $('#cp_panel_toggle_infobar').val(), module_type);
+                                   ConvertProHelper._toggle(for_edit, panel_info_toggle, module_type);
                         }else{
-                                 ConvertProHelper._toggle(for_edit, $('#cp_panel_toggle').val(), module_type);
+                                 ConvertProHelper._toggle(for_edit, $('#cp_panel_toggle').attr('value'), module_type);
                         }
                     }
 
@@ -2835,7 +2869,7 @@ var step_id = 0,
                     if(target.length > 0 && value != '' ) {
                         if(onhover == true ) {
                                   var StyleSelector = for_edit + '_cp-target';
-                                  var target = target.selector + ':hover';
+                                  var target = ( typeof target == "object" ) ? newtarget+ ':hover' : '#'+for_edit+' '+target + ':hover';
                                   ConvertProHelper._setHoverStyle(target, StyleSelector, parameter, value);
                         } else {
                                           var preset = target.closest('.cp-panel-field').data('preset');
@@ -2864,7 +2898,7 @@ var step_id = 0,
                     case 'youtube':
                     case 'vimeo':
                             video_url  = bmodel.getModalValue(for_edit, current_step, 'video_id');
-      break;
+                            break;
                     }
 
                     ConvertProHelper._renderVideo(for_edit, video_source, video_url);
@@ -3087,7 +3121,7 @@ var step_id = 0,
 
                         if (parameter == 'max-width' || parameter == 'width' ) {
 
-                                  var maxWidth = parseInt(value);
+                            var maxWidth = parseInt(value);
 
                             if(module_type == 'info_bar' || module_type == 'welcome_mat' ||  module_type == 'full_screen' ) {
                                 $('#'+for_edit).find(".panel-content-wrapper").css({ "max-width": maxWidth + "px", "width": maxWidth });
@@ -3102,17 +3136,17 @@ var step_id = 0,
                                 );
                             }
 
-                            if(module_type == 'info_bar' && jQuery("#cp_panel_toggle_infobar").val() == '1' ) {
+                            if(module_type == 'info_bar' && jQuery("#cp_panel_toggle_infobar").attr('value') == '1' ) {
                                 ConvertProHelper._applyInfobarToggle();
                             }
 
-                            if(module_type == 'slide_in' && jQuery("#cp_panel_toggle").val() == '1' ) {
+                            if(module_type == 'slide_in' && jQuery("#cp_panel_toggle").attr('value') == '1' ) {
                                 ConvertProHelper._applySlideinToggle();
                             }
 
                         } else {
 
-                                           var panel_id = "panel-" + ( current_step + 1 );
+                            var panel_id = "panel-" + ( current_step + 1 );
                             if(parameter == 'background-color' ) {
 
                                 var is_inherit = bmodel.getModalValue(panel_id, current_step, "inherit_bg_prop");
@@ -3143,17 +3177,18 @@ var step_id = 0,
 
                                              $('#'+for_edit).find('svg').attr("height", value);
 
-                            if(module_type == 'info_bar' && jQuery("#cp_panel_toggle_infobar").val() == '1' ) {
+                            if(module_type == 'info_bar' && jQuery("#cp_panel_toggle_infobar").attr('value') == '1' ) {
                                 ConvertProHelper._applyInfobarToggle();
                             }
 
-                            if(module_type == 'slide_in' && jQuery("#cp_panel_toggle").val() == '1' ) {
+                            if(module_type == 'slide_in' && jQuery("#cp_panel_toggle").attr('value') == '1' ) {
                                 ConvertProHelper._applySlideinToggle();
                             }
                         }
                     } else {
+
                         if(onhover ) {
-                            var newSelector = ConvertProHelper._getHoverSelector(target.selector);
+                            var newSelector = ( typeof target == "object" ) ? ConvertProHelper._getHoverSelector(newtarget) : ConvertProHelper._getHoverSelector('#'+for_edit+' '+target);
                             ConvertProHelper._setHoverStyle(newSelector, StyleSelector, parameter, value);
                         } else {    
 

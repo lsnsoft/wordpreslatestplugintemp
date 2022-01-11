@@ -317,10 +317,11 @@ final class CPRO_Service_AWeber extends CPRO_Service {
 
 			$api  = $this->get_api( $account_data['auth_code'] );
 			$data = array(
-				'ws.op'       => 'create',
-				'email'       => $email,
-				'add_notes'   => $this->aweber_get_ip(),
-				'ad_tracking' => CPRO_BRANDING_NAME,
+				'ws.op'           => 'create',
+				'email'           => $email,
+				'add_notes'       => $this->aweber_get_ip(),
+				'ad_tracking'     => CPRO_BRANDING_NAME,
+				'update_existing' => 'true',
 			);
 
 			if ( isset( $settings['aweber_tags'] ) ) {

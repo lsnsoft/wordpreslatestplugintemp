@@ -7,7 +7,7 @@
             function (key, element) {
                 var json = $(element).attr('data-json');
                 if(typeof json != 'undefined' && json != '' ) {
-                    element.CPField = $.parseJSON(json);
+                    element.CPField = JSON.parse(json);
                 }
                 arr.push(element);
             }

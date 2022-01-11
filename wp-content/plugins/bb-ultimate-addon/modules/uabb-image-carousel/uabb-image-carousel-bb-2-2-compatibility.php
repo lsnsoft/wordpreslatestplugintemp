@@ -17,12 +17,12 @@ FLBuilder::register_module(
 				'general'       => array(
 					'title'  => '',
 					'fields' => array(
-						'photos'        => array(
+						'photos'           => array(
 							'type'        => 'multiple-photos',
 							'label'       => __( 'Photos', 'uabb' ),
 							'connections' => array( 'multiple-photos' ),
 						),
-						'photo_size'    => array(
+						'photo_size'       => array(
 							'type'    => 'select',
 							'label'   => __( 'Photo Size', 'uabb' ),
 							'default' => 'medium',
@@ -35,7 +35,30 @@ FLBuilder::register_module(
 								)
 							),
 						),
-						'photo_spacing' => array(
+						'scroll_effect'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Scroll Effect', 'uabb' ),
+							'help'    => __( 'Select scroll effect for images.', 'uabb' ),
+							'default' => 'slide',
+							'options' => array(
+								'slide' => 'Slide',
+								'fade'  => 'Fade',
+							),
+							'toggle'  => array(
+								'slide' => array(
+									'sections' => array( 'show_images' ),
+									'fields'   => array( 'slides_to_scroll', 'photo_spacing' ),
+								),
+							),
+						),
+						'slides_to_scroll' => array(
+							'type'        => 'text',
+							'label'       => __( 'Images to Scroll', 'uabb' ),
+							'help'        => __( 'This is how many images you want to scroll at a time.', 'uabb' ),
+							'placeholder' => '1',
+							'size'        => '8',
+						),
+						'photo_spacing'    => array(
 							'type'        => 'unit',
 							'label'       => __( 'Photo Spacing', 'uabb' ),
 							'mode'        => 'padding',
@@ -53,8 +76,9 @@ FLBuilder::register_module(
 					),
 				),
 				'show_images'   => array(
-					'title'  => __( 'Number of Photo to Show', 'uabb' ),
-					'fields' => array(
+					'title'     => __( 'Number of Photo to Show', 'uabb' ),
+					'collapsed' => true,
+					'fields'    => array(
 						'grid_column'            => array(
 							'type'    => 'select',
 							'label'   => __( 'Desktop Grid', 'uabb' ),
@@ -112,8 +136,9 @@ FLBuilder::register_module(
 					),
 				),
 				'image_setting' => array(
-					'title'  => __( 'Photo Settings', 'uabb' ),
-					'fields' => array(
+					'title'     => __( 'Photo Settings', 'uabb' ),
+					'collapsed' => true,
+					'fields'    => array(
 						'show_captions'         => array(
 							'type'    => 'select',
 							'label'   => __( 'Show Captions', 'uabb' ),
@@ -181,18 +206,11 @@ FLBuilder::register_module(
 			),
 		),
 		'carousel_filter' => array(
-			'title'    => __( 'Carousel', 'uabb' ),
+			'title'    => __( 'Carousel Settings', 'uabb' ),
 			'sections' => array(
 				'carousel_filter' => array(
-					'title'  => __( 'Carousel Filter', 'uabb' ),
+					'title'  => __( 'Carousel Filters', 'uabb' ),
 					'fields' => array(
-						'slides_to_scroll'  => array(
-							'type'        => 'text',
-							'label'       => __( 'Images to Scroll', 'uabb' ),
-							'help'        => __( 'This is how many images you want to scroll at a time.', 'uabb' ),
-							'placeholder' => '1',
-							'size'        => '8',
-						),
 						'autoplay'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Autoplay Image Scroll', 'uabb' ),
@@ -259,6 +277,51 @@ FLBuilder::register_module(
 								'yes' => array(
 									'sections' => array( 'arrow_section' ),
 								),
+							),
+						),
+						'enable_dots'       => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Dots', 'uabb' ),
+							'help'    => __( 'Enable dots to your carousel slider.', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'dots_size', 'dots_color' ),
+								),
+							),
+						),
+						'dots_size'         => array(
+							'type'    => 'unit',
+							'label'   => __( 'Dots Size', 'uabb' ),
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-image-carousel .slick-dots li button:before',
+								'property' => 'font-size',
+								'unit'     => 'px',
+							),
+							'slider'  => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+						),
+						'dots_color'        => array(
+							'type'        => 'color',
+							'label'       => __( 'Dots Color', 'uabb' ),
+							'show_alpha'  => 'true',
+							'show_reset'  => 'true',
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-image-carousel ul.slick-dots li button:before, .uabb-image-carousel ul.slick-dots li.slick-active button:before',
+								'property' => 'color',
 							),
 						),
 						'enable_arrow_resp' => array(

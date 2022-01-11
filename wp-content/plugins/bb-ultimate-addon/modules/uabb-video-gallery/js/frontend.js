@@ -102,9 +102,10 @@
 
 						e.preventDefault();
 						var iframe 		= $( "<iframe/>" );
-						var vurl 		= $( this ).data( 'url' );
-						var overlay		= $( this ).closest( '.uabb-video__gallery-item' ).find( '.uabb-vg__overlay' );
-						var wrap_outer  = $( this ).closest( '.uabb-video__gallery-iframe' );
+						var this_selector    = $( this );
+						var vurl 		= this_selector.data( 'url' );
+						var overlay		= this_selector.closest( '.uabb-video__gallery-item' ).find( '.uabb-vg__overlay' );
+						var wrap_outer  = this_selector.closest( '.uabb-video__gallery-iframe' );
 
 							iframe.attr( 'src', vurl );
 							iframe.attr( 'frameborder', '0' );
@@ -134,7 +135,7 @@
 				}
 
 				if( 'carousel' === layout && selector.hasClass( 'uabb-vg__layout-carousel' )) {
-						self = this;
+						var self = this;
 					nodeClass.find('.uabb-video-gallery-wrap').find( '.uabb-video__gallery-iframe' )
 						.imagesLoaded( { background: true } )
 						.done( function( e ) {
@@ -222,7 +223,7 @@
 		},
 		_openOnLink : function() {
 			var nodeClass  		= jQuery(this.nodeClass);
-			
+
 			// Regexp for validating user input as ID : https://regex101.com/r/KGj6I6/1
 			var pattern = new RegExp('^[\\w\\-]+$');
 

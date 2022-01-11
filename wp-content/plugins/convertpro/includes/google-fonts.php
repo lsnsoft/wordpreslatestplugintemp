@@ -78,6 +78,18 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Akaya Kanadaka' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Akaya Telivigala' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Akronim' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -115,7 +127,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Alegreya' => array(
-				'variants' => array( 'regular', 'italic', '500', '500italic', '700', '700italic', '800', '800italic', '900', '900italic' ),
+				'variants' => array( 'regular', '500', '600', '700', '800', '900', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -192,6 +204,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Allison' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Allura' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -219,6 +237,12 @@ function cpro_google_fonts_array() {
 			'Almendra SC' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Alumni Sans' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -276,8 +300,20 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Andada Pro' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800', 'italic', '500italic', '600italic', '700italic', '800italic' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Andika' => array(
 				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Andika New Basic' => array(
+				'variants' => array( 'regular', 'italic', '700', '700italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -324,6 +360,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Antonio' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Arapey' => array(
 				'variants' => array( 'regular', 'italic' ),
 				'category' => 'serif',
@@ -349,7 +391,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Archivo' => array(
-				'variants' => array( 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -379,7 +421,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Arimo' => array(
-				'variants' => array( 'regular', 'italic', '700', '700italic' ),
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -421,7 +463,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Asap' => array(
-				'variants' => array( 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic' ),
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -445,7 +487,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Assistant' => array(
-				'variants' => array( '200', '300', 'regular', '600', '700', '800' ),
+				'variants' => array( '200', '300', 'regular', '500', '600', '700', '800' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -464,6 +506,12 @@ function cpro_google_fonts_array() {
 		array(
 			'Athiti' => array(
 				'variants' => array( '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Atkinson Hyperlegible' => array(
+				'variants' => array( 'regular', 'italic', '700', '700italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -534,6 +582,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Azeret Mono' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'monospace',
+			),
+		),
+		array(
 			'B612' => array(
 				'variants' => array( 'regular', 'italic', '700', '700italic' ),
 				'category' => 'sans-serif',
@@ -567,6 +621,12 @@ function cpro_google_fonts_array() {
 			'Bai Jamjuree' => array(
 				'variants' => array( '200', '200italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic' ),
 				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Ballet' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
 			),
 		),
 		array(
@@ -750,6 +810,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Benne' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Bentham' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'serif',
@@ -759,6 +825,12 @@ function cpro_google_fonts_array() {
 			'Berkshire Swash' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Besley' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800', '900', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -775,6 +847,30 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Big Shoulders Display' => array(
+				'variants' => array( '100', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Big Shoulders Inline Display' => array(
+				'variants' => array( '100', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Big Shoulders Inline Text' => array(
+				'variants' => array( '100', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Big Shoulders Stencil Display' => array(
+				'variants' => array( '100', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Big Shoulders Stencil Text' => array(
 				'variants' => array( '100', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'display',
 			),
@@ -829,7 +925,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Bitter' => array(
-				'variants' => array( 'regular', 'italic', '700' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -858,9 +954,21 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Bodoni Moda' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800', '900', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Bokor' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
+			),
+		),
+		array(
+			'Bona Nova' => array(
+				'variants' => array( 'regular', 'italic', '700' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -896,6 +1004,12 @@ function cpro_google_fonts_array() {
 		array(
 			'Bree Serif' => array(
 				'variants' => array( 'regular' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Brygada 1918' => array(
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -967,7 +1081,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Cabin' => array(
-				'variants' => array( 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic' ),
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -1092,6 +1206,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Castoro' => array(
+				'variants' => array( 'regular', 'italic' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Catamaran' => array(
 				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
@@ -1105,7 +1225,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Caveat' => array(
-				'variants' => array( 'regular', '700' ),
+				'variants' => array( 'regular', '500', '600', '700' ),
 				'category' => 'handwriting',
 			),
 		),
@@ -1237,7 +1357,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Cinzel' => array(
-				'variants' => array( 'regular', '700', '900' ),
+				'variants' => array( 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'serif',
 			),
 		),
@@ -1299,6 +1419,12 @@ function cpro_google_fonts_array() {
 			'Coming Soon' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Commissioner' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -1459,7 +1585,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Cuprum' => array(
-				'variants' => array( 'regular', 'italic', '700', '700italic' ),
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -1554,6 +1680,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Dela Gothic One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Delius' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -1627,7 +1759,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Domine' => array(
-				'variants' => array( 'regular', '700' ),
+				'variants' => array( 'regular', '500', '600', '700' ),
 				'category' => 'serif',
 			),
 		),
@@ -1652,6 +1784,12 @@ function cpro_google_fonts_array() {
 		array(
 			'Dosis' => array(
 				'variants' => array( '200', '300', 'regular', '500', '600', '700', '800' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'DotGothic16' => array(
+				'variants' => array( 'regular' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -1764,6 +1902,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Encode Sans SC' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Encode Sans Semi Condensed' => array(
 				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
@@ -1791,6 +1935,12 @@ function cpro_google_fonts_array() {
 			'Enriqueta' => array(
 				'variants' => array( 'regular', '500', '600', '700' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Epilogue' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -1920,6 +2070,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Festive' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Finger Paint' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -2010,6 +2166,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Fraunces' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Freckle Face' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -2055,6 +2217,12 @@ function cpro_google_fonts_array() {
 			'Fugaz One' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
+			),
+		),
+		array(
+			'Fuggles' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
 			),
 		),
 		array(
@@ -2142,6 +2310,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Georama' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Geostar' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -2202,6 +2376,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Glory' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Goblin One' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -2211,6 +2391,12 @@ function cpro_google_fonts_array() {
 			'Gochi Hand' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Goldman' => array(
+				'variants' => array( 'regular', '700' ),
+				'category' => 'display',
 			),
 		),
 		array(
@@ -2238,6 +2424,18 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Gowun Batang' => array(
+				'variants' => array( 'regular', '700' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Gowun Dodum' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Graduate' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -2247,6 +2445,12 @@ function cpro_google_fonts_array() {
 			'Grand Hotel' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Grandstander' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'display',
 			),
 		),
 		array(
@@ -2265,6 +2469,12 @@ function cpro_google_fonts_array() {
 			'Grenze' => array(
 				'variants' => array( '100', '100italic', '200', '200italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic', '800', '800italic', '900', '900italic' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Grenze Gotisch' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'display',
 			),
 		),
 		array(
@@ -2306,6 +2516,18 @@ function cpro_google_fonts_array() {
 		array(
 			'Habibi' => array(
 				'variants' => array( 'regular' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Hachi Maru Pop' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Hahmlet' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'serif',
 			),
 		),
@@ -2353,7 +2575,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Harmattan' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( 'regular', '700' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -2391,6 +2613,12 @@ function cpro_google_fonts_array() {
 			'Hi Melody' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Hina Mincho' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -2454,8 +2682,44 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'IBM Plex Sans Arabic' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'IBM Plex Sans Condensed' => array(
 				'variants' => array( '100', '100italic', '200', '200italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'IBM Plex Sans Devanagari' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'IBM Plex Sans Hebrew' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'IBM Plex Sans KR' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'IBM Plex Sans Thai' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'IBM Plex Sans Thai Looped' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -2527,7 +2791,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Ibarra Real Nova' => array(
-				'variants' => array( 'regular', 'italic', '600', '600italic', '700', '700italic' ),
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -2541,6 +2805,12 @@ function cpro_google_fonts_array() {
 			'Iceland' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
+			),
+		),
+		array(
+			'Imbue' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -2646,6 +2916,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'JetBrains Mono' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic' ),
+				'category' => 'monospace',
+			),
+		),
+		array(
 			'Jim Nightshade' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -2683,7 +2959,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Josefin Slab' => array(
-				'variants' => array( '100', '100italic', '300', '300italic', 'regular', 'italic', '600', '600italic', '700', '700italic' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -2760,6 +3036,30 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Kaisei Decol' => array(
+				'variants' => array( 'regular', '500', '700' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Kaisei HarunoUmi' => array(
+				'variants' => array( 'regular', '500', '700' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Kaisei Opti' => array(
+				'variants' => array( 'regular', '500', '700' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Kaisei Tokumin' => array(
+				'variants' => array( 'regular', '500', '700', '800' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Kalam' => array(
 				'variants' => array( '300', 'regular', '700' ),
 				'category' => 'handwriting',
@@ -2784,8 +3084,14 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Karantina' => array(
+				'variants' => array( '300', 'regular', '700' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Karla' => array(
-				'variants' => array( 'regular', 'italic', '700', '700italic' ),
+				'variants' => array( '200', '300', 'regular', '500', '600', '700', '800', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -2874,6 +3180,18 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Kiwi Maru' => array(
+				'variants' => array( '300', 'regular', '500' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Klee One' => array(
+				'variants' => array( 'regular', '600' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Knewave' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -2946,6 +3264,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Kufam' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800', '900', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Kulim Park' => array(
 				'variants' => array( '200', '200italic', '300', '300italic', 'regular', 'italic', '600', '600italic', '700', '700italic' ),
 				'category' => 'sans-serif',
@@ -2961,6 +3285,12 @@ function cpro_google_fonts_array() {
 			'Kumar One Outline' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
+			),
+		),
+		array(
+			'Kumbh Sans' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -2984,7 +3314,7 @@ function cpro_google_fonts_array() {
 		array(
 			'Laila' => array(
 				'variants' => array( '300', 'regular', '500', '600', '700' ),
-				'category' => 'serif',
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -3001,6 +3331,12 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Lancelot' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Langar' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
 			),
@@ -3054,44 +3390,50 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Lexend' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Lexend Deca' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
 		array(
 			'Lexend Exa' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
 		array(
 			'Lexend Giga' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
 		array(
 			'Lexend Mega' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
 		array(
 			'Lexend Peta' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
 		array(
 			'Lexend Tera' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
 		array(
 			'Lexend Zetta' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -3132,6 +3474,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Libre Barcode EAN13 Text' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Libre Baskerville' => array(
 				'variants' => array( 'regular', 'italic', '700' ),
 				'category' => 'serif',
@@ -3151,7 +3499,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Libre Franklin' => array(
-				'variants' => array( '100', '100italic', '200', '200italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic', '800', '800italic', '900', '900italic' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -3187,7 +3535,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Literata' => array(
-				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
+				'variants' => array( '200', '300', 'regular', '500', '600', '700', '800', '900', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -3535,7 +3883,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Merriweather Sans' => array(
-				'variants' => array( '300', '300italic', 'regular', 'italic', '700', '700italic', '800', '800italic' ),
+				'variants' => array( '300', 'regular', '500', '600', '700', '800', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -3684,6 +4032,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'MonteCarlo' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Montez' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -3786,7 +4140,7 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
-			'Muli' => array(
+			'Mulish' => array(
 				'variants' => array( '200', '300', 'regular', '500', '600', '700', '800', '900', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
 			),
@@ -3840,6 +4194,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Nerko One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Neucha' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -3858,9 +4218,21 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'New Tegomin' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'News Cycle' => array(
 				'variants' => array( 'regular', '700' ),
 				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Newsreader' => array(
+				'variants' => array( '200', '300', 'regular', '500', '600', '700', '800', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -4074,6 +4446,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Oi' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Old Standard TT' => array(
 				'variants' => array( 'regular', 'italic', '700' ),
 				'category' => 'serif',
@@ -4128,6 +4506,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Orelega One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Orienta' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'sans-serif',
@@ -4142,6 +4526,12 @@ function cpro_google_fonts_array() {
 		array(
 			'Oswald' => array(
 				'variants' => array( '200', '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Otomanopee One' => array(
+				'variants' => array( 'regular' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -4260,6 +4650,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Palette Mosaic' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Pangolin' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -4357,7 +4753,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Petrona' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -4365,6 +4761,12 @@ function cpro_google_fonts_array() {
 			'Philosopher' => array(
 				'variants' => array( 'regular', 'italic', '700', '700italic' ),
 				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Piazzolla' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -4476,6 +4878,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Potta One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Pragati Narrow' => array(
 				'variants' => array( 'regular', '700' ),
 				'category' => 'sans-serif',
@@ -4554,6 +4962,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Qahiri' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Quando' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'serif',
@@ -4627,7 +5041,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Raleway' => array(
-				'variants' => array( '100', '100italic', '200', '200italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic', '800', '800italic', '900', '900italic' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -4662,6 +5076,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Rampart One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Ranchers' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -4681,7 +5101,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Rasa' => array(
-				'variants' => array( '300', 'regular', '500', '600', '700' ),
+				'variants' => array( '300', 'regular', '500', '600', '700', '300italic', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'serif',
 			),
 		),
@@ -4698,6 +5118,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Recursive' => array(
+				'variants' => array( '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Red Hat Display' => array(
 				'variants' => array( 'regular', 'italic', '500', '500italic', '700', '700italic', '900', '900italic' ),
 				'category' => 'sans-serif',
@@ -4710,6 +5136,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Red Rose' => array(
+				'variants' => array( '300', 'regular', '500', '600', '700' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Redressed' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -4717,7 +5149,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Reem Kufi' => array(
-				'variants' => array( 'regular' ),
+				'variants' => array( 'regular', '500', '600', '700' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -4725,6 +5157,12 @@ function cpro_google_fonts_array() {
 			'Reenie Beanie' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'Reggae One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
 			),
 		),
 		array(
@@ -4777,7 +5215,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Roboto Mono' => array(
-				'variants' => array( '100', '100italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '700', '700italic' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'monospace',
 			),
 		),
@@ -4797,6 +5235,12 @@ function cpro_google_fonts_array() {
 			'Rock Salt' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
+			),
+		),
+		array(
+			'RocknRoll One' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -4836,6 +5280,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Rowdies' => array(
+				'variants' => array( '300', 'regular', '700' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Rozha One' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'serif',
@@ -4843,7 +5293,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Rubik' => array(
-				'variants' => array( '300', '300italic', 'regular', 'italic', '500', '500italic', '700', '700italic', '900', '900italic' ),
+				'variants' => array( '300', 'regular', '500', '600', '700', '800', '900', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -4908,6 +5358,18 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'STIX Two Math' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'STIX Two Text' => array(
+				'variants' => array( 'regular', '500', '600', '700', 'italic', '500italic', '600italic', '700italic' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Sacramento' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'handwriting',
@@ -4927,7 +5389,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Saira' => array(
-				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -4977,6 +5439,12 @@ function cpro_google_fonts_array() {
 			'Sansita' => array(
 				'variants' => array( 'regular', 'italic', '700', '700italic', '800', '800italic', '900', '900italic' ),
 				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Sansita Swashed' => array(
+				'variants' => array( '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'display',
 			),
 		),
 		array(
@@ -5124,6 +5592,18 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Shippori Mincho' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800' ),
+				'category' => 'serif',
+			),
+		),
+		array(
+			'Shippori Mincho B1' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Shojumaru' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -5155,7 +5635,7 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Signika' => array(
-				'variants' => array( '300', 'regular', '600', '700' ),
+				'variants' => array( '300', 'regular', '500', '600', '700' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -5280,6 +5760,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Sora' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Sorts Mill Goudy' => array(
 				'variants' => array( 'regular', 'italic' ),
 				'category' => 'serif',
@@ -5299,8 +5785,14 @@ function cpro_google_fonts_array() {
 		),
 		array(
 			'Source Serif Pro' => array(
-				'variants' => array( 'regular', '600', '700' ),
+				'variants' => array( '200', '200italic', '300', '300italic', 'regular', 'italic', '600', '600italic', '700', '700italic', '900', '900italic' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Space Grotesk' => array(
+				'variants' => array( '300', 'regular', '500', '600', '700' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -5400,6 +5892,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Stick' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'Stint Ultra Condensed' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
@@ -5421,6 +5919,12 @@ function cpro_google_fonts_array() {
 			'Strait' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Style Script' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
 			),
 		),
 		array(
@@ -5508,6 +6012,24 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Syne' => array(
+				'variants' => array( 'regular', '500', '600', '700', '800' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Syne Mono' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'monospace',
+			),
+		),
+		array(
+			'Syne Tactile' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Tajawal' => array(
 				'variants' => array( '200', '300', 'regular', '500', '700', '800', '900' ),
 				'category' => 'sans-serif',
@@ -5568,6 +6090,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Texturina' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'serif',
+			),
+		),
+		array(
 			'Thasadith' => array(
 				'variants' => array( 'regular', 'italic', '700', '700italic' ),
 				'category' => 'sans-serif',
@@ -5622,7 +6150,19 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Tourney' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'display',
+			),
+		),
+		array(
 			'Trade Winds' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Train One' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'display',
 			),
@@ -5631,6 +6171,12 @@ function cpro_google_fonts_array() {
 			'Trirong' => array(
 				'variants' => array( '100', '100italic', '200', '200italic', '300', '300italic', 'regular', 'italic', '500', '500italic', '600', '600italic', '700', '700italic', '800', '800italic', '900', '900italic' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Trispace' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -5643,6 +6189,12 @@ function cpro_google_fonts_array() {
 			'Trochut' => array(
 				'variants' => array( 'regular', 'italic', '700' ),
 				'category' => 'display',
+			),
+		),
+		array(
+			'Truculenta' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -5679,6 +6231,12 @@ function cpro_google_fonts_array() {
 			'Ubuntu Mono' => array(
 				'variants' => array( 'regular', 'italic', '700', '700italic' ),
 				'category' => 'monospace',
+			),
+		),
+		array(
+			'Uchen' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'serif',
 			),
 		),
 		array(
@@ -5736,6 +6294,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Urbanist' => array(
+				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
 			'VT323' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'monospace',
@@ -5756,6 +6320,12 @@ function cpro_google_fonts_array() {
 		array(
 			'Varela Round' => array(
 				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Varta' => array(
+				'variants' => array( '300', 'regular', '500', '600', '700' ),
 				'category' => 'sans-serif',
 			),
 		),
@@ -5868,6 +6438,12 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'WindSong' => array(
+				'variants' => array( 'regular', '500' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Wire One' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'sans-serif',
@@ -5877,6 +6453,12 @@ function cpro_google_fonts_array() {
 			'Work Sans' => array(
 				'variants' => array( '100', '200', '300', 'regular', '500', '600', '700', '800', '900', '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic' ),
 				'category' => 'sans-serif',
+			),
+		),
+		array(
+			'Xanh Mono' => array(
+				'variants' => array( 'regular', 'italic' ),
+				'category' => 'monospace',
 			),
 		),
 		array(
@@ -5922,9 +6504,21 @@ function cpro_google_fonts_array() {
 			),
 		),
 		array(
+			'Yomogi' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'handwriting',
+			),
+		),
+		array(
 			'Yrsa' => array(
-				'variants' => array( '300', 'regular', '500', '600', '700' ),
+				'variants' => array( '300', 'regular', '500', '600', '700', '300italic', 'italic', '500italic', '600italic', '700italic' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Yusei Magic' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'sans-serif',
 			),
 		),
 		array(
@@ -5943,6 +6537,24 @@ function cpro_google_fonts_array() {
 			'ZCOOL XiaoWei' => array(
 				'variants' => array( 'regular' ),
 				'category' => 'serif',
+			),
+		),
+		array(
+			'Zen Dots' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Zen Loop' => array(
+				'variants' => array( 'regular', 'italic' ),
+				'category' => 'display',
+			),
+		),
+		array(
+			'Zen Tokyo Zoo' => array(
+				'variants' => array( 'regular' ),
+				'category' => 'display',
 			),
 		),
 		array(

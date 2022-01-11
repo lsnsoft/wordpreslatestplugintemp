@@ -43,6 +43,10 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		add_action( 'wp_ajax_uabb_registration_form', array( $this, 'register_user' ) );
 		add_action( 'wp_ajax_nopriv_uabb_registration_form', array( $this, 'register_user' ) );
 		add_filter( 'wp_new_user_notification_email', array( $this, 'uabb_custom_wp_new_user_notification_email' ), 10, 3 );
+		add_action( 'show_user_profile', array( $this, 'show_user_extra_field' ) );
+		add_action( 'edit_user_profile', array( $this, 'show_user_extra_field' ) );
+		add_action( 'personal_options_update', array( $this, 'update_user_profile' ) );
+		add_action( 'edit_user_profile_update', array( $this, 'update_user_profile' ) );
 	}
 	/**
 	 * Function that enqueue's the scripts
@@ -67,6 +71,9 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		}
 		if ( isset( $settings->check_password_strength ) && 'yes' === $settings->check_password_strength ) {
 			$this->add_js( 'password-strength-meter' );
+		}
+		if ( isset( $settings->fields_icon ) && 'show' === $settings->fields_icon ) {
+			$this->add_css( 'font-awesome-5' );
 		}
 	}
 	/**
@@ -117,6 +124,47 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 		return $wp_new_user_notification_email;
 	}
+		/**
+		 * Show extra phone field on user profile page.
+		 *
+		 * @since 1.30.0
+		 * @param object $user WP_User object.
+		 * @access public
+		 */
+	public static function show_user_extra_field( $user ) {
+		$phone = get_user_meta( $user->ID, 'phone', true );
+		if ( empty( $phone ) ) {
+			return;
+		}
+		?>
+		<h3><?php echo esc_html__( 'Extra profile information', 'uabb' ); ?></h3>
+		<table class="form-table">
+			<tr>
+				<th><label for="phone"><?php echo esc_html__( 'Phone Number', 'uabb' ); ?></label></th>
+				<td>
+					<input type="text" name="phone" id="phone" value="<?php echo esc_attr( $phone ); ?>" class="regular-text" placeholder="<?php echo esc_attr( 'Enter your phone number' ); ?>" /><br />
+				</td>
+			</tr>
+		</table>
+		<?php
+	}
+
+	/**
+	 * Update extra phone field on user profile page.
+	 *
+	 * @since 1.30.0
+	 * @param int $user_id WP_User object.
+	 * @access public
+	 */
+	public function update_user_profile( $user_id ) {
+		if ( ! current_user_can( 'edit_user', $user_id ) ) {
+			return false;
+		}
+
+		if ( ! empty( $_POST['phone'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing
+			update_user_meta( $user_id, 'phone', intval( $_POST['phone'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
+		}
+	}
 	/**
 	 * Function that Create a user
 	 *
@@ -151,7 +199,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 			}
 		}
 
-		if ( isset( $_POST['data'] ) && '1' === $allow_register ) {
+		if ( isset( $_POST['data'] ) && $allow_register ) {
 
 			$data = $_POST['data'];
 
@@ -259,6 +307,8 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 			$last_name = ( isset( $data['last_name'] ) && ! empty( $data['last_name'] ) ) ? sanitize_user( $data['last_name'], true ) : '';
 
+			$phone = ( isset( $data['phone'] ) && ! empty( $data['phone'] ) ) ? sanitize_user( $data['phone'], true ) : '';
+
 			if ( true === $error_flag ) {
 
 				$response['success'] = false;
@@ -276,12 +326,20 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 						'user_email'      => isset( $user_email ) ? $user_email : '',
 						'first_name'      => isset( $first_name ) ? $first_name : '',
 						'last_name'       => isset( $last_name ) ? $last_name : '',
+						'phone'           => isset( $phone ) ? $phone : '',
 						'user_registered' => gmdate( 'Y-m-d H:i:s' ),
 						'role'            => $user_role,
 					)
 				);
+				$phone_val = $user_args['phone'];
+
+				unset( $user_args['phone'] );
 
 				$result = wp_insert_user( $user_args );
+
+				if ( ! is_wp_error( $result ) ) {
+					update_user_meta( $result, 'phone', $phone_val );
+				}
 
 				if ( ! is_wp_error( $result ) ) {
 
@@ -359,6 +417,20 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 		$required_class = '';
 
+		$field_icon_list = array();
+
+		if ( 'show' === $this->settings->fields_icon ) {
+			$field_icon_list = array(
+				'user_login'   => 'fa fa-user',
+				'user_email'   => 'fas fa-envelope',
+				'user_pass'    => 'fa fa-lock',
+				'first_name'   => 'fa fa-user',
+				'last_name'    => 'fa fa-user',
+				'confirm_pass' => 'fa fa-lock',
+				'phone'        => 'fas fa-phone-alt',
+			);
+		}
+
 		if ( 'yes' === $this->settings->required_mark_label ) {
 			$required_class = 'uabb-rform-requried-' . $error_class;
 		}
@@ -372,7 +444,12 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 			<?php } ?>
 			<div class="uabb-form-outter">
 				<input type="<?php echo esc_attr( $type ); ?>" aria-label="<?php echo esc_attr( $field_name ); ?>" name="uabb_<?php echo esc_attr( $field_name ); ?>" value="" class="uabb-registration-form-requried-<?php echo esc_attr( $error_class ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
-				<?php if ( 'email' === $type ) { ?>
+				<?php
+				if ( 'show' === $this->settings->fields_icon ) {
+					echo '<span class="uabb-fields-icon"><i class="' . wp_kses_post( $field_icon_list[ $field_name ] ) . '"></i></span>';
+				}
+				if ( 'email' === $type ) {
+					?>
 					<div class="uabb-registration_form-error-message uabb-registration_form-error-message-required"><span class="uabb-registration-form-invalid-field"></div>
 				<?php } else { ?>
 					<div class="uabb-registration_form-error-message uabb-registration_form-error-message-required"></div>
@@ -449,6 +526,14 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 						'responsive' => $item->field_width_responsive,
 					);
 					$this->create_field( $item->field_type, 'text', $item->field_label, $item->field_required, $field_width, $item->field_placeholder );
+					break;
+				case 'phone':
+					$field_width = array(
+						'desktop'    => $item->field_width,
+						'medium'     => $item->field_width_medium,
+						'responsive' => $item->field_width_responsive,
+					);
+					$this->create_field( $item->field_type, 'tel', $item->field_label, $item->field_required, $field_width, $item->field_placeholder );
 					break;
 				default:
 					break;

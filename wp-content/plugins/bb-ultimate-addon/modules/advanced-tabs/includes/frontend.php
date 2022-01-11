@@ -12,8 +12,12 @@ if ( 'underline' === $settings->style ) {
 	$settings->style         = 'topline';
 	$settings->line_position = 'bottom';
 }
+$tab_positions = '';
+if ( 'vertical' === $settings->tab_layout ) {
+	$tab_positions = 'uabb-tab-position-' . $settings->tab_position;
+}
 ?>
-	<div class="uabb-module-content uabb-tabs uabb-tabs-layout-<?php echo esc_attr( $settings->tab_layout ); ?> uabb-tabs-style-<?php echo esc_attr( $settings->style ); ?>">
+	<div class="uabb-module-content uabb-tabs uabb-tabs-layout-<?php echo esc_attr( $settings->tab_layout ); ?> <?php echo esc_attr( $tab_positions ); ?> uabb-tabs-style-<?php echo esc_attr( $settings->style ); ?>">
 		<nav class="uabb-tabs-nav uabb-tabs-nav<?php echo esc_attr( $id ); ?>">
 			<ul>
 				<?php
@@ -27,7 +31,13 @@ if ( 'underline' === $settings->style ) {
 					?>
 				<li class="<?php echo ( (int) $settings->active_tab === $i ) ? 'uabb-tab-current' : ''; ?>" data-index="<?php echo esc_attr( $i ); ?>">
 					<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-tag-selected">
-						<a class="uabb-tab-link" href="javascript:void(0);" class=""><?php echo wp_kses_post( $class ); ?><span class="uabb-tab-title"><?php echo $settings->items[ $i ]->label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
+						<a class="uabb-tab-link" href="javascript:void(0);" class=""><?php echo wp_kses_post( $class ); ?><span class="uabb-tab-title"><?php echo $settings->items[ $i ]->label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<?php if ( isset( $settings->items[ $i ]->description ) && ! empty( $settings->items[ $i ]->description ) ) { ?>
+					<div class="uabb-tab-description">
+							<?php echo $settings->items[ $i ]->description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+				<?php } ?>
+						</a>
 					</<?php echo esc_attr( $settings->title_tag_selection ); ?>>
 				</li>
 				<?php endfor; ?>
@@ -43,7 +53,7 @@ if ( 'underline' === $settings->style ) {
 				$class = ( 'yes' === $settings->show_icon || 'iconfall' === $settings->style ) ? '<span class="uabb-tabs-icon"><i class= " ' . $settings->items[ $i ]->tab_icon . '"></i></span>' : '';
 				?>
 
-			<div id="section-<?php echo esc_attr( $settings->style ); ?>-<?php echo esc_attr( $i ); ?>" class="<?php echo esc_attr( $settings->id ) . '-' . esc_attr( $i ); ?> section <?php echo ( 0 === $i ) ? 'uabb-content-current' : ''; ?>">
+			<div id="section-<?php echo esc_attr( $settings->style ); ?>-<?php echo esc_attr( $i ); ?>" class="<?php echo esc_attr( $settings->id ) . '-' . esc_attr( $i ); ?> section <?php echo ( (int) $settings->active_tab === $i ) ? 'uabb-content-current' : ''; ?>">
 				<?php if ( 'accordion' === $settings->responsive ) : ?>
 				<div class="uabb-tab-acc-title uabb-acc-<?php echo esc_attr( $i ); ?>">
 					<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-title-tag">

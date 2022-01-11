@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Ultimate Addons for Beaver Builder
  * Plugin URI: http://www.ultimatebeaver.com/
- * Description: Ultimate Addons is a premium extension for Beaver Builder that adds 55+ modules, 250+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro & Agency) You can use it with any WordPress theme.
- * Version: 1.27.0
+ * Description: Ultimate Addons is a premium extension for Beaver Builder that adds 70+ modules, 250+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro & Agency) You can use it with any WordPress theme.
+ * Version: 1.34.2
  * Author: Brainstorm Force
  * Author URI: http://www.brainstormforce.com
  * Text Domain: uabb
@@ -33,13 +33,14 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 			register_activation_hook( __FILE__, array( $this, 'activation_reset' ) );
 			// UABB Initialize.
 			require_once 'classes/class-uabb-init.php';
+			add_filter( 'bsf_is_product_bundled', array( $this, 'remove_astra_pro_bundled_products' ), 20, 3 );
 		}
 		/**
 		 * Function which defines the constand for UABB plugin
 		 */
 		public function define_constant() {
 
-			define( 'BB_ULTIMATE_ADDON_VER', '1.27.0' );
+			define( 'BB_ULTIMATE_ADDON_VER', '1.34.2' );
 			define( 'BB_ULTIMATE_ADDON_DIR', plugin_dir_path( __FILE__ ) );
 			define( 'BB_ULTIMATE_ADDON_URL', plugins_url( '/', __FILE__ ) );
 			define( 'BSF_REMOVE_UABB_FROM_REGISTRATION_LISTING', true );
@@ -108,6 +109,35 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 				}
 			}
 		}
+
+		/**
+		 * Remove bundled products for Astra Pro Sites.
+		 * For Astra Pro Sites the bundled products are only used for one click plugin installation when importing the Astra Site.
+		 * License Validation and product updates are managed separately for all the products.
+		 *
+		 * @since x.x.x
+		 *
+		 * @param  array  $product_parent  Array of parent product ids.
+		 * @param  String $bsf_product    Product ID or  Product init or Product name based on $search_by.
+		 * @param  String $search_by      Reference to search by id | init | name of the product.
+		 *
+		 * @return array                 Array of parent product ids.
+		 */
+		public function remove_astra_pro_bundled_products( $product_parent, $bsf_product, $search_by ) {
+
+			// Bundled plugins are installed when the demo is imported on Ajax request and bundled products should be unchanged in the ajax.
+			if ( ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) ) {
+
+				$key = array_search( 'astra-pro-sites', $product_parent, true );
+
+				if ( false !== $key ) {
+					unset( $product_parent[ $key ] );
+				}
+			}
+
+			return $product_parent;
+		}
+
 	}
 
 	new BB_Ultimate_Addon();

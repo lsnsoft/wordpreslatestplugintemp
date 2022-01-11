@@ -49,7 +49,8 @@ if ( ! class_exists( 'Astra_Addon_Page_Builder_Compatibility' ) ) :
 		public function get_active_page_builder( $post_id ) {
 
 			global $wp_post_types;
-			$post = get_post( $post_id );
+			$post      = get_post( $post_id );
+			$post_type = get_post_type( $post_id );
 
 			if ( class_exists( '\Elementor\Plugin' ) ) {
 				if ( ( version_compare( ELEMENTOR_VERSION, '1.5.0', '<' ) &&
@@ -63,7 +64,7 @@ if ( ! class_exists( 'Astra_Addon_Page_Builder_Compatibility' ) ) :
 				return Astra_Addon_Thrive_Compatibility::get_instance();
 			}
 
-			if ( class_exists( 'FLBuilderModel' ) && apply_filters( 'fl_builder_do_render_content', true, FLBuilderModel::get_post_id() ) && get_post_meta( $post_id, '_fl_builder_enabled', true ) ) {
+			if ( class_exists( 'FLBuilderModel' ) && apply_filters( 'fl_builder_do_render_content', true, FLBuilderModel::get_post_id() ) && get_post_meta( $post_id, '_fl_builder_enabled', true ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				return Astra_Addon_Beaver_Builder_Compatibility::get_instance();
 			}
 
@@ -89,10 +90,9 @@ if ( ! class_exists( 'Astra_Addon_Page_Builder_Compatibility' ) ) :
 				}
 			}
 
-			$editor_type      = get_post_meta( $post_id, 'editor_type', true );
-			$has_rest_support = $wp_post_types[ ASTRA_ADVANCED_HOOKS_POST_TYPE ]->show_in_rest;
+			$has_rest_support = isset( $wp_post_types[ $post_type ]->show_in_rest ) ? $wp_post_types[ $post_type ]->show_in_rest : false;
 
-			if ( 'wordpress_editor' === $editor_type && $has_rest_support ) {
+			if ( $has_rest_support ) {
 				return new Astra_Addon_Gutenberg_Compatibility();
 			}
 

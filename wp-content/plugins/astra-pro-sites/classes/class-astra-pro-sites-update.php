@@ -74,7 +74,7 @@ if ( ! class_exists( 'Astra_Pro_Sites_Update' ) ) :
 			update_site_option( 'bsf_force_check_extensions', true );
 
 			// Auto update product latest version.
-			update_option( 'astra-pro-sites-auto-version', ASTRA_PRO_SITES_VER );
+			update_option( 'astra-pro-sites-auto-version', ASTRA_PRO_SITES_VER, 'no' );
 
 			do_action( 'astra_pro_sites_update_after' );
 		}

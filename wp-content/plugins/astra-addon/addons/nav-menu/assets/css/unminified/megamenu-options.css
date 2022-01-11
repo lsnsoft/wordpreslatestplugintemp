@@ -234,7 +234,7 @@
 }
 
 .astra-option-input-container .select2-container {
-  width: 50% !important;
+  width: 60% !important;
 }
 
 .astra-option-input-container .select2-search__field, .astra-option-input-container .select2-search--inline {
@@ -413,3 +413,55 @@
 }
 
 /* WP Beta 5.3 compatibility CSS - Start */
+/* New Advanced spacing control CSS starts */
+.astra-mm-settings-wrap .spacing-wrapper {
+  -js-display: inline-flex;
+  display: inline-flex;
+}
+
+.spacing-wrapper .ast-mm-spacing-wrap {
+  -js-display: inline-flex;
+  display: inline-flex;
+  width: calc(100% - 40px);
+}
+
+.ast-mm-spacing-wrap li {
+  text-align: center;
+  width: 20%;
+  margin-bottom: 0;
+}
+
+.ast-mm-spacing-wrap li:not(:first-child) .ast-mm-input {
+  border-left: none;
+}
+
+.ast-mm-spacing-wrap .ast-mm-input {
+  text-align: center;
+  display: block;
+  font-size: 12px;
+  padding: 4px;
+  width: 100%;
+  height: 28px;
+  border: 1px solid #dddddd;
+  box-shadow: none;
+  padding-left: 11px;
+  border-radius: 0;
+}
+
+.ast-mm-spacing-wrap .ast-mm-input:focus {
+  border-color: #ddd;
+  box-shadow: none;
+}
+
+.ast-mm-spacing-wrap .ast-mm-input:active {
+  border-color: #ddd;
+  box-shadow: none;
+}
+
+.ast-mm-spacing-wrap .ast-spacing-title {
+  text-transform: uppercase;
+  font-size: 10px;
+  opacity: .75;
+}
+
+/* New Advanced spacing control CSS ends */

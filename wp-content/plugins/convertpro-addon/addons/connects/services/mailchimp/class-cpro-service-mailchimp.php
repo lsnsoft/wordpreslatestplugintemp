@@ -379,11 +379,12 @@ final class CPRO_Service_MailChimp extends CPRO_Service {
 	 * @since 1.0.0
 	 * @param object $settings A module settings object.
 	 * @param string $email The email to subscribe.
+	 * @param array  $dynamic_tags get the dynamic tags via checkboxes.
 	 * @return array {
 	 *      @type bool|string $error The error message or false if no error.
 	 * }
 	 */
-	public function subscribe( $settings, $email ) {
+	public function subscribe( $settings, $email, $dynamic_tags ) {
 
 		$account_data = ConvertPlugServices::get_account_data( $settings['api_connection'] );
 
@@ -452,6 +453,7 @@ final class CPRO_Service_MailChimp extends CPRO_Service {
 				$data['interests'] = $group_arr;
 			}
 
+			$data['segments'] = array();
 			if ( isset( $settings['mailchimp_segments'] ) && -1 !== $settings['mailchimp_segments'] ) {
 				$tag_arr = array();
 				$i       = 0;
@@ -460,6 +462,15 @@ final class CPRO_Service_MailChimp extends CPRO_Service {
 					$i++;
 				}
 				$data['segments'] = $tag_arr;
+			}
+
+			/**
+			 * Dynamic Tags support from the Checkboxes selection.
+			 * As MailChimp tags are accepted as array format.
+			 * So $dynamic_tags variable will receive in array.
+			 */
+			if ( ! empty( $dynamic_tags ) ) {
+				$data['segments'] = array_merge( $data['segments'], $dynamic_tags );
 			}
 
 			// Subscribe.

@@ -27,6 +27,9 @@ $shortcode = '[cp_popup display="inline" style_id="' . $style . '" step_id = "' 
 $optin_form = array();
 
 
+
+$form_validation_link = 'You can refer to the article <a rel="noopener" target="_blank" href="' . esc_url_raw( 'https://www.convertpro.net/docs/how-to-enable-form-field-validation/' ) . '">here.</a>';
+
 $recaptcha_setting_link = 'You can set reCaptcha Site Key and Secret Key <a rel="noopener" target="_blank" href="' . CP_V2_Tab_Menu::get_page_url( 'general-settings' ) . '#recaptcha">here.</a>';
 /*** Array contains Configure options */
 $configure = array(
@@ -70,6 +73,91 @@ $configure = array(
 		'section'      => 'Configure',
 		'section_icon' => 'cp-icon-launch',
 		'category'     => 'After Few Seconds on Page',
+	),
+	array(
+		'type'         => 'switch',
+		'class'        => '',
+		'name'         => 'autoload_on_no_page_visit',
+		'opts'         => array(
+			'title'       => '',
+			'value'       => false,
+			'on'          => __( 'ON', 'convertpro' ),
+			'off'         => __( 'OFF', 'convertpro' ),
+			'description' => '',
+			'tags'        => 'autoload,seconds,after,launch,smart',
+		),
+		'panel'        => 'Launch',
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'category'     => 'After Number of Page Visits',
+	),
+	array(
+		'type'         => 'number',
+		'class'        => '',
+		'name'         => 'load_on_no_page_visit',
+		'opts'         => array(
+			'title'  => __( 'Display when a user viewed number of pages count:', 'convertpro' ),
+			'value'  => 1,
+			'min'    => 1,
+			'max'    => 100,
+			'step'   => 1,
+			'suffix' => '',
+			'tags'   => 'load,seconds,after,duration,launch,smart',
+		),
+		'panel'        => 'Launch',
+		'dependency'   => array(
+			'name'     => 'autoload_on_no_page_visit',
+			'operator' => '==',
+			'value'    => '1',
+		),
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'category'     => 'After Number of Page Visits',
+	),
+	array(
+		'type'         => 'dropdown',
+		'name'         => 'load_on_page_visit_type',
+		'opts'         => array(
+			'options' => array(
+				'is-more-than' => __( 'Is more than', 'convertpro' ),
+				'is-less-than' => __( 'Is less than', 'convertpro' ),
+			),
+			'value'   => 'is-more-than',
+			'tags'    => 'load,seconds,after,duration,launch,smart',
+		),
+		'panel'        => 'Launch',
+		'dependency'   => array(
+			'name'     => 'autoload_on_no_page_visit',
+			'operator' => '==',
+			'value'    => '1',
+		),
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'category'     => 'After Number of Page Visits',
+	),
+	array(
+		'type'         => 'txt-link',
+		'class'        => '',
+		'name'         => 'cp_show_note_page_view',
+		'opts'         => array(
+			'link'  => __(
+				'<strong>Note: </strong>If Cookie is enabled and user performs the Close/Submit action, then on next visit of the site, this popup will not be triggered as the cookie will be set for it.
+<br><br><strong>For more information you can refer to the article <a rel="noopener" target="_blank" href="https://www.convertpro.net/docs/trigger-popup-based-on-page-visits/">here.</a></strong>',
+				'convertpro'
+			),
+			'value' => '',
+			'title' => '',
+			'class' => 'cp-show-note-page-view',
+		),
+		'panel'        => 'Launch',
+		'dependency'   => array(
+			'name'     => 'autoload_on_no_page_visit',
+			'operator' => '==',
+			'value'    => '1',
+		),
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'category'     => 'After Number of Page Visits',
 	),
 	array(
 		'type'         => 'switch',
@@ -257,9 +345,10 @@ $configure = array(
 			'value'       => 'both',
 			'description' => __( 'Select the position, where you want to display module inline.', 'convertpro' ),
 			'options'     => array(
-				'before_post' => __( 'Before Post', 'convertpro' ),
-				'after_post'  => __( 'After Post', 'convertpro' ),
-				'both'        => __( 'Both', 'convertpro' ),
+				'before_post'     => __( 'Before Post', 'convertpro' ),
+				'after_post'      => __( 'After Post', 'convertpro' ),
+				'both'            => __( 'Both', 'convertpro' ),
+				'between_content' => __( 'Inside Post/Page Content', 'convertpro' ),
 			),
 			'tags'        => 'inline,position,launch,smart',
 		),
@@ -271,6 +360,75 @@ $configure = array(
 			'operator' => '==',
 			'value'    => 'true',
 		),
+	),
+	array(
+		'type'         => 'dropdown',
+		'class'        => '',
+		'name'         => 'select_inline_location',
+		'opts'         => array(
+			'title'       => __( 'Location on post/page', 'convertpro' ),
+			'value'       => 'after_blocks',
+			'description' => __( 'Popup will be displayed at a selected location on post/page block editor only.', 'convertpro' ),
+			'options'     => array(
+				'after_blocks'    => __( 'After certain number of blocks', 'convertpro' ),
+				'before_headings' => __( 'Before certain number of Heading blocks', 'convertpro' ),
+			),
+			'tags'        => 'inline,position,launch,smart',
+		),
+		'panel'        => 'Launch',
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'dependency'   => array(
+			'name'     => 'inline_position',
+			'operator' => '==',
+			'value'    => 'between_content',
+		),
+	),
+	array(
+		'type'         => 'number',
+		'class'        => '',
+		'name'         => 'number_of_layout',
+		'opts'         => array(
+			'title'  => __( 'Layout will be inserted after selected number of blocks:', 'convertpro' ),
+			'value'  => 1,
+			'min'    => 1,
+			'max'    => 100,
+			'step'   => 1,
+			'suffix' => 'Blocks',
+			'tags'   => 'load,seconds,after,launch,smart',
+		),
+		'panel'        => 'Launch',
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'dependency'   =>
+			array(
+				'name'     => 'select_inline_location',
+				'operator' => '==',
+				'value'    => 'after_blocks',
+			),
+	),
+	array(
+		'type'         => 'number',
+		'class'        => '',
+		'name'         => 'number_of_layout_heading',
+		'opts'         => array(
+			'title'  => __( 'Layout will be inserted before the selected number of Heading blocks.', 'convertpro' ),
+			'value'  => 1,
+			'min'    => 1,
+			'max'    => 100,
+			'step'   => 1,
+			'suffix' => 'Blocks',
+			'tags'   => 'load,seconds,after,launch,smart',
+		),
+		'panel'        => 'Launch',
+		'section'      => 'Configure',
+		'section_icon' => 'cp-icon-launch',
+		'dependency'   =>
+			array(
+				'name'     => 'select_inline_location',
+				'operator' => '==',
+				'value'    => 'before_headings',
+			),
 	),
 	array(
 		'type'         => 'switch',
@@ -1414,6 +1572,7 @@ $collect = apply_filters( 'cp_collect_option', $collect );
 			'MM-DD-YYYY' => __( 'MM-DD-YYYY', 'convertpro' ),
 			'DD/MM/YYYY' => __( 'DD/MM/YYYY', 'convertpro' ),
 			'DD-MM-YYYY' => __( 'DD-MM-YYYY', 'convertpro' ),
+			'YYYY-MM-DD' => __( 'YYYY-MM-DD', 'convertpro' ),
 			'MM/DD'      => __( 'MM/DD', 'convertpro' ),
 		);
 
@@ -3829,6 +3988,70 @@ $collect = apply_filters( 'cp_collect_option', $collect );
 							'target' => '.cp-target',
 						),
 					),
+					array(
+						'id'            => 'reg_ex_validation',
+						'name'          => 'reg_ex_validation',
+						'type'          => 'switch',
+						'label'         => __( 'Enable Validation', 'convertpro' ),
+						'suffix'        => '',
+						'default_value' => false,
+						'description'   => __( 'Do you wish to Enable the validation?', 'convertpro' ),
+						'options'       => array(
+							'on'  => __( 'YES', 'convertpro' ),
+							'off' => __( 'NO', 'convertpro' ),
+						),
+						'map'           => array(
+							'attr'   => 'input_reg_pattern',
+							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'            => 'input_reg_ex_text',
+						'name'          => 'input_reg_ex_text',
+						'type'          => 'text',
+						'suffix'        => '',
+						'label'         => __( 'Enter the Regular Expression', 'convertpro' ),
+						'default_value' => '[A-Za-z\s]+',
+						'dependency'    => array(
+							'name'     => 'reg_ex_validation',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+						'map'           => array(
+							'attr'   => 'pattern',
+							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'            => 'input_reg_ex_title',
+						'name'          => 'input_reg_ex_title',
+						'type'          => 'text',
+						'suffix'        => '',
+						'label'         => __( 'Enter the Message Title', 'convertpro' ),
+						'default_value' => __( 'Enter the Name', 'convertpro' ),
+						'dependency'    => array(
+							'name'     => 'reg_ex_validation',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+						'map'           => array(
+							'attr'   => 'title',
+							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'         => 'reg_ex_validation_link',
+						'name'       => 'reg_ex_validation_link',
+						'class'      => 'cpro-reg-ex-validation-link',
+						'type'       => 'label',
+						'label'      => /* translators:%s module name .*/
+						sprintf( __( '%s ', 'convertpro' ), $form_validation_link ), // PHPCS:ignore WordPress.WP.I18n.NoEmptyStrings,
+						'dependency' => array(
+							'name'     => 'reg_ex_validation',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+					),
 				),
 			),
 			array(
@@ -3945,9 +4168,9 @@ $collect = apply_filters( 'cp_collect_option', $collect );
 	$cp_form_name_options = apply_filters( 'cp_form_name_options', $cp_form_name_options );
 
 	$cp_form_phone_options = array(
-		'type'         => 'cp_text',
+		'type'         => 'cp_number',
 		'class'        => '',
-		'name'         => 'cp_text_2',
+		'name'         => 'cp_number',
 		'opts'         => array(
 			'title'          => __( 'Phone', 'convertpro' ),
 			'value'          => '',
@@ -3964,7 +4187,7 @@ $collect = apply_filters( 'cp_collect_option', $collect );
 						'id'            => 'input_text_name',
 						'name'          => 'input_text_name',
 						'type'          => 'hidden',
-						'label'         => __( 'Number', 'convertpro' ),
+						'label'         => __( 'Name', 'convertpro' ),
 						'default_value' => 'numberfield',
 						'suffix'        => '',
 						'map'           => array(
@@ -3977,7 +4200,7 @@ $collect = apply_filters( 'cp_collect_option', $collect );
 						'name'          => 'input_text_placeholder',
 						'type'          => 'text',
 						'suffix'        => '',
-						'label'         => __( 'Number', 'convertpro' ),
+						'label'         => __( 'Name', 'convertpro' ),
 						'default_value' => __( 'Phone', 'convertpro' ),
 						'map'           => array(
 							'attr'   => 'placeholder',
@@ -4014,6 +4237,70 @@ $collect = apply_filters( 'cp_collect_option', $collect );
 						'map'           => array(
 							'attr'   => 'required',
 							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'            => 'reg_ex_validation',
+						'name'          => 'reg_ex_validation',
+						'type'          => 'switch',
+						'label'         => __( 'Enable Validation', 'convertpro' ),
+						'description'   => __( 'Do you wish to Enable the validation?', 'convertpro' ),
+						'suffix'        => '',
+						'default_value' => false,
+						'options'       => array(
+							'on'  => __( 'YES', 'convertpro' ),
+							'off' => __( 'NO', 'convertpro' ),
+						),
+						'map'           => array(
+							'attr'   => 'pattern',
+							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'            => 'input_reg_ex_text',
+						'name'          => 'input_reg_ex_text',
+						'type'          => 'text',
+						'suffix'        => '',
+						'label'         => __( 'Enter the Regular Expression', 'convertpro' ),
+						'default_value' => __( '[0-9]{10}', 'convertpro' ),
+						'dependency'    => array(
+							'name'     => 'reg_ex_validation',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+						'map'           => array(
+							'attr'   => 'input_reg_pattern',
+							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'            => 'input_reg_ex_title',
+						'name'          => 'input_reg_ex_title',
+						'type'          => 'text',
+						'suffix'        => '',
+						'label'         => __( 'Enter the Message Title', 'convertpro' ),
+						'default_value' => __( 'Enter the Number.', 'convertpro' ),
+						'dependency'    => array(
+							'name'     => 'reg_ex_validation',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+						'map'           => array(
+							'attr'   => 'title',
+							'target' => '.cp-target',
+						),
+					),
+					array(
+						'id'         => 'reg_ex_validation_link',
+						'name'       => 'reg_ex_validation_link',
+						'class'      => 'cpro-reg-ex-validation-link',
+						'type'       => 'label',
+						'label'      => /* translators:%s module name .*/
+						sprintf( __( '%s ', 'convertpro' ), $form_validation_link ), // PHPCS:ignore WordPress.WP.I18n.NoEmptyStrings,
+						'dependency' => array(
+							'name'     => 'reg_ex_validation',
+							'operator' => '==',
+							'value'    => 'true',
 						),
 					),
 				),

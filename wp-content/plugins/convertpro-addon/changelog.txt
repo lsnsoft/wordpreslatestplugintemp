@@ -1,3 +1,46 @@
+Version 1.5.5 July 14, 2021
+- Improvement: Email ID not added with a plus(+) sign in ElasticEmail campaign.
+- Fix: Assets loading URI Double slash causing Cloudflare firewall false-positive.
+
+Version 1.5.4 May 25, 2021
+
+- Improvement: Added dynamic API's Tags support for ConvertKit API. (https://www.convertpro.net/docs/add-dynamic-tag-support-for-autoresponder/)
+- Fix: ElasticEmail where to find the PublicAccountID link updated.
+
+Version 1.5.3 April 21, 2021
+
+- Improvement: Added dynamic API's Tags support for MailChimp, ActiveCampaign, FluentCRM, and GetResponse. (https://www.convertpro.net/docs/add-dynamic-tag-support-for-autoresponder/)
+- Fix: Mailster Integration - Already subscribed user status changes to pending when double-opt-in enabled.
+- Fix: Infusionsoft Integration - Not able to authenticate - each() deprecated PHP 8.0
+
+Version 1.5.2 March 11, 2021
+
+- Fix: MailerLite API - Groups limit increased by 500.
+
+Version 1.5.1 February 25, 2021
+
+- Improvement: Show Analytics report Datewise.
+- Improvement: Support latest jQuery function deprecations.
+- Fix: AB test - Popups configuration setting not saving correctly.
+- Fix: Fetch popups paginated Google Analytics data on the dashboard.
+
+Version 1.5.0 February 01, 2021
+
+- New: FluentCRM Integration. (https://www.convertpro.net/docs/integrate-convert-pro-with-fluentcrm/)
+- Improvement: Added Get Response API tags support. (https://www.convertpro.net/docs/how-to-connect-convert-pro-with-getresponse/)
+- Improvement: Added Sendinblue V3 API - Double-opt-in option support. (https://www.convertpro.net/docs/how-to-connect-convert-pro-with-sendinblue/)
+- Fix: Mailpoet V3 custom fields not mapping.
+- Fix: Update existing Contact via Aweber API.
+- Fix: Location not setting correctly via Mautic Form ID integration.
+
+Version 1.4.4 December 09, 2020
+
+Improvement: Import CTA templates compatibility with PHP 8.0 - Deprecated: Function zip_open.
+Improvement: SendGrid Integration: Added reserved fields for mapping the form fields.
+Fix: Added filter to remove unnecessary Convertfox script loader on wp footer.
+Fix: Contacts not added to selected Segments in Mautic v3.
+Fix: ActiveCampaign Integration: Multiple checkboxes form field values not mapping correctly with AC checkbox field.
+
 Version 1.4.3 September 14, 2020
 
 Improvement: Sendinblue API V3 support.

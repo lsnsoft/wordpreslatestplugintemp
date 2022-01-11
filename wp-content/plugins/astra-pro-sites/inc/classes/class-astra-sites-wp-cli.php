@@ -89,7 +89,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			$search   = isset( $assoc_args['search'] ) ? $assoc_args['search'] : '';
 
 			$rest_args = array(
-				'_fields'  => 'id,title,slug,astra-site-category,astra-site-page-builder,astra-sites-tag,astra-site-type,astra-site-url',
+				'_fields'  => 'id,title,slug,astra-sites-site-category,astra-site-page-builder,astra-site-type,astra-site-url',
 				'per_page' => $per_page,
 			);
 
@@ -180,7 +180,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( 'free' !== $demo_data['site-type'] && 'upgrade' === $demo_data['license-status'] && ! $license_status ) {
 
 				if ( ! defined( 'ASTRA_PRO_SITES_NAME' ) ) {
-					WP_CLI::line( __( 'This is Agency site. Please activate the "Starter Templates" license!', 'astra-sites' ) );
+					WP_CLI::line( __( 'This is Premium site. Please activate the "Starter Templates" license!', 'astra-sites' ) );
 					WP_CLI::line( __( 'Use `wp plugin deactivate astra-sites` and then `wp plugin activate astra-pro-sites`', 'astra-sites' ) );
 				}
 
@@ -533,7 +533,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( empty( $this->current_site_data ) ) {
 				// @todo Use Astra_Sites::get_instance()->api_request() instead of below function.
 				$this->current_site_data = Astra_Sites_Importer::get_instance()->get_single_demo( $id );
-				update_option( 'astra_sites_import_data', $this->current_site_data );
+				update_option( 'astra_sites_import_data', $this->current_site_data, 'no' );
 			}
 
 			return $this->current_site_data;
@@ -572,7 +572,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 			// Add categories.
 			$category   = isset( $assoc_args['category'] ) ? $assoc_args['category'] : '';
-			$response   = $this->get_term_ids( 'astra-site-category', $category, $args );
+			$response   = $this->get_term_ids( 'astra-sites-site-category', $category, $args );
 			$args       = $response['args'];
 			$categories = $response['terms'];
 			if ( empty( $categories['data'] ) ) {
@@ -590,13 +590,13 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						'slug'          => $site['slug'],
 						'title'         => $site['title']['rendered'],
 						'url'           => $site['astra-site-url'],
-						'type'          => ( 'premium' === $site['astra-site-type'] ) ? 'Agency' : ucwords( $site['astra-site-type'] ),
+						'type'          => ( 'premium' === $site['astra-site-type'] ) ? 'Premium' : ucwords( $site['astra-site-type'] ),
 						'categories'    => array(),
 						'page_builders' => array(),
 					);
 
-					if ( isset( $site['astra-site-category'] ) && ! empty( $categories['data'] ) ) {
-						foreach ( $site['astra-site-category'] as $category_key => $category_id ) {
+					if ( isset( $site['astra-sites-site-category'] ) && ! empty( $categories['data'] ) ) {
+						foreach ( $site['astra-sites-site-category'] as $category_key => $category_id ) {
 							if ( isset( $categories['data'][ $category_id ] ) ) {
 								$single_site['categories'][ $category_id ] = $categories['data'][ $category_id ];
 							}

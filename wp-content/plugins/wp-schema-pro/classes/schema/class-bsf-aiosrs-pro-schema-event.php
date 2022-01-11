@@ -193,7 +193,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Event' ) ) {
 		 * @return array
 		 */
 		public static function prepare_attendence_mode( $schema, $data ) {
-			if ( isset( $data['schema-type'] ) && isset( $data['event-attendance-mode'] ) && 'Event' === $data['schema-type'] && ! empty( $data['event-attendance-mode'] ) ) {
+			if ( isset( $data['schema-type'] ) && isset( $data['event-attendance-mode'] ) && ! empty( $data['event-attendance-mode'] ) ) {
 
 				$schema['eventAttendanceMode'] = 'https://schema.org/' . wp_strip_all_tags( $data['event-attendance-mode'] );
 			}

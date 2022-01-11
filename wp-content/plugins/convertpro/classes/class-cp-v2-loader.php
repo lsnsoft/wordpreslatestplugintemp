@@ -23,6 +23,13 @@ if ( ! class_exists( 'Cp_V2_Loader' ) ) {
 		private static $instance;
 
 		/**
+		 * Check WP_Block_Parser class exists.
+		 *
+		 * @var wp_block_parser_class_exists
+		 */
+		public static $wp_block_parser_class_exists;
+
+		/**
 		 * Gets an instance of our plugin.
 		 */
 		public static function get_instance() {
@@ -334,12 +341,19 @@ if ( ! class_exists( 'Cp_V2_Loader' ) ) {
 		private static function load_files() {
 			/* Classes */
 			$cp_is_admin = is_admin();
+
+			self::$wp_block_parser_class_exists = class_exists( 'WP_Block_Parser' ) ? true : false;
+
 			require_once CP_V2_BASE_DIR . 'includes/common-helper-functions.php';
 			require_once CP_V2_BASE_DIR . 'includes/google-fonts.php';
 			require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-fonts.php';
 			require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-post-type.php';
 
 			require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-auto-update.php';
+			if ( self::$wp_block_parser_class_exists ) {
+				require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-wp-block-parser.php';
+			}
+
 			require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-model.php';
 			require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-popups.php';
 
@@ -359,7 +373,7 @@ if ( ! class_exists( 'Cp_V2_Loader' ) ) {
 				require_once CP_V2_BASE_DIR . 'classes/class-cp-v2-tab-menu.php';
 
 				// Load Astra Notices library.
-				require_once CP_V2_BASE_DIR . 'lib/notices/class-astra-notices.php';
+				require_once CP_V2_BASE_DIR . 'lib/astra-notices/class-astra-notices.php';
 
 			}
 

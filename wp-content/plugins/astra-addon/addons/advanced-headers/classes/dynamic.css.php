@@ -5,7 +5,7 @@
  * @package Astra Addon
  */
 
-add_filter( 'astra_dynamic_css', 'astra_ext_advanced_headers_dynamic_css', 20 );
+add_filter( 'astra_addon_dynamic_css', 'astra_ext_advanced_headers_dynamic_css', 20 );
 
 /**
  * Dynamic CSS
@@ -234,6 +234,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 		),
 	);
 
+	if ( true == Astra_Addon_Builder_Helper::apply_flex_based_css() ) {
+
+		$flex_based_page_header_layout_2 = array(
+			'.ast-advanced-headers-layout.ast-advanced-headers-layout-2 .ast-container' => array(
+				'flex-direction' => 'column',
+			),
+		);
+		$parse_css                      .= astra_parse_css( $flex_based_page_header_layout_2 );
+	}
+
 	$parse_css .= astra_parse_css( $adv_header_logo_output );
 
 	if ( 'disable' !== $advanced_headers_layout ) {
@@ -274,6 +284,10 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 		$parse_css .= astra_parse_css( $css_output );
 		// merge page with site header enabled.
 		if ( $advanced_headers_merged ) {
+
+			$above_header_style = '';
+			$below_header_style = '';
+
 			$merge_header_style = array(
 				/**
 				 * Header
@@ -294,46 +308,148 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 				/**
 				 * Primary Menu
 				 */
-				'.ast-advanced-headers .main-header-menu, .ast-advanced-headers.ast-header-break-point .main-header-menu, .ast-advanced-headers .ast-masthead-custom-menu-items, .ast-advanced-headers.ast-header-break-point .main-header-menu' => array(
+				'.ast-advanced-headers .main-header-menu, .ast-advanced-headers.ast-header-break-point .main-header-menu, .ast-advanced-headers .ast-masthead-custom-menu-items' => array(
 					'background-color' => esc_attr( $primary_menu_bg_color ),
 				),
-				'.ast-advanced-headers .main-header-menu > li.current-menu-item > a,.ast-advanced-headers .main-header-menu >li.current-menu-ancestor > a,.ast-advanced-headers .main-header-menu > li.current_page_item > a' => array(
+				'.ast-advanced-headers .main-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .main-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 					'color' => esc_attr( $primary_menu_a_fb_color ),
 				),
-				'.ast-advanced-headers .main-header-menu > li > a:hover, .ast-advanced-headers .main-header-menu > li:hover > a' => array(
+				'.ast-advanced-headers .main-header-menu > .menu-item > .menu-link:hover, .ast-advanced-headers .main-header-menu > .menu-item:hover > .menu-link' => array(
 					'color' => esc_attr( $primary_menu_h_fb_color ),
 				),
 				'.ast-advanced-headers .main-header-menu .ast-masthead-custom-menu-items a:hover' => array(
 					'color' => esc_attr( $primary_menu_h_fb_color ),
 				),
-				'.ast-advanced-headers .main-header-menu, .ast-advanced-headers .main-header-menu > li > a,.ast-advanced-headers .ast-masthead-custom-menu-items, .ast-advanced-headers .ast-masthead-custom-menu-items a' => array(
+				'.ast-advanced-headers .main-header-menu, .ast-advanced-headers .main-header-menu > .menu-item > .menu-link, .ast-advanced-headers .ast-masthead-custom-menu-items, .ast-advanced-headers .ast-masthead-custom-menu-items a' => array(
 					'color' => esc_attr( $primary_menu_fb_color ),
 				),
 
 				/**
 				 * Primary Submenu
 				 */
-				'.ast-advanced-headers .main-navigation .sub-menu, .ast-advanced-headers.ast-header-break-point .main-header-menu ul, .ast-advanced-headers .ast-header-sections-navigation div > li > ul, .ast-advanced-headers .ast-above-header-menu-items li > ul, .ast-advanced-headers .ast-below-header-menu-items li > ul' => array(
+				'.ast-advanced-headers .main-navigation .sub-menu, .ast-advanced-headers.ast-header-break-point .main-header-menu .sub-menu, .ast-advanced-headers .ast-header-sections-navigation div > .menu-item > .sub-menu, .ast-advanced-headers .ast-above-header-menu-items .menu-item > .sub-menu, .ast-advanced-headers .ast-below-header-menu-items .menu-item > .sub-menu' => array(
 					'background-color' => esc_attr( $primary_header_submenu_bg_color ),
 				),
-				'.ast-advanced-headers .main-header-menu .sub-menu, .ast-advanced-headers .main-header-menu .sub-menu a, .ast-advanced-headers .main-header-menu .children a' => array(
+				'.ast-advanced-headers .main-header-menu .sub-menu, .ast-advanced-headers .main-header-menu .sub-menu .menu-link' => array(
 					'color' => esc_attr( $primary_header_submenu_text_color ),
 				),
-				'.ast-advanced-headers .main-header-menu .sub-menu a:hover, .ast-advanced-headers .main-header-menu .children a:hover, .ast-advanced-headers .main-header-menu .sub-menu li:hover > a, .ast-advanced-headers .main-header-menu .children li:hover > a, .ast-advanced-headers .main-header-menu .sub-menu li.focus > a, .ast-advanced-headers .main-header-menu .children li.focus > a' => array(
+				'.ast-advanced-headers .main-header-menu .sub-menu .menu-link:hover, .ast-advanced-headers .main-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-advanced-headers .main-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 					'color' => esc_attr( $primary_header_submenu_text_link_hover_color ),
 				),
-				'.ast-advanced-headers .main-header-menu .sub-menu li:hover > .ast-menu-toggle, .ast-advanced-headers .main-header-menu .sub-menu li.focus > .ast-menu-toggle' => array(
+				'.ast-advanced-headers .main-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .main-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
 					'color' => esc_attr( $primary_header_submenu_text_link_hover_color ),
 				),
-				'.ast-advanced-headers .main-header-menu .sub-menu li.current-menu-item > a, .ast-advanced-headers .main-header-menu .children li.current_page_item > a, .ast-advanced-headers .main-header-menu .sub-menu li.current-menu-ancestor > a, .ast-advanced-headers .main-header-menu .children li.current_page_ancestor > a, .ast-advanced-headers .main-header-menu .sub-menu li.current_page_item > a, .ast-advanced-headers.ast-header-break-point .main-header-menu .sub-menu li.current-menu-item > a, .ast-advanced-headers.ast-header-break-point .main-header-menu .sub-menu li.current_page_item > a, .ast-advanced-headers .main-header-menu .children li.current_page_item > a, .ast-advanced-headers.ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current_page_item' => array(
+				'.ast-advanced-headers .main-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers.ast-header-break-point .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers.ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current-menu-item' => array(
 					'color' => esc_attr( $primary_header_submenu_text_link_active_color ),
 				),
 			);
 
-				$parse_css .= astra_parse_css( $merge_header_style );
+			if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+				$merge_header_style = array(
+					/**
+					 * Header
+					 */
+					'.ast-advanced-headers .main-header-bar' => array(
+						'background-color' => esc_attr( $header_bg_color ),
+					),
+					'.ast-advanced-headers .site-title a, .site-title a:focus, .ast-advanced-headers .site-title a:hover, .ast-advanced-headers .site-title a:visited' => array(
+						'color' => esc_attr( $header_color_site_fb_title ),
+					),
+					'.ast-advanced-headers .site-header .site-title a:hover' => array(
+						'color' => esc_attr( $header_color_site_h_fb_title ),
+					),
+					'.ast-advanced-headers .site-header .site-description' => array(
+						'color' => esc_attr( $header_color_site_tagline_fb ),
+					),
 
-				// Above Headder enabled.
-			if ( $above_header_enabled ) {
+					/**
+					 * Primary Menu
+					 */
+					'.ast-advanced-headers .ast-primary-header .main-header-menu, .ast-advanced-headers.ast-header-break-point #ast-mobile-popup-wrapper .main-header-menu' => array(
+						'background-color' => esc_attr( $primary_menu_bg_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-primary-header .main-header-menu > .menu-item.current-menu-item > .menu-link' => array(
+						'color' => esc_attr( $primary_menu_a_fb_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu > .menu-item > .menu-link:hover, .ast-advanced-headers .ast-primary-header .main-header-menu > .menu-item:hover > .menu-link' => array(
+						'color' => esc_attr( $primary_menu_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu, .ast-advanced-headers .ast-primary-header .main-header-menu > .menu-item > .menu-link' => array(
+						'color' => esc_attr( $primary_menu_fb_color ),
+					),
+
+					/**
+					 * Primary Submenu
+					 */
+					'.ast-advanced-headers .ast-primary-header .main-navigation .sub-menu' => array(
+						'background-color' => esc_attr( $primary_header_submenu_bg_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu, .ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-link' => array(
+						'color' => esc_attr( $primary_header_submenu_text_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-link:hover, .ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
+						'color' => esc_attr( $primary_header_submenu_text_link_hover_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
+						'color' => esc_attr( $primary_header_submenu_text_link_hover_color ),
+					),
+					'.ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers.ast-header-break-point .ast-primary-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers .ast-primary-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers.ast-desktop .ast-primary-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current-menu-item' => array(
+						'color' => esc_attr( $primary_header_submenu_text_link_active_color ),
+					),
+				);
+			}
+
+			$parse_css                                        .= astra_parse_css( $merge_header_style );
+			$is_page_headers_designs_compatible_builder_layout = apply_filters( 'astra_addon_page_header_options_compatibility', astra_get_option( 'can-update-page-header-compatibility-to-header-builder', false ) );
+
+			// Above Headder enabled.
+			if ( true === astra_addon_builder_helper()->is_header_footer_builder_active && Astra_Addon_Builder_Helper::is_row_empty( 'above', 'header', 'desktop' ) ) {
+				/**
+				 * Above Heaader
+				*/
+				$above_header_style = array(
+					/**
+					 * Above Header Menus
+					 */
+					'.ast-advanced-headers .ast-above-header .main-header-menu, .ast-advanced-headers.ast-header-break-point #ast-mobile-popup-wrapper .main-header-menu' => array(
+						'background-color' => esc_attr( $above_header_bg_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-above-header .main-header-menu > .menu-item.current-menu-item > .menu-link' => array(
+						'color' => esc_attr( $above_header_text_link_a_fb_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu > .menu-item > .menu-link:hover, .ast-advanced-headers .ast-above-header .main-header-menu > .menu-item:hover > .menu-link' => array(
+						'color' => esc_attr( $above_header_text_link_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu, .ast-advanced-headers .ast-above-header .main-header-menu > .menu-item > .menu-link' => array(
+						'color' => esc_attr( $above_header_text_link_fb_color ),
+					),
+
+					/**
+					 * Above Header Submenu
+					 */
+					'.ast-advanced-headers .ast-above-header .main-navigation .sub-menu' => array(
+						'background-color' => esc_attr( $above_header_submenu_bg_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu .sub-menu, .ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-link' => array(
+						'color' => esc_attr( $above_header_submenu_text_link_fb_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-link:hover, .ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
+						'color' => esc_attr( $above_header_submenu_text_link_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
+						'color' => esc_attr( $above_header_submenu_text_link_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers.ast-header-break-point .ast-above-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers .ast-above-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers.ast-desktop .ast-above-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current-menu-item' => array(
+						'color' => esc_attr( $above_header_submenu_text_link_a_fb_color ),
+					),
+				);
+
+				if ( $is_page_headers_designs_compatible_builder_layout ) {
+					$above_header_style['.ast-advanced-headers .ast-above-header .main-navigation .main-header-menu .menu-item > .menu-link, .ast-advanced-headers .ast-above-header .main-navigation .main-header-menu .menu-item > .menu-link:hover'] = array(
+						'background' => 'transparent',
+					);
+				}
+			} elseif ( $above_header_enabled ) {
 				/**
 				 * Above Heaader
 				*/
@@ -341,19 +457,19 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 					'.ast-advanced-headers .ast-above-header, .ast-advanced-headers .ast-above-header .slide-search' => array(
 						'background' => esc_attr( $above_header_bg_color ),
 					),
-					'.ast-advanced-headers .ast-above-header-menu > li.current-menu-item > a,.ast-advanced-headers .ast-above-header-menu >li.current-menu-ancestor > a,.ast-advanced-headers .ast-above-header-menu > li.current_page_item > a' => array(
+					'.ast-advanced-headers .ast-above-header-menu > .menu-item.current-menu-item > .menu-link,.ast-advanced-headers .ast-above-header-menu >.menu-item.current-menu-ancestor > .menu-link' => array(
 						'color' => esc_attr( $above_header_text_link_h_fb_color ),
 					),
-					'.ast-advanced-headers .ast-above-header-menu > li > a:hover, .ast-advanced-headers .ast-above-header-menu > li:hover > a' => array(
+					'.ast-advanced-headers .ast-above-header-menu > .menu-item > .menu-link:hover, .ast-advanced-headers .ast-above-header-menu > .menu-item:hover > .menu-link' => array(
 						'color' => esc_attr( $above_header_text_link_h_fb_color ),
 					),
-					'.ast-advanced-headers .ast-above-header > a:hover, .ast-advanced-headers  .ast-above-header .user-select a:hover, .ast-advanced-headers .ast-above-header .widget a:hover' => array(
+					'.ast-advanced-headers .ast-above-header > a:hover, .ast-advanced-headers .ast-above-header .user-select a:hover, .ast-advanced-headers .ast-above-header .widget a:hover' => array(
 						'color' => esc_attr( $above_header_text_link_h_fb_color ),
 					),
-					'.ast-above-header-navigation li.current-menu-item > a, .ast-above-header-navigation li.current-menu-ancestor > a' => array(
+					'.ast-above-header-navigation .menu-item.current-menu-item > .menu-link, .ast-above-header-navigation .menu-item.current-menu-ancestor > .menu-link' => array(
 						'color' => esc_attr( $above_header_text_link_a_fb_color ),
 					),
-					'.ast-advanced-headers .ast-above-header, .ast-advanced-headers .ast-above-header-menu > li > a, .ast-advanced-headers  .ast-above-header .user-select, .ast-advanced-headers  .ast-above-header .user-select a, .ast-advanced-headers .ast-above-header .widget, .ast-advanced-headers .ast-above-header .widget a, .ast-advanced-headers .ast-above-header-menu-items > li > a' => array(
+					'.ast-advanced-headers .ast-above-header, .ast-advanced-headers .ast-above-header-menu > .menu-item > .menu-link, .ast-advanced-headers .ast-above-header .user-select, .ast-advanced-headers .ast-above-header .user-select a, .ast-advanced-headers .ast-above-header .widget, .ast-advanced-headers .ast-above-header .widget a, .ast-advanced-headers .ast-above-header-menu-items > .menu-item > .menu-link' => array(
 						'color' => esc_attr( $above_header_text_link_fb_color ),
 					),
 
@@ -363,23 +479,70 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 					'.ast-advanced-headers .ast-above-header-menu .sub-menu' => array(
 						'background-color' => esc_attr( $above_header_submenu_bg_color ),
 					),
-					'.ast-advanced-headers .ast-above-header-menu .sub-menu, .ast-advanced-headers .ast-above-header-menu .sub-menu a' => array(
+					'.ast-advanced-headers .ast-above-header-menu .sub-menu, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-link' => array(
 						'color' => esc_attr( $above_header_submenu_text_link_fb_color ),
 					),
-					'.ast-advanced-headers .ast-above-header-menu .sub-menu li:hover > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li:focus > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.focus > a,.ast-advanced-headers .ast-above-header-menu .sub-menu li:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li:focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.focus > .ast-menu-toggle' => array(
+					'.ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.focus > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item:focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
 						'color' => esc_attr( $above_header_submenu_text_link_h_fb_color ),
 					),
-					'.ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor:focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor.focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item:focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item.focus > .ast-menu-toggle' => array(
+					'.ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item:focus > .ast-menu-toggle, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item.focus > .ast-menu-toggle' => array(
 						'color' => esc_attr( $above_header_submenu_text_link_a_fb_color ),
 					),
-					'.ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item:hover > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item:focus > a, .ast-advanced-headers .ast-above-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+					'.ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-advanced-headers .ast-above-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 						'color' => esc_attr( $above_header_submenu_text_link_a_fb_color ),
 					),
 				);
-				$parse_css .= astra_parse_css( $above_header_style );
 			}
-				// Below Headder enabled.
-			if ( $below_header_enabled ) {
+
+			$parse_css .= astra_parse_css( $above_header_style );
+
+			// Below Headder enabled.
+			if ( true === astra_addon_builder_helper()->is_header_footer_builder_active && Astra_Addon_Builder_Helper::is_row_empty( 'below', 'header', 'desktop' ) ) {
+				/**
+				 * Below Heaader
+				 */
+				$below_header_style = array(
+					/**
+					 * Above Header Menus
+					 */
+					'.ast-advanced-headers .ast-below-header .main-header-menu, .ast-advanced-headers.ast-header-break-point #ast-mobile-popup-wrapper .main-header-menu' => array(
+						'background-color' => esc_attr( $below_header_bg_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-below-header .main-header-menu > .menu-item.current-menu-item > .menu-link' => array(
+						'color' => esc_attr( $below_header_text_link_a_fb_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu > .menu-item > .menu-link:hover, .ast-advanced-headers .ast-below-header .main-header-menu > .menu-item:hover > .menu-link' => array(
+						'color' => esc_attr( $below_header_text_link_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu, .ast-advanced-headers .ast-below-header .main-header-menu > .menu-item > .menu-link' => array(
+						'color' => esc_attr( $below_header_text_link_fb_color ),
+					),
+
+					/**
+					 * Above Header Submenu
+					 */
+					'.ast-advanced-headers .ast-below-header .main-navigation .sub-menu' => array(
+						'background-color' => esc_attr( $below_header_submenu_bg_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu .sub-menu, .ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-link' => array(
+						'color' => esc_attr( $below_header_submenu_text_link_fb_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-link:hover, .ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
+						'color' => esc_attr( $below_header_submenu_text_link_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
+						'color' => esc_attr( $below_header_submenu_text_link_h_fb_color ),
+					),
+					'.ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers.ast-header-break-point .ast-below-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers .ast-below-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers.ast-desktop .ast-below-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current-menu-item' => array(
+						'color' => esc_attr( $below_header_submenu_text_link_a_fb_color ),
+					),
+				);
+				if ( $is_page_headers_designs_compatible_builder_layout ) {
+					$below_header_style['.ast-advanced-headers .ast-below-header .main-navigation .main-header-menu .menu-item > .menu-link, .ast-advanced-headers .ast-below-header .main-navigation .main-header-menu .menu-item > .menu-link:hover'] = array(
+						'background' => 'transparent',
+					);
+				}
+			} elseif ( $below_header_enabled ) {
 				/**
 				 * Below Heaader
 				 */
@@ -387,16 +550,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 					'.ast-advanced-headers .ast-below-header,  .ast-advanced-headers .ast-below-header .slide-search' => array(
 						'background' => esc_attr( $below_header_bg_color ),
 					),
-					'.ast-advanced-headers .ast-below-header-menu > li.current-menu-item > a,.ast-advanced-headers .ast-below-header-menu >li.current-menu-ancestor > a,.ast-advanced-headers .ast-below-header-menu > li.current_page_item > a' => array(
+					'.ast-advanced-headers .ast-below-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-below-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 						'color' => esc_attr( $below_header_text_link_a_fb_color ),
 					),
-					'.ast-advanced-headers .ast-below-header-menu a:hover, .ast-advanced-headers .ast-below-header-menu > li:hover > a' => array(
+					'.ast-advanced-headers .ast-below-header-menu .menu-link:hover, .ast-advanced-headers .ast-below-header-menu > .menu-item:hover > .menu-link' => array(
 						'color' => esc_attr( $below_header_text_link_h_fb_color ),
 					),
-					'.ast-advanced-headers .ast-below-header > a:hover, .ast-advanced-headers  .ast-below-header .user-select a:hover, .ast-advanced-headers .ast-below-header .widget a:hover' => array(
+					'.ast-advanced-headers .ast-below-header > a:hover, .ast-advanced-headers .ast-below-header .user-select a:hover, .ast-advanced-headers .ast-below-header .widget a:hover' => array(
 						'color' => esc_attr( $below_header_text_link_h_fb_color ),
 					),
-					'.ast-advanced-headers .ast-below-header, .ast-advanced-headers .ast-below-header-menu > li > a, .ast-advanced-headers  .ast-below-header .user-select, .ast-advanced-headers  .ast-below-header .user-select a, .ast-advanced-headers .ast-below-header .widget, .ast-advanced-headers .ast-below-header .widget a, .below-header-user-select, .ast-advanced-headers .ast-below-header-menu-items > li > a' => array(
+					'.ast-advanced-headers .ast-below-header, .ast-advanced-headers .ast-below-header-menu > .menu-item > .menu-link, .ast-advanced-headers .ast-below-header .user-select, .ast-advanced-headers .ast-below-header .user-select a, .ast-advanced-headers .ast-below-header .widget, .ast-advanced-headers .ast-below-header .widget a, .below-header-user-select, .ast-advanced-headers .ast-below-header-menu-items > .menu-item > .menu-link' => array(
 						'color' => esc_attr( $below_header_text_link_fb_color ),
 					),
 
@@ -406,34 +569,34 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 					'.ast-advanced-headers .ast-below-header-menu .sub-menu' => array(
 						'background-color' => esc_attr( $below_header_submenu_bg_color ),
 					),
-					'.ast-advanced-headers .ast-below-header-menu .sub-menu, .ast-advanced-headers .ast-below-header-menu .sub-menu a' => array(
+					'.ast-advanced-headers .ast-below-header-menu .sub-menu, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-link' => array(
 						'color' => esc_attr( $below_header_submenu_text_link_fb_color ),
 					),
-					'.ast-advanced-headers .ast-below-header-menu .sub-menu li:hover > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li:focus > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.focus > a' => array(
+					'.ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 						'color' => esc_attr( $below_header_submenu_text_link_h_fb_color ),
 					),
-					'.ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-ancestor > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-item > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-advanced-headers .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+					'.ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-advanced-headers .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 						'color' => esc_attr( $below_header_submenu_text_link_a_fb_color ),
 					),
 				);
-
-				$parse_css .= astra_parse_css( $below_header_style );
 			}
 
-				$css = '';
+			$parse_css .= astra_parse_css( $below_header_style );
 
-				// Header Separator.
-				$css       .= '.ast-advanced-headers.ast-header-break-point .main-header-bar {';
-				$css       .= 'border-bottom-width:' . astra_get_css_value( $header_main_sep, 'px' ) . ';';
-				$css       .= 'border-bottom-color:' . esc_attr( $header_main_sep_color ) . ';';
-				$css       .= '}';
-				$css       .= '@media (min-width: ' . astra_addon_get_tablet_breakpoint( '', 1 ) . 'px) {';
-				$css       .= '.ast-advanced-headers .main-header-bar {';
-				$css       .= 'border-bottom-width:' . astra_get_css_value( $header_main_sep, 'px' ) . ';';
-				$css       .= 'border-bottom-color:' . esc_attr( $header_main_sep_color ) . ';';
-				$css       .= '}';
-				$css       .= '}';
-				$parse_css .= $css;
+			$css = '';
+
+			// Header Separator.
+			$css       .= '.ast-advanced-headers.ast-header-break-point .main-header-bar {';
+			$css       .= 'border-bottom-width:' . astra_get_css_value( $header_main_sep, 'px' ) . ';';
+			$css       .= 'border-bottom-color:' . esc_attr( $header_main_sep_color ) . ';';
+			$css       .= '}';
+			$css       .= '@media (min-width: ' . astra_addon_get_tablet_breakpoint( '', 1 ) . 'px) {';
+			$css       .= '.ast-advanced-headers .main-header-bar {';
+			$css       .= 'border-bottom-width:' . astra_get_css_value( $header_main_sep, 'px' ) . ';';
+			$css       .= 'border-bottom-color:' . esc_attr( $header_main_sep_color ) . ';';
+			$css       .= '}';
+			$css       .= '}';
+			$parse_css .= $css;
 		}
 		/**
 		 * Background
@@ -584,16 +747,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-transparent-header .main-header-menu, .ast-transparent-header.ast-header-break-point .main-header-menu, .ast-transparent-header .ast-masthead-custom-menu-items, .ast-transparent-header.ast-header-break-point .main-header-menu' => array(
 				'background-color' => esc_attr( $tr_primary_menu_bg_color ),
 			),
-			'.ast-transparent-header .main-header-menu > li.current-menu-item > a,.ast-transparent-header .main-header-menu >li.current-menu-ancestor > a,.ast-transparent-header .main-header-menu > li.current_page_item > a' => array(
+			'.ast-transparent-header .main-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-transparent-header .main-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 				'color' => esc_attr( $primary_menu_a_color ),
 			),
-			'.ast-transparent-header .main-header-menu > li > a:hover, .ast-transparent-header .main-header-menu > li:hover > a' => array(
+			'.ast-transparent-header .main-header-menu > .menu-item > .menu-link:hover, .ast-transparent-header .main-header-menu > .menu-item:hover > .menu-link' => array(
 				'color' => esc_attr( $tr_primary_menu_h_color ),
 			),
 			'.ast-transparent-header .main-header-menu .ast-masthead-custom-menu-items a:hover' => array(
 				'color' => esc_attr( $tr_primary_menu_h_color ),
 			),
-			'.ast-transparent-header .main-header-menu, .main-header-menu > li > a,.ast-transparent-header .ast-masthead-custom-menu-items, .ast-transparent-header .ast-masthead-custom-menu-items a' => array(
+			'.ast-transparent-header .main-header-menu, .main-header-menu > .menu-item > .menu-link, .ast-transparent-header .ast-masthead-custom-menu-items, .ast-transparent-header .ast-masthead-custom-menu-items a' => array(
 				'color' => esc_attr( $tr_primary_menu_color ),
 			),
 
@@ -603,16 +766,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-transparent-header .main-header-menu .sub-menu, .ast-transparent-header.ast-header-break-point .main-header-menu .sub-menu' => array(
 				'background-color' => esc_attr( $primary_header_submenu_bg_color ),
 			),
-			'.ast-transparent-header .main-header-menu .sub-menu, .ast-transparent-header .main-header-menu .sub-menu a, .ast-transparent-header .main-header-menu .children a' => array(
+			'.ast-transparent-header .main-header-menu .sub-menu, .ast-transparent-header .main-header-menu .sub-menu .menu-link' => array(
 				'color' => esc_attr( $primary_header_submenu_text_color ),
 			),
-			'.ast-transparent-header .main-header-menu .sub-menu a:hover, .ast-transparent-header .main-header-menu .children a:hover, .ast-transparent-header .main-header-menu .sub-menu li:hover > a, .ast-transparent-header .main-header-menu .children li:hover > a, .ast-transparent-header .main-header-menu .sub-menu li.focus > a, .ast-transparent-header .main-header-menu .children li.focus > a' => array(
+			'.ast-transparent-header .main-header-menu .sub-menu .menu-link:hover, .ast-transparent-header .main-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-transparent-header .main-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 				'color' => esc_attr( $primary_header_submenu_text_link_hover_color ),
 			),
-			'.ast-transparent-header .main-header-menu .sub-menu li:hover > .ast-menu-toggle, .ast-transparent-header .main-header-menu .sub-menu li.focus > .ast-menu-toggle' => array(
+			'.ast-transparent-header .main-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-transparent-header .main-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
 				'color' => esc_attr( $primary_header_submenu_text_link_hover_color ),
 			),
-			'.ast-transparent-header .main-header-menu .sub-menu li.current-menu-item > a, .ast-transparent-header .main-header-menu .children li.current_page_item > a, .ast-transparent-header .main-header-menu .sub-menu li.current-menu-ancestor > a, .ast-transparent-header .main-header-menu .children li.current_page_ancestor > a, .ast-transparent-header .main-header-menu .sub-menu li.current_page_item > a, .ast-transparent-header.ast-header-break-point .main-header-menu .sub-menu li.current-menu-item > a, .ast-transparent-header.ast-header-break-point .main-header-menu .sub-menu li.current_page_item > a, .ast-transparent-header .main-header-menu .children li.current_page_item > a, .ast-transparent-header.ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current_page_item' => array(
+			'.ast-transparent-header .main-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-transparent-header.ast-header-break-point .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-transparent-header .main-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-transparent-header.ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading.current-menu-item' => array(
 				'color' => esc_attr( $primary_header_submenu_text_link_active_color ),
 			),
 
@@ -622,16 +785,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-transparent-header .ast-above-header' => array(
 				'background-color' => esc_attr( $tr_above_header_bg_color ),
 			),
-			'.ast-transparent-header .ast-above-header-menu > li.current-menu-item > a,.ast-transparent-header .ast-above-header-menu >li.current-menu-ancestor > a,.ast-transparent-header .ast-above-header-menu > li.current_page_item > a' => array(
+			'.ast-transparent-header .ast-above-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-transparent-header .ast-above-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 				'color' => esc_attr( $above_header_text_link_a_color ),
 			),
-			'.ast-transparent-header .ast-above-header-menu > li > a:hover, .ast-transparent-header .ast-above-header-menu > li:hover > a' => array(
+			'.ast-transparent-header .ast-above-header-menu > .menu-item > .menu-link:hover, .ast-transparent-header .ast-above-header-menu > .menu-item:hover > .menu-link' => array(
 				'color' => esc_attr( $tr_above_header_text_link_h_fb_color ),
 			),
-			'.ast-transparent-header .ast-above-header > a:hover, .ast-transparent-header  .ast-above-header .user-select a:hover, .ast-transparent-header .ast-above-header .widget a:hover' => array(
+			'.ast-transparent-header .ast-above-header > a:hover, .ast-transparent-header .ast-above-header .user-select a:hover, .ast-transparent-header .ast-above-header .widget a:hover' => array(
 				'color' => esc_attr( $tr_above_header_text_link_h_fb_color ),
 			),
-			'.ast-transparent-header .ast-above-header, .ast-transparent-header .ast-above-header-menu > li > a, .ast-transparent-header  .ast-above-header .user-select, .ast-transparent-header  .ast-above-header .user-select a, .ast-transparent-header .ast-above-header .widget, .ast-transparent-header .ast-above-header .widget a' => array(
+			'.ast-transparent-header .ast-above-header, .ast-transparent-header .ast-above-header-menu > .menu-item > .menu-link, .ast-transparent-header .ast-above-header .user-select, .ast-transparent-header .ast-above-header .user-select a, .ast-transparent-header .ast-above-header .widget, .ast-transparent-header .ast-above-header .widget a' => array(
 				'color' => esc_attr( $tr_above_header_text_link_fb_color ),
 			),
 
@@ -641,16 +804,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-transparent-header .ast-above-header .ast-above-header-menu .sub-menu' => array(
 				'background-color' => esc_attr( $above_header_submenu_bg_color ),
 			),
-			'.ast-transparent-header .ast-above-header-menu .sub-menu, .ast-transparent-header .ast-above-header-menu .sub-menu a' => array(
+			'.ast-transparent-header .ast-above-header-menu .sub-menu, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-link' => array(
 				'color' => esc_attr( $above_header_submenu_text_link_fb_color ),
 			),
-			'.ast-transparent-header .ast-above-header-menu .sub-menu li:hover > a, .ast-transparent-header .ast-above-header-menu .sub-menu li:focus > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.focus > a,.ast-transparent-header .ast-above-header-menu .sub-menu li:hover > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li:focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.focus > .ast-menu-toggle' => array(
+			'.ast-transparent-header .ast-above-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.focus > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item:hover > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item:focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.focus > .ast-menu-toggle' => array(
 				'color' => esc_attr( $above_header_submenu_text_link_h_fb_color ),
 			),
-			'.ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor:hover > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor:focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor.focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item:hover > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item:focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item.focus > .ast-menu-toggle' => array(
+			'.ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item:hover > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item:focus > .ast-menu-toggle, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item.focus > .ast-menu-toggle' => array(
 				'color' => esc_attr( $above_header_submenu_text_link_a_fb_color ),
 			),
-			'.ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item:hover > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item:focus > a, .ast-transparent-header .ast-above-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+			'.ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-transparent-header .ast-above-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 				'color' => esc_attr( $above_header_submenu_text_link_a_fb_color ),
 			),
 
@@ -660,16 +823,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-transparent-header .ast-below-header' => array(
 				'background-color' => esc_attr( $tr_below_header_bg_color ),
 			),
-			'.ast-transparent-header .ast-below-header-menu > li.current-menu-item > a,.ast-transparent-header .ast-below-header-menu >li.current-menu-ancestor > a,.ast-transparent-header .ast-below-header-menu > li.current_page_item > a' => array(
+			'.ast-transparent-header .ast-below-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-transparent-header .ast-below-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 				'color' => esc_attr( $below_header_text_link_a_color ),
 			),
-			'.ast-transparent-header .ast-below-header-menu > li > a:hover, .ast-transparent-header .ast-below-header-menu > li:hover > a' => array(
+			'.ast-transparent-header .ast-below-header-menu > .menu-item > .menu-link:hover, .ast-transparent-header .ast-below-header-menu > .menu-item:hover > .menu-link' => array(
 				'color' => esc_attr( $tr_below_header_text_link_h_fb_color ),
 			),
-			'.ast-transparent-header .ast-below-header > a:hover, .ast-transparent-header  .ast-below-header .user-select a:hover, .ast-transparent-header .ast-below-header .widget a:hover' => array(
+			'.ast-transparent-header .ast-below-header > a:hover, .ast-transparent-header .ast-below-header .user-select a:hover, .ast-transparent-header .ast-below-header .widget a:hover' => array(
 				'color' => esc_attr( $tr_below_header_text_link_h_fb_color ),
 			),
-			'.ast-transparent-header .ast-below-header, .ast-transparent-header .ast-below-header-menu > li > a, .ast-transparent-header  .ast-below-header .user-select, .ast-transparent-header  .ast-below-header .user-select a, .ast-transparent-header .ast-below-header .widget, .ast-transparent-header .ast-below-header .widget a' => array(
+			'.ast-transparent-header .ast-below-header, .ast-transparent-header .ast-below-header-menu > .menu-item > .menu-link, .ast-transparent-header .ast-below-header .user-select, .ast-transparent-header .ast-below-header .user-select a, .ast-transparent-header .ast-below-header .widget, .ast-transparent-header .ast-below-header .widget a' => array(
 				'color' => esc_attr( $tr_below_header_text_link_fb_color ),
 			),
 
@@ -679,13 +842,13 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-transparent-header .ast-below-header .ast-below-header-menu .sub-menu' => array(
 				'background-color' => esc_attr( $below_header_submenu_bg_color ),
 			),
-			'.ast-transparent-header .ast-below-header-menu .sub-menu, .ast-transparent-header .ast-below-header-menu .sub-menu a' => array(
+			'.ast-transparent-header .ast-below-header-menu .sub-menu, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-link' => array(
 				'color' => esc_attr( $below_header_submenu_text_link_fb_color ),
 			),
-			'.ast-transparent-header .ast-below-header-menu .sub-menu li:hover > a, .ast-transparent-header .ast-below-header-menu .sub-menu li:focus > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.focus > a' => array(
+			'.ast-transparent-header .ast-below-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 				'color' => esc_attr( $below_header_submenu_text_link_h_fb_color ),
 			),
-			'.ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-ancestor > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-item > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-transparent-header .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+			'.ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-transparent-header .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 				'color' => esc_attr( $below_header_submenu_text_link_a_fb_color ),
 			),
 		);
@@ -727,16 +890,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-advanced-headers .ast-above-header, .ast-advanced-headers .ast-above-header .slide-search' => array(
 				'background' => esc_attr( $above_header_bg_color ),
 			),
-			'.ast-advanced-headers .ast-above-header-menu > li.current-menu-item > a,.ast-advanced-headers .ast-above-header-menu >li.current-menu-ancestor > a,.ast-advanced-headers .ast-above-header-menu > li.current_page_item > a' => array(
+			'.ast-advanced-headers .ast-above-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-above-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 				'color' => esc_attr( $above_header_text_link_a_color ),
 			),
-			'.ast-advanced-headers .ast-above-header-menu > li > a:hover, .ast-advanced-headers .ast-above-header-menu > li:hover > a' => array(
+			'.ast-advanced-headers .ast-above-header-menu > .menu-item > .menu-link:hover, .ast-advanced-headers .ast-above-header-menu > .menu-item:hover > .menu-link' => array(
 				'color' => esc_attr( $above_header_text_link_h_color ),
 			),
-			'.ast-advanced-headers .ast-above-header > a:hover, .ast-advanced-headers  .ast-above-header .user-select a:hover, .ast-advanced-headers .ast-above-header .widget a:hover' => array(
+			'.ast-advanced-headers .ast-above-header > a:hover, .ast-advanced-headers .ast-above-header .user-select a:hover, .ast-advanced-headers .ast-above-header .widget a:hover' => array(
 				'color' => esc_attr( $above_header_text_link_h_color ),
 			),
-			'.ast-advanced-headers .ast-above-header, .ast-advanced-headers .ast-above-header-menu > li > a, .ast-advanced-headers  .ast-above-header .user-select, .ast-advanced-headers  .ast-above-header .user-select a, .ast-advanced-headers .ast-above-header .widget, .ast-advanced-headers .ast-above-header .widget a, .ast-advanced-headers .ast-above-header-menu-items > li > a' => array(
+			'.ast-advanced-headers .ast-above-header, .ast-advanced-headers .ast-above-header-menu > .menu-item > .menu-link, .ast-advanced-headers .ast-above-header .user-select, .ast-advanced-headers .ast-above-header .user-select a, .ast-advanced-headers .ast-above-header .widget, .ast-advanced-headers .ast-above-header .widget a, .ast-advanced-headers .ast-above-header-menu-items > .menu-item > .menu-link' => array(
 				'color' => esc_attr( $above_header_text_link_color ),
 			),
 		);
@@ -753,16 +916,16 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 			'.ast-advanced-headers .ast-below-header,  .ast-advanced-headers .ast-below-header .slide-search' => array(
 				'background' => esc_attr( $below_header_bg_color ),
 			),
-			'.ast-advanced-headers .ast-below-header-menu > li.current-menu-item > a,.ast-advanced-headers .ast-below-header-menu >li.current-menu-ancestor > a,.ast-advanced-headers .ast-below-header-menu > li.current_page_item > a' => array(
+			'.ast-advanced-headers .ast-below-header-menu > .menu-item.current-menu-ancestor > .menu-link, .ast-advanced-headers .ast-below-header-menu > .menu-item.current-menu-item > .menu-link' => array(
 				'color' => esc_attr( $below_header_text_link_a_color ),
 			),
-			'.ast-advanced-headers .ast-below-header-menu a:hover, .ast-advanced-headers .ast-below-header-menu > li:hover > a' => array(
+			'.ast-advanced-headers .ast-below-header-menu .menu-link:hover, .ast-advanced-headers .ast-below-header-menu > .menu-item:hover > .menu-link' => array(
 				'color' => esc_attr( $below_header_text_link_h_color ),
 			),
-			'.ast-advanced-headers .ast-below-header > a:hover, .ast-advanced-headers  .ast-below-header .user-select a:hover, .ast-advanced-headers .ast-below-header .widget a:hover' => array(
+			'.ast-advanced-headers .ast-below-header > a:hover, .ast-advanced-headers .ast-below-header .user-select a:hover, .ast-advanced-headers .ast-below-header .widget a:hover' => array(
 				'color' => esc_attr( $below_header_text_link_h_color ),
 			),
-			'.ast-advanced-headers .ast-below-header, .ast-advanced-headers .ast-below-header-menu > li > a, .ast-advanced-headers  .ast-below-header .user-select, .ast-advanced-headers  .ast-below-header .user-select a, .ast-advanced-headers .ast-below-header .widget, .ast-advanced-headers .ast-below-header .widget a, .below-header-user-select, .ast-advanced-headers .ast-below-header-menu-items > li > a' => array(
+			'.ast-advanced-headers .ast-below-header, .ast-advanced-headers .ast-below-header-menu > .menu-item > .menu-link, .ast-advanced-headers .ast-below-header .user-select, .ast-advanced-headers .ast-below-header .user-select a, .ast-advanced-headers .ast-below-header .widget, .ast-advanced-headers .ast-below-header .widget a, .below-header-user-select, .ast-advanced-headers .ast-below-header-menu-items > .menu-item > .menu-link' => array(
 				'color' => esc_attr( $below_header_text_link_color ),
 			),
 		);
@@ -794,5 +957,5 @@ function astra_ext_advanced_headers_dynamic_css( $dynamic_css, $dynamic_css_filt
 
 	$parse_css .= astra_parse_css( $parallax_style );
 
-	return $dynamic_css .= $parse_css;
+	return $dynamic_css . $parse_css;
 }

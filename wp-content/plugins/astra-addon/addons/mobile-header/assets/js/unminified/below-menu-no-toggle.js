@@ -18,9 +18,9 @@
 
 	for (var i = 0; i < menu_toggle_all.length; i++) {
 
-		var parentList = __main_header_all[i].querySelectorAll( 'ul.ast-below-header-menu li' );
+		var parentList = __main_header_all[i].querySelectorAll( '.ast-below-header-menu .menu-item' );
 
-	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-below-header-menu .ast-menu-toggle' );
+	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-below-header-menu .ast-menu-toggle' );
 
 		// Add Eevetlisteners for Submenu.
 		if (astra_menu_toggle.length > 0) {
@@ -29,7 +29,7 @@
 			};
 		}
 
-		var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-below-header-menu > li > .ast-menu-toggle' );
+		var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-below-header-menu > .menu-item > .ast-menu-toggle' );
 		BelowMenuNoToggle( astra_menu_toggle );
 
 	}
@@ -72,20 +72,20 @@
 				return;
 			}
 
-			var all_sub_menu = document.querySelectorAll( '.ast-below-header .sub-menu, .ast-below-header .children' );
-			for (var k = 0; k < all_sub_menu.length; k++) {		
-				all_sub_menu[k].removeAttribute("style");
-			};
-			var all_sub_menu = document.querySelectorAll( '.ast-below-header li' );
-			for (var k = 0; k < all_sub_menu.length; k++) {
-				all_sub_menu[k].classList.remove( 'ast-submenu-expanded' );
-			};
+		var all_sub_menu = document.querySelectorAll( '.ast-below-header .sub-menu' );
+		for (var k = 0; k < all_sub_menu.length; k++) {		
+			all_sub_menu[k].removeAttribute("style");
+		};
+		var all_sub_menu = document.querySelectorAll( '.ast-below-header li' );
+		for (var k = 0; k < all_sub_menu.length; k++) {
+			all_sub_menu[k].classList.remove( 'ast-submenu-expanded' );
+		};
 
-			var __main_header_all = document.querySelectorAll( '.ast-below-header' );
-			var menu_toggle_all   = document.querySelectorAll( '.ast-below-header' );
+		var __main_header_all = document.querySelectorAll( '.ast-below-header' );
+		var menu_toggle_all   = document.querySelectorAll( '.ast-below-header' );
 
-			for (var i = 0; i < menu_toggle_all.length; i++) {
-				var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-below-header-menu > li > .ast-menu-toggle' );
+		for (var i = 0; i < menu_toggle_all.length; i++) {
+			var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-below-header-menu > .menu-item > .ast-menu-toggle' );
 
 				if (astra_menu_toggle.length !== 0) {
 

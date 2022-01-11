@@ -10,6 +10,10 @@ namespace AstraSites\Elementor;
 
 defined( 'ABSPATH' ) || exit;
 
+if ( ! class_exists( '\Elementor\Plugin' ) ) {
+	return;
+}
+
 if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 
 	/**
@@ -55,9 +59,58 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 			 *          After defining the constant `WP_LOAD_IMPORTERS` in WP CLI it was not works.
 			 *          Try to remove below duplicate code in future.
 			 */
-			if ( defined( 'WP_CLI' ) ) {
+			if ( ! wp_doing_ajax() || ( defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.0.0', '>=' ) ) ) {
+				remove_filter( 'wp_import_post_meta', array( 'Elementor\Compatibility', 'on_wp_import_post_meta' ) );
+				remove_filter( 'wxr_importer.pre_process.post_meta', array( 'Elementor\Compatibility', 'on_wxr_importer_pre_process_post_meta' ) );
+
 				add_filter( 'wp_import_post_meta', array( $this, 'on_wp_import_post_meta' ) );
 				add_filter( 'wxr_importer.pre_process.post_meta', array( $this, 'on_wxr_importer_pre_process_post_meta' ) );
+			}
+
+			add_action( 'astra_sites_before_delete_imported_posts', array( $this, 'force_delete_kit' ), 10, 2 );
+			add_action( 'astra_sites_before_sse_import', array( $this, 'disable_attachment_metadata' ) );
+
+			add_action( 'init', array( $this, 'init' ) );
+		}
+
+		/**
+		 * Remove the transient update check for plugins callback from Elementor.
+		 * This reduces the extra code execution for Elementor.
+		 */
+		public function init() {
+			if ( astra_sites_has_import_started() && null !== \Elementor\Plugin::$instance->admin ) {
+				remove_filter( 'pre_set_site_transient_update_plugins', array( \Elementor\Plugin::$instance->admin->get_component( 'canary-deployment' ), 'check_version' ) );
+			}
+		}
+
+		/**
+		 * Disable the attachment metadata
+		 */
+		public function disable_attachment_metadata() {
+			remove_filter(
+				'wp_update_attachment_metadata', array(
+					\Elementor\Plugin::$instance->uploads_manager->get_file_type_handlers( 'svg' ),
+					'set_svg_meta_data',
+				), 10, 2
+			);
+		}
+
+		/**
+		 * Force Delete Elementor Kit
+		 *
+		 * Delete the previously imported Elementor kit.
+		 *
+		 * @param int    $post_id     Post name.
+		 * @param string $post_type   Post type.
+		 */
+		public function force_delete_kit( $post_id = 0, $post_type = '' ) {
+
+			if ( ! $post_id ) {
+				return;
+			}
+
+			if ( 'elementor_library' === $post_type ) {
+				$_GET['force_delete_kit'] = true;
 			}
 		}
 

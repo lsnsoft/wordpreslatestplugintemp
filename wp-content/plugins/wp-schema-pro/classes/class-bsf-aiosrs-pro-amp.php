@@ -76,6 +76,8 @@ final class BSF_AIOSRS_Pro_Amp {
 						add_action( 'amp_post_template_footer', array( $schema_markup, 'schema_markup' ) );
 						add_action( 'amp_post_template_footer', array( $schema_markup, 'global_schemas_markup' ) );
 						break;
+					default:
+						break;
 				}
 			}
 		}

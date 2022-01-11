@@ -14,7 +14,7 @@ FLBuilder::register_module(
 		'general'          => array(
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
-				'general'       => array( // Section.
+				'general'                => array( // Section.
 					'title'  => __( 'Video', 'uabb' ), // Section Title.
 					'fields' => array( // Section Fields.
 						'video_type'   => array(
@@ -25,6 +25,7 @@ FLBuilder::register_module(
 								'youtube' => __( 'YouTube', 'uabb' ),
 								'vimeo'   => __( 'Vimeo', 'uabb' ),
 								'wistia'  => __( 'Wistia', 'uabb' ),
+								'hosted'  => __( 'Self Hosted', 'uabb' ),
 							),
 							'toggle'  => array(
 								'youtube' => array(
@@ -39,6 +40,10 @@ FLBuilder::register_module(
 								'wistia'  => array(
 									'fields'   => array( 'wistia_link' ),
 									'sections' => array( 'wistia_option' ),
+								),
+								'hosted'  => array(
+									'fields'   => array( 'video_source', 'autoplay', 'loop', 'end', 'start', 'video', 'video_url' ),
+									'sections' => array( 'video_controls_section' ),
 								),
 							),
 						),
@@ -62,6 +67,37 @@ FLBuilder::register_module(
 							'default'     => '<p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2"><img src="https://embedwistia-a.akamaihd.net/deliveries/53eec5fa72737e60aa36731b57b607a7c0636f52.webp?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=54bbffe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p><p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2">Video Placeholder - Brainstorm Force - pratikc</a></p>',
 							'description' => UABBVideo::get_description( 'wistia_link' ),
 							'connections' => array( 'url' ),
+						),
+						'video_source' => array(
+							'type'    => 'select',
+							'label'   => __( 'Video Source', 'uabb' ),
+							'default' => 'library',
+							'options' => array(
+								'video'   => __( 'Media Library', 'uabb' ),
+								'ext_url' => __( 'External URL', 'uabb' ),
+							),
+							'toggle'  => array(
+								'video'   => array(
+									'fields' => array( 'video' ),
+								),
+								'ext_url' => array(
+									'fields' => array( 'video_url' ),
+								),
+							),
+						),
+						'video'        => array(
+							'type'        => 'video',
+							'label'       => __( 'Video', 'uabb' ),
+							'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'uabb' ),
+							'show_remove' => true,
+						),
+						'video_url'    => array(
+							'type'        => 'text',
+							'label'       => __( 'External URL', 'uabb' ),
+							'placeholder' => __( 'http://www.example.com/my-photo.jpg', 'uabb' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
 						),
 						'start'        => array(
 							'type'    => 'unit',
@@ -92,7 +128,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'video_option'  => array(
+				'video_option'           => array(
 					'title'  => __( 'Video Options', 'uabb' ),
 					'fields' => array(
 						'yt_autoplay'       => array(
@@ -164,10 +200,10 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'vimeo_option'  => array(
+				'vimeo_option'           => array(
 					'title'  => __( 'Video option', 'uabb' ),
 					'fields' => array(
-						'vimeo_autoplay' => array(
+						'vimeo_autoplay'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Autoplay', 'uabb' ),
 							'default' => 'no',
@@ -182,7 +218,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Thumbnail will not display if AutoPlay mode is enabled.', 'uabb' ),
 						),
-						'vimeo_loop'     => array(
+						'vimeo_loop'      => array(
 							'type'    => 'select',
 							'label'   => __( 'Loop', 'uabb' ),
 							'default' => 'no',
@@ -192,7 +228,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Choose a video to play continuously in a loop. The video will automatically start again after reaching the end.', 'uabb' ),
 						),
-						'vimeo_title'    => array(
+						'vimeo_title'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Intro Title', 'uabb' ),
 							'default' => 'show',
@@ -202,7 +238,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Displays title of the video.', 'uabb' ),
 						),
-						'vimeo_portrait' => array(
+						'vimeo_portrait'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Intro Portrait', 'uabb' ),
 							'default' => 'show',
@@ -212,7 +248,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Displays the author’s profile image.', 'uabb' ),
 						),
-						'vimeo_byline'   => array(
+						'vimeo_byline'    => array(
 							'type'    => 'select',
 							'label'   => __( 'Intro Byline', 'uabb' ),
 							'default' => 'show',
@@ -222,7 +258,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Displays the author’s name of the video.', 'uabb' ),
 						),
-						'vimeo_color'    => array(
+						'vimeo_color'     => array(
 							'type'        => 'color',
 							'connections' => array( 'color' ),
 							'label'       => __( 'Controls Color', 'uabb' ),
@@ -230,9 +266,19 @@ FLBuilder::register_module(
 							'show_reset'  => true,
 							'show_alpha'  => true,
 						),
+						'vimeo_dnt_track' => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Do Not Track', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Enabling this option will block the player from tracking any session data, including all cookies and analytics. ', 'uabb' ),
+						),
 					),
 				),
-				'wistia_option' => array(
+				'wistia_option'          => array(
 					'title'  => __( 'Video Options', 'uabb' ),
 					'fields' => array(
 						'wistia_autoplay' => array(
@@ -276,6 +322,64 @@ FLBuilder::register_module(
 							'options' => array(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				),
+				'video_controls_section' => array(
+					'title'  => 'Video Controls',
+					'fields' => array(
+						'autoplay' => array(
+							'type'    => 'select',
+							'label'   => __( 'Auto Play', 'uabb' ),
+							'default' => '0',
+							'options' => array(
+								'0' => __( 'No', 'uabb' ),
+								'1' => __( 'Yes', 'uabb' ),
+							),
+						),
+						'loop'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Loop', 'uabb' ),
+							'default' => '0',
+							'options' => array(
+								'0' => __( 'No', 'uabb' ),
+								'1' => __( 'Yes', 'uabb' ),
+							),
+						),
+						'controls' => array(
+							'type'    => 'select',
+							'label'   => __( 'Controls', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'1' => __( 'Show', 'uabb' ),
+								'0' => __( 'Hide', 'uabb' ),
+							),
+						),
+						'muted'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Mute', 'uabb' ),
+							'default' => '0',
+							'options' => array(
+								'1' => __( 'Yes', 'uabb' ),
+								'0' => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				),
+				'style'                  => array(
+					'title'  => __( 'Style', 'uabb' ),
+					'fields' => array(
+						'video_border' => array(
+							'type'    => 'border',
+							'label'   => __( 'Video Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-video__outer-wrap',
+								'property' => 'border',
+								'unit'     => 'px',
 							),
 						),
 					),

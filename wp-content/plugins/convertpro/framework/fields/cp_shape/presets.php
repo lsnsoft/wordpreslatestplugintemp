@@ -834,6 +834,58 @@ function add_cp_shape_presets( $presets ) {
 			),
 		),
 		array(
+			'name'           => 'instagram',
+			'tags'           => 'shape, instagram, social',
+			'section'        => 'social-media',
+			'preset_setting' => array(
+				'width'  => array(
+					'value' => '50',
+				),
+				'height' => array(
+					'value' => '50',
+				),
+			),
+		),
+		array(
+			'name'           => 'whatsapp',
+			'tags'           => 'shape, whatsapp, social',
+			'section'        => 'social-media',
+			'preset_setting' => array(
+				'width'  => array(
+					'value' => '50',
+				),
+				'height' => array(
+					'value' => '50',
+				),
+			),
+		),
+		array(
+			'name'           => 'spotify',
+			'tags'           => 'shape, spotify, social',
+			'section'        => 'social-media',
+			'preset_setting' => array(
+				'width'  => array(
+					'value' => '50',
+				),
+				'height' => array(
+					'value' => '50',
+				),
+			),
+		),
+		array(
+			'name'           => 'telegram',
+			'tags'           => 'shape, telegram, social',
+			'section'        => 'social-media',
+			'preset_setting' => array(
+				'width'  => array(
+					'value' => '50',
+				),
+				'height' => array(
+					'value' => '50',
+				),
+			),
+		),
+		array(
 			'name'           => 'angle_up',
 			'tags'           => 'shape, arrow, angle',
 			'section'        => 'arrow-shape',

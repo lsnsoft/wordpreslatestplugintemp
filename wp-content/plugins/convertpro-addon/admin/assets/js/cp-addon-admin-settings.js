@@ -93,13 +93,13 @@
 			 */
 			CPAddonAjaxQueue.run();
 
-			$( document ).delegate( ".activate-module", "click", CPAddonAdmin._activate_module );
-			$( document ).delegate( ".deactivate-module", "click", CPAddonAdmin._deactivate_module );
+			$( document ).on( "click", ".activate-module", CPAddonAdmin._activate_module );
+			$( document ).on( "click", ".deactivate-module", CPAddonAdmin._deactivate_module );
 
-			$( document ).delegate( ".all", "click", CPAddonAdmin._bulk_activate_modules_activate_module );
-			$( document ).delegate( ".deactivate-all", "click", CPAddonAdmin._bulk_deactivate_modules_activate_module );
-			$( "#search-cp-addon" ).focus();
-			$( "#search-cp-addon" ).bind( "keyup input", CPAddonAdmin._search_modules );
+			$( document ).on( "click", ".all", CPAddonAdmin._bulk_activate_modules_activate_module );
+			$( document ).on( "click", ".deactivate-all", CPAddonAdmin._bulk_deactivate_modules_activate_module );
+			$( "#search-cp-addon" ).trigger( "focus" );
+			$( "#search-cp-addon" ).on( "keyup input", CPAddonAdmin._search_modules );
 		},
 
 		/**

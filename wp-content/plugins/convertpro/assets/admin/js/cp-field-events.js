@@ -24,7 +24,7 @@
 
     // params array
     var param_json = $('#cp_params').val();
-    cp_params = $.parseJSON(param_json);
+    cp_params = JSON.parse(param_json);
 
     $.each(
         cp_params, function (index, val) {    
@@ -82,7 +82,7 @@
         init: function () {
            
             // on click edit panel cancel
-            $('#cp-cancel-modal-data').click(
+            $('#cp-cancel-modal-data').on( 'click',
                 function () {
                     $(document).trigger('cpro_close_edit_panel');
                 }
@@ -136,16 +136,20 @@
             rulsets_wrap     = $this.closest('.cp-rulsets-wrap'),
             active_rulset    = parseInt(rulsets_wrap.find('.cp-rulsets-active').attr('data-rulsets')),
             rulesets_field    = rulsets_wrap.find('input[name=rulesets]');
-            rulesets_value    = jQuery.parseJSON(rulesets_field.val());
+            rulesets_value    = JSON.parse(rulesets_field.val());
 
             rulesets_value[ active_rulset ][ field_name ] = field_value;
+            if ( 'autoload_on_no_page_visit' == field_name && 1 == field_value ) {
+                rulesets_value[ active_rulset ][ 'load_on_page_visit_type' ] = $this.closest('.after-number-of-page-visits').find('#cp_load_on_page_visit_type').val();
+                rulesets_value[ active_rulset ][ 'load_on_no_page_visit' ] = $this.closest('.after-number-of-page-visits').find('#cp_load_on_no_page_visit').val();
+            }
             rulesets_field.val(JSON.stringify(rulesets_value));
 
         },
 
         _onDatePickerChange: function ( e, input, strTime ) {
 
-            if(input.selector == '#cp_start_date' || input.selector == '#cp_end_date' ) {
+            if( ('#'+input[0].id) == '#cp_start_date' || ('#'+input[0].id) == '#cp_end_date' ) {
 
                 var $this             = input,
                 field_name         = $this.attr('name'),
@@ -153,7 +157,7 @@
                 rulsets_wrap     = $this.closest('.cp-rulsets-wrap'),
                 active_rulset    = parseInt(rulsets_wrap.find('.cp-rulsets-active').attr('data-rulsets')),
                 rulesets_field    = rulsets_wrap.find('input[name=rulesets]');
-                rulesets_value    = jQuery.parseJSON(rulesets_field.val());
+                rulesets_value    = JSON.parse(rulesets_field.val());
 
                 rulesets_value[ active_rulset ][ field_name ] = field_value;
                 rulesets_field.val(JSON.stringify(rulesets_value));
@@ -443,7 +447,7 @@
                 document.selection.empty();
             }
         
-            $(".panel-wrapper").focus();
+            $(".panel-wrapper").trigger('focus');
 
             e.stopPropagation();
 
@@ -700,7 +704,7 @@
             
             for_edit = $(element).attr('for');
             var name = $(element).attr('name');
-            var value = $(element).val();        
+            var value = $(element).val() == '' ? $(element).attr('value') : $(element).val();
             type = $('#'+for_edit).attr('data-type');    
 
             if(name == 'input_text_placeholder' ) {
@@ -782,13 +786,10 @@
                 var el_height = $('#'+for_edit).outerHeight();
 
                 if (( type == 'cp_image' || type == 'cp_close_image' ) && 'width' != name ) {
-                    if(el_width > 700 ) {
-                        el_width = 700;    
-                        if(type == 'cp_image' ) {
-                                 $('#'+for_edit + ' img.cp-image').css('width', el_width);
-                        } else {
-                              $('#'+for_edit + ' img.cp-close-image').css('width', el_width);
-                        }
+                    if(type == 'cp_image' ) {
+                       $('#'+for_edit + ' img.cp-image').css('width', el_width);
+                    } else {
+                       $('#'+for_edit + ' img.cp-close-image').css('width', el_width);
                     }
                 }
 

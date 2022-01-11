@@ -21,6 +21,20 @@ $settings->block_bg_color  = UABB_Helper::uabb_colorpicker( $settings, 'block_bg
 $settings->dots_color      = UABB_Helper::uabb_colorpicker( $settings, 'dots_color', true );
 $settings->arrows_color    = UABB_Helper::uabb_colorpicker( $settings, 'arrows_color', true );
 $settings->read_more_color = UABB_Helper::uabb_colorpicker( $settings, 'read_more_color', true );
+
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-review .uabb-star-full.uabb-star-custom,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-review .uabb-star-empty.uabb-star-custom,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-prev:before,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-next:before,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap ul.slick-dots li button:before {
+	font-family: 'Font Awesome 5 Pro';
+}
+		<?php
+	}
+}
 if ( ! $version_bb_check ) {
 	$settings->block_border_color = UABB_Helper::uabb_colorpicker( $settings, 'block_border_color', true );
 }
@@ -497,7 +511,16 @@ if ( 'carousel' === $settings->review_layout ) {
 
 	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px ) {
 
-		<?php if ( 'yes' === $settings->reviewer_name ) { ?>
+		<?php if ( 'carousel' === $settings->review_layout ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-prev {
+			left: -30px;
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-next {
+			right: -30px;
+		}
+}
+
+		if ( 'yes' === $settings->reviewer_name ) { ?>
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-review .uabb-reviewer-name {
 				<?php
 				if ( isset( $settings->reviewer_name_spacing_medium ) ) {
@@ -691,7 +714,21 @@ if ( 'carousel' === $settings->review_layout ) {
 		<?php } ?>        
 	}
 	@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px ) {
-		<?php if ( isset( $settings->content_block_bottom_spacing_responsive ) ) { ?>
+		<?php if ( 'carousel' === $settings->review_layout ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-prev {
+			left: -10px;
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-next {
+			right: -10px;
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-list {
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+			<?php
+		}
+		if ( isset( $settings->content_block_bottom_spacing_responsive ) ) {
+			?>
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-skin-bubble .uabb-review-content-wrap {
 				<?php echo ( '' !== $settings->content_block_bottom_spacing_responsive ) ? 'margin-bottom:' . esc_attr( $settings->content_block_bottom_spacing_responsive ) . 'px;' : ''; ?>
 			}

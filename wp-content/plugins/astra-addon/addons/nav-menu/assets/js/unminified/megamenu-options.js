@@ -12,6 +12,7 @@
 				.on( 'click', '.astra-builder-upload-button', this._openMediaUploader )
 				.on( 'click', '.ast-remove-button', this._removeUploadButton )
 				.on( 'change', '.field-mm-enabled input', this._megaMenuOptionDependency )
+				.on( 'change', '.field-mm-width [name="menu-item-megamenu_width"]', this._megaMenuWidthStyleDependency )
 				.on( 'change', '.field-mm-enabled-heading input', this._megaMenuHeadingOptionDependency )
 				.on( 'change', '.ast-content-src', this._contentOptDependency )
 				.on( 'change', '.field-mm-disable-label input', this._disableLabelOptionDependency )
@@ -22,7 +23,6 @@
 		_openSettingsModal: function() {
 
 			var $this              = $(this);
-			var container_overlay  = $this.closest( 'div' ).find('.astra-mm-modal-overlay');
 			var $holder            = $this.parents( '.menu-item-settings' );
 			var menu_item          = $this.closest('li.menu-item');
 			var classes            = menu_item.attr('class').split(' ');
@@ -31,7 +31,8 @@
 			var popup_wrap         = $('.ast-popup-wrap');
 			var menu_title         = menu_item.find('.menu-item-title').text();
 			var spinner            = popup_wrap.find('.ast-megamenu-spinner.spinner');
-			var opts_wrap 		   = $('.astra-mm-options-wrap');
+			var opts_wrap 		   = $('.astra-mm-options-wrap'),
+				advanced_options   = $(".field-mm-advanced-options");
 
 			$('html').css( 'overflow', 'hidden' );
 
@@ -58,7 +59,6 @@
 			} else {
 				popup_wrap.find('.astra-mm-options-wrap div').css( 'visibility', 'hidden' );
 			}
-
 
 			var data = {
 				action : 'ast_render_popup',
@@ -222,25 +222,48 @@
 		},
 		_megaMenuOptionDependency: function() {
 
-			var $this               = $(this);
-			var is_checked          = $this.prop('checked');
-			var width_options       = $(".field-mm-megamenu-opts .field-mm-width");
-			var mega_menu_dependent = $(".bg-image-container, .field-mm-color");
-			var mega_menu_src       = $( '.field-mm-content-src' );
-			
+			var $this               = $(this),
+				is_checked          = $this.prop('checked'),
+				width_options       = $(".field-mm-megamenu-opts .field-mm-width"),
+				mega_menu_dependent = $(".bg-image-container, .field-mm-color"),
+				mega_menu_src       = $( '.field-mm-content-src' ),
+				mega_menu_container_style = $('.field-mm-width [name="menu-item-megamenu_width"]'),
+				mega_menu_custom_width = $('.mm-custom-width-wrap'),
+				advanced_options   = $(".field-mm-advanced-options");
+
 			if( is_checked ) {
 				width_options.show();
 				mega_menu_dependent.show();
 				if ( ! $this.parents('.astra-mm-options-wrap').hasClass('menu-item-depth-0') ) {
 					mega_menu_src.show();
+					advanced_options.hide();
+				} else {
+					advanced_options.show();
+				}
+				if ( 'custom' == mega_menu_container_style.val() ) {
+					mega_menu_custom_width.show();
 				}
 			} else {
 				width_options.hide();
 				mega_menu_dependent.hide();
 				mega_menu_src.hide();
+				mega_menu_custom_width.hide();
+				advanced_options.hide();
 			}
-			
 		},
+
+		_megaMenuWidthStyleDependency: function() {
+
+			var $this               = $(this),
+				mega_menu_custom_width = $('.mm-custom-width-wrap');
+
+			if ( 'custom' == $this.val() ) {
+				mega_menu_custom_width.show();
+			} else {
+				mega_menu_custom_width.hide();
+			}
+		},
+
 		_disableLabelOptionDependency: function() {
 				
 			var $this = $(this);
@@ -260,10 +283,29 @@
 			$('.field-mm-custom-text').hide();
 			$('.field-mm-widget-option').hide();
 			$('.field-mm-widget-area').hide();
+			$('.mm-custom-width-wrap').hide();
+			$('.field-mm-advanced-options').hide();
 
 			if( 'undefined' != typeof opts_wrap ) {
-				var src = opts_wrap.find(".ast-content-src").val();
-				var settings_container = opts_wrap.find('.ast-mm-settings');
+				var src = opts_wrap.find(".ast-content-src").val(),
+					settings_container = opts_wrap.find('.ast-mm-settings'),
+					is_mega_menu_enabled = opts_wrap.find('.field-mm-enabled input').prop('checked'),
+					menu_container_style = opts_wrap.find('.field-mm-width [name="menu-item-megamenu_width"]'),
+					mega_menu_custom_width = opts_wrap.find('.mm-custom-width-wrap'),
+					advanced_options = opts_wrap.find(".field-mm-advanced-options");
+
+				if( is_mega_menu_enabled ) {
+					if ( opts_wrap.closest( '.astra-mm-options-wrap' ).hasClass('menu-item-depth-0') ) {
+						advanced_options.show();
+					} else {
+						advanced_options.hide();
+					}
+					if ( 'custom' == menu_container_style.val() ) {
+						mega_menu_custom_width.show();
+					} else {
+						mega_menu_custom_width.hide();
+					}
+				}
 			} else {
 				var src = $(this).val();
 				var settings_container = $(this).closest('.ast-mm-settings');
@@ -465,8 +507,7 @@
 				if( 'undefined' != typeof name ) {
 					options_data[name] = value;
 				}
-
-			});	
+			});
 
 			$('#ast-widget-sortable > .widget').each( function() {
 

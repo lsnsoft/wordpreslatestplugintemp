@@ -124,6 +124,13 @@ if ( ! class_exists( 'Cp_V2_Model' ) ) {
 		);
 
 		/**
+		 * Member Variable
+		 *
+		 * @var array is_layout_content_in_array
+		 */
+		private $is_layout_content_in_array = array();
+
+		/**
 		 * Gets an instance of our plugin.
 		 */
 		public static function get_instance() {
@@ -143,6 +150,17 @@ if ( ! class_exists( 'Cp_V2_Model' ) ) {
 			add_action( 'init', array( $this, 'add_capabilities' ), 1 );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_scripts' ), 10 );
+
+			if ( Cp_V2_Loader::$wp_block_parser_class_exists ) {
+				add_filter(
+					'block_parser_class',
+					function () {
+						return 'CP_V2_WP_Block_Parser';
+					}
+				);
+			}
+
+			add_action( 'wp', array( $this, 'before_after_cta' ), 10 );
 			add_filter( 'the_content', array( $this, 'add_content' ) );
 
 			add_action( 'wp_footer', array( $this, 'load_popup_globally' ) );
@@ -493,6 +511,115 @@ if ( ! class_exists( 'Cp_V2_Model' ) ) {
 				$content  = $content_str_array[0] . $content;
 				$content .= $content_str_array[1];
 			}
+			return $content;
+		}
+
+		/**
+		 * Function to trigger the popup between the block content.
+		 * As per the location and layout set for it.
+		 *
+		 * @since 1.7.0
+		 */
+		public function before_after_cta() {
+			if ( ( is_single() || is_page() ) && ! is_front_page() ) {
+				$style_arrays = cp_get_live_popups( 'inline' );
+
+				if ( is_array( $style_arrays ) ) {
+					foreach ( $style_arrays as $style_id ) {
+						$display        = false;
+						$display_inline = false;
+
+						$style_data      = get_post_meta( $style_id, 'configure', true );
+						$inline_position = '';
+
+						if ( isset( $style_data['enable_display_inline'] ) ) {
+							$display_inline    = true;
+							$inline_position   = $style_data['inline_position'];
+							$display           = cp_v2_is_style_visible( $style_id );
+							$hide_on_device    = $style_data['hide_on_device'];
+							$is_enabled_device = cpro_is_current_device( $hide_on_device );
+							if ( $display && $display_inline && $style_id && $is_enabled_device ) {
+								if ( isset( $inline_position ) && 'between_content' === $inline_position ) {
+									$use_style_data['style_id']                    = $style_id;
+									$use_style_data['select_inline_location']      = $style_data['select_inline_location'];
+									$use_style_data['number_of_layout']            = 'before_headings' === $style_data['select_inline_location'] ? $style_data['number_of_layout_heading'] : $style_data['number_of_layout'];
+									$this->is_layout_content_in_array[ $style_id ] = false;
+									add_filter(
+										'render_block',
+										function ( $content, $parsed_block ) use ( $use_style_data ) {
+											return Cp_V2_Model::render_before_after_cta( $use_style_data, $content, $parsed_block );
+										},
+										10,
+										2
+									);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/**
+		 * Add Before After CTA in-between the content.
+		 *
+		 * @param array  $use_style_data style data.
+		 * @param string $content block content.
+		 * @param array  $parsed_block Block array.
+		 * @since 1.7.0
+		 */
+		public function render_before_after_cta( $use_style_data, $content, $parsed_block ) {
+			// Condition to check if the popup already rendered, if yes, then do not execute the further code.
+			if ( true === $this->is_layout_content_in_array[ $use_style_data['style_id'] ] ) {
+				return $content;
+			}
+
+			$location    = $use_style_data['select_inline_location'];
+			$layout_meta = $use_style_data['number_of_layout'];
+
+			if ( 'after_blocks' === $location ) {
+
+				// Match block index with After Blocks number and display the content.
+				if (
+					isset( $parsed_block['firstLevelBlock'] )
+					&&
+					$parsed_block['firstLevelBlock']
+					&&
+					isset( $parsed_block['firstLevelBlockIndex'] )
+					&&
+					intval(
+						$parsed_block['firstLevelBlockIndex']
+					) + 1 === intval( $layout_meta )
+				) {
+					ob_start();
+					echo do_shortcode( '[cp_popup style_id="' . $use_style_data['style_id'] . '" step_id ="1" display="inline" ][/cp_popup]' );
+					$layout_content = ob_get_clean();
+					$content       .= $layout_content;
+					$this->is_layout_content_in_array[ $use_style_data['style_id'] ] = true;
+				}
+			} elseif ( 'before_headings' === $location ) {
+
+				// Match block index with before headings number and display the content.
+				if (
+					isset( $parsed_block['firstLevelBlock'] )
+					&&
+					$parsed_block['firstLevelBlock']
+					&&
+					isset( $parsed_block['firstLevelHeadingIndex'] )
+					&&
+					intval(
+						$parsed_block['firstLevelHeadingIndex']
+					) + 1 === intval( $layout_meta )
+				) {
+					ob_start();
+					echo do_shortcode( '[cp_popup style_id="' . $use_style_data['style_id'] . '" step_id ="1" display="inline" ][/cp_popup]' );
+					$layout_content = ob_get_clean();
+					$content        = $layout_content . $content;
+
+					$this->is_layout_content_in_array[ $use_style_data['style_id'] ] = true;
+				}
+			}
+
 			return $content;
 		}
 

@@ -222,7 +222,7 @@ if ( ! class_exists( 'CP_Addon_Loader' ) ) {
 
 			$file = dirname( dirname( __FILE__ ) );
 
-			define( 'CP_ADDON_VER', '1.4.3' );
+			define( 'CP_ADDON_VER', '1.5.5' );
 			define( 'CP_ADDON_DIR_NAME', plugin_basename( $file ) );
 			define( 'CP_ADDON_FILE', trailingslashit( $file ) . CP_ADDON_DIR_NAME . '.php' );
 			define( 'CP_ADDON_DIR', plugin_dir_path( CP_ADDON_FILE ) );

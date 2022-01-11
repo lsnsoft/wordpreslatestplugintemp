@@ -84,7 +84,7 @@
     border-bottom: 1px solid #e4e7ea;
     padding-bottom: 12px;
     margin-bottom: 7px;
-    margin-right: -16px; 
+    margin-right: -16px;
 }
 
 #ast-sites-modal .required-plugins-list li.plugin-card-head.no-plugin {
@@ -92,7 +92,7 @@
     border-bottom: none;
     padding-bottom: 0;
     margin-bottom: 0;
-    margin-right: -16px; 
+    margin-right: -16px;
 }
 
 #ast-sites-modal .required-plugins-list {
@@ -133,7 +133,6 @@
     font-size: 34px;
 }
 #ast-sites-modal .astra-sites-library-template:not(.elementor-template-library-template-page) .elementor-template-library-template-footer {
-    padding: 7px;
     padding-top: 5px;
     padding-right: 5px;
     background-color: #fff;
@@ -892,7 +891,7 @@
     border-radius: 6px;
     position: relative;
 }
-#ast-sites-modal .icon-search {
+#ast-sites-modal .ast-icon-search {
     position: absolute;
     left: 0;
     top: 0;
@@ -960,7 +959,6 @@
     font-size: 9px;
     left: -5px;
     line-height: 14px;
-    padding: 4px 8px;
 }
 
 .ast-sites-floating-notice-wrap {
@@ -1152,7 +1150,7 @@
 @-webkit-keyframes slide-in {
     100% { -webkit-transform: translateX(0%); }
 }
-    
+
 @keyframes slide-out {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-120%); }
@@ -1201,6 +1199,11 @@
 
 #ast-sites-modal .position-left-last {
     margin-left: auto;
+}
+
+#elementor-template-block-color-filter select,
+#elementor-template-block-color-filter option {
+    text-transform: capitalize;
 }
 
 @media (max-width: 768px) {

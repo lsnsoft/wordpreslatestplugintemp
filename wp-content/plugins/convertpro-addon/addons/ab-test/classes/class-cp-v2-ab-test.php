@@ -98,7 +98,7 @@ if ( ! class_exists( 'CP_V2_AB_Test' ) ) {
 								$output = $cp_popup_obj->render( $child->ID, false, '1', $module_type, $display, '' );
 								$output = str_replace( array( 'http:', 'https:' ), '', $output );
 
-								$output_formattted = htmlspecialchars( $output, ENT_QUOTES, 'UTF-8' );
+								$output_formattted = htmlspecialchars( $output, ENT_COMPAT, 'UTF-8' );
 
 								update_post_meta( $child->ID, 'html_data', $output_formattted );
 							}

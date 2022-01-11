@@ -81,8 +81,17 @@ FLBuilder::register_module(
 								'threed'      => __( '3D', 'uabb' ),
 							),
 							'toggle'  => array(
-								'default' => array(
+								'default'     => array(
 									'fields' => array( 'button_padding_dimension', 'button_border', 'border_hover_color' ),
+								),
+								'transparent' => array(
+									'fields' => array( 'border_radius' ),
+								),
+								'gradient'    => array(
+									'fields' => array( 'button_border' ),
+								),
+								'flat'        => array(
+									'fields' => array( 'border_radius' ),
 								),
 							),
 						),
@@ -478,6 +487,13 @@ FLBuilder::register_module(
 								'type'     => 'css',
 								'selector' => '.uabb-creative-button-wrap',
 								'property' => 'text-align',
+							),
+						),
+						'tab_align'                => array(
+							'type'    => 'align',
+							'label'   => __( 'Tablet Alignment', 'uabb' ),
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 						'mob_align'                => array(

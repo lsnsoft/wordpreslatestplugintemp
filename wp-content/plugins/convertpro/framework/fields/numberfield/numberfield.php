@@ -19,7 +19,7 @@ if ( function_exists( 'cp_add_input_type' ) ) {
  */
 function cp_v2_numberfield_admin_scripts( $hook ) {
 	$dev_mode = get_option( 'cp_dev_mode' );
-	wp_enqueue_script( 'jquery' );
+
 	if ( '1' === $dev_mode ) {
 		wp_enqueue_script( 'cp-numberfield', plugins_url( 'numberfield.js', __FILE__ ), array(), '1.0.0', true );
 	}

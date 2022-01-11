@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 	/**
 	 * Register below header Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Archive_Advanced_Typo_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Typography Customizer Configurations.
@@ -79,13 +82,13 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 					'parent'            => ASTRA_THEME_SETTINGS . '[blog-content-archive-summary-typo]',
 					'section'           => 'section-blog',
 					'transport'         => 'postMessage',
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-archive-summary-title' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'type'              => 'sub-control',
 					'control'           => 'ast-slider',
 					'priority'          => 30,
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,
@@ -120,10 +123,13 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'blog-content-post-meta-typo' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Meta', 'astra-addon' ),
+					'title'     => __( 'Meta Font', 'astra-addon' ),
 					'section'   => 'section-blog',
 					'transport' => 'postMessage',
 					'priority'  => 145,
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+					'context'   => ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ?
+						astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab,
 				),
 
 				array(
@@ -131,10 +137,13 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 					'default'   => astra_get_option( 'blog-content-pagination-typo' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Pagination', 'astra-addon' ),
+					'title'     => __( 'Pagination Font', 'astra-addon' ),
 					'section'   => 'section-blog',
 					'transport' => 'postMessage',
 					'priority'  => 150,
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+					'context'   => ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ?
+						astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab,
 				),
 
 				/**
@@ -178,13 +187,13 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 					'parent'            => ASTRA_THEME_SETTINGS . '[blog-content-blog-post-title-typo]',
 					'section'           => 'section-blog',
 					'title'             => __( 'Line Height', 'astra-addon' ),
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-page-title' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'type'              => 'sub-control',
 					'control'           => 'ast-slider',
 					'transport'         => 'postMessage',
 					'priority'          => 6,
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,
@@ -279,10 +288,10 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'type'              => 'sub-control',
 					'control'           => 'ast-slider',
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-post-meta' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'transport'         => 'postMessage',
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,

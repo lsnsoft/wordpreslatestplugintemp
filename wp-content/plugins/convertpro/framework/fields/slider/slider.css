@@ -114,15 +114,6 @@ a.ui-slider-handle.ui-state-default.ui-corner-all {
 	position: relative;
 }
 
-/* Firefox supported CSS */
-
-@-moz-document url-prefix() {
-    .cp-slider-block div.slider-input {
-        width: 60px;
-        margin-left: 10px;
-    }
-}
-
 .cp-slider-block .slider-input {
     width: 80px;
     order: 1;

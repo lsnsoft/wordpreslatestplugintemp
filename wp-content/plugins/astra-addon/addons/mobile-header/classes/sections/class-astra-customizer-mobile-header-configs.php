@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Customizer_Mobile_Header_Configs' ) ) {
 	/**
 	 * Customizer Sanitizes Initial setup
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Customizer_Mobile_Header_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Panels and Sections for Customizer.
@@ -36,6 +39,26 @@ if ( ! class_exists( 'Astra_Customizer_Mobile_Header_Configs' ) ) {
 		 */
 		public function register_configuration( $configurations, $wp_customize ) {
 
+			$show_deprecated_no_toggle_style = 'no-toggle' == astra_get_option( 'mobile-menu-style' ) ? true : false;
+
+			// Check deprecated flag has been set or not.
+			if ( apply_filters( 'astra_no_toggle_menu_style_deprecate', $show_deprecated_no_toggle_style ) ) {
+				$menu_style_choices     = array(
+					'default'    => __( 'Dropdown', 'astra-addon' ),
+					'flyout'     => __( 'Flyout', 'astra-addon' ),
+					'fullscreen' => __( 'Full-Screen', 'astra-addon' ),
+					'no-toggle'  => __( 'No Toggle (Deprecated)', 'astra-addon' ),
+				);
+				$menu_style_description = __( 'No Toggle style will no longer supported. We recommend you to choose different menu style.', 'astra-addon' );
+			} else {
+				$menu_style_choices     = array(
+					'default'    => __( 'Dropdown', 'astra-addon' ),
+					'flyout'     => __( 'Flyout', 'astra-addon' ),
+					'fullscreen' => __( 'Full-Screen', 'astra-addon' ),
+				);
+				$menu_style_description = __( 'No Toggle option has been deprecated.', 'astra-addon' );
+			}
+
 			$configs = array(
 
 				/**
@@ -43,19 +66,22 @@ if ( ! class_exists( 'Astra_Customizer_Mobile_Header_Configs' ) ) {
 				 */
 
 				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[mobile-menu-style]',
-					'type'     => 'control',
-					'control'  => 'select',
-					'section'  => 'section-primary-menu',
-					'default'  => astra_get_option( 'mobile-menu-style' ),
-					'title'    => __( 'Menu Style', 'astra-addon' ),
-					'required' => array( ASTRA_THEME_SETTINGS . '[disable-primary-nav]', '!=', '1' ),
-					'priority' => 40,
-					'choices'  => array(
-						'default'    => __( 'Dropdown', 'astra-addon' ),
-						'flyout'     => __( 'Flyout', 'astra-addon' ),
-						'fullscreen' => __( 'Full-Screen', 'astra-addon' ),
-						'no-toggle'  => __( 'No Toggle', 'astra-addon' ),
+					'name'        => ASTRA_THEME_SETTINGS . '[mobile-menu-style]',
+					'type'        => 'control',
+					'control'     => 'ast-select',
+					'section'     => 'section-primary-menu',
+					'default'     => astra_get_option( 'mobile-menu-style' ),
+					'title'       => __( 'Menu Style', 'astra-addon' ),
+					'priority'    => 40,
+					'choices'     => $menu_style_choices,
+					'description' => $menu_style_description,
+					'context'     => array(
+						astra_addon_builder_helper()->general_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[disable-primary-nav]',
+							'operator' => '!=',
+							'value'    => '1',
+						),
 					),
 				),
 
@@ -68,8 +94,17 @@ if ( ! class_exists( 'Astra_Customizer_Mobile_Header_Configs' ) ) {
 					'title'    => __( 'Flyout Menu Alignment', 'astra-addon' ),
 					'default'  => astra_get_option( 'flyout-mobile-menu-alignment' ),
 					'type'     => 'control',
-					'control'  => 'select',
-					'required' => array( ASTRA_THEME_SETTINGS . '[mobile-menu-style]', '==', 'flyout' ),
+					'control'  => 'ast-select',
+
+					'context'  => array(
+						astra_addon_builder_helper()->general_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[mobile-menu-style]',
+							'operator' => '==',
+							'value'    => 'flyout',
+						),
+					),
+
 					'priority' => 41,
 					'choices'  => array(
 						'left'  => __( 'Left', 'astra-addon' ),
@@ -87,7 +122,6 @@ if ( ! class_exists( 'Astra_Customizer_Mobile_Header_Configs' ) ) {
 					'control'        => 'ast-border',
 					'default'        => astra_get_option( 'mobile-header-menu-all-border' ),
 					'transport'      => 'postMessage',
-					'section'        => 'section-primary-menu',
 					'title'          => __( 'Border for Menu Items', 'astra-addon' ),
 					'linked_choices' => true,
 					'priority'       => 65,
@@ -103,15 +137,15 @@ if ( ! class_exists( 'Astra_Customizer_Mobile_Header_Configs' ) ) {
 				 * Option: Mobile Header Menu Border Color
 				 */
 				array(
-					'name'      => ASTRA_THEME_SETTINGS . '[mobile-header-menu-b-color]',
-					'section'   => 'section-primary-menu',
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'title'     => __( 'Border Color', 'astra-addon' ),
-					'default'   => '#dadada',
-					'transport' => 'postMessage',
-					'section'   => 'section-primary-menu',
-					'priority'  => 68,
+					'name'              => ASTRA_THEME_SETTINGS . '[mobile-header-menu-b-color]',
+					'section'           => 'section-primary-menu',
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'title'             => __( 'Border Color', 'astra-addon' ),
+					'default'           => astra_get_option( 'mobile-header-menu-b-color', '#dadada' ),
+					'transport'         => 'postMessage',
+					'priority'          => 68,
 				),
 			);
 

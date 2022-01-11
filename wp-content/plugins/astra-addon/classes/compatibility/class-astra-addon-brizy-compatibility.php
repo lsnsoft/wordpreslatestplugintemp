@@ -71,7 +71,7 @@ if ( ! class_exists( 'Astra_Addon_Brizy_Compatibility' ) ) :
 
 			if ( $post && $post->uses_editor() ) {
 
-				$content = apply_filters( 'brizy_content', $post->get_compiled_html(), Brizy_Editor_Project::get(), $post->get_wp_post() );
+				$content = apply_filters( 'brizy_content', $post->get_compiled_html(), Brizy_Editor_Project::get(), $post->get_wp_post() ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 				echo do_shortcode( $content );
 			}
@@ -86,12 +86,42 @@ if ( ! class_exists( 'Astra_Addon_Brizy_Compatibility' ) ) :
 		 */
 		public function enqueue_scripts( $post_id ) {
 
-			$post = Brizy_Editor_Post::get( $post_id );
-			$main = new Brizy_Public_Main( $post );
+			$prefix = method_exists( 'Brizy_Editor', 'prefix' ) ? Brizy_Editor::prefix() : 'brizy';
+
+			if ( isset( $_GET[ "{$prefix}-edit-iframe" ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				return;
+			}
+
+			try {
+				$post = Brizy_Editor_Post::get( $post_id );
+				$main = method_exists( 'Brizy_Public_Main', 'get' ) ? Brizy_Public_Main::get( $post ) : new Brizy_Public_Main( $post );
+			} catch ( Exception $e ) {
+				return;
+			}
+
+			$needs_compile = ! $post->isCompiledWithCurrentVersion() || $post->get_needs_compile();
+
+			if ( $needs_compile ) {
+				try {
+					$post->compile_page();
+					$post->saveStorage();
+					$post->savePost();
+				} catch ( Exception $e ) {
+					return;
+				}
+			}
 
 			// Add page CSS.
 			add_filter( 'body_class', array( $main, 'body_class_frontend' ) );
-			add_action( 'wp_enqueue_scripts', array( $main, '_action_enqueue_preview_assets' ), 9999 );
+			add_action(
+				'wp_enqueue_scripts',
+				function() use ( $main ) {
+					if ( ! wp_script_is( 'brizy-preview' ) ) {
+						add_action( 'wp_enqueue_scripts', array( $main, '_action_enqueue_preview_assets' ), 10001 );
+					}
+				},
+				10000
+			);
 
 			add_action(
 				'wp_head',

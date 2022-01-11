@@ -12,7 +12,9 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 	 *
 	 * @since 1.6.10
 	 */
-	class ASTRA_Ext_Edd_Markup {
+	// @codingStandardsIgnoreStart
+	class ASTRA_Ext_Edd_Markup { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Varible
@@ -39,16 +41,12 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 			add_action( 'wp', array( $this, 'edd_initializattion' ) );
 			add_action( 'wp', array( $this, 'customization_checkout_page' ) );
 
-			add_action( 'astra_get_css_files', array( $this, 'add_styles' ) );
+			add_action( 'astra_addon_get_css_files', array( $this, 'add_styles' ) );
 
 			add_filter( 'body_class', array( $this, 'body_class' ) );
 
 			add_filter( 'post_class', array( $this, 'post_class' ) );
 			add_filter( 'edd_download_class', array( $this, 'shortcode_download_class' ), 10, 4 );
-
-			// Header Cart Icon.
-			add_action( 'astra_edd_header_cart_icons_before', array( $this, 'header_cart_icon_markup' ) );
-			add_filter( 'astra_edd_cart_in_menu_class', array( $this, 'header_cart_icon_class' ) );
 
 			add_shortcode( 'astra_edd_mini_cart', array( $this, 'astra_edd_mini_cart_markup' ) );
 
@@ -218,92 +216,6 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 			return $class;
 		}
 
-
-		/**
-		 * Header Cart Icon Class
-		 *
-		 * @param array $classes Default argument array.
-		 *
-		 * @return array;
-		 */
-		public function header_cart_icon_class( $classes ) {
-
-			$header_cart_icon_style = astra_get_option( 'edd-header-cart-icon-style' );
-
-			$classes[]                  = 'ast-edd-menu-cart-' . $header_cart_icon_style;
-			$header_cart_icon_has_color = astra_get_option( 'edd-header-cart-icon-color' );
-			if ( ! empty( $header_cart_icon_has_color ) && ( 'none' !== $header_cart_icon_style ) ) {
-				$classes[] = 'ast-menu-cart-has-color';
-			}
-
-			return $classes;
-		}
-
-		/**
-		 * Header Cart Extra Icons markup
-		 *
-		 * @return void;
-		 */
-		public function header_cart_icon_markup() {
-
-			$icon               = astra_get_option( 'edd-header-cart-icon' );
-			$cart_total_display = astra_get_option( 'edd-header-cart-total-display' );
-			$cart_count_display = apply_filters( 'astra_edd_header_cart_count', true );
-			$cart_title_display = astra_get_option( 'edd-header-cart-title-display' );
-			$cart_title         = apply_filters( 'astra_header_cart_title', __( 'Cart', 'astra-addon' ) );
-
-			$cart_title_markup = '<span class="ast-edd-header-cart-title">' . esc_html( $cart_title ) . '</span>';
-
-			$cart_total_markup = '<span class="ast-edd-header-cart-total">' . esc_html( edd_currency_filter( edd_format_amount( edd_get_cart_total() ) ) ) . '</span>';
-
-			// Cart Title & Cart Cart total markup.
-			$cart_info_markup = sprintf(
-				'<span class="ast-edd-header-cart-info-wrap">
-						%1$s
-						%2$s
-						%3$s
-					</span>',
-				( $cart_title_display ) ? $cart_title_markup : '',
-				( $cart_total_display && $cart_title_display ) ? '/' : '',
-				( $cart_total_display ) ? $cart_total_markup : ''
-			);
-
-			$cart_items          = count( edd_get_cart_contents() );
-			$cart_contents_count = $cart_items;
-
-			// Cart Icon markup with total number of items.
-			$cart_icon = sprintf(
-				'<span class="astra-icon ast-icon-shopping-%1$s %2$s"	
-							%3$s
-						></span>',
-				( $icon ) ? $icon : '',
-				( $cart_count_display ) ? '' : 'no-cart-total',
-				( $cart_count_display ) ? 'data-cart-total="' . $cart_contents_count . '"' : ''
-			);
-
-			// Theme's default icon with cart title and cart total.
-			if ( 'default' == $icon ) {
-				// Cart Total or Cart Title enable then only add markup.
-				if ( $cart_title_display || $cart_total_display ) {
-					echo $cart_info_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				}
-			} else {
-
-				// Remove Default cart icon added by theme.
-				add_filter( 'astra_edd_default_header_cart_icon', '__return_false' );
-
-				/* translators: 1: Cart Title Markup, 2: Cart Icon Markup */
-				printf(
-					'<div class="ast-addon-cart-wrap">
-							%1$s
-							%2$s
-					</div>',
-					( $cart_title_display || $cart_total_display ) ? $cart_info_markup : '', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					( $cart_icon ) ? $cart_icon : '' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				);
-			}
-		}
-
 		/**
 		 * Checkout page markup update using actions & filters only
 		 */
@@ -322,6 +234,12 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 			// Distraction Free Checkout.
 			if ( astra_get_option( 'edd-distraction-free-checkout' ) ) {
 
+				// HFB Support for distration free checkout.
+				if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+					remove_action( 'astra_header', array( Astra_Builder_Header::get_instance(), 'prepare_header_builder_markup' ) );
+					remove_action( 'astra_footer', array( Astra_Builder_Footer::get_instance(), 'footer_markup' ), 10 );
+				}
+
 				remove_action( 'astra_header', 'astra_header_markup' );
 				remove_action( 'astra_footer', 'astra_footer_markup' );
 
@@ -338,7 +256,7 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 		 */
 		public function checkout_header_markup() {
 
-			astra_get_template( 'edd/templates/checkout-header.php' );
+			astra_addon_get_template( 'edd/templates/checkout-header.php' );
 		}
 
 		/**
@@ -346,7 +264,7 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 		 */
 		public function checkout_footer_markup() {
 
-			astra_get_template( 'edd/templates/checkout-footer.php' );
+			astra_addon_get_template( 'edd/templates/checkout-footer.php' );
 		}
 
 		/**
@@ -369,8 +287,8 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 			/*** Start Path Logic */
 
 			/* Define Variables */
-			$uri  = ASTRA_EXT_EDD_URI . 'assets/css/';
-			$path = ASTRA_EXT_EDD_DIR . 'assets/css/';
+			$uri  = ASTRA_ADDON_EXT_EDD_URI . 'assets/css/';
+			$path = ASTRA_ADDON_EXT_EDD_DIR . 'assets/css/';
 			$rtl  = '';
 
 			if ( is_rtl() ) {
@@ -404,6 +322,7 @@ if ( ! class_exists( 'ASTRA_Ext_Edd_Markup' ) ) {
 			$shop_page_style = astra_get_option( 'edd-archive-style' );
 
 			if ( 'edd-archive-page-list-style' == $shop_page_style ) {
+				$shop_page_style = Astra_Addon_Builder_Helper::apply_flex_based_css() ? $shop_page_style . '-grid' : $shop_page_style;
 				Astra_Minify::add_css( $gen_path . $shop_page_style . $file_prefix . '.css' );
 			}
 		}

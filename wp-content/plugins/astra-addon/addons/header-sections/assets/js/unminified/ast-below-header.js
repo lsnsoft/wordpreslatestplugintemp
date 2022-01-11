@@ -21,7 +21,7 @@
 	if ( menu_toggle_all.length > 0 ) {
 
 		for (var i = 0; i < menu_toggle_all.length; i++) {
-			
+
 			menu_toggle_all[i].setAttribute('data-index', i);
 
 			menu_toggle_all[i].addEventListener( 'click', function( event ) {
@@ -29,41 +29,46 @@
 
 		    	var event_index = this.getAttribute( 'data-index' );
 
-		    	var menuHasChildren = __main_header_all[event_index].querySelectorAll( '.menu-item-has-children, .page_item_has_children' );
+		    	var menuHasChildren = __main_header_all[event_index].querySelectorAll( '.menu-item-has-children' );
 				for ( var i = 0; i < menuHasChildren.length; i++ ) {
 					menuHasChildren[i].classList.remove( 'ast-submenu-expanded' );
-					var menuHasChildrenSubMenu = menuHasChildren[i].querySelectorAll( '.sub-menu, .children' );		
-					for (var j = 0; j < menuHasChildrenSubMenu.length; j++) {		
-						menuHasChildrenSubMenu[j].style.display = 'none';		
+					var menuHasChildrenSubMenu = menuHasChildren[i].querySelectorAll( '.sub-menu' );
+					for (var j = 0; j < menuHasChildrenSubMenu.length; j++) {
+						menuHasChildrenSubMenu[j].style.display = 'none';
 					};
 				}
 
 				var menu_class = this.getAttribute('class') || '';
-		
+
 				if ( menu_class.indexOf('menu-below-header-toggle') !== -1 ) {
-					toggleClass( __main_header_all[event_index], 'toggle-on' );
-					toggleClass( menu_toggle_all[event_index], 'toggled' );
+					if (typeof astraToggleClass === "function") {
+						astraToggleClass( __main_header_all[event_index], 'toggle-on' );
+						astraToggleClass( menu_toggle_all[event_index], 'toggled' );
+					} else {
+						toggleClass( __main_header_all[event_index], 'toggle-on' );
+						toggleClass( menu_toggle_all[event_index], 'toggled' );
+					}
 
 					if ( __main_header_all[event_index].classList.contains( 'toggle-on' ) ) {
 						//__main_header_all[event_index].style.display = 'block';
 						below_header_nav_all[event_index].style.display = 'block';
 						html.classList.add( 'below-header-toggle-on' );
-					} else {		
-						//__main_header_all[event_index].style.display = '';		
+					} else {
+						//__main_header_all[event_index].style.display = '';
 						below_header_nav_all[event_index].style.display = '';
 						html.classList.remove( 'below-header-toggle-on' );
 					}
 				}
 		    }, false);
-			
+
 			if( 'undefined' !== typeof __main_header_all[i] ) {
 
-				var parentList = __main_header_all[i].querySelectorAll( 'ul.ast-below-header-menu li' );
-			 	
+				var parentList = __main_header_all[i].querySelectorAll( '.ast-below-header-menu .menu-item' );
+
 			 	if ( document.querySelector("header.site-header").classList.contains("ast-menu-toggle-link") ) {
-			 	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-header-break-point .ast-below-header-menu .ast-menu-toggle, .ast-header-break-point .ast-below-header-menu .menu-item-has-children > a' );
+			 	 	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-header-break-point .ast-below-header-menu .ast-menu-toggle, .ast-header-break-point .ast-below-header-menu .menu-item-has-children > .menu-link' );
 			 	} else {
-			 	  	var astra_menu_toggle = __main_header_all[i].querySelectorAll( 'ul.ast-below-header-menu .ast-menu-toggle' );
+			 	  	var astra_menu_toggle = __main_header_all[i].querySelectorAll( '.ast-below-header-menu .ast-menu-toggle' );
 			 	}
 
 				// Add Eevetlisteners for Submenu.
@@ -85,17 +90,17 @@
 
 		if ( below_menu_toggle_all.length > 0 && __below_main_header_all.length > 0  && __primary_menu.length == 0 ) {
 
-			for (var i = 0; i < below_menu_toggle_all.length; i++) {	
+			for (var i = 0; i < below_menu_toggle_all.length; i++) {
 
 			 	var astra_menu_toggle_below_header = __below_main_header_all[i].querySelectorAll( '.ast-menu-toggle' );
-				
+
 				 // Add Eventlisteners for Submenu.
 				 if (astra_menu_toggle_below_header.length > 0) {
 					for (var i = 0; i < astra_menu_toggle_below_header.length; i++) {
 						astra_menu_toggle_below_header[i].addEventListener('click', AstraToggleSubMenu, false);
 					};
 				}
-				
+
 			};
 
 		}

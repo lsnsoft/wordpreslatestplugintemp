@@ -18,7 +18,10 @@ if ( ! class_exists( 'Astra_Customizer_Ext_WooCommerce_Partials' ) ) {
 	 *
 	 * @since 1.1.0
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Customizer_Ext_WooCommerce_Partials {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -47,7 +50,7 @@ if ( ! class_exists( 'Astra_Customizer_Ext_WooCommerce_Partials' ) ) {
 		 *
 		 * @since 1.1.0
 		 */
-		public function _render_shop_load_more() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		public static function _render_shop_load_more() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 			return astra_get_option( 'shop-load-more-text' );
 		}
 	}

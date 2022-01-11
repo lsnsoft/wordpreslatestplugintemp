@@ -83,13 +83,11 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Course' ) ) {
 							$schema['hasCourseInstance'][ $key ]['endDate'] = wp_strip_all_tags( $value['end-date'] );
 						}
 
-						if ( isset( $value['previous-date'] ) && ! empty( $value['previous-date'] ) ) {
-							if ( 'EventRescheduled' === $value['event-status'] ) {
+						if ( isset( $value['previous-date'] ) && ! empty( $value['previous-date'] ) && 'EventRescheduled' === $value['event-status'] ) {
 								$schema['hasCourseInstance'][ $key ]['previousStartDate'] = wp_strip_all_tags( $value['previous-date'] );
-							}
 						}
 
-						if ( isset( $value['online-location'] ) && ! empty( $value['online-location'] ) && 'OfflineEventAttendanceMode' !== $value['event-attendance-mode'] ) {
+						if ( isset( $value['online-location'] ) && ! empty( $value['online-location'] ) && 'OfflineEventAttendanceMode' !== $value['event-attendance-mode'] || 'MixedEventAttendanceMode' === $value['event-attendance-mode'] ) {
 							$schema['hasCourseInstance'][ $key ]['location']['@type'] = 'VirtualLocation';
 							$schema['hasCourseInstance'][ $key ]['location']['url']   = esc_url( $value['online-location'] );
 						}
@@ -98,12 +96,12 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Course' ) ) {
 							$schema['hasCourseInstance'][ $key ]['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $value['image'] );
 						}
 
-						if ( isset( $value['location-name'] ) && ! empty( $value['location-name'] ) && 'OnlineEventAttendanceMode' !== isset( $value['event-attendance-mode'] ) ) {
+						if ( isset( $value['location-name'] ) && ! empty( $value['location-name'] ) && 'OnlineEventAttendanceMode' !== $value['event-attendance-mode'] ) {
 							$schema['hasCourseInstance'][ $key ]['location']['@type'] = 'Place';
 							$schema['hasCourseInstance'][ $key ]['location']['name']  = wp_strip_all_tags( $value['location-name'] );
 						}
 
-						if ( isset( $value['location-address'] ) && ! empty( $value['location-address'] ) && 'OnlineEventAttendanceMode' !== isset( $value['event-attendance-mode'] ) ) {
+						if ( isset( $value['location-address'] ) && ! empty( $value['location-address'] ) && 'OnlineEventAttendanceMode' !== $value['event-attendance-mode'] ) {
 							$schema['hasCourseInstance'][ $key ]['location']['@type']   = 'Place';
 							$schema['hasCourseInstance'][ $key ]['location']['address'] = wp_strip_all_tags( $value['location-address'] );
 						}

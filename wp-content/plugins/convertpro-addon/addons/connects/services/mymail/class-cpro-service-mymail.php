@@ -231,6 +231,16 @@ final class CPRO_Service_MyMail extends CPRO_Service {
 					'0' => $settings['mailster_list_id'],
 				);
 			}
+
+			// Check if the double-optin in enabled.
+			if ( 0 === $optin ) {
+				$details = $subs->get_by_mail( $email ); // Get the exisiting user status.
+				if ( is_object( $details ) && 1 === $details->status ) {
+					// If the user's status is already subscribed in double-optin case.
+					$userdata['status'] = 1;
+				}
+			}
+
 			if ( is_array( $userdata ) && ! empty( $userdata ) ) {
 				$subscriber_id = $subs->add( $userdata, true );
 			}

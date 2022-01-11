@@ -19,7 +19,7 @@ if ( function_exists( 'cp_add_input_type' ) ) {
  */
 function cp_v2_textalign_admin_scripts( $hook ) {
 	$dev_mode = get_option( 'cp_dev_mode' );
-	wp_enqueue_script( 'jquery' );
+
 	if ( '1' === $dev_mode ) {
 		wp_enqueue_script( 'cp-text-align-script', plugins_url( 'text-align.js', __FILE__ ), array(), '1.0.0', true );
 		wp_enqueue_style( 'cp-text-align-style', plugins_url( 'text-align.css', __FILE__ ), array(), '1.0.0' );

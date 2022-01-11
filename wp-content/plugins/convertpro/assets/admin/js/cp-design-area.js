@@ -105,7 +105,7 @@ var ConvertProPanel    = '';
                     }
 
                     $(".tooltip-wrapper").hide();
-                    $('.panel-wrapper').focus();
+                    $('.panel-wrapper').trigger('focus');
 
                 }
             };
@@ -115,7 +115,7 @@ var ConvertProPanel    = '';
 
         _ready: function () {
 
-            $('.draggable').dblclick(
+            $('.draggable').on('dblclick',
                 function ( e ) {
                     ConvertProDragDrop._dblclick_drop($(this), e, ui = false);
                 }
@@ -196,7 +196,7 @@ var ConvertProPanel    = '';
                     }
 
                     $(".tooltip-wrapper").hide();
-                    $('.panel-wrapper').focus();
+                    $('.panel-wrapper').trigger('focus');
                 }
             };
             $(document).trigger('cpro_init_drag', ['.cp-panel-field', obj]);
@@ -512,7 +512,7 @@ var ConvertProPanel    = '';
 
             $(document).trigger('cpro_open_edit_panel', [ field, false ]);
             $('.cp-layer-wrapper').removeClass('cp-hidden');
-            $('.panel-wrapper').focus();
+            $('.panel-wrapper').trigger('focus');
 
         },
 
@@ -699,7 +699,7 @@ var ConvertProPanel    = '';
             .on("mouseup", this._selectElements)
             .on("mousemove", this._openSelector)
 
-            .resize(
+            .on("resize",
                 function (e) {
                     if (cp_ghost_dragging ) {
                         cp_ghost_dragging = false;
@@ -720,8 +720,8 @@ var ConvertProPanel    = '';
 
         _groupingGrid: function () {
 
-            $('body').delegate(
-                '.panel-wrapper', 'mousedown', function (e) { 
+            $('body').on(
+                'mousedown', '.panel-wrapper', function (e) {
                     
                     if ($(e.target).hasClass('cp-field-html-data') 
                         || $(e.target).closest(".cp-field-html-data").length > 0 
@@ -729,7 +729,7 @@ var ConvertProPanel    = '';
                         return;
                     }
 
-                    $(this).focus();
+                    $(this).trigger('focus');
                 
                     if (e.target != this 
                         && $(e.target).closest('.cp-field-html-data').length > 0 
@@ -1167,41 +1167,6 @@ var ConvertProPanel    = '';
             
             var id = step_id + 1;
             
-            // //set aspect ratio for image
-            $(".cp-image-ratio").resizable(
-                {
-                    aspectRatio: true,
-                    handles: {
-                        'n':  '.ui-resizable-n', 
-                        'e':  '.ui-resizable-e',
-                        's':  '.ui-resizable-s',
-                        'w':  '.ui-resizable-w',
-                        'ne': '.ui-resizable-ne',
-                        'se': '.ui-resizable-se',
-                        'sw': '.ui-resizable-sw',
-                        'nw': '.ui-resizable-nw'
-                    },
-                    create: function ( event, ui ) {
-                          var width = $(event.target).width();
-                          var height = $(event.target).height();
-                          ConvertProHelper._setResizeHandlerPosition(width, height, $(this));
-                    },
-                    start: function ( event, ui ) {
-                           guides = $.map($('#panel-'+id+" .cp-panel-item").not(this), ConvertProHelper._computeGuidesForElementResize);
-
-                           $(this).removeClass('selected');
-                           //$(this).addClass('cp-promote-tooltip');
-                           jQuery(".ui-resizable-handle").removeClass("show");
-                    },
-                    resize : function (event, ui) {        
-                           ConvertProResize._onResizeActions(event, jQuery(this), ui);
-                    },
-                    stop: function ( event, ui ) {
-                           ConvertProResize._onResizeStop(event, jQuery(this), ui);    
-                    }
-                }
-            );
-
             $('.cp-resize-element').resizable(
                 {
                     handles: {
@@ -1322,7 +1287,7 @@ var ConvertProPanel    = '';
             
             setTimeout(
                 function () {
-                    $(".panel-wrapper").focus();
+                    $(".panel-wrapper").trigger('focus');
                 }, 50
             );
         },
@@ -1415,12 +1380,12 @@ var ConvertProPanel    = '';
                 }
             );
 
-            $('.panel-wrapper').bind('keydown', this._onPanelKeyDown);
+            $('.panel-wrapper').on('keydown', this._onPanelKeyDown);
             
             $(window)
             .on('resize', this._onResize)
             .on('beforeunload', this._beforeUnload)
-            .bind('keydown', this._keyEvents);
+            .on('keydown', this._keyEvents);
 
             this._addShapeHeadings();
 
@@ -1445,7 +1410,7 @@ var ConvertProPanel    = '';
             ConvertProPanel._modifyWindowURL();
             ConvertProPanel._loadGoogleFonts();
 
-            $(".panel-wrapper").focus();
+            $(".panel-wrapper").trigger('focus');
 
             $('.design-content .form-fields .cp-element-container .cp-droppable-item[data-field-title=Phone]').find('i').removeClass('dashicons-editor-spellcheck').addClass('dashicons-phone');
         
@@ -1462,7 +1427,7 @@ var ConvertProPanel    = '';
             var load_previous_data = $('#cp_modal_data').val();
 
             if(load_previous_data !== '' ) {
-                load_previous_data_json = $.parseJSON(load_previous_data);
+                load_previous_data_json = JSON.parse(load_previous_data);
             } else {
                 // get default data
                 panel_default_data = bmodel.getDefaultData();
@@ -1682,8 +1647,6 @@ var ConvertProPanel    = '';
             // Move fields using keyboard arrow keys
             else if (e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 ) {
 
-                clearTimeout(cp_move_field_timer);
-                        
                 var el_selected = $(".cp-field-html-data.selected");
                 var el_in_group = el_selected.closest('.cp-big-ghost').length;
 
@@ -1724,6 +1687,7 @@ var ConvertProPanel    = '';
                             }
                         }, 50
                     );
+                    clearTimeout(cp_move_field_timer);
                 }
             }
 
@@ -1802,19 +1766,33 @@ var ConvertProPanel    = '';
                 var popup_wrap_ht = popup_wrap.innerHeight();
                 var popup_wrap_wt = popup_wrap.innerWidth();
                 
-                if (cp_height > ( popup_wrap_ht - 40 ) ) {
-                    
+               if ( cp_height > ( popup_wrap_ht - 40 ) ) {
                     popup_wrap.addClass('cp-popup-exceed-view exceed-height');
-                
+                    if ( 'modal_popup' === $('#cp_module_type').val() && cp_height >= popup_wrap_ht ) {
+                        var modal_ht = ( cp_height - popup_wrap_ht ) / 2;
+                        panel_wrapper.css(
+                            {
+                                'margin-top' : modal_ht + 2,
+                                'margin-bottom' : modal_ht + 14
+                            }
+                        );
+                    }
                 } else {
-                    
                     popup_wrap.removeClass('cp-popup-exceed-view exceed-height');
 
                     panel_wrapper.css(
                         {
-                            'height' : ''
+                            'height' : '',
                         }
                     );
+                    if ( 'modal_popup' === $('#cp_module_type').val() ) {
+                        panel_wrapper.css(
+                        {
+                            'margin-top' : '',
+                            'margin-bottom' : '',
+                        }
+                        );
+                    }
                 }
 
                 if (cp_width > popup_wrap_wt ) {

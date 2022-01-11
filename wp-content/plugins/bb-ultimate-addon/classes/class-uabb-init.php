@@ -197,8 +197,25 @@ class UABB_Init {
 		require_once BB_ULTIMATE_ADDON_DIR . 'includes/column.php';
 
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/batch-process/class-uabb-batch-process.php';
-		require_once BB_ULTIMATE_ADDON_DIR . 'lib/notices/class-astra-notices.php';
-		require_once BB_ULTIMATE_ADDON_DIR . 'admin/bsf-analytics/class-bsf-analytics.php';
+		require_once BB_ULTIMATE_ADDON_DIR . 'lib/astra-notices/class-astra-notices.php';
+		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-presets.php';
+
+		if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
+			require_once BB_ULTIMATE_ADDON_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
+
+			$bsf_analytics = BSF_Analytics_Loader::get_instance();
+
+			$bsf_analytics->set_entity(
+				array(
+					'bsf' => array(
+						'product_name'    => 'Ultimate Addons for Beaver Builder',
+						'path'            => BB_ULTIMATE_ADDON_DIR . 'admin/bsf-analytics',
+						'author'          => 'Brainstorm Force',
+						'time_to_display' => '+24 hours',
+					),
+				)
+			);
+		}
 
 		// Load the appropriate text-domain.
 		$this->load_plugin_textdomain();
@@ -335,19 +352,19 @@ class UABB_Init {
 	 */
 	public function load_scripts() {
 
-		$uabb_localize = apply_filters(
-			'uabb_js_localize',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-			)
-		);
-
-		wp_localize_script( 'jquery', 'uabb', $uabb_localize );
-
 		if ( FLBuilderModel::is_builder_active() ) {
 
 			wp_enqueue_style( 'uabb-builder-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-builder.css', array(), BB_ULTIMATE_ADDON_VER );
 			wp_enqueue_script( 'uabb-builder-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-builder.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
+			wp_enqueue_script( 'uabb-presets', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-presets.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
+			wp_localize_script(
+				'uabb-presets',
+				'uabb',
+				array(
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
+					'nonce'    => wp_create_nonce( 'uabb-presets-nonce' ),
+				)
+			);
 
 			$uabb_options = self::$uabb_options['fl_builder_uabb'];
 

@@ -124,6 +124,10 @@ foreach ( $types as $popup_type ) {
 					<span class="cp-question-title"><?php esc_html_e( 'Group', 'convertpro' ); ?></span>
 				</a>
 				<?php echo apply_filters( 'cp_export_option', $option ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
+				<a class="cp-change-slug-action" href="#">
+					<span class="cp-question-icon"><i class="dashicons dashicons-welcome-write-blog"></i></span>
+					<span class="cp-question-title"><?php esc_html_e( 'Change Slug', 'convertpro' ); ?></span>
+				</a>
 				<a class="cp-delete-action" href="#">
 					<span class="without-has-tip">
 						<span class="cp-question-icon"><i class="dashicons dashicons-trash"></i></span>
@@ -366,7 +370,46 @@ foreach ( $types as $popup_type ) {
 						</div>
 					</div>
 				</div> <!--Rename Action End-->
-
+				<div class="change-slug-action"> <!--Change slug Action-->
+					<div class="cp-form-error">
+							<label class="cp-error"></label>
+						</div><!-- Error Message -->
+					<div class="cp-modal-header">
+						<h3 class="cp-md-modal-title"><?php esc_html_e( 'Change Your Call-to-action Slug', 'convertpro' ); ?></h3>
+					</div>
+					<div class="cp-modal-content">
+						<div class="cp-change-slug-notice">
+							<strong>
+								<?php esc_html_e( 'Note: ', 'convertpro' ); ?>
+							</strong>
+							<span class="cp-change-slug-notice-span">
+								<?php
+								esc_html_e( 'It is not recommended to change the slug if you already have analytics running for this CTA. Changing the slug will result in resetting the analytics. Both impressions and conversions will set to 0. Existing analytics data will be deleted for this CTA.', 'convertpro' );
+								?>
+								<br>
+								<?php
+								esc_html_e( 'You can refer to the article ', 'convertpro' );
+								echo wp_kses_post( sprintf( '<a href="%1s" target="_blank" rel="noreferrer noopener">%2s</a>', esc_url( 'https://www.convertpro.net/docs/how-to-change-the-popup-slug-name/' ), __( 'here.', 'convertpro' ) ) );
+								?>
+							</span>
+						</div>
+						<br>
+						<div class="cp-save-style-content">
+							<div class="cp-dash-txt-field">
+								<div class="cp-form-input has-input">
+									<input type="text" name="cp_popup_slug" id="cp_popup_slug" required="" value="">
+									<label class="cp-field-label"><?php esc_html_e( 'Call-to-action Slug ( ex: your-slug-name )', 'convertpro' ); ?></label>
+								</div>
+							</div><!-- .cp-dash-txt-field -->                            
+						</div>
+						<!-- Footer Buttons -->
+						<div class="cp-modal-button cp-action-row">                            
+							<button class="cp-cancel-change-slug-btn cp-sm-btn cp-button-style"><?php esc_html_e( 'Cancel', 'convertpro' ); ?></button>
+							<button class="cp-save-change-slug-btn cp-sm-btn cp-button-style cp-btn-primary"><?php esc_html_e( 'Save', 'convertpro' ); ?></button>
+							<?php wp_nonce_field( 'cp_change_popup_slug', 'cp_change_popup_slug_nonce' ); ?>
+						</div>
+					</div>
+				</div> <!--Change slug Action End-->
 				<div class="duplicate-action">
 					<div class="cp-form-error">
 							<label class="cp-error"></label>

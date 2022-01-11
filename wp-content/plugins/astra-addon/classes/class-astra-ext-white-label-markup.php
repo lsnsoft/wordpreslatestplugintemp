@@ -12,7 +12,9 @@ if ( ! class_exists( 'Astra_Ext_White_Label_Markup' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	class Astra_Ext_White_Label_Markup {
+	// @codingStandardsIgnoreStart
+	class Astra_Ext_White_Label_Markup { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -72,6 +74,7 @@ if ( ! class_exists( 'Astra_Ext_White_Label_Markup' ) ) {
 				add_filter( 'astra_page_top_icon', array( $this, 'astra_welcome_page_icon' ), 10, 1 );
 
 				if ( false !== self::get_whitelabel_string( 'astra', 'name', false ) ) {
+					// Gettext filter.
 					add_filter( 'gettext', array( $this, 'theme_gettext' ), 20, 3 );
 				}
 
@@ -237,7 +240,7 @@ if ( ! class_exists( 'Astra_Ext_White_Label_Markup' ) ) {
 				$show_branding = false;
 			}
 
-			return apply_filters( 'astra_pro_show_branding', $show_branding );
+			return apply_filters( 'astra_addon_show_branding', $show_branding );
 		}
 
 		/**
@@ -858,7 +861,7 @@ if ( ! class_exists( 'Astra_Ext_White_Label_Markup' ) ) {
 						'updates',
 						"
 						var _ast_default_ss = '$default_screenshot', _ast_branded_ss = '$branded_screenshot';
-						
+
 						document.querySelectorAll( '#update-themes-table .plugin-title .updates-table-screenshot' ).forEach(function(theme) {
 							if( _ast_default_ss === theme.src ) {
 								theme.src = _ast_branded_ss;

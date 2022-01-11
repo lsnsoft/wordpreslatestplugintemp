@@ -55,6 +55,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Article' ) ) {
 			if ( isset( $data['author'] ) && ! empty( $data['author'] ) ) {
 				$schema['author']['@type'] = 'Person';
 				$schema['author']['name']  = wp_strip_all_tags( $data['author'] );
+				if ( isset( $data['author-url'] ) && ! empty( $data['author-url'] ) ) {
+					$schema['author']['url'] = wp_strip_all_tags( $data['author-url'] );
+				}
 			}
 
 			if ( isset( $data['orgnization-name'] ) && ! empty( $data['orgnization-name'] ) ) {

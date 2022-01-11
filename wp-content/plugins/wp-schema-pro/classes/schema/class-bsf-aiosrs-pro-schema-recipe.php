@@ -55,7 +55,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Recipe' ) ) {
 			if ( isset( $data['cook-time'] ) && ! empty( $data['cook-time'] ) ) {
 				$schema['cookTime'] = wp_strip_all_tags( $data['cook-time'] );
 			}
-
+			if ( isset( $data['recipe-yield'] ) && ! empty( $data['recipe-yield'] ) ) {
+				$schema['recipeYield'] = esc_html( $data['recipe-yield'] );
+			}
 			if ( isset( $data['recipe-keywords'] ) && ! empty( $data['recipe-keywords'] ) ) {
 				$schema['keywords'] = wp_strip_all_tags( $data['recipe-keywords'] );
 			}
@@ -100,6 +102,16 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Recipe' ) ) {
 
 						$schema['recipeInstructions'][ $key ]['@type'] = 'HowToStep';
 						$schema['recipeInstructions'][ $key ]['text']  = wp_strip_all_tags( $value['steps'] );
+						if ( isset( $value['name'] ) && ! empty( $value['name'] ) ) {
+
+							$schema['recipeInstructions'][ $key ]['name'] = wp_strip_all_tags( $value['name'] );
+						}
+						if ( isset( $value['url'] ) && ! empty( $value['url'] ) ) {
+							$schema['recipeInstructions'][ $key ]['url'] = wp_strip_all_tags( $value['url'] );
+						}
+						if ( isset( $value['image'] ) && ! empty( $value['image'] ) ) {
+							$schema['recipeInstructions'][ $key ]['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $value['image'], 'URL' );
+						}
 					}
 				}
 			}

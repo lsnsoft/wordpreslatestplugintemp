@@ -92,7 +92,13 @@ final class ConvertPlugServices {
 			'type'  => 'autoresponder',
 			'name'  => 'ElasticEmail',
 			'class' => 'CPRO_Service_ElasticEmail',
-			'url'   => 'https://elasticemail.com/account/#/settings/apiconfiguration',
+			'url'   => 'https://elasticemail.com/account#/account/security',
+		),
+		'fluentcrm'        => array(
+			'type'  => 'autoresponder',
+			'name'  => 'FluentCRM',
+			'class' => 'CPRO_Service_FluentCRM',
+			'url'   => '',
 		),
 		'getresponse'      => array(
 			'type'  => 'autoresponder',
@@ -839,6 +845,32 @@ final class ConvertPlugServices {
 		$cnt           = 0;
 		$keys_with_arr = array();
 
+		$separator = ',';
+		$style_id  = $post_data['style_id'];
+
+		$meta = call_user_func_array( 'array_merge', call_user_func_array( 'array_merge', get_post_meta( $style_id, 'connect' ) ) );
+
+		foreach ( $meta as $key => $m ) {
+			$meta[ $key ] = json_decode( $m );
+		}
+
+		if ( is_array( $meta['cp_connect_settings'] ) ) {
+			$value_exists = array_search(
+				'activecampaign',
+				array_map(
+					function( $element ) {
+						return $element->value;
+					},
+					$meta['cp_connect_settings']
+				),
+				true
+			);
+
+			if ( false !== $value_exists ) {
+				$separator = '||';
+			}
+		}
+
 		foreach ( $post_data['param'] as $key => $value ) {
 			if ( false !== strpos( $key, 'checkboxfield_' ) ) {
 				$tmp                                    = explode( '-', $key );
@@ -858,7 +890,7 @@ final class ConvertPlugServices {
 					$existing_value = $post_data['param'][ $value ];
 
 					// Comma separated values for checkbox field.
-					$post_data['param'][ $value ] = implode( ',', $existing_value );
+					$post_data['param'][ $value ] = implode( $separator, $existing_value );
 				}
 			}
 
@@ -869,15 +901,7 @@ final class ConvertPlugServices {
 		$meta_mapping = array();
 		$email_status = true;
 
-		$style_id = $post_data['style_id'];
-
-		$meta = call_user_func_array( 'array_merge', call_user_func_array( 'array_merge', get_post_meta( $style_id, 'connect' ) ) );
-
 		$post = get_post( $style_id );
-
-		foreach ( $meta as $key => $m ) {
-			$meta[ $key ] = json_decode( $m );
-		}
 
 		$mailer      = '';
 		$mailer_name = '';
@@ -889,7 +913,7 @@ final class ConvertPlugServices {
 					$mailer      = ConvertPlugHelper::get_connection_data( $t->value );
 				} else {
 
-					if ( isset( $mailer_name ) && '' !== $mailer_name && 'mailpoet' !== $mailer_name && 'mymail' !== $mailer_name ) {
+					if ( isset( $mailer_name ) && '' !== $mailer_name && 'mailpoet' !== $mailer_name && 'mymail' !== $mailer_name && isset( $mailer[ CP_API_CONNECTION_SERVICE ][0] ) ) {
 						if ( 'infusionsoft' === $mailer[ CP_API_CONNECTION_SERVICE ][0] && 'infusionsoft_tags' === $t->name ) {
 							$settings['infusionsoft_tags'][] = $t->value;
 						} elseif ( 'convertkit' === $mailer[ CP_API_CONNECTION_SERVICE ][0] && 'convertkit_tags' === $t->name ) {
@@ -904,9 +928,13 @@ final class ConvertPlugServices {
 							$settings['mautic_segment'][] = $t->value;
 						} elseif ( 'sendlane' === $mailer[ CP_API_CONNECTION_SERVICE ][0] && 'sendlane_tags' === $t->name ) {
 							$settings['sendlane_tags'][] = $t->value;
+						} elseif ( 'getresponse' === $mailer[ CP_API_CONNECTION_SERVICE ][0] && 'getresponse_tags' === $t->name ) {
+							$settings['getresponse_tags'][] = $t->value;
 						} else {
 							$settings[ $t->name ] = $t->value;
 						}
+					} elseif ( 'fluentcrm' === $mailer_name && 'fluentcrm_tags' === $t->name ) {
+						$settings['fluentcrm_tags'][] = $t->value;
 					} else {
 						$settings[ $t->name ] = $t->value;
 					}
@@ -920,7 +948,7 @@ final class ConvertPlugServices {
 		$map = ( isset( $meta['map_placeholder'] ) ) ? ConvertPlugHelper::get_decoded_array( wp_json_encode( $meta['map_placeholder'] ) ) : array();
 
 		$style_name = get_the_title( $settings['style_id'] );
-		if ( ! $mailer && ! ( 'mailpoet' === $mailer_name || 'mymail' === $mailer_name ) ) {
+		if ( ! $mailer && ! ( 'mailpoet' === $mailer_name || 'mymail' === $mailer_name || 'fluentcrm' === $mailer_name ) ) {
 			if ( $can_user_see_errors ) {
 				$response['error'] = __( 'You are not connected to any service.', 'convertpro-addon' );
 			}
@@ -956,7 +984,15 @@ final class ConvertPlugServices {
 
 		$settings = apply_filters( 'cpro_form_submit_settings', $settings );
 
-		$response = $instance->subscribe( $settings, $email );
+		$dynamic_tags            = array();
+		$cp_dynamic_api_tags_cnt = isset( $settings['cp_dynamic_api_tags'] ) ? count( $settings['cp_dynamic_api_tags'] ) : 0;
+
+		if ( $cp_dynamic_api_tags_cnt > 0 ) {
+			$dynamic_tags_string = implode( '||', $settings['cp_dynamic_api_tags'] );
+			$dynamic_tags        = explode( '||', $dynamic_tags_string );
+		}
+
+		$response = $instance->subscribe( $settings, $email, $dynamic_tags );
 
 		if ( ! $can_user_see_errors ) {
 			$response['error'] = false;
@@ -1027,7 +1063,7 @@ final class ConvertPlugServices {
 			$subject  = str_replace( '[MAILER_SERVICE_NAME]', ucfirst( $settings['cp-integration-service'] ), $subject );
 			$subject  = str_replace( '[SITE_NAME]', get_bloginfo( 'name' ), $subject );
 			$template = stripslashes( $template );
-			self::send_email( $admin_email, $subject, $template, $settings, $map );
+			cpro_send_email( $admin_email, $subject, $template, $settings, $map );
 		} else {
 			$email_meta = get_post_meta( $style_id, 'connect', true );
 
@@ -1090,6 +1126,8 @@ final class ConvertPlugServices {
 						$settings['infusionsoft_tags'][] = $t;
 					} elseif ( 'convertkit' === $service && 'convertkit_tags' === $key ) {
 						$settings['convertkit_tags'][] = $t;
+					} elseif ( 'fluentcrm' === $service && 'fluentcrm_tags' === $key ) {
+						$settings['fluentcrm_tags'][] = $t;
 					} elseif ( 'ontraport' === $service && 'ontraport_tags' === $key ) {
 						$settings['ontraport_tags'][] = $t;
 					} elseif ( 'mautic' === $service && 'mautic_segment' === $key ) {

@@ -200,6 +200,16 @@ if ( 'button' === $settings->cta_type ) {
 	}
 	/* CSS Render Function */
 	FLBuilder::render_module_css( 'uabb-button', $id, $btn_settings );
+	if ( 'gradient' === $settings->btn_style ) {
+		if ( isset( $settings->btn_gradient ) ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap a,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-button-wrap a:visited {
+				background: <?php echo esc_attr( FLBuilderColor::gradient( $settings->btn_gradient ) ); ?>;
+			}
+			<?php
+		}
+	}
 }
 /* Render Separator */
 if ( 'block' === $settings->enable_separator ) {
@@ -288,6 +298,7 @@ if ( 'none' !== $settings->image_type ) {
 
 			/* Icon Basics */
 			'icon'                    => $settings->icon,
+			'icon'                    => ( isset( $settings->icon ) && '' !== $settings->icon ) ? $settings->icon : '',
 			'icon_size'               => $settings->icon_size,
 			'icon_align'              => '',
 
@@ -388,7 +399,7 @@ if ( 'none' !== $settings->image_type ) {
 <?php } ?>
 
 /* Border Properties */
-<?php if ( 'none' !== $settings->uabb_border_type ) : ?>
+<?php if ( 'none' !== $settings->uabb_border_type || 'yes' === $settings->enable_box_shadow ) : ?>
 		.fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox {
 			border-style: <?php echo esc_attr( $settings->uabb_border_type ); ?>;
 
@@ -396,12 +407,13 @@ if ( 'none' !== $settings->image_type ) {
 				border-color: <?php echo esc_attr( $settings->uabb_border_color ); ?>;
 			<?php endif; ?>
 
-			border-top-width: <?php echo $settings->uabb_border_top ? esc_attr( $settings->uabb_border_top ) : '0'; ?>px;
-			border-bottom-width: <?php echo $settings->uabb_border_bottom ? esc_attr( $settings->uabb_border_bottom ) : '0'; ?>px;
-			border-left-width: <?php echo $settings->uabb_border_left ? esc_attr( $settings->uabb_border_left ) : '0'; ?>px;
-			border-right-width: <?php echo $settings->uabb_border_right ? esc_attr( $settings->uabb_border_right ) : '0'; ?>px;
+			border-radius: <?php echo $settings->border_radius ? esc_attr( $settings->border_radius ) : 0; ?>px;
+			border-top-width: <?php echo $settings->uabb_border_top ? esc_attr( $settings->uabb_border_top ) : 0; ?>px;
+			border-bottom-width: <?php echo $settings->uabb_border_bottom ? esc_attr( $settings->uabb_border_bottom ) : 0; ?>px;
+			border-left-width: <?php echo $settings->uabb_border_left ? esc_attr( $settings->uabb_border_left ) : 0; ?>px;
+			border-right-width: <?php echo $settings->uabb_border_right ? esc_attr( $settings->uabb_border_right ) : 0; ?>px;
 
-			<?php if ( $settings->uabb_border_top > 0 || $settings->uabb_border_bottom > 0 || $settings->uabb_border_left > 0 || $settings->uabb_border_right > 0 ) : ?>
+			<?php if ( $settings->uabb_border_top > 0 || $settings->uabb_border_bottom > 0 || $settings->uabb_border_left > 0 || $settings->uabb_border_right > 0 || 'yes' === $settings->enable_box_shadow ) : ?>
 
 					<?php
 					if ( 'yes' === $converted || isset( $settings->info_box_padding_dimension_top ) && isset( $settings->info_box_padding_dimension_bottom ) && isset( $settings->info_box_padding_dimension_left ) && isset( $settings->info_box_padding_dimension_right ) ) {
@@ -436,16 +448,16 @@ if ( 'none' !== $settings->image_type ) {
 			<?php
 			if ( 'yes' === $converted || isset( $settings->info_box_padding_dimension_top ) && isset( $settings->info_box_padding_dimension_bottom ) && isset( $settings->info_box_padding_dimension_left ) && isset( $settings->info_box_padding_dimension_right ) ) {
 				if ( isset( $settings->info_box_padding_dimension_top ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_top ) ? 'padding-top:' . esc_attr( $settings->info_box_padding_dimension_top ) . 'px;' : 'padding-top: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_top ) ? 'padding-top:' . esc_attr( $settings->info_box_padding_dimension_top ) . 'px;' : '';
 				}
 				if ( isset( $settings->info_box_padding_dimension_bottom ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_bottom ) ? 'padding-bottom:' . esc_attr( $settings->info_box_padding_dimension_bottom ) . 'px;' : 'padding-bottom: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_bottom ) ? 'padding-bottom:' . esc_attr( $settings->info_box_padding_dimension_bottom ) . 'px;' : '';
 				}
 				if ( isset( $settings->info_box_padding_dimension_left ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_left ) ? 'padding-left:' . esc_attr( $settings->info_box_padding_dimension_left ) . 'px;' : 'padding-left: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_left ) ? 'padding-left:' . esc_attr( $settings->info_box_padding_dimension_left ) . 'px;' : '';
 				}
 				if ( isset( $settings->info_box_padding_dimension_right ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_right ) ? 'padding-right:' . esc_attr( $settings->info_box_padding_dimension_right ) . 'px;' : 'padding-right: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_right ) ? 'padding-right:' . esc_attr( $settings->info_box_padding_dimension_right ) . 'px;' : '';
 				}
 			} elseif ( isset( $settings->info_box_padding ) && '' !== $settings->info_box_padding && isset( $settings->info_box_padding_dimension_top ) && ( '' === $settings->info_box_padding_dimension_top || '0' === $settings->info_box_padding_dimension_top ) && isset( $settings->info_box_padding_dimension_bottom ) && ( '' === $settings->info_box_padding_dimension_bottom || '0' === $settings->info_box_padding_dimension_bottom ) && isset( $settings->info_box_padding_dimension_left ) && ( '' === $settings->info_box_padding_dimension_left || '0' === $settings->info_box_padding_dimension_left ) && isset( $settings->info_box_padding_dimension_right ) && ( '' === $settings->info_box_padding_dimension_right || '0' === $settings->info_box_padding_dimension_right ) ) {
 				?>
@@ -478,14 +490,28 @@ if ( 'none' !== $settings->image_type ) {
 		<?php UABB_Helper::uabb_gradient_css( $settings->bg_gradient ); ?>
 	<?php endif; ?>
 	}
-<?php } ?>
-<?php if ( isset( $settings->bg_color_hover ) && '' !== $settings->bg_color_hover ) { ?>
+	<?php
+}
+if ( isset( $settings->enable_box_shadow ) && 'yes' === $settings->enable_box_shadow ) {
+	$box_shadow_color = ( false === strpos( $settings->info_shadow_color, 'rgb' ) ) ? '#' . $settings->info_shadow_color : $settings->info_shadow_color;
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox {
+		-webkit-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		-moz-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		-o-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		}
+	<?php
+}
+if ( isset( $settings->bg_color_hover ) && '' !== $settings->bg_color_hover ) {
+	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox:hover {
 		background:<?php echo esc_attr( $settings->bg_color_hover ); ?>;
 	}
 <?php } ?>
 /* Align */
-.fl-node-<?php echo esc_attr( $id ); ?> .infobox-<?php echo esc_attr( $settings->align ); ?> {
+.fl-node-<?php echo esc_attr( $id ); ?> .infobox-<?php echo esc_attr( $settings->align ); ?>,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox .uabb-separator {
 	text-align: <?php echo esc_attr( $settings->align ); ?>;
 }
 
@@ -501,7 +527,7 @@ if ( 'custom' === $settings->min_height_switch && '' !== $settings->min_height )
 		}
 
 		.fl-node-<?php echo esc_attr( $id ); ?> .infobox-<?php echo esc_attr( $settings->align ); ?> {
-			justify-content: 
+			justify-content:
 			<?php echo esc_attr( ( 'center' === $settings->align ) ? 'center' : ( ( 'left' === $settings->align ) ? 'flex-start' : 'flex-end' ) ); ?>;
 		}
 <?php } ?>
@@ -548,7 +574,7 @@ if ( 'custom' === $settings->min_height_switch && '' !== $settings->min_height )
 /* Description Color */
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox-text {
-	color: 
+	color:
 	<?php echo esc_attr( uabb_theme_text_color( $settings->subhead_color ) ); ?>;
 }
 <?php if ( isset( $settings->subhead_color_hover ) && '' !== $settings->subhead_color_hover ) { ?>
@@ -557,6 +583,25 @@ if ( 'custom' === $settings->min_height_switch && '' !== $settings->min_height )
 		color: <?php echo ( '' !== $settings->subhead_color_hover ) ? esc_attr( $settings->subhead_color_hover ) : ''; ?>;
 	}
 <?php } ?>
+
+/* Icon Margin */
+<?php if ( 'icon' === $settings->image_type || 'photo' === $settings->image_type ) { ?>
+	<?php
+	if ( 'left-title' === $settings->img_icon_position || 'left' === $settings->img_icon_position ) {
+		?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .infobox-left .uabb-imgicon-wrap {
+		margin-right: <?php echo ( '' !== $settings->icon_spacing ) ? esc_attr( $settings->icon_spacing ) : '20'; ?>px;
+	}
+		<?php
+	}
+	if ( 'right-title' === $settings->img_icon_position || 'right' === $settings->img_icon_position ) {
+		?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .infobox-right .uabb-imgicon-wrap {
+		margin-left: <?php echo ( '' !== $settings->icon_spacing ) ? esc_attr( $settings->icon_spacing ) : '20'; ?>px;
+	}
+	<?php } ?>
+<?php } ?>
+
 /* Icon Margin */
 <?php if ( 'icon' === $settings->image_type ) { ?>
 	<?php
@@ -608,14 +653,14 @@ if ( 'custom' === $settings->min_height_switch && '' !== $settings->min_height )
 .fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> a,
 .fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> a *,
 .fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> a:visited {
-	color: 
+	color:
 	<?php echo esc_attr( uabb_theme_text_color( $settings->link_color ) ); ?>;
 }
 <?php endif; ?>
 <?php if ( ! empty( $settings->link_color_hover ) ) : ?>
 .fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> a:hover,
 .fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> a *:hover{
-	color: 
+	color:
 	<?php echo esc_attr( uabb_theme_text_color( $settings->link_color_hover ) ); ?>;
 }
 <?php endif; ?>
@@ -926,6 +971,11 @@ if ( 'icon' === $settings->image_type ) {
 			}
 		}
 		$cal_width = $cal_width + 20;
+	}
+}
+if ( 'none' !== $settings->image_type ) {
+	if ( 'left-title' === $settings->img_icon_position || 'left' === $settings->img_icon_position || 'right-title' === $settings->img_icon_position || 'right' === $settings->img_icon_position ) {
+		$cal_width = $cal_width + intval( $settings->icon_spacing );
 	}
 }
 ?>

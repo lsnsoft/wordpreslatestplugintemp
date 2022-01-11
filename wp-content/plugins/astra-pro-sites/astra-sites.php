@@ -13,7 +13,7 @@ if ( ! defined( 'ASTRA_SITES_NAME' ) ) {
 }
 
 if ( ! defined( 'ASTRA_SITES_VER' ) ) {
-	define( 'ASTRA_SITES_VER', '2.3.2' );
+	define( 'ASTRA_SITES_VER', '3.0.24' );
 }
 
 if ( ! defined( 'ASTRA_SITES_FILE' ) ) {
@@ -34,8 +34,28 @@ if ( ! defined( 'ASTRA_SITES_URI' ) ) {
 
 require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites.php';
 
+// BSF_Quick_Links.
+if ( ! class_exists( 'BSF_Quick_Links' ) ) {
+	require_once ASTRA_SITES_DIR . 'inc/lib/bsf-quick-links/class-bsf-quick-links.php';
+}
+
 // Astra Notices.
-require_once ASTRA_SITES_DIR . 'admin/astra-notices/class-astra-notices.php';
+require_once ASTRA_SITES_DIR . 'inc/lib/astra-notices/class-astra-notices.php';
 
 // BSF Analytics Tracker.
-require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics.php';
+if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
+	require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
+}
+
+$bsf_analytics = BSF_Analytics_Loader::get_instance();
+
+$bsf_analytics->set_entity(
+	array(
+		'bsf' => array(
+			'product_name'    => 'Premium Starter Templates',
+			'path'            => ASTRA_SITES_DIR . 'admin/bsf-analytics',
+			'author'          => 'Brainstorm Force',
+			'time_to_display' => '+24 hours',
+		),
+	)
+);

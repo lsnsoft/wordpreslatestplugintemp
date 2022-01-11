@@ -12,8 +12,6 @@ $style1                          = '<div style="line-height: 1.5em;  padding-top
 $style2                          = '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;">';
 $user_role_desc                  = $style1 . __( 'The default option will assign the user role as per the WordPress backend setting.', 'uabb' ) . '</div>';
 $user_hide_form_desc             = $style1 . __( 'Enable this option if you wish to hide the form at the frontend from logged in users.', 'uabb' ) . '</div>';
-$login_link_desc                 = $style1 . __( 'Add the “Login” link below the register button.', 'uabb' ) . '</div>';
-$lost_pass_desc                  = $style1 . __( 'Add the “Lost Password” link below the register button.', 'uabb' ) . '</div>';
 $enable_email_desc               = $style1 . __( 'On enabling this option, visit the Email tab to send a customized email to the user.', 'uabb' ) . '</div>';
 $email_content_desc              = $style2 . __( 'Here you can design the Email Content user will receive.', 'uabb' ) . '</div>';
 $register_website_recaptcha_desc = $style2 . __( 'Please register keys for your website at', 'uabb' );
@@ -25,6 +23,29 @@ FLBuilder::register_module(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
+				'preset_section'       => array(
+					'title'  => __( 'Presets', 'uabb' ),
+					'fields' => array(
+						'preset_select' => array(
+							'type'    => 'select',
+							'label'   => __( 'Preset', 'uabb' ),
+							'default' => 'none',
+							'help'    => __( 'Before changing presets, save the content you added to the module. Otherwise, your content will be overwritten with the default one.', 'uabb' ),
+							'class'   => 'uabb-preset-select',
+							'options' => array(
+								'none'     => __( 'Default', 'uabb' ),
+								'preset-1' => __( 'Preset 1', 'uabb' ),
+								'preset-2' => __( 'Preset 2', 'uabb' ),
+								'preset-3' => __( 'Preset 3', 'uabb' ),
+								'preset-4' => __( 'Preset 4', 'uabb' ),
+								'preset-5' => __( 'Preset 5', 'uabb' ),
+							),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
+					),
+				),
 				'name_section'         => array(
 					'title'  => __( 'Form Fields', 'uabb' ),
 					'fields' => array(
@@ -36,19 +57,22 @@ FLBuilder::register_module(
 							'preview_text' => 'field_type',
 							'default'      => array(
 								array(
-									'field_type'     => 'user_login',
-									'field_label'    => 'Username ',
-									'field_required' => 'yes',
+									'field_type'        => 'user_login',
+									'field_label'       => __( 'Username ', 'uabb' ),
+									'field_placeholder' => __( 'Username', 'uabb' ),
+									'field_required'    => 'yes',
 								),
 								array(
-									'field_type'     => 'user_email',
-									'field_label'    => 'Email ',
-									'field_required' => 'yes',
+									'field_type'        => 'user_email',
+									'field_label'       => __( 'Email ', 'uabb' ),
+									'field_placeholder' => __( 'Email', 'uabb' ),
+									'field_required'    => 'yes',
 								),
 								array(
-									'field_type'     => 'user_pass',
-									'field_label'    => 'Password ',
-									'field_required' => 'yes',
+									'field_type'        => 'user_pass',
+									'field_label'       => __( 'Password ', 'uabb' ),
+									'field_placeholder' => __( 'Password', 'uabb' ),
+									'field_required'    => 'yes',
 								),
 							),
 						),
@@ -57,6 +81,36 @@ FLBuilder::register_module(
 				'general_section'      => array(
 					'title'  => __( 'General Form Settings', 'uabb' ),
 					'fields' => array(
+						'fields_icon'             => array(
+							'type'    => 'select',
+							'label'   => __( 'Fields Icon', 'uabb' ),
+							'default' => 'hide',
+							'options' => array(
+								'show' => __( 'Show', 'uabb' ),
+								'hide' => __( 'Hide', 'uabb' ),
+							),
+							'toggle'  => array(
+								'show' => array(
+									'fields' => array( 'enable_divider', 'fields_icon_color', 'fields_icon_size' ),
+								),
+							),
+							'help'    => __( 'Enable this option to add icon for fields.', 'uabb' ),
+						),
+						'enable_divider'          => array(
+							'type'    => 'select',
+							'label'   => __( 'Divider', 'uabb' ),
+							'default' => 'hide',
+							'options' => array(
+								'show' => __( 'Show', 'uabb' ),
+								'hide' => __( 'Hide', 'uabb' ),
+							),
+							'toggle'  => array(
+								'show' => array(
+									'fields' => array( 'divider_style', 'divider_color', 'divider_thickness' ),
+								),
+							),
+							'help'    => __( 'Enable divider between Icon and Content.', 'uabb' ),
+						),
 						'required_mark_label'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Display Required Mark', 'uabb' ),
@@ -93,15 +147,14 @@ FLBuilder::register_module(
 							'label' => __( 'Message For Logged In Users', 'uabb' ),
 						),
 						'login_link'              => array(
-							'type'        => 'select',
-							'label'       => __( 'Login Link', 'uabb' ),
-							'default'     => 'no',
-							'options'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Login Link', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => $login_link_desc,
-							'toggle'      => array(
+							'toggle'  => array(
 								'yes' => array(
 									'fields'   => array( 'login_link_text', 'login_link_to' ),
 									'sections' => array( 'login_link_style', 'login_link_typography' ),
@@ -111,7 +164,7 @@ FLBuilder::register_module(
 						'login_link_text'         => array(
 							'type'        => 'text',
 							'label'       => __( 'Login Link Text', 'uabb' ),
-							'default'     => 'Login',
+							'default'     => 'Login |',
 							'connections' => array( 'string', 'html' ),
 						),
 						'login_link_to'           => array(
@@ -136,18 +189,19 @@ FLBuilder::register_module(
 							'connections'   => array( 'url' ),
 						),
 						'lost_your_pass'          => array(
-							'type'        => 'select',
-							'label'       => __( 'Lost Your Password Link', 'uabb' ),
-							'default'     => 'no',
-							'options'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Lost Your Password Link', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => $lost_pass_desc,
-							'toggle'      => array(
+							'toggle'  => array(
 								'yes' => array(
-									'fields'   => array( 'lost_link_text', 'lost_link_to' ),
-									'sections' => array( 'login_link_style', 'lost_link_typography' ),
+									'fields' => array( 'lost_link_text', 'lost_link_to' ),
+								),
+								'no'  => array(
+									'fields' => array( 'inline_btn_login_text' ),
 								),
 							),
 						),
@@ -206,6 +260,24 @@ FLBuilder::register_module(
 								),
 							),
 						),
+						'login_text_position'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Login and Lost Your Password Text Position', 'uabb' ),
+							'default' => 'below',
+							'options' => array(
+								'above' => __( 'Above Terms and Conditions Field', 'uabb' ),
+								'below' => __( 'Below Register Button', 'uabb' ),
+							),
+						),
+						'inline_btn_login_text'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Inline Register Button and Login Text', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+						),
 					),
 				),
 				'terms_section'        => array(
@@ -230,6 +302,20 @@ FLBuilder::register_module(
 							'type'    => 'text',
 							'label'   => __( 'Checkbox Text', 'uabb' ),
 							'default' => __( 'I Accept the Terms and Conditions', 'uabb' ),
+						),
+						'enable_terms_text'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Show Terms and Conditions Text', 'uabb' ),
+							'default' => 'yes',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'terms_text' ),
+								),
+							),
 						),
 						'terms_text'          => array(
 							'type'          => 'editor',
@@ -317,7 +403,7 @@ FLBuilder::register_module(
 			'title'    => __( 'Style', 'uabb' ),
 			'sections' => array(
 				'form-style'           => array(
-					'title'  => 'Form Style',
+					'title'  => 'Form',
 					'fields' => array(
 						'form_bg_type'           => array(
 							'type'    => 'select',
@@ -412,7 +498,7 @@ FLBuilder::register_module(
 					),
 				),
 				'input-border-style'   => array(
-					'title'  => __( 'Input Style', 'uabb' ),
+					'title'  => __( 'Input', 'uabb' ),
 					'fields' => array(
 						'input_padding'             => array(
 							'type'       => 'dimension',
@@ -446,6 +532,7 @@ FLBuilder::register_module(
 							'type'        => 'color',
 							'connections' => array( 'color' ),
 							'label'       => __( 'Background Color', 'uabb' ),
+							'default'     => 'ffffff',
 							'show_alpha'  => true,
 							'show_reset'  => true,
 							'preview'     => array(
@@ -493,10 +580,74 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
+						'fields_icon_color'         => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Fields Icon Color', 'uabb' ),
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'show_reset'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-fields-icon i',
+								'property' => 'color',
+							),
+						),
+						'fields_icon_size'          => array(
+							'type'    => 'unit',
+							'label'   => __( 'Fields Icon Size', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type' => 'refresh',
+							),
+						),
+						'divider_style'             => array(
+							'type'    => 'select',
+							'label'   => __( 'Divider Style', 'uabb' ),
+							'default' => 'solid',
+							'options' => array(
+								'solid'  => __( 'Solid', 'uabb' ),
+								'dotted' => __( 'Dotted', 'uabb' ),
+								'dashed' => __( 'Dashed', 'uabb' ),
+							),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-fields-icon',
+								'property' => 'border-right-style',
+							),
+						),
+						'divider_color'             => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Divider Color', 'uabb' ),
+							'default'     => 'd4d4d4',
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'show_reset'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-fields-icon',
+								'property' => 'color',
+							),
+						),
+						'divider_thickness'         => array(
+							'type'    => 'unit',
+							'label'   => __( 'Divider Thickness', 'uabb' ),
+							'default' => '1',
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-fields-icon',
+								'property' => 'border-right-width',
+								'unit'     => 'px',
+							),
+						),
 					),
 				),
 				'error-style'          => array(
-					'title'  => __( 'Validation Style', 'uabb' ),
+					'title'  => __( 'Validation', 'uabb' ),
 					'fields' => array(
 						'success_msg_color'   => array(
 							'type'        => 'color',
@@ -600,7 +751,7 @@ FLBuilder::register_module(
 					),
 				),
 				'login_link_style'     => array(
-					'title'  => __( 'Login Link Style', 'uabb' ),
+					'title'  => __( 'Password/Login Link', 'uabb' ),
 					'fields' => array(
 						'login_link_color'       => array(
 							'type'       => 'color',
@@ -608,10 +759,9 @@ FLBuilder::register_module(
 							'show_reset' => true,
 							'show_alpha' => true,
 							'preview'    => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-rform-exteral-link-wrap .uabb-rform-exteral-link',
-								'property'  => 'color',
-								'important' => true,
+								'type'     => 'css',
+								'selector' => '.uabb-rform-exteral-link-wrap .uabb-rform-exteral-link',
+								'property' => 'color',
 							),
 						),
 						'login_link_hover_color' => array(
@@ -629,7 +779,7 @@ FLBuilder::register_module(
 					),
 				),
 				'terms-checkbox-style' => array(
-					'title'  => __( 'Terms Checkbox Style', 'uabb' ),
+					'title'  => __( 'Terms Checkbox', 'uabb' ),
 					'fields' => array(
 						'checkbox_size'           => array(
 							'type'    => 'unit',
@@ -1235,12 +1385,12 @@ FLBuilder::register_settings_form(
 									'user_email'   => __( 'Email', 'uabb' ),
 									'first_name'   => __( 'First Name', 'uabb' ),
 									'last_name'    => __( 'Last Name', 'uabb' ),
+									'phone'        => __( 'Phone', 'uabb' ),
 								),
 							),
 							'field_label'       => array(
 								'type'        => 'text',
 								'label'       => __( 'Label', 'uabb' ),
-								'default'     => __( 'Username', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'field_placeholder' => array(

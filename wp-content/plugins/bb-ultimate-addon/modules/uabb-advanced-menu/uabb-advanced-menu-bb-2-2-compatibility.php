@@ -457,16 +457,16 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'hamburger'       => array(
-									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_color', 'creative_menu_navigation_alignment' ),
-									'sections' => array( 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
+									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_color', 'creative_menu_navigation_alignment', 'hamburger_icon_size' ),
+									'sections' => array( 'menu_button_colors', 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
 								),
 								'hamburger-label' => array(
-									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_color', 'creative_menu_mobile_toggle_text', 'creative_menu_navigation_alignment' ),
-									'sections' => array( 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
+									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_color', 'creative_menu_mobile_toggle_text', 'creative_menu_navigation_alignment', 'hamburger_icon_size' ),
+									'sections' => array( 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style', 'menu_button_colors', 'menu_label_typography' ),
 								),
 								'text'            => array(
 									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_color', 'creative_menu_mobile_toggle_text', 'creative_menu_navigation_alignment' ),
-									'sections' => array( 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
+									'sections' => array( 'menu_button_colors', 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style', 'menu_label_typography' ),
 								),
 								'expanded'        => array(
 									'fields'   => array( 'creative_menu_responsive_alignment' ),
@@ -481,6 +481,36 @@ FLBuilder::register_module(
 							'placeholder' => __( 'Menu', 'uabb' ),
 							'connections' => array( 'string' ),
 						),
+						'hamburger_icon_size'              => array(
+							'type'       => 'unit',
+							'label'      => __( 'Hamburger Icon Size', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle.hamburger',
+								'property' => 'font-size',
+								'unit'     => 'px',
+							),
+						),
+						'creative_menu_navigation_alignment' => array(
+							'type'       => 'align',
+							'label'      => __( 'Navigation Alignment', 'uabb' ),
+							'default'    => 'center',
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-creative-menu-mobile-toggle-container, .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text',
+								'property'  => 'text-align',
+								'important' => true,
+							),
+						),
+					),
+				),
+				'menu_button_colors'                    => array(
+					'title'  => __( 'Navigation Styling', 'uabb' ),
+					'fields' => array(
 						'creative_menu_mobile_toggle_color' => array(
 							'type'        => 'color',
 							'label'       => __( 'Navigation Color', 'uabb' ),
@@ -495,15 +525,61 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'creative_menu_navigation_alignment' => array(
-							'type'       => 'align',
-							'label'      => __( 'Navigation Alignment', 'uabb' ),
-							'default'    => 'center',
-							'responsive' => true,
+						'text_hover_color' => array(
+							'type'       => 'color',
+							'label'      => __( 'Navigation Hover Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'button_bg_color'  => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Navigation Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle',
+								'property' => 'background-color',
+							),
+						),
+						'bg_hover_color'   => array(
+							'type'       => 'color',
+							'label'      => __( 'Navigation Background Hover Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'button_border'    => array(
+							'type'    => 'border',
+							'label'   => __( 'Navigation Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle',
+								'property' => 'border',
+								'unit'     => 'px',
+							),
+						),
+						'button_padding'   => array(
+							'type'        => 'dimension',
+							'label'       => __( 'Navigation Padding', 'uabb' ),
+							'description' => 'px',
+							'responsive'  => true,
+							'preview'     => array(
 								'type'      => 'css',
-								'selector'  => '.uabb-creative-menu-mobile-toggle-container, .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text',
-								'property'  => 'text-align',
+								'selector'  => '.uabb-creative-menu-mobile-toggle',
+								'property'  => 'padding',
+								'unit'      => 'px',
 								'important' => true,
 							),
 						),
@@ -523,6 +599,9 @@ FLBuilder::register_module(
 								'below-row'   => __( 'Below Row', 'uabb' ),
 							),
 							'toggle'  => array(
+								'default'     => array(
+									'fields' => array( 'collapse_menu' ),
+								),
 								'off-canvas'  => array(
 									'fields'   => array( 'creative_menu_responsive_link_color', 'creative_menu_responsive_link_hover_color', 'creative_menu_responsive_link_border_color', 'creative_menu_offcanvas_direction', 'creative_menu_animation_speed', 'creative_menu_responsive_overlay_bg_color', 'creative_menu_responsive_overlay_padding_dimension', 'creative_menu_close_icon_size', 'creative_menu_close_icon_color', 'creative_menu_responsive_overlay_color', 'creative_menu_off_canvas_shadow', 'creative_menu_responsive_toggle' ),
 									'sections' => array( 'creative_menu_responsive_close_style' ),
@@ -531,6 +610,15 @@ FLBuilder::register_module(
 									'fields'   => array( 'creative_menu_responsive_link_color', 'creative_menu_responsive_link_hover_color', 'creative_menu_responsive_link_border_color', 'creative_menu_full_screen_effects', 'creative_menu_animation_speed', 'creative_menu_responsive_overlay_bg_color', 'creative_menu_close_icon_size', 'creative_menu_close_icon_color', 'creative_menu_responsive_toggle' ),
 									'sections' => array( 'creative_menu_responsive_close_style' ),
 								),
+							),
+						),
+						'collapse_menu'                   => array(
+							'type'    => 'select',
+							'label'   => __( 'Collapse Menu', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
 							),
 						),
 						'creative_menu_full_screen_effects' => array(
@@ -814,6 +902,21 @@ FLBuilder::register_module(
 							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-creative-menu .sub-menu a, .uabb-creative-menu .sub-menu > li > .uabb-has-submenu-container > a',
+								'important' => true,
+							),
+						),
+					),
+				),
+				'menu_label_typography'   => array(
+					'title'  => __( 'Menu Label Typography', 'uabb' ),
+					'fields' => array(
+						'creative_menu_label_typo' => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.menu > li > a, .menu > li > .uabb-has-submenu-container > a, .uabb-creative-menu-mobile-toggle-label',
 								'important' => true,
 							),
 						),

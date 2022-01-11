@@ -97,6 +97,10 @@ class CP_Before_After extends cp_Framework {
 			array(
 				'autoload_on_duration',
 				'load_on_duration',
+				'autoload_on_no_page_visit',
+				'load_on_no_page_visit',
+				'load_on_page_visit_type',
+				'cp_show_note_page_view',
 				'autoload_on_scroll',
 				'load_after_scroll',
 				'show_after_within_scroll_info',

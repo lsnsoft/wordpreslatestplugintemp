@@ -40,9 +40,7 @@ function cp_v2_tags_footer( $hook ) {
 	$dev_mode = get_option( 'cp_dev_mode' );
 
 	if ( '1' === $dev_mode ) {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'jquery-ui' );
-		wp_enqueue_script( 'jquery-ui-autocomplete' );
+
 		wp_enqueue_style( 'cp-tagit-style', plugins_url( 'css/jquery.tagit.css', __FILE__ ), array(), '1.0.0' );
 		wp_enqueue_script( 'cp-taggle', plugins_url( 'js/tag-it.js', __FILE__ ), false, '1.0.0', array( 'jquery' ) );
 		wp_enqueue_script( 'cp-tags', plugins_url( 'js/tags.js', __FILE__ ), false, '1.0.0', array( 'cp-taggle' ) );

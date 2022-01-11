@@ -40,7 +40,7 @@ var CProVideo = '';
                     case "youtube":
                         if( is_autoplay ) {
                             video_url = video_url.replace( '&autoplay=0', '' );
-                            video_url = video_url + "&autoplay=1";
+                            video_url = video_url + "&autoplay=1&mute=1";
                             video_frame.attr( 'src', video_url );
                         }
                     break;

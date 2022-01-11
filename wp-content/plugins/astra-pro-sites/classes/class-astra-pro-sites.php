@@ -51,7 +51,7 @@ if ( ! class_exists( 'Astra_Pro_Sites' ) ) :
 
 			self::includes();
 
-			add_action( 'admin_notices', array( $this, 'admin_notices' ), 1 );
+			add_action( 'admin_init', array( $this, 'admin_notices' ), 1 );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_filter( 'astra_sites_localize_vars', array( $this, 'update_vars' ) );
 			add_filter( 'astra_sites_render_localize_vars', array( $this, 'update_vars' ) );
@@ -188,10 +188,6 @@ if ( ! class_exists( 'Astra_Pro_Sites' ) ) :
 				'page' => 'starter-templates',
 			);
 
-			$current_page_builder = Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );
-			if ( empty( $current_page_builder ) ) {
-				$arguments['change-page-builder'] = 'yes';
-			}
 			$url = add_query_arg( $arguments, admin_url( 'themes.php' ) );
 
 			$action_links = array(

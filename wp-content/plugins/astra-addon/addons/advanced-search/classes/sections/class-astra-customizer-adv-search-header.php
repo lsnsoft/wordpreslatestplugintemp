@@ -29,7 +29,9 @@ if ( ! class_exists( 'Astra_Customizer_Adv_Search_Header' ) ) {
 	/**
 	 * Register General Customizer Configurations.
 	 */
-	class Astra_Customizer_Adv_Search_Header extends Astra_Customizer_Config_Base {
+	// @codingStandardsIgnoreStart
+	class Astra_Customizer_Adv_Search_Header extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register General Customizer Configurations.
@@ -51,16 +53,22 @@ if ( ! class_exists( 'Astra_Customizer_Adv_Search_Header' ) ) {
 					'priority' => 20,
 					'title'    => __( 'Search Style', 'astra-addon' ),
 					'type'     => 'control',
-					'control'  => 'select',
+					'control'  => 'ast-select',
 					'choices'  => array(
 						'slide-search' => __( 'Slide Search', 'astra-addon' ),
 						'full-screen'  => __( 'Full Screen Search', 'astra-addon' ),
 						'header-cover' => __( 'Header Cover Search', 'astra-addon' ),
 						'search-box'   => __( 'Search Box', 'astra-addon' ),
 					),
-					'required' => array(
-						array( ASTRA_THEME_SETTINGS . '[header-main-rt-section]', '==', 'search' ),
+					'context'  => array(
+						astra_addon_builder_helper()->general_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[header-main-rt-section]',
+							'operator' => '==',
+							'value'    => 'search',
+						),
 					),
+					'divider'  => array( 'ast_class' => 'ast-top-divider' ),
 				),
 
 			);

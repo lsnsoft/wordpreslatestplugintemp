@@ -1,3 +1,82 @@
+Version 1.7.4 September 28, 2021
+- Improvement: Added WPML integration using wpml-config.xml file.
+- Fix: Rollback popup displayed on WP Forms page.
+- Fix: Fatal error Class WP_Block_Parser not found.
+- Fix: Not able to resize the image more than 700px in customizer.
+- Fix: Select dropdown content not showing properly.
+- Fix: Rollback button UI.
+
+Version 1.7.3 August 25, 2021
+- New: Added Rollback version functionality.
+
+Version 1.7.2 July 15, 2021
+- Fix: Elements gets deleted in the customizer via DELETE/BACKSPACE keys.
+
+Version 1.7.1 July 13, 2021
+- Improvement: WordPress 5.8 Compatibility - Not able to delete Elements using keys.
+- Improvement: Reset form data when button action set to "Submit and Go To URL".
+
+Version 1.7.0 June 01, 2021
+- New: Before/After call-to-action - Option to trigger the popup Inside Post/Page content. (https://www.convertpro.net/docs/cta-inside-post-page/)
+- Improvement: Filter to customize the Email notification From Email ID and From Name. (https://www.convertpro.net/docs/filter-to-change-email-notification/)
+- Improvement: Core Web Vital - Added width and height attribute for image elements.
+- Fix: Unwanted Google Font loading in front-end.
+- Fix: Youtube Autoplay not working.
+- Fix: Viber link not working.
+- Fix: Cookies Slider numbers not visible in Firefox.
+
+Version 1.6.0 April 21, 2021
+
+- New: Show a popup when a number of pages visited. (https://www.convertpro.net/docs/trigger-popup-based-on-page-visits/
+)
+- Improvement: Added dynamic API's Tags support for Checkboxes, Radio buttons, and Dropdown Elements. (https://www.convertpro.net/docs/add-dynamic-tag-support-for-autoresponder/
+)
+- Fix: cppro-ft cookie expiration set to 365 days.
+- Fix: Insert Post Ads plugin JS Conflict with Convert Pro popup editor.
+
+Version 1.5.8 March 11, 2021
+
+- Improvement: Improvement: Added Compatibility with WordPress 5.7.
+- Fix: Convert Pro popup translation issue with WPML.
+
+Version 1.5.7 February 25, 2021
+
+- Improvement: Support latest jQuery function deprecations.
+- Improvement: Added Exit-intent ruleset for Convert Mat call-to-action.
+- Fix: WP Shortcode Pro by MyThemeShop plugin JS Conflict with Convert Pro popup editor.
+
+Version 1.5.6 February 01, 2021
+
+- Improvement: Added YYYY-MM-DD Date format support for FluentCRM integration.
+
+Version 1.5.5 December 30, 2020
+
+- Improvement: Display the Scheduled ruleset under the insight section of the popup.
+- Fix: Elements not resizable when Schema Pro and Rank Math plugin active with WordPress 5.6.
+- Fix: Raffle Ticket Generator - Woocommerce plugin JS Conflict with CPro popup editor.
+
+Version 1.5.4 December 09, 2020
+
+- Improvement: Compatibility with WordPress v5.6 to the CTA's Editor panel. ( Drag and Drop elements, Switch options )
+- Improvement: Duplicate CTA compatibility with PHP 8.0 - Deprecated: Required parameters after optional parameters in function/method signatures.
+- Fix: Urban Mag theme JS Conflict with Convert Pro popup editor.
+
+Version 1.5.3 November 04, 2020
+
+- Improvement: Added Social icons - Instagram, Telegram, Spotify, and Whatsapp.
+- Fix: CTA's Slug name not changed on the front-end markup.
+- Fix: Listeo-Core - Directory Plugin by Purethemes plugin JS Conflict with Convert Pro popup editor.
+- Fix: Ads for WP – Advanced Ads & Adsense Solution for WP & AMP plugin JS Conflict with Convert Pro popup editor.
+- Fix: Elements not displayed in the customizer of Modal popup when height exceeds.
+- Fix: Modal popup "E-book downloads" template not working.
+- Fix: Not able to download the Convert Pro Addon plugin.
+
+Version 1.5.2 September 23, 2020
+
+- New: Option to change CTA's Slug name. ( https://www.convertpro.net/docs/how-to-change-the-popup-slug-name/ )
+- Improvement: Show Inline Shortcode with-in the insight section.
+- Improvement: Added form field validation support with Regex. ( https://www.convertpro.net/docs/how-to-enable-form-field-validation/ )
+
 Version 1.5.1 August 12, 2020
 
 - Improvement: Compatibility with WordPress 5.5.

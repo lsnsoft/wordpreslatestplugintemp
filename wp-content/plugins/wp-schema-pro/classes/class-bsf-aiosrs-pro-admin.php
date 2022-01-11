@@ -71,6 +71,35 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		public static $branding = array();
 
 		/**
+		 * Minify CSS var
+		 *
+		 * @since 2.6.1
+		 * @var $minfy_css
+		 */
+		public static $minfy_css = '';
+		/**
+		 * Minify JS var
+		 *
+		 * @since 2.6.1
+		 * @var $minfy_js
+		 */
+		public static $minfy_js = '';
+		/**
+		 * Minify CSS ext
+		 *
+		 * @since 2.6.1
+		 * @var $minfy_css_ext
+		 */
+		public static $minfy_css_ext = '';
+		/**
+		 * Minify JS ext
+		 *
+		 * @since 2.6.1
+		 * @var $minfy_js_ext
+		 */
+		public static $minfy_js_ext = '';
+
+		/**
 		 * Parent Page Slug
 		 *
 		 * @since 1.0
@@ -125,6 +154,11 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		 */
 		public function __construct() {
 
+			self::$minfy_css     = BSF_AIOSRS_Pro_Helper::bsf_schema_pro_is_wp_debug_enable() ? 'css/' : 'min-css/';
+			self::$minfy_js      = BSF_AIOSRS_Pro_Helper::bsf_schema_pro_is_wp_debug_enable() ? 'js/' : 'min-js/';
+			self::$minfy_css_ext = BSF_AIOSRS_Pro_Helper::bsf_schema_pro_is_wp_debug_enable() ? 'css' : 'min.css';
+			self::$minfy_js_ext  = BSF_AIOSRS_Pro_Helper::bsf_schema_pro_is_wp_debug_enable() ? 'js' : 'min.js';
+
 			$setting_options = BSF_AIOSRS_Pro_Helper::$settings['aiosrs-pro-settings'];
 			if ( is_multisite() ) {
 				self::$branding = get_site_option( 'wp-schema-pro-branding-settings' );
@@ -138,7 +172,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 			}
 
 			add_action( 'init', array( $this, 'init' ) );
-
+			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'admin_bar_menu', array( $this, 'admin_bar' ), 100 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_script' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_scripts' ) );
@@ -152,12 +186,17 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 				add_action( 'update_option_aiosrs-pro-settings', array( $this, 'clear_cache_on_validation_enabled' ), 10, 2 );
 
 				add_action( 'wp_ajax_regenerate_schema', array( $this, 'delete_schema_cache' ) );
+				add_action( 'wp_ajax_bsf_get_specific_pages', array( $this, 'bsf_get_specific_pages' ) );
 
 				add_action( 'wp_redirect', array( $this, 'redirect_menu_position' ), 10, 2 );
 				add_action( 'init', array( $this, 'init_admin_settings' ) );
 
 				add_filter( 'wp_schema_pro_menu_options', array( $this, 'setting_menu_options' ) );
 				add_action( 'aiosrs_menu_settings_action', array( $this, 'setting_page' ) );
+				add_filter( 'wp_schema_pro_menu_options', array( $this, 'breadcrumb_settings_options' ) );
+				add_action( 'aiosrs_menu_breadcrumb_settings_action', array( $this, 'load_breadcrumb_setting_page' ) );
+				add_filter( 'wp_schema_pro_menu_options', array( $this, 'wpsp_advanced_setting_options' ) );
+				add_action( 'aiosrs_menu_wpsp_advanced_settings_action', array( $this, 'load_wpsp_advanced_setting_page' ) );
 
 				$sp_hide_label = isset( self::$branding['sp_hide_label'] ) ? self::$branding['sp_hide_label'] : '';
 				if ( '' === $sp_hide_label || 'disabled' === $sp_hide_label && false === ( defined( 'WP_SP_WL' ) && WP_SP_WL ) ) {
@@ -167,11 +206,6 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 				}
 				if ( '1' === $sp_hide_label ) {
 					add_filter( 'bsf_white_label_options', array( $this, 'bsf_wpsp_white_label_option' ) );
-				}
-				$set_breadcrumb = isset( $settings['breadcrumb'] ) ? $settings['breadcrumb'] : '';
-				if ( '1' === $set_breadcrumb ) {
-					add_filter( 'wp_schema_pro_menu_options', array( $this, 'breadcrumb_settings_options' ) );
-					add_action( 'aiosrs_menu_breadcrumb_settings_action', array( $this, 'load_breadcrumb_setting_page' ) );
 				}
 			}
 
@@ -194,12 +228,47 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		 * @param array $new_value new values.
 		 */
 		public function clear_cache_on_validation_enabled( $old_value, $new_value ) {
-			if ( isset( $old_value['schema-validation'] ) && isset( $new_value['schema-validation'] ) ) {
-				if ( ( $old_value['schema-validation'] !== $new_value['schema-validation'] ) ) {
-					// Clearing cache on enabling the schema validation.
-					global  $wpdb;
-					$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => BSF_AIOSRS_PRO_CACHE_KEY ) );
+			if ( isset( $old_value['schema-validation'] ) && isset( $new_value['schema-validation'] ) && ( $old_value['schema-validation'] !== $new_value['schema-validation'] ) ) {
+				// Clearing cache on enabling the schema validation.
+				global  $wpdb;
+				$wpdb->delete( $wpdb->postmeta, array( 'meta_key' => BSF_AIOSRS_PRO_CACHE_KEY ) );
+			}
+		}
+
+		/**
+		 * Ajax handeler to return the pages based on the search query.
+		 * When searching for the pages only titles are searched for.
+		 *
+		 * @since  1.0.0
+		 */
+		public function bsf_get_specific_pages() {
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return false;
+			}
+
+			check_ajax_referer( 'spec_schema', 'nonce_ajax' );
+			$aiosrs_meta_default = array(
+				array(
+					'ID'         => '0',
+					'post_title' => '--None--',
+				),
+			);
+			$search_string       = isset( $_POST['q'] ) ? sanitize_text_field( $_POST['q'] ) : '';
+			$data                = array();
+
+			global $wpdb;
+			// WPCS: unprepared SQL OK.
+			$aiosrs_meta_array = $wpdb->get_results( "SELECT DISTINCT ID, post_title FROM {$wpdb->posts} WHERE post_title LIKE '%{$search_string}%' && post_type = 'page'", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$aiosrs_meta_array = array_merge( $aiosrs_meta_default, $aiosrs_meta_array );
+			if ( isset( $aiosrs_meta_array ) && ! empty( $aiosrs_meta_array ) ) {
+				foreach ( $aiosrs_meta_array as $value ) {
+						$data[] = array(
+							'id'   => $value['ID'],
+							'text' => preg_replace( '/^_/', '', esc_html( str_replace( '_', ' ', $value['post_title'] ) ) ),
+						);
 				}
+				wp_send_json( $data );
 			}
 		}
 
@@ -368,8 +437,6 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 			}
 			global $parent_file, $submenu_file, $post_type;
 
-			$screen = get_current_screen();
-
 			$parent_page     = self::$default_menu_position;
 			$setting_options = BSF_AIOSRS_Pro_Helper::$settings['aiosrs-pro-settings'];
 			$menu_position   = isset( $setting_options['menu-position'] ) ? $setting_options['menu-position'] : $parent_page;
@@ -404,6 +471,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 
 			register_setting( 'wp-schema-pro-general-settings-group', 'wp-schema-pro-general-settings' );
 			register_setting( 'wp-schema-pro-social-profiles-group', 'wp-schema-pro-social-profiles' );
+			register_setting( 'wp-schema-pro-social-profiles-repeater-group', 'wp-schema-pro-social-profiles-repeater' );
 			register_setting( 'wp-schema-pro-global-schemas-group', 'wp-schema-pro-global-schemas' );
 			register_setting( 'wp-schema-pro-breadcrumb-setting-group', 'wp-schema-pro-breadcrumb-setting' );
 			register_setting( 'aiosrs-pro-settings-group', 'aiosrs-pro-settings' );
@@ -415,10 +483,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		 * Redirect to menu position.
 		 *
 		 * @param string $location URL.
-		 * @param string $status URL status.
 		 * @return string
 		 */
-		public function redirect_menu_position( $location, $status ) {
+		public function redirect_menu_position( $location ) {
 
 			$value         = get_option( 'aiosrs-pro-settings' );
 			$current_parts = wp_parse_url( $location );
@@ -426,7 +493,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 				parse_str( $current_parts['query'], $current_query );
 			}
 
-			if ( isset( $current_query['page'] ) && isset( $current_query['action'] ) && self::$plugin_slug === $current_query['page'] && 'settings' === $current_query['action'] ) {
+			if ( isset( $current_query['page'] ) && isset( $current_query['action'] ) && self::$plugin_slug === $current_query['page'] && 'wpsp-advanced-settings' === $current_query['action'] ) {
 
 				// Menu position.
 				$menu_position     = isset( $value['menu-position'] ) ? $value['menu-position'] : self::$default_menu_position;
@@ -434,14 +501,22 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 
 				// If menu is at top level.
 				if ( $is_top_level_page ) {
-					$url = admin_url( 'admin.php?page=' . self::$plugin_slug . '&action=settings' );
+					$url = esc_url(  // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+						add_query_arg(
+							array(
+								'page'   => self::$plugin_slug,
+								'action' => 'wpsp-advanced-settings',
+							),
+							admin_url() . 'admin.php'
+						)
+					);
 				} else {
 					if ( strpos( $menu_position, '?' ) !== false ) {
-						$query_var = '&page=' . self::$plugin_slug . '&action=settings';
+						$query_var = 'page=' . self::$plugin_slug . '&action=wpsp-advanced-settings';
 					} else {
-						$query_var = '?page=' . self::$plugin_slug . '&action=settings';
+						$query_var = '?page=' . self::$plugin_slug . '&action=wpsp-advanced-settings';
 					}
-					$url = admin_url( $menu_position . $query_var );
+					$url = add_query_arg( $query_var, '', admin_url() . $menu_position );
 				}
 
 				$new_parts = wp_parse_url( $url );
@@ -659,7 +734,22 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		public function setting_menu_options( $actions ) {
 
 			$actions['settings'] = array(
-				'label' => esc_html__( 'Configuration', 'wp-schema-pro' ),
+				'label' => esc_html__( 'Website Information', 'wp-schema-pro' ),
+				'show'  => ! is_network_admin(),
+			);
+			return $actions;
+		}
+
+		/**
+		 * Add Plugin settings option in menu page
+		 *
+		 * @param  array $actions Array of actions.
+		 * @return array            Return the actions.
+		 */
+		public function wpsp_advanced_setting_options( $actions ) {
+
+			$actions['wpsp-advanced-settings'] = array(
+				'label' => esc_html__( 'Plugin Settings', 'wp-schema-pro' ),
 				'show'  => ! is_network_admin(),
 			);
 			return $actions;
@@ -721,11 +811,17 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 			if ( isset( $_REQUEST['wp_schema_pro_admin_page_nonce'] ) && ! wp_verify_nonce( $_REQUEST['wp_schema_pro_admin_page_nonce'], 'wp_schema_pro_admin_page' ) ) {
 				return;
 			}
+			$sp_plugin_sname = isset( self::$branding['sp_plugin_sname'] ) ? self::$branding['sp_plugin_sname'] : '';
 
 			?>
 			<div class="wrap">
-				<h2> <?php echo esc_html( self::$menu_page_title ); ?>
-				<span class="schema-version"><?php echo esc_html( 'Ver ' . BSF_AIOSRS_PRO_VER ); ?></span></h2>
+					<?php if ( '' !== $sp_plugin_sname ) { ?>
+						<h2 class="wpsp-pro-title"> <?php echo esc_html( self::$menu_page_title ); ?></h2>
+					<?php } else { ?>
+					<span class="wpsp-pro-logo">
+						<img src="<?php echo esc_url( BSF_AIOSRS_PRO_URI . '/admin/assets/images/schema-pro.png' ); ?>" alt="<?php esc_html_e( 'Schema Pro', 'wp-schema-pro' ); ?>" ></span>
+				<h2 class="wpsp-pro-title"> <span class="schema-version"><?php echo esc_html( BSF_AIOSRS_PRO_VER ); ?></span></h2>
+			<?php } ?>
 			</div>
 			<div class="nav-tab-wrapper">
 				<?php
@@ -811,10 +907,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		public function load_scripts( $hook = '' ) {
 
 			if ( 'plugins.php' === $hook ) {
-				wp_enqueue_style( 'aiosrs-pro-license-form', BSF_AIOSRS_PRO_URI . 'admin/assets/css/license-form-popup.css', array(), BSF_AIOSRS_PRO_VER, 'all' );
-				wp_enqueue_script( 'aiosrs-pro-license-form', BSF_AIOSRS_PRO_URI . 'admin/assets/js/license-form-popup.js', array( 'jquery' ), BSF_AIOSRS_PRO_VER, true );
+				wp_enqueue_style( 'aiosrs-pro-license-form', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_css . 'license-form-popup.' . self::$minfy_css_ext, array(), BSF_AIOSRS_PRO_VER, 'all' );
+				wp_enqueue_script( 'aiosrs-pro-license-form', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_js . 'license-form-popup.' . self::$minfy_js_ext, array( 'jquery' ), BSF_AIOSRS_PRO_VER, true );
 			}
-
 		}
 
 		/**
@@ -865,21 +960,22 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 
 			global $pagenow;
 			global $post;
-
-			$screen = get_current_screen();
 			if ( isset( $_REQUEST['wp_schema_pro_admin_page_nonce'] ) && ! wp_verify_nonce( $_REQUEST['wp_schema_pro_admin_page_nonce'], 'wp_schema_pro_admin_page' ) ) {
 				return;
 			}
-
 			if ( 'post-new.php' === $pagenow || 'post.php' === $pagenow ) {
-				wp_enqueue_script( 'aiosrs-pro-field-edit-script', BSF_AIOSRS_PRO_URI . 'admin/assets/js/fields-script.js', array( 'jquery', 'jquery-ui-tooltip', 'jquery-ui-dialog', 'wp-i18n' ), BSF_AIOSRS_PRO_VER, true );
-				wp_set_script_translations( 'aiosrs-pro-field-edit-script', 'wp-schema-pro' );
-				wp_enqueue_style( 'aiosrs-pro-field-edit-style', BSF_AIOSRS_PRO_URI . 'admin/assets/css/fields-style.css', BSF_AIOSRS_PRO_VER, 'false' );
+
+					wp_enqueue_style( 'aiosrs-pro-field-edit-style', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_css . 'fields-style.' . self::$minfy_css_ext, BSF_AIOSRS_PRO_VER, 'false' );
+					wp_enqueue_style( 'aiosrs-pro-admin-edit-style', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_css . 'style.' . self::$minfy_css_ext, BSF_AIOSRS_PRO_VER, 'false' );
+					wp_enqueue_script( 'aiosrs-pro-field-edit-script', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_js . 'fields-script.' . self::$minfy_js_ext, array( 'jquery', 'jquery-ui-tooltip', 'jquery-ui-dialog', 'wp-i18n' ), BSF_AIOSRS_PRO_VER, true );
+					wp_enqueue_script( 'aiosrs-pro-admin-edit-script', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_js . 'script.' . self::$minfy_js_ext, array( 'jquery', 'jquery-ui-tooltip' ), BSF_AIOSRS_PRO_VER, true );
+
+				if ( function_exists( 'wp_set_script_translations' ) ) {
+					wp_set_script_translations( 'aiosrs-pro-field-edit-script', 'wp-schema-pro' );
+				}
 				wp_localize_script( 'aiosrs-pro-field-edit-script', 'AIOSRS_Rating', apply_filters( 'wp_schema_pro_field_edit_script_localize', array(), BSF_AIOSRS_PRO_VER, 'false' ) );
 				// ToDo: Removed enqueue check.
 				wp_enqueue_media();
-				wp_enqueue_script( 'aiosrs-pro-admin-edit-script', BSF_AIOSRS_PRO_URI . 'admin/assets/js/script.js', array( 'jquery', 'jquery-ui-tooltip' ), BSF_AIOSRS_PRO_VER, true );
-				wp_enqueue_style( 'aiosrs-pro-admin-edit-style', BSF_AIOSRS_PRO_URI . 'admin/assets/css/style.css', BSF_AIOSRS_PRO_VER, 'false' );
 				wp_localize_script(
 					'aiosrs-pro-admin-edit-script',
 					'AIOSRS_Rating',
@@ -891,13 +987,32 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 						)
 					)
 				);
-
 			}
 
 			if ( isset( $_GET['page'] ) && 'aiosrs_pro_admin_menu_page' === $_GET['page'] ) {
-				wp_enqueue_style( 'aiosrs-pro-admin-style', BSF_AIOSRS_PRO_URI . 'admin/assets/css/settings-style.css', BSF_AIOSRS_PRO_VER, 'false' );
+
+				wp_enqueue_style( 'aiosrs-pro-admin-style', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_css . 'settings-style.' . self::$minfy_css_ext, BSF_AIOSRS_PRO_VER, 'false' );
+				wp_enqueue_script( 'aiosrs-pro-settings-script', BSF_AIOSRS_PRO_URI . 'admin/assets/' . self::$minfy_js . 'settings-script.' . self::$minfy_js_ext, array( 'jquery', 'bsf-target-rule-select2', 'wp-i18n', 'wp-util' ), BSF_AIOSRS_PRO_VER, null, true );
 				wp_enqueue_media();
-				wp_enqueue_script( 'aiosrs-pro-settings-script', BSF_AIOSRS_PRO_URI . 'admin/assets/js/settings-script.js', array( 'jquery' ), BSF_AIOSRS_PRO_VER, null, true );
+				wp_enqueue_style( 'bsf-target-rule-select2', BSF_AIOSRS_PRO_URI . 'classes/lib/target-rule/select2.css', '', BSF_AIOSRS_PRO_VER, false );
+				wp_register_script( 'bsf-target-rule-select2', BSF_AIOSRS_PRO_URI . 'classes/lib/target-rule/select2.js', array( 'jquery', 'backbone', 'wp-util' ), BSF_AIOSRS_PRO_VER, true );
+				if ( function_exists( 'wp_set_script_translations' ) ) {
+					wp_set_script_translations( 'aiosrs-pro-settings-script', 'wp-schema-pro' );
+				}
+				wp_localize_script(
+					'aiosrs-pro-settings-script',
+					'AIOSRS_search',
+					apply_filters(
+						'aiosrs_pro_settings_script_localize',
+						array(
+							'search_field' => wp_create_nonce( 'spec_schema' ),
+							'ajax_url'     => admin_url( 'admin-ajax.php' ),
+							'ajax_nonce'   => wp_create_nonce( 'wpsp-block-nonce' ),
+							'activate'     => __( 'Activate', 'wp-schema-pro' ),
+							'deactivate'   => __( 'Deactivate', 'wp-schema-pro' ),
+						)
+					)
+				);
 			}
 		}
 
@@ -916,18 +1031,17 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 
 				global $wp_admin_bar;
 				$http        = ( ! empty( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ) ? 'https' : 'http';
-				$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+				$actual_link = $http . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 				if ( ! is_super_admin() || ! is_admin_bar_showing() ) {
 					return;
 				}
-
 				if ( ! is_admin() ) {
 					$wp_admin_bar->add_menu(
 						array(
 							'id'    => 'aiosrs',
 							'title' => 'Test Schema',
-							'href'  => 'https://search.google.com/structured-data/testing-tool#url=' . $actual_link,
+							'href'  => 'https://search.google.com/test/rich-results?url=' . $actual_link,
 							'meta'  => array(
 								'target' => '_blank',
 								'rel'    => 'noopener',
@@ -948,6 +1062,15 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		}
 
 		/**
+		 * Plugin Settings Page markup.
+		 *
+		 * @return void
+		 */
+		public function load_wpsp_advanced_setting_page() {
+			require_once BSF_AIOSRS_PRO_DIR . 'template/wpsp-advanced-settings.php';
+		}
+
+		/**
 		 * White Label setting Page markup.
 		 *
 		 * @return void
@@ -962,6 +1085,42 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Admin' ) ) {
 		 */
 		public function load_breadcrumb_setting_page() {
 			require_once BSF_AIOSRS_PRO_DIR . 'template/breadcrumb-settings.php';
+		}
+
+		/**
+		 * Load plugin text domain.
+		 *
+		 * @since 2.4.0
+		 */
+		public function load_textdomain() {
+
+			// Traditional WordPress plugin locale filter.
+			$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-schema-pro' );
+
+			$mofile_locale = sprintf( '%1$s-%2$s.mo', 'wp-schema-pro', $locale );
+
+			// Setup paths to current locale file.
+			$mofile_global = trailingslashit( WP_LANG_DIR ) . 'plugins/wp-schema-pro/' . $locale;
+			$mofile_local  = trailingslashit( BSF_AIOSRS_PRO_DIR ) . 'languages/' . $locale;
+			// Setup new names to current locale file.
+			$new_mofile_global = trailingslashit( WP_LANG_DIR ) . 'plugins/wp-schema-pro/' . $mofile_locale;
+			$new_mofile_local  = trailingslashit( BSF_AIOSRS_PRO_DIR ) . 'languages/' . $mofile_locale;
+			if ( file_exists( $new_mofile_global ) ) {
+				// Look in global /wp-content/languages/plugins/wp-schema-pro/ folder.
+				return load_textdomain( 'wp-schema-pro', $new_mofile_global );
+			} elseif ( file_exists( $mofile_global ) ) {
+				// Look in global /wp-content/languages/plugins/wp-schema-pro/ folder.
+				return load_textdomain( 'wp-schema-pro', $mofile_global );
+			} elseif ( file_exists( $new_mofile_local ) ) {
+				// Look in local /wp-content/plugins/wp-schema-pro/languages/ folder.
+				return load_textdomain( 'wp-schema-pro', $new_mofile_local );
+			} elseif ( file_exists( $mofile_local ) ) {
+				// Look in local /wp-content/plugins/wp-schema-pro/languages/ folder.
+				return load_textdomain( 'wp-schema-pro', $mofile_local );
+			}
+
+			// Nothing found.
+			return false;
 		}
 	}
 }

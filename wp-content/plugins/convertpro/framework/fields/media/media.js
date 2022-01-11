@@ -1,5 +1,5 @@
 jQuery(document).ready(function(jQuery){
-	jQuery('.cp-upload-media').click(function(e) {
+	jQuery('.cp-upload-media').on('click', function(e) {
 		_wpPluploadSettings['defaults']['multipart_params']['admin_page']= 'customizer';
 		var button 			= jQuery(this),
 			btn_attr_id 	= button.attr('id'),

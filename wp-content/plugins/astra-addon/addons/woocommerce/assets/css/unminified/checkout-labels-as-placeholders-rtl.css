@@ -8,7 +8,6 @@
 
 .ast-checkout-labels-as-placeholders form #customer_details .form-row label {
   -webkit-user-select: none;
-  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   pointer-events: none;

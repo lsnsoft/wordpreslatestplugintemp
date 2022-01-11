@@ -30,6 +30,8 @@ $settings->_btn_one_text_hover_color = UABB_Helper::uabb_colorpicker( $settings,
 $settings->_btn_two_text_color       = UABB_Helper::uabb_colorpicker( $settings, '_btn_two_text_color' );
 $settings->_btn_two_text_hover_color = UABB_Helper::uabb_colorpicker( $settings, '_btn_two_text_hover_color' );
 
+$settings->border_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'border_hover_color' );
+
 $settings->button_border_width     = ( '' !== $settings->button_border_width ) ? $settings->button_border_width : '2';
 $settings->img_icon_width_btn_one  = ( '' !== $settings->img_icon_width_btn_one ) ? $settings->img_icon_width_btn_one : '30';
 $settings->img_icon_width_btn_two  = ( '' !== $settings->img_icon_width_btn_two ) ? $settings->img_icon_width_btn_two : '30';
@@ -83,13 +85,13 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 	<?php
 		$settings->button_border = uabb_theme_border( $settings->button_border );
 
-	if ( class_exists( 'FLBuilderCSS' ) ) {
+	if ( 'default' === ( $settings->dual_button_style ) && class_exists( 'FLBuilderCSS' ) ) {
 		// Border - Settings.
 		FLBuilderCSS::border_field_rule(
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'button_border',
-				'selector'     => ".fl-node-$id .uabb-btn.uabb-btn-one,.fl-node-$id .uabb-btn.uabb-btn-two",
+				'selector'     => ".fl-node-$id .uabb-horizontal .uabb-btn.uabb-btn-one,.fl-node-$id  .uabb-horizontal .uabb-btn.uabb-btn-two, .fl-node-$id .uabb-vertical .uabb-btn.uabb-btn-one,.fl-node-$id  .uabb-vertical .uabb-btn.uabb-btn-two",
 			)
 		);
 	}
@@ -106,8 +108,10 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn.uabb-btn-two:hover {
 		background: <?php echo esc_attr( uabb_theme_default_button_bg_hover_color( $settings->_btn_two_back_hover_color ) ); ?>;
 	}
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn.uabb-btn-one:hover,
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn.uabb-btn-two:hover {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one:hover,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two:hover,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-vertical .uabb-btn.uabb-btn-one:hover,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-vertical .uabb-btn.uabb-btn-two:hover {
 		border-color:<?php echo esc_attr( uabb_theme_border_hover_color( $settings->border_hover_color ) ); ?>;
 	}
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one:hover .uabb-imgicon-wrap .uabb-icon i,
@@ -410,7 +414,6 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two .uabb-imgicon-wrap .uabb-icon i {
 	color: <?php echo esc_attr( uabb_theme_button_text_color( $settings->_btn_two_text_color ) ); ?>;
 }
-
 <?php } ?>
 
 /************* Global Hover Styles *****************/
@@ -453,6 +456,15 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two {
 			border-top-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
 			border-bottom-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+		}
+
+		[dir='rtl'] .fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one {
+			border-top-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+			border-bottom-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+		}
+		[dir='rtl'] .fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two {
+			border-top-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+			border-bottom-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
 		}
 	<?php } ?>
 		<?php if ( 'full' === $settings->dual_button_width_type || 'custom' === $settings->dual_button_width_type ) { ?>
@@ -1036,6 +1048,9 @@ if ( 'horizontal' === $settings->dual_button_type && 'no' === $settings->join_bu
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button-one {
 	margin-right: <?php echo esc_attr( $settings->spacing_between_buttons ); ?>px;
 }
+[dir='rtl'] .fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button-one {
+	margin-left: <?php echo esc_attr( $settings->spacing_between_buttons ); ?>px;
+}
 	<?php if ( 'default' !== $settings->dual_button_style ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two {
@@ -1259,6 +1274,34 @@ if ( ! $version_bb_check ) {
 			)
 		);
 	}
+}
+?>
+
+<?php
+if ( class_exists( 'FLBuilderCSS' ) ) {
+
+	// Button one border - Settings.
+	FLBuilderCSS::border_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'btn_one_border',
+			'selector'     => ".fl-node-$id .uabb-btn.uabb-btn-one",
+		)
+	);
+}
+?>
+
+<?php
+if ( class_exists( 'FLBuilderCSS' ) ) {
+
+	// Button two border - Settings.
+	FLBuilderCSS::border_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'btn_two_border',
+			'selector'     => ".fl-node-$id .uabb-btn.uabb-btn-two",
+		)
+	);
 }
 ?>
 

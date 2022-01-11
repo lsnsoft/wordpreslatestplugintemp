@@ -5,7 +5,7 @@
  * @package Astra Addon
  */
 
-add_filter( 'astra_dynamic_css', 'astra_ext_below_header_dynamic_css' );
+add_filter( 'astra_addon_dynamic_css', 'astra_ext_below_header_dynamic_css' );
 
 /**
  * Dynamic CSS funtion
@@ -101,6 +101,63 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 
 	$parse_css = '';
 
+	if ( false === Astra_Icons::is_svg_icons() ) {
+		$astra_font = array(
+			'.ast-desktop .ast-below-header-menu .sub-menu .menu-item.menu-item-has-children > .menu-link:after' => array(
+				'position'  => 'absolute',
+				'right'     => '1em',
+				'top'       => '50%',
+				'transform' => 'translate(0, -50%) rotate( 270deg )',
+			),
+			'.ast-desktop .ast-below-header .menu-item-has-children > .menu-link:after' => array(
+				'content'                 => '"\e900"',
+				'display'                 => 'inline-block',
+				'font-family'             => "'Astra'",
+				'font-size'               => '9px',
+				'font-size'               => '.6rem',
+				'font-weight'             => 'bold',
+				'text-rendering'          => 'auto',
+				'-webkit-font-smoothing'  => 'antialiased',
+				'-moz-osx-font-smoothing' => 'grayscale',
+				'margin-left'             => '10px',
+				'line-height'             => 'normal',
+			),
+			'.ast-header-break-point .ast-below-header-actual-nav .menu-item-has-children > .ast-menu-toggle::before' => array(
+				'content'         => '"\e900"',
+				'font-family'     => "'Astra'",
+				'text-decoration' => 'inherit',
+				'display'         => 'inline-block',
+			),
+			'.ast-header-break-point .ast-below-header-actual-nav .sub-menu .menu-item .menu-link:before' => array(
+				'content'         => '"\e900"',
+				'font-family'     => "'Astra'",
+				'text-decoration' => 'inherit',
+				'font-size'       => '.65em',
+				'display'         => 'inline-block',
+				'transform'       => 'translate(0, -2px) rotateZ(270deg)',
+				'margin-right'    => '5px',
+			),
+		);
+	} else {
+		$astra_font = array(
+			'.ast-header-break-point .ast-below-header-menu .menu-item .menu-link .icon-arrow:first-of-type svg' => array(
+				'left'         => '.1em',
+				'top'          => '.1em',
+				'transform'    => 'translate(0,-2px) rotateZ( 270deg )',
+				'margin-right' => '5px',
+				'position'     => 'unset',
+			),
+		);
+		if ( false === Astra_Builder_Helper::$is_header_footer_builder_active && false === Astra_Ext_Extension::is_active( 'nav-menu' ) ) {
+			$astra_font['.ast-desktop .ast-below-header-menu .menu-link > .icon-arrow'] = array(
+				'display' => 'none',
+			);
+		}
+	}
+
+	/* Parse CSS from array() */
+	$parse_css .= astra_parse_css( $astra_font );
+
 	/**
 	 * [1]. Below Header General options
 	 * [2]. Below Header Responsive Typography
@@ -194,7 +251,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 	 * [3]. Below Header Responsive Colors
 	 */
 	$desktop_colors = array(
-		'.ast-below-header'                                => astra_get_responsive_background_obj( $below_header_obj, 'desktop' ),
+		'.ast-below-header'         => astra_get_responsive_background_obj( $below_header_obj, 'desktop' ),
 		'.ast-below-header, .ast-below-header-menu .sub-menu' => array(
 			'background-color' => esc_attr( $desktop_below_header_bg ),
 		),
@@ -210,20 +267,20 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		 * Below Header Navigation
 		 */
 
-		'.ast-below-header-menu, .ast-below-header-menu a' => array(
+		'.ast-below-header-menu, .ast-below-header-menu .menu-link' => array(
 			'color' => esc_attr( $below_header_menu_text['desktop'] ),
 		),
 
-		'.ast-below-header-menu li:hover > a, .ast-below-header-menu li:focus > a, .ast-below-header-menu li.focus > a' => array(
+		'.ast-below-header-menu .menu-item:hover > .menu-link, .ast-below-header-menu .menu-item:focus > .menu-link, .ast-below-header-menu .menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_menu_hover_color['desktop'] ),
 			'background-color' => esc_attr( $below_header_menu_hover_bg_color['desktop'] ),
 		),
 
-		'.ast-below-header-menu li.current-menu-ancestor > a, .ast-below-header-menu li.current-menu-item > a, .ast-below-header-menu li.current-menu-ancestor > .ast-menu-toggle, .ast-below-header-menu li.current-menu-item > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item.focus > .ast-menu-toggle' => array(
+		'.ast-below-header-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .menu-item.current-menu-ancestor > .ast-menu-toggle, .ast-below-header-menu .menu-item.current-menu-item > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .ast-menu-toggle' => array(
 			'color' => esc_attr( $below_header_menu_current_color['desktop'] ),
 		),
 
-		'.ast-below-header-menu li.current-menu-ancestor > a, .ast-below-header-menu li.current-menu-item > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+		'.ast-below-header-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 			'background-color' => esc_attr( $below_header_menu_current_bg_color['desktop'] ),
 		),
 
@@ -231,12 +288,12 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		 * Below Header Dropdown Navigation
 		 */
 
-		'.ast-below-header-menu .sub-menu li:hover > a, .ast-below-header-menu .sub-menu li:focus > a, .ast-below-header-menu .sub-menu li.focus > a' => array(
+		'.ast-below-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_submenu_hover_color['desktop'] ),
 			'background-color' => esc_attr( $below_header_submenu_bg_hover_color['desktop'] ),
 		),
 
-		'.ast-below-header-menu .sub-menu li.current-menu-ancestor > a, .ast-below-header-menu .sub-menu li.current-menu-item > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+		'.ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_submenu_active_color['desktop'] ),
 			'background-color' => esc_attr( $below_header_submenu_active_bg_color['desktop'] ),
 		),
@@ -245,7 +302,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 			'background-color' => esc_attr( $below_header_submenu_bg_color['desktop'] ),
 		),
 
-		'.ast-below-header-menu .sub-menu, .ast-below-header-menu .sub-menu a' => array(
+		'.ast-below-header-menu .sub-menu, .ast-below-header-menu .sub-menu .menu-link' => array(
 			'color' => esc_attr( $below_header_submenu_text_color['desktop'] ),
 		),
 
@@ -267,13 +324,13 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		'.below-header-user-select input.search-field:focus, .below-header-user-select input.search-field.focus' => array(
 			'border-color' => esc_attr( $desktop_right_left_link_color ),
 		),
-		'.below-header-user-select'                        => array(
+		'.below-header-user-select' => array(
 			'color' => esc_attr( $right_left_text_color['desktop'] ),
 		),
 	);
 
 	$tablet_colors = array(
-		'.ast-below-header'                                => astra_get_responsive_background_obj( $below_header_obj, 'tablet' ),
+		'.ast-below-header'         => astra_get_responsive_background_obj( $below_header_obj, 'tablet' ),
 		'.ast-below-header, .ast-below-header-menu .sub-menu, .ast-below-header-menu.ast-mega-menu-enabled.submenu-with-border .astra-full-megamenu-wrapper' => array(
 			'background-color' => esc_attr( $tablet_below_header_bg ),
 		),
@@ -289,20 +346,20 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		 * Below Header Navigation
 		 */
 
-		'.ast-below-header-menu, .ast-below-header-menu a' => array(
+		'.ast-below-header-menu, .ast-below-header-menu .menu-link' => array(
 			'color' => esc_attr( $below_header_menu_text['tablet'] ),
 		),
 
-		'.ast-below-header-menu li:hover > a, .ast-below-header-menu li:focus > a, .ast-below-header-menu li.focus > a' => array(
+		'.ast-below-header-menu .menu-item:hover > .menu-link, .ast-below-header-menu .menu-item:focus > .menu-link, .ast-below-header-menu .menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_menu_hover_color['tablet'] ),
 			'background-color' => esc_attr( $below_header_menu_hover_bg_color['tablet'] ),
 		),
 
-		'.ast-below-header-menu li.current-menu-ancestor > a, .ast-below-header-menu li.current-menu-item > a, .ast-below-header-menu li.current-menu-ancestor > .ast-menu-toggle, .ast-below-header-menu li.current-menu-item > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item.focus > .ast-menu-toggle' => array(
+		'.ast-below-header-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .menu-item.current-menu-ancestor > .ast-menu-toggle, .ast-below-header-menu .menu-item.current-menu-item > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .ast-menu-toggle' => array(
 			'color' => esc_attr( $below_header_menu_current_color['tablet'] ),
 		),
 
-		'.ast-below-header-menu li.current-menu-ancestor > a, .ast-below-header-menu li.current-menu-item > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+		'.ast-below-header-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 			'background-color' => esc_attr( $below_header_menu_current_bg_color['tablet'] ),
 		),
 
@@ -310,12 +367,12 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		 * Below Header Dropdown Navigation
 		 */
 
-		'.ast-below-header-menu .sub-menu li:hover > a, .ast-below-header-menu .sub-menu li:focus > a, .ast-below-header-menu .sub-menu li.focus > a' => array(
+		'.ast-below-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_submenu_hover_color['tablet'] ),
 			'background-color' => esc_attr( $below_header_submenu_bg_hover_color['tablet'] ),
 		),
 
-		'.ast-below-header-menu .sub-menu li.current-menu-ancestor > a, .ast-below-header-menu .sub-menu li.current-menu-item > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+		'.ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_submenu_active_color['tablet'] ),
 			'background-color' => esc_attr( $below_header_submenu_active_bg_color['tablet'] ),
 		),
@@ -324,7 +381,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 			'background-color' => esc_attr( $below_header_submenu_bg_color['tablet'] ),
 		),
 
-		'.ast-below-header-menu .sub-menu, .ast-below-header-menu .sub-menu a' => array(
+		'.ast-below-header-menu .sub-menu, .ast-below-header-menu .sub-menu .menu-link' => array(
 			'color' => esc_attr( $below_header_submenu_text_color['tablet'] ),
 		),
 
@@ -346,13 +403,13 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		'.below-header-user-select input.search-field:focus, .below-header-user-select input.search-field.focus' => array(
 			'border-color' => esc_attr( $tablet_right_left_link_color ),
 		),
-		'.below-header-user-select'                        => array(
+		'.below-header-user-select' => array(
 			'color' => esc_attr( $right_left_text_color['tablet'] ),
 		),
 	);
 
 	$mobile_colors = array(
-		'.ast-below-header'                                => astra_get_responsive_background_obj( $below_header_obj, 'mobile' ),
+		'.ast-below-header'         => astra_get_responsive_background_obj( $below_header_obj, 'mobile' ),
 		'.ast-below-header, .ast-below-header-menu .sub-menu, .ast-below-header-menu.ast-mega-menu-enabled.submenu-with-border .astra-full-megamenu-wrapper' => array(
 			'background-color' => esc_attr( $mobile_below_header_bg ),
 		),
@@ -368,20 +425,20 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		 * Below Header Navigation
 		 */
 
-		'.ast-below-header-menu, .ast-below-header-menu a' => array(
+		'.ast-below-header-menu, .ast-below-header-menu .menu-link' => array(
 			'color' => esc_attr( $below_header_menu_text['mobile'] ),
 		),
 
-		'.ast-below-header-menu li:hover > a, .ast-below-header-menu li:focus > a, .ast-below-header-menu li.focus > a' => array(
+		'.ast-below-header-menu .menu-item:hover > .menu-link, .ast-below-header-menu .menu-item:focus > .menu-link, .ast-below-header-menu .menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_menu_hover_color['mobile'] ),
 			'background-color' => esc_attr( $below_header_menu_hover_bg_color['mobile'] ),
 		),
 
-		'.ast-below-header-menu li.current-menu-ancestor > a, .ast-below-header-menu li.current-menu-item > a, .ast-below-header-menu li.current-menu-ancestor > .ast-menu-toggle, .ast-below-header-menu li.current-menu-item > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu li.current-menu-item.focus > .ast-menu-toggle' => array(
+		'.ast-below-header-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .menu-item.current-menu-ancestor > .ast-menu-toggle, .ast-below-header-menu .menu-item.current-menu-item > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .ast-menu-toggle, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .ast-menu-toggle' => array(
 			'color' => esc_attr( $below_header_menu_current_color['mobile'] ),
 		),
 
-		'.ast-below-header-menu li.current-menu-ancestor > a, .ast-below-header-menu li.current-menu-item > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+		'.ast-below-header-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 			'background-color' => esc_attr( $below_header_menu_current_bg_color['mobile'] ),
 		),
 
@@ -389,12 +446,12 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		 * Below Header Dropdown Navigation
 		 */
 
-		'.ast-below-header-menu .sub-menu li:hover > a, .ast-below-header-menu .sub-menu li:focus > a, .ast-below-header-menu .sub-menu li.focus > a' => array(
+		'.ast-below-header-menu .sub-menu .menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_submenu_hover_color['mobile'] ),
 			'background-color' => esc_attr( $below_header_submenu_bg_hover_color['mobile'] ),
 		),
 
-		'.ast-below-header-menu .sub-menu li.current-menu-ancestor > a, .ast-below-header-menu .sub-menu li.current-menu-item > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:hover > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor:focus > a, .ast-below-header-menu .sub-menu li.current-menu-ancestor.focus > a, .ast-below-header-menu .sub-menu li.current-menu-item:hover > a, .ast-below-header-menu .sub-menu li.current-menu-item:focus > a, .ast-below-header-menu .sub-menu li.current-menu-item.focus > a' => array(
+		'.ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-ancestor.focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:hover > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item:focus > .menu-link, .ast-below-header-menu .sub-menu .menu-item.current-menu-item.focus > .menu-link' => array(
 			'color'            => esc_attr( $below_header_submenu_active_color['mobile'] ),
 			'background-color' => esc_attr( $below_header_submenu_active_bg_color['mobile'] ),
 		),
@@ -403,7 +460,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 			'background-color' => esc_attr( $below_header_submenu_bg_color['mobile'] ),
 		),
 
-		'.ast-below-header-menu .sub-menu, .ast-below-header-menu .sub-menu a' => array(
+		'.ast-below-header-menu .sub-menu, .ast-below-header-menu .sub-menu .menu-link' => array(
 			'color' => esc_attr( $below_header_submenu_text_color['mobile'] ),
 		),
 
@@ -425,7 +482,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 		'.below-header-user-select input.search-field:focus, .below-header-user-select input.search-field.focus' => array(
 			'border-color' => esc_attr( $mobile_right_left_link_color ),
 		),
-		'.below-header-user-select'                        => array(
+		'.below-header-user-select' => array(
 			'color' => esc_attr( $right_left_text_color['mobile'] ),
 		),
 	);
@@ -456,7 +513,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 
 	// Below header border.
 	$border = array(
-		'.ast-desktop .ast-below-header-menu.submenu-with-border .sub-menu a' => array(
+		'.ast-desktop .ast-below-header-menu.submenu-with-border .sub-menu .menu-link' => array(
 			'border-bottom-width' => ( true == $below_header_submenu_item_border ) ? '1px' : '0px',
 			'border-style'        => 'solid',
 			'border-color'        => esc_attr( $below_header_submenu_item_b_color ),
@@ -475,7 +532,7 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 
 	// Submenu items goes outside?
 	$submenu_border_for_left_align_menu = array(
-		'.ast-below-header-menu ul li.ast-left-align-sub-menu:hover > ul, .ast-below-header-menu ul li.ast-left-align-sub-menu.focus > ul' => array(
+		'.ast-below-header-menu .sub-menu .menu-item.ast-left-align-sub-menu:hover > .sub-menu, .ast-below-header-menu .sub-menu .menu-item.ast-left-align-sub-menu.focus > .sub-menu' => array(
 			'margin-left' => ( ( isset( $below_header_submenu_border['left'] ) && '' != $below_header_submenu_border['left'] ) || isset( $below_header_submenu_border['right'] ) && '' != $below_header_submenu_border['right'] ) ? astra_get_css_value( '-' . ( $below_header_submenu_border['left'] + $below_header_submenu_border['right'] ), 'px' ) : '',
 		),
 	);
@@ -485,6 +542,34 @@ function astra_ext_below_header_dynamic_css( $dynamic_css, $dynamic_css_filtered
 	// Submenu items goes outside?
 	$parse_css .= astra_parse_css( $submenu_border_for_left_align_menu, astra_addon_get_tablet_breakpoint( '', 1 ) );
 
+	if ( astra_addon_swap_mobile_below_header_sections() ) {
+
+		$swap_mobile_below_header_sections = array(
+			'.ast-header-break-point .ast-swap-below-header-sections .below-header-section-1' => array(
+				'order'           => 2,
+				'justify-content' => 'flex-end',
+			),
+			'.ast-header-break-point .ast-swap-below-header-sections .below-header-section-2' => array(
+				'order'           => 1,
+				'justify-content' => 'flex-start',
+			),
+		);
+		$parse_css                        .= astra_parse_css( $swap_mobile_below_header_sections );
+	}
+
 	// Add Inline style.
 	return $dynamic_css . $parse_css;
+}
+
+/**
+ * Whether to fix the Swap Sections on Mobile Devices not working case or not.
+ * As this is frontend reflecting change added this backwards for existing users.
+ *
+ * @since 3.5.7
+ * @return boolean false if it is an existing user, true if not.
+ */
+function astra_addon_swap_mobile_below_header_sections() {
+	$astra_settings                                        = get_option( ASTRA_THEME_SETTINGS );
+	$astra_settings['support-swap-mobile-header-sections'] = isset( $astra_settings['support-swap-mobile-header-sections'] ) ? false : true;
+	return apply_filters( 'astra_apply_swap_mobile_header_sections_css', $astra_settings['support-swap-mobile-header-sections'] );
 }

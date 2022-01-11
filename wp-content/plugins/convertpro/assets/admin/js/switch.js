@@ -5,8 +5,7 @@ jQuery(document).ready(function(){
 			switch_input = jQuery(this).parents(".cp-switch-wrapper").find("#"+id),
 			name 		= switch_input.attr('name'),
 			property    = switch_input.attr('data-css-property') || '',
-			value 		= switch_input.val();
-
+			value 		= switch_input.attr('value');
 		if( value == 1 || value == '1' ) {
 			jQuery(this).parents(".cp-switch-wrapper").find("#"+id).attr('value','0');
 			value = 0;
@@ -17,6 +16,6 @@ jQuery(document).ready(function(){
 
 		jQuery("#"+id).trigger('change');
 		
-		jQuery(document).trigger('cpro_switch_change', [switch_input.selector, name, value, property, 'field'] );
+		jQuery(document).trigger('cpro_switch_change', ["#"+id, name, value, property, 'field'] );
 	});
 });

@@ -245,6 +245,19 @@ class CPRO_GetResponse
     }
 
     /**
+     * Retrieve GetResponse Tags
+     *
+     * @since 1.5.0
+     * @param array $params tags parameters.
+     *
+     * @return mixed
+     */
+    public function get_tags( $params )
+    {
+        return $this->call('tags?' . $this->setParams($params));
+    }
+
+    /**
      * retrieve account custom fields
      * @param array $params
      *

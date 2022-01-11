@@ -158,7 +158,7 @@
                     this.$anchor.blur($.proxy(this.hide, this));
                     break;
                 default:
-                    this.$anchor.hover($.proxy(this.show, this), $.proxy(this.hide, this));
+                    this.$anchor.on( 'mouseenter', $.proxy(this.show, this) ).on( 'mouseleave', $.proxy(this.hide, this) );
             }
             //$(window).resize($.proxy(this._setPosition, this));
         },

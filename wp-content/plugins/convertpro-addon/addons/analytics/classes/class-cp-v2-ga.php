@@ -122,8 +122,9 @@ if ( ! class_exists( 'CP_V2_GA' ) ) {
 				die( '-1' );
 			}
 
-			$style_slug = isset( $_POST['style_id'] ) ? esc_attr( $_POST['style_id'] ) : '';
-			$filter     = isset( $_POST['filter'] ) ? esc_attr( $_POST['filter'] ) : '';
+			$style_slug = isset( $_POST['style_id'] ) ? sanitize_text_field( $_POST['style_id'] ) : '';
+			$sdate      = isset( $_POST['sdate'] ) ? sanitize_text_field( $_POST['sdate'] ) : '';
+			$edate      = isset( $_POST['edate'] ) ? sanitize_text_field( $_POST['edate'] ) : '';
 
 			if ( '' === $style_slug ) {
 				wp_send_json_error();
@@ -140,127 +141,61 @@ if ( ! class_exists( 'CP_V2_GA' ) ) {
 
 			$analytics_data = array();
 
-			$start_date_val = '';
-			$today          = strtotime( gmdate( 'Y-m-d' ) );
+			$new_start_date    = strtotime( $sdate );
+			$new_end_date      = strtotime( $edate );
+			$popups_impression = 0;
+			$popups_conversion = 0;
+			$defaults          = array();
 
-			switch ( $filter ) {
-
-				case 'month':
-					$start_date_val = gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d' ) . ' -1 month' ) );
-					break;
-
-				case 'week':
-					$start_date_val = gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d' ) . ' -1 week' ) );
-					break;
-
-				case 'yesterday':
-					$start_date_val = gmdate( 'Y-m-d H:i:s', strtotime( gmdate( 'Y-m-d H:i:s' ) . ' -1 day' ) );
-					break;
-
-				case 'today':
-					$start_date_val = gmdate( 'Y-m-d H:i:s' );
-					break;
-
-				default:
-					$query_args = array(
-						'post_type'      => CP_CUSTOM_POST_TYPE,
-						'posts_per_page' => -1,
-						'post_status'    => 'publish',
-					);
-
-					$popups = new WP_Query( $query_args );
-
-					wp_reset_postdata();
-
-					$start_date_val = min(
-						array_map(
-							function( $item ) {
-									return $item->post_date;
-							},
-							$popups->posts
-						)
-					);
-					break;
-			}
-
-			$start_date   = strtotime( gmdate( 'Y-m-d', strtotime( $start_date_val ) ) );
-			$end_date     = $today;
-			$current_date = $start_date;
-
-			if ( 'today' !== $filter && 'yesterday' !== $filter ) {
-
+			// If Today and Yesterday option selected.
+			if ( $sdate === $edate ) {
+				$defaults[0] = $sdate;
+				$defaults[1] = 0;
+				$defaults[2] = 0;
 				if ( isset( $data[ $style_slug ] ) ) {
+					if ( isset( $data[ $style_slug ][ $sdate ] ) ) {
+						$defaults[1] = $data[ $style_slug ][ $sdate ]['impressions'];
+						$defaults[2] = $data[ $style_slug ][ $sdate ]['conversions'];
 
-					while ( $current_date <= $end_date ) {
-
-						$defaults    = array();
-						$defaults[0] = gmdate( 'Y-m-d', $current_date );
-						$defaults[1] = 0;
-						$defaults[2] = 0;
-
-						$analytics_data[] = $defaults;
-
-						foreach ( $data[ $style_slug ] as $key => $value ) {
-
-							if ( strtotime( $key ) === $current_date ) {
-
-								$defaults[0] = $key;
-								$defaults[1] = $value['impressions'];
-								$defaults[2] = $value['conversions'];
-
-								$analytics_data[] = $defaults;
-							}
-						}
-
-						$current_date = ( $current_date + ( 86400 ) );
+						// Total popups impressions and conversions count.
+						$popups_impression = $defaults[1];
+						$popups_conversion = $defaults[2];
 					}
-				} else {
-
-					$analytics_data = array(
-						array(
-							gmdate( 'Y-m-d', $start_date ),
-							0,
-							0,
-						),
-						array(
-							gmdate( 'Y-m-d', $end_date ),
-							0,
-							0,
-						),
-					);
 				}
-			} else {
 
-				$curr_date = strtotime( gmdate( 'Y-m-d', strtotime( $start_date_val ) ) );
+				$analytics_data[] = $defaults;
+			} else {
+				// Other than the Today and Yesterday option selected.
 				if ( isset( $data[ $style_slug ] ) ) {
 
-					$defaults    = array();
-					$defaults[0] = $start_date_val;
-					$defaults[1] = 0;
-					$defaults[2] = 0;
+					while ( $new_start_date <= $new_end_date ) {
 
-					foreach ( $data[ $style_slug ] as $key => $value ) {
+						$recurring_date = gmdate( 'Y-m-d', $new_start_date );
+						if ( isset( $data[ $style_slug ][ $recurring_date ] ) ) {
+							$defaults[0] = $recurring_date;
+							$defaults[1] = $data[ $style_slug ][ $recurring_date ]['impressions'];
+							$defaults[2] = $data[ $style_slug ][ $recurring_date ]['conversions'];
 
-						if ( strtotime( $key ) === $curr_date ) {
-
-							$defaults[0] = $start_date_val;
-							$defaults[1] = $value['impressions'];
-							$defaults[2] = $value['conversions'];
+							// Total popups impressions and conversions count.
+							$popups_impression += $defaults[1];
+							$popups_conversion += $defaults[2];
 
 							$analytics_data[] = $defaults;
 						}
+						$new_start_date = ( $new_start_date + ( 86400 ) );
 					}
-				} else {
-					$analytics_data = array(
-						array( $curr_date, 0, 0 ),
-					);
 				}
-				$edate = gmdate( 'Y-m-d H:i:s', strtotime( gmdate( 'Y-m-d', $curr_date ) ) );
-
-				array_push( $analytics_data, array( $edate, 0, 0 ) );
 			}
 
-			wp_send_json( $analytics_data );
+			$final_analytics_data = array(
+				'analytics_count' => array(
+					'impressions' => $popups_impression,
+					'conversions' => $popups_conversion,
+				),
+				'analytics_data'  => $analytics_data,
+			);
+
+			wp_send_json( $final_analytics_data );
 
 		}
 
@@ -502,8 +437,9 @@ if ( ! class_exists( 'CP_V2_GA' ) ) {
 					$popup_slugs_temp = array_chunk( $popup_slugs, $count );
 
 					foreach ( $popup_slugs_temp as $value ) {
-						$filter              = 'ga:eventCategory==' . CPRO_BRANDING_NAME . ';' . implode( ',', $value );
-						$defaults['filters'] = $filter;
+						$filter                  = 'ga:eventCategory==' . CPRO_BRANDING_NAME . ';' . implode( ',', $value );
+						$defaults['filters']     = $filter;
+						$defaults['start-index'] = 1; // Default starting index 1 to max-result 10000.
 
 						$this->ga_instance->set_default_query_params( $defaults );
 
@@ -511,6 +447,24 @@ if ( ! class_exists( 'CP_V2_GA' ) ) {
 
 						if ( isset( $result_rows['rows'] ) ) {
 							$merge_result = array_merge( $merge_result, $result_rows['rows'] );
+						}
+
+						/**
+						 * Get the paginated data for the popups analytics.
+						 * i.e. starting index 10001 - 20000 and so on.
+						*/
+						if ( isset( $result_rows['nextLink'] ) ) {
+							$paginator = (int) ( $result_rows['totalResults'] / 10000 );
+
+							for ( $i = 1; $i <= $paginator; $i++ ) {
+								$defaults['start-index'] = ( 10000 * $i ) + 1;
+								$this->ga_instance->set_default_query_params( $defaults );
+
+								$paginator_result_rows = $this->ga_instance->query( $params );
+								if ( isset( $paginator_result_rows['rows'] ) ) {
+									$merge_result = array_merge( $merge_result, $paginator_result_rows['rows'] );
+								}
+							}
 						}
 					}
 
@@ -668,7 +622,7 @@ if ( ! class_exists( 'CP_V2_GA' ) ) {
 						array(
 							'success' => false,
 							/* translators: %s auth URL */
-							'msg'     => sprintf( __( 'Please create a Google AnalytTTTics Property for this Domain. <a class="google-analytic-page-link" href="%s" target="_blank" rel="noopener">Know more.</a>', 'convertpro-addon' ), esc_url( $ga_property_url ) ),
+							'msg'     => sprintf( __( 'Please create a Google Analytics Property for this Domain. <a class="google-analytic-page-link" href="%s" target="_blank" rel="noopener">Know more.</a>', 'convertpro-addon' ), esc_url( $ga_property_url ) ),
 						)
 					);
 				}

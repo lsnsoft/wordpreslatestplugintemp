@@ -1,14 +1,14 @@
-# Copyright (C) 2020 Brainstorm Force
+# Copyright (C) 2021 Brainstorm Force
 # This file is distributed under the same license as the Convert Pro - Addon package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Convert Pro - Addon 1.4.1\n"
+"Project-Id-Version: Convert Pro - Addon 1.5.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/convertpro-addon\n"
-"POT-Creation-Date: 2020-08-05 06:15:41+00:00\n"
+"POT-Creation-Date: 2021-07-14 09:23:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
@@ -30,7 +30,7 @@ msgid "Google Analytics"
 msgstr ""
 
 #: addons/ab-test/admin/abtest-analytics.php:24
-#: addons/analytics/views/ga-insights-view.php:112
+#: addons/analytics/views/ga-insights-view.php:120
 msgid "Loading..."
 msgstr ""
 
@@ -266,7 +266,7 @@ msgstr ""
 msgid "Analytics"
 msgstr ""
 
-#: addons/analytics/classes/class-cp-ga-loader.php:283
+#: addons/analytics/classes/class-cp-ga-loader.php:288
 #. translators: %s link
 msgid ""
 "You have not entered the access code! Please <a "
@@ -274,19 +274,19 @@ msgid ""
 "rel=\"noopener\">click here</a> to get an access code."
 msgstr ""
 
-#: addons/analytics/classes/class-cp-ga-loader.php:284
+#: addons/analytics/classes/class-cp-ga-loader.php:289
 msgid "Processing your request. This might take few minutes."
 msgstr ""
 
-#: addons/analytics/classes/class-cp-ga-loader.php:285
+#: addons/analytics/classes/class-cp-ga-loader.php:290
 msgid "Google Analytics data updated. Redirecting..."
 msgstr ""
 
-#: addons/analytics/classes/class-cp-ga-loader.php:286
+#: addons/analytics/classes/class-cp-ga-loader.php:291
 msgid "Authorizing..."
 msgstr ""
 
-#: addons/analytics/classes/class-cp-ga-loader.php:287
+#: addons/analytics/classes/class-cp-ga-loader.php:292
 msgid "Are you sure you want to delete Google Analytics Integration?"
 msgstr ""
 
@@ -361,22 +361,22 @@ msgstr ""
 msgid "less than a minute"
 msgstr ""
 
-#: addons/analytics/classes/class-cp-v2-ga.php:671
+#: addons/analytics/classes/class-cp-v2-ga.php:625
 #. translators: %s auth URL
 msgid ""
-"Please create a Google AnalytTTTics Property for this Domain. <a "
+"Please create a Google Analytics Property for this Domain. <a "
 "class=\"google-analytic-page-link\" href=\"%s\" target=\"_blank\" "
 "rel=\"noopener\">Know more.</a>"
 msgstr ""
 
-#: addons/analytics/classes/class-cp-v2-ga.php:682
+#: addons/analytics/classes/class-cp-v2-ga.php:636
 #. translators: %s auth URL
 msgid ""
 "This access code was already redeemed. Please try generating a new code "
 "from <a href=\"%s\" target=\"_blank\" rel=\"noopener\">here.</a>"
 msgstr ""
 
-#: addons/analytics/classes/class-cp-v2-ga.php:699
+#: addons/analytics/classes/class-cp-v2-ga.php:653
 #. translators: %s auth URL
 msgid ""
 "The access code you entered is incorrect! Please <a "
@@ -416,24 +416,12 @@ msgstr ""
 msgid "AUTHENTICATE MY ACCOUNT"
 msgstr ""
 
-#: addons/analytics/views/ga-insights-view.php:102
-msgid "Today"
+#: addons/analytics/views/ga-insights-view.php:108
+msgid "Impressions: "
 msgstr ""
 
-#: addons/analytics/views/ga-insights-view.php:103
-msgid "Yesterday"
-msgstr ""
-
-#: addons/analytics/views/ga-insights-view.php:104
-msgid "Last 7 Days"
-msgstr ""
-
-#: addons/analytics/views/ga-insights-view.php:105
-msgid "Last 30 Days"
-msgstr ""
-
-#: addons/analytics/views/ga-insights-view.php:106
-msgid "Lifetime"
+#: addons/analytics/views/ga-insights-view.php:112
+msgid "Conversions: "
 msgstr ""
 
 #: addons/analytics/views/ga-settings-view.php:19
@@ -559,28 +547,28 @@ msgstr ""
 msgid "Remove Google Analytics Integration"
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:460
+#: addons/connects/classes/class-convertplugservices.php:466
 msgid "Integration Name should not be blank."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:491
+#: addons/connects/classes/class-convertplugservices.php:497
 msgid "Provide a name for this integration"
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:546
+#: addons/connects/classes/class-convertplugservices.php:552
 msgid "You have not added an account yet. Please add a new account."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:558
+#: addons/connects/classes/class-convertplugservices.php:564
 msgid "Select Integration"
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:569
-#: addons/connects/classes/class-convertplugservices.php:573
+#: addons/connects/classes/class-convertplugservices.php:575
+#: addons/connects/classes/class-convertplugservices.php:579
 msgid "You have not added a account yet. Please add a new account."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:612
+#: addons/connects/classes/class-convertplugservices.php:618
 #: addons/connects/services/activecampaign/class-cpro-service-activecampaign.php:276
 #: addons/connects/services/activecampaign/class-cpro-service-activecampaign.php:316
 #: addons/connects/services/aweber/class-cpro-service-aweber.php:238
@@ -596,7 +584,8 @@ msgstr ""
 #: addons/connects/services/drip/class-cpro-service-drip.php:206
 #: addons/connects/services/drip/class-cpro-service-drip.php:265
 #: addons/connects/services/elasticemail/class-cpro-service-elasticemail.php:209
-#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:252
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:256
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:296
 #: addons/connects/services/hubspot/class-cpro-service-hubspot.php:175
 #: addons/connects/services/icontact/class-cpro-service-icontact.php:244
 #: addons/connects/services/klaviyo/class-cpro-service-klaviyo.php:200
@@ -615,7 +604,8 @@ msgstr ""
 #: addons/connects/services/ontraport/class-cpro-service-ontraport.php:260
 #: addons/connects/services/sendfox/class-cpro-service-sendfox.php:186
 #: addons/connects/services/sendgrid/class-cpro-service-sendgrid.php:202
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:199
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:292
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:334
 #: addons/connects/services/sendlane/class-cpro-service-sendlane.php:223
 #: addons/connects/services/sendreach/class-cpro-service-sendreach.php:281
 #: addons/connects/services/simplycast/class-cpro-service-simplycast.php:196
@@ -624,21 +614,21 @@ msgstr ""
 msgid "Choose..."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:620
+#: addons/connects/classes/class-convertplugservices.php:626
 msgid "Add Integration..."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:629
+#: addons/connects/classes/class-convertplugservices.php:635
 msgid "Existing Integration"
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:925
-#: addons/connects/classes/class-convertplugservices.php:1078
+#: addons/connects/classes/class-convertplugservices.php:953
+#: addons/connects/classes/class-convertplugservices.php:1114
 msgid "You are not connected to any service."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:1009
-#: addons/connects/classes/class-cp-v2-services-loader.php:108
+#: addons/connects/classes/class-convertplugservices.php:1045
+#: addons/connects/classes/class-cp-v2-services-loader.php:110
 #. translators: %s Error Message
 #. translators: %s Product name
 msgid ""
@@ -646,125 +636,125 @@ msgid ""
 "configuration error"
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:1175
+#: addons/connects/classes/class-convertplugservices.php:1213
 msgid "Wrong Style ID. Please check with admin."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:120
+#: addons/connects/classes/class-cp-v2-services-loader.php:122
 msgid "Error Notification"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:123
+#: addons/connects/classes/class-cp-v2-services-loader.php:125
 msgid ""
 "This is an email that will be sent to you every time a user subscribes "
 "through a form and some error is encountered. You can customize the email "
 "subject and body in the fields below. "
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:127
+#: addons/connects/classes/class-cp-v2-services-loader.php:129
 msgid "This is applicable when you integrate with some mailer service."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:134
+#: addons/connects/classes/class-cp-v2-services-loader.php:136
 msgid "Template Subject"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:142
+#: addons/connects/classes/class-cp-v2-services-loader.php:144
 msgid "Template"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:177
+#: addons/connects/classes/class-cp-v2-services-loader.php:179
 msgid "Oh sorry! Something went wrong!"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:178
+#: addons/connects/classes/class-cp-v2-services-loader.php:180
 msgid ""
 "You cannot delete this account. It is already associated with a "
 "call-to-action."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:179
+#: addons/connects/classes/class-cp-v2-services-loader.php:181
 msgid ""
 "This \"##account_name##\" account will be deleted permanently. Do you wish "
 "to continue?"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:180
+#: addons/connects/classes/class-cp-v2-services-loader.php:182
 msgid "Are you sure you want to remove this?"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:181
+#: addons/connects/classes/class-cp-v2-services-loader.php:183
 msgid "Please select a valid account. Or go ahead and create a new account."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:182
+#: addons/connects/classes/class-cp-v2-services-loader.php:184
 msgid "Enter \"Name\" of the field"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:183
+#: addons/connects/classes/class-cp-v2-services-loader.php:185
 msgid ""
 "Oops! You did not add an email field! We will not be able to pass values "
 "without an email field."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:184
+#: addons/connects/classes/class-cp-v2-services-loader.php:186
 msgid "All done! Please save the changes & publish."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:185
+#: addons/connects/classes/class-cp-v2-services-loader.php:187
 msgid "Oops! Your design do not have form fields. You don't need integration."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:186
+#: addons/connects/classes/class-cp-v2-services-loader.php:188
 msgid "Custom Field"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:187
+#: addons/connects/classes/class-cp-v2-services-loader.php:189
 msgid "--- Select Value ---"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:188
+#: addons/connects/classes/class-cp-v2-services-loader.php:190
 msgid "Please select a valid list."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:189
+#: addons/connects/classes/class-cp-v2-services-loader.php:191
 msgid "Please select a valid form."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:190
+#: addons/connects/classes/class-cp-v2-services-loader.php:192
 msgid "Please select the kind of integration you want; A list or a form."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:191
+#: addons/connects/classes/class-cp-v2-services-loader.php:193
 msgid "Please select a valid Drip account."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:192
+#: addons/connects/classes/class-cp-v2-services-loader.php:194
 msgid "Please select a valid sequence."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:193
+#: addons/connects/classes/class-cp-v2-services-loader.php:195
 msgid "Please enter a valid list ID."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:194
+#: addons/connects/classes/class-cp-v2-services-loader.php:196
 msgid "Please select a client from the dropdown menu."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:195
+#: addons/connects/classes/class-cp-v2-services-loader.php:197
 msgid "Please select at least a single tag."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:197
+#: addons/connects/classes/class-cp-v2-services-loader.php:199
 #. translators: %s Product name
 msgid "%s Fields"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:198
+#: addons/connects/classes/class-cp-v2-services-loader.php:200
 msgid "Mailer Fields"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:199
+#: addons/connects/classes/class-cp-v2-services-loader.php:201
 msgid ""
 "The following fields are not mapped with your <b>##mailer_name##</b> "
 "account. Please map those fields from <b>Connect > ##account_name##</b>. "
@@ -772,21 +762,21 @@ msgid ""
 "fields.</i>"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:200
+#: addons/connects/classes/class-cp-v2-services-loader.php:202
 msgid "Testing Connection..."
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:201
+#: addons/connects/classes/class-cp-v2-services-loader.php:203
 msgid "Tested"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:202
-#: addons/connects/classes/class-cp-v2-services-loader.php:405
+#: addons/connects/classes/class-cp-v2-services-loader.php:204
+#: addons/connects/classes/class-cp-v2-services-loader.php:407
 msgid "Test Connection"
 msgstr ""
 
-#: addons/connects/classes/class-cp-v2-services-loader.php:295
-#: addons/connects/classes/class-cp-v2-services-loader.php:339
+#: addons/connects/classes/class-cp-v2-services-loader.php:297
+#: addons/connects/classes/class-cp-v2-services-loader.php:341
 msgid "Account Name should not be blank."
 msgstr ""
 
@@ -801,15 +791,15 @@ msgstr ""
 msgid "Something went wrong."
 msgstr ""
 
-#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:31
+#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:39
 msgid "You must provide credentails for Mautic integration"
 msgstr ""
 
-#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:394
+#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:409
 msgid "There appears to be an error with the configuration."
 msgstr ""
 
-#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:405
+#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:420
 #. translators: %s Error Message
 msgid ""
 "404 error. This sometimes happens when you've just enabled the API, and "
@@ -817,19 +807,19 @@ msgid ""
 "for more info</a> - %2$s"
 msgstr ""
 
-#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:409
+#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:424
 #. translators: %s Error Message
 msgid ""
 "403 error. You need to enable the API from within Mautic's configuration "
 "settings to connect. - %s"
 msgstr ""
 
-#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:413
+#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:428
 #. translators: %s Error Message
 msgid "%s - %s"
 msgstr ""
 
-#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:434
+#: addons/connects/includes/vendor/mautic/class-cp-mautic-api.php:449
 msgid "There appears to be an error with the configuration. - %s"
 msgstr ""
 
@@ -877,7 +867,7 @@ msgstr ""
 #: addons/connects/services/drip/class-cpro-service-drip.php:104
 #: addons/connects/services/drip/class-cpro-service-drip.php:188
 #: addons/connects/services/getresponse/class-cpro-service-getresponse.php:118
-#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:231
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:232
 #: addons/connects/services/ontraport/class-cpro-service-ontraport.php:117
 msgid ""
 "Oops! You've entered the wrong API Key. Please enter the API key and try "
@@ -914,7 +904,7 @@ msgstr ""
 #: addons/connects/services/moosend/class-cpro-service-moosend.php:117
 #: addons/connects/services/ontraport/class-cpro-service-ontraport.php:152
 #: addons/connects/services/sendgrid/class-cpro-service-sendgrid.php:126
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:116
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:134
 #: addons/connects/services/sendlane/class-cpro-service-sendlane.php:129
 #: addons/connects/services/sendy/class-cpro-service-sendy.php:135
 #: addons/connects/services/verticalresponse/class-cpro-service-verticalresponse.php:131
@@ -967,13 +957,13 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: addons/connects/services/activecampaign/class-cpro-service-activecampaign.php:401
+#: addons/connects/services/activecampaign/class-cpro-service-activecampaign.php:402
 msgid ""
 "There was an error subscribing to ActiveCampaign! The account is no longer "
 "connected."
 msgstr ""
 
-#: addons/connects/services/activecampaign/class-cpro-service-activecampaign.php:452
+#: addons/connects/services/activecampaign/class-cpro-service-activecampaign.php:464
 msgid "There was an error subscribing to ActiveCampaign!"
 msgstr ""
 
@@ -994,7 +984,8 @@ msgstr ""
 
 #: addons/connects/services/aweber/class-cpro-service-aweber.php:247
 #: addons/connects/services/elasticemail/class-cpro-service-elasticemail.php:228
-#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:270
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:199
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:274
 #: addons/connects/services/klaviyo/class-cpro-service-klaviyo.php:219
 #: addons/connects/services/madmimi/class-cpro-service-madmimi.php:216
 #: addons/connects/services/mailchimp/class-cpro-service-mailchimp.php:236
@@ -1013,7 +1004,7 @@ msgid ""
 "connected."
 msgstr ""
 
-#: addons/connects/services/aweber/class-cpro-service-aweber.php:360
+#: addons/connects/services/aweber/class-cpro-service-aweber.php:361
 #. translators: %s Error Message
 msgid "There was an error subscribing to AWeber! %s"
 msgstr ""
@@ -1153,10 +1144,12 @@ msgstr ""
 
 #: addons/connects/services/clever-reach/class-cpro-service-clever-reach.php:323
 #: addons/connects/services/drip/class-cpro-service-drip.php:342
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:270
 #: addons/connects/services/klaviyo/class-cpro-service-klaviyo.php:252
 #: addons/connects/services/mailchimp/class-cpro-service-mailchimp.php:268
 #: addons/connects/services/mailpoet/class-cpro-service-mailpoet.php:228
 #: addons/connects/services/mymail/class-cpro-service-mymail.php:180
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:390
 #: addons/connects/services/sendlane/class-cpro-service-sendlane.php:276
 msgid "Enable Double Opt-in"
 msgstr ""
@@ -1168,9 +1161,9 @@ msgstr ""
 #: addons/connects/services/clever-reach/class-cpro-service-clever-reach.php:453
 #: addons/connects/services/clever-reach/class-cpro-service-clever-reach.php:456
 #: addons/connects/services/clever-reach/class-cpro-service-clever-reach.php:462
-#: addons/connects/services/mailpoet/class-cpro-service-mailpoet.php:406
+#: addons/connects/services/mailpoet/class-cpro-service-mailpoet.php:409
 #: addons/connects/services/mailwizz/class-cpro-service-mailwizz.php:347
-#: addons/connects/services/mymail/class-cpro-service-mymail.php:239
+#: addons/connects/services/mymail/class-cpro-service-mymail.php:249
 #: addons/connects/services/sendreach/class-cpro-service-sendreach.php:360
 #: addons/connects/services/simplycast/class-cpro-service-simplycast.php:98
 msgid "Something went wrong! Please try again."
@@ -1249,13 +1242,13 @@ msgid ""
 "Account Settings > API Key."
 msgstr ""
 
-#: addons/connects/services/convertkit/class-cpro-service-convertkit.php:299
+#: addons/connects/services/convertkit/class-cpro-service-convertkit.php:300
 msgid ""
 "There was an error subscribing to ConvertKit! The account is no longer "
 "connected."
 msgstr ""
 
-#: addons/connects/services/convertkit/class-cpro-service-convertkit.php:378
+#: addons/connects/services/convertkit/class-cpro-service-convertkit.php:407
 #. translators: %s Error Message
 msgid "There was an error subscribing to ConvertKit! %s"
 msgstr ""
@@ -1349,6 +1342,36 @@ msgstr ""
 msgid "There was an error subscribing to ElasticEMail! %s"
 msgstr ""
 
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:90
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:133
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:307
+msgid ""
+"Error: FluentCRM connects addon requires FluentCRM plugin installed and "
+"activated."
+msgstr ""
+
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:151
+msgid "No lists found in your FluentCRM account."
+msgstr ""
+
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:238
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:318
+#: addons/connects/services/infusionsoft/class-cpro-service-infusionsoft.php:338
+#: addons/connects/services/sendlane/class-cpro-service-sendlane.php:313
+msgid "Select Tags"
+msgstr ""
+
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:314
+msgid ""
+"There was an error subscribing to FluentCRM! The account is no longer "
+"connected."
+msgstr ""
+
+#: addons/connects/services/fluentcrm/class-cpro-service-fluentcrm.php:377
+#. translators: %s Error Message
+msgid "There was an error subscribing to FluentCRM! %s"
+msgstr ""
+
 #: addons/connects/services/getresponse/class-cpro-service-getresponse.php:89
 msgid "Error: You must select GetResponse Account type"
 msgstr ""
@@ -1389,13 +1412,13 @@ msgid ""
 "Account section. > Domains."
 msgstr ""
 
-#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:307
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:355
 msgid ""
 "There was an error subscribing to GetResponse! The account is no longer "
 "connected."
 msgstr ""
 
-#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:413
+#: addons/connects/services/getresponse/class-cpro-service-getresponse.php:485
 #. translators: %s Error Message
 msgid "There was an error subscribing to GetResponse. %s"
 msgstr ""
@@ -1488,11 +1511,6 @@ msgstr ""
 msgid "Error: Please check your API key."
 msgstr ""
 
-#: addons/connects/services/infusionsoft/class-cpro-service-infusionsoft.php:338
-#: addons/connects/services/sendlane/class-cpro-service-sendlane.php:313
-msgid "Select Tags"
-msgstr ""
-
 #: addons/connects/services/infusionsoft/class-cpro-service-infusionsoft.php:354
 msgid "Action ID"
 msgstr ""
@@ -1576,13 +1594,13 @@ msgstr ""
 msgid "Select a Tags"
 msgstr ""
 
-#: addons/connects/services/mailchimp/class-cpro-service-mailchimp.php:395
+#: addons/connects/services/mailchimp/class-cpro-service-mailchimp.php:396
 msgid ""
 "There was an error subscribing to MailChimp! The account is no longer "
 "connected."
 msgstr ""
 
-#: addons/connects/services/mailchimp/class-cpro-service-mailchimp.php:484
+#: addons/connects/services/mailchimp/class-cpro-service-mailchimp.php:495
 #. translators: %s Error Message
 msgid "There was an error subscribing to MailChimp! %s"
 msgstr ""
@@ -1900,7 +1918,7 @@ msgstr ""
 msgid "No lists found in your Mailster account."
 msgstr ""
 
-#: addons/connects/services/mymail/class-cpro-service-mymail.php:245
+#: addons/connects/services/mymail/class-cpro-service-mymail.php:255
 msgid "Something went wrong! Subscriber was not added to the list."
 msgstr ""
 
@@ -1966,38 +1984,48 @@ msgstr ""
 msgid "There was an error subscribing to SendGrid! %s"
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:83
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:95
 msgid "Error: You must provide an Access Key."
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:89
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:160
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:107
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:227
 msgid "There was an error connecting to SendinBlue! Please try again."
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:92
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:163
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:110
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:230
 #. translators: %s Message
 msgid "Error: Could not connect to SendinBlue. %s"
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:117
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:135
 msgid ""
 "The API Key can be found under API & Integration in your SendinBlue "
 "account. > Manager Your Keys > Version 2.0 > Access Key."
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:250
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:358
+msgid "Redirection URL"
+msgstr ""
+
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:359
+msgid ""
+"URL of the web page that user will be redirected to after clicking on the "
+"double opt in URL."
+msgstr ""
+
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:429
 msgid ""
 "There was an error subscribing to SendinBlue! The account is no longer "
 "connected."
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:274
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:480
 msgid "There was an error subscribing to SendinBlue! Please try again."
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:277
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:483
 #. translators: %s Message
 msgid "Error: Could not subscribe to SendinBlue. %s"
 msgstr ""
@@ -2261,28 +2289,28 @@ msgstr ""
 msgid "convertpro"
 msgstr ""
 
-#: addons/import-export/classes/class-cpro-import-export-helper.php:438
+#: addons/import-export/classes/class-cpro-import-export-helper.php:439
 #. translators: %s: zip object
 msgid "Failed to Open. Error Code: %s"
 msgstr ""
 
-#: addons/import-export/classes/class-cpro-import-export-helper.php:464
+#: addons/import-export/classes/class-cpro-import-export-helper.php:465
 msgid "Unable to extract the file."
 msgstr ""
 
-#: addons/import-export/classes/class-cpro-import-export-helper.php:515
+#: addons/import-export/classes/class-cpro-import-export-helper.php:516
 msgid "Invalid file ID"
 msgstr ""
 
-#: addons/import-export/classes/class-cpro-import-export-helper.php:626
+#: addons/import-export/classes/class-cpro-import-export-helper.php:627
 msgid "Error in uploading images"
 msgstr ""
 
-#: addons/import-export/classes/class-cpro-import-export-helper.php:646
+#: addons/import-export/classes/class-cpro-import-export-helper.php:647
 msgid "Error in creating design"
 msgstr ""
 
-#: addons/import-export/classes/class-cpro-import-export-helper.php:650
+#: addons/import-export/classes/class-cpro-import-export-helper.php:651
 msgid "Invalid file!"
 msgstr ""
 
@@ -2348,22 +2376,22 @@ msgstr ""
 msgid "http://www.brainstormforce.com"
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:383
+#: addons/connects/classes/class-convertplugservices.php:389
 msgctxt "Third party service such as MailChimp."
 msgid "Error: Missing service type."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:385
+#: addons/connects/classes/class-convertplugservices.php:391
 msgctxt "Connection data such as an API key."
 msgid "Error: Missing service data."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:387
+#: addons/connects/classes/class-convertplugservices.php:393
 msgctxt "Integration name for a third party service such as MailChimp."
 msgid "Error: Please enter a valid integration name."
 msgstr ""
 
-#: addons/connects/classes/class-convertplugservices.php:396
+#: addons/connects/classes/class-convertplugservices.php:402
 msgctxt "Integration name for a third party service such as MailChimp."
 msgid ""
 "Hey, looks like you already have an account with the same name. Please use "
@@ -2453,9 +2481,14 @@ msgctxt "A list from your MailWizz Account."
 msgid "List"
 msgstr ""
 
-#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:211
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:304
 msgctxt "An email list from SendinBlue."
-msgid "List"
+msgid "Select a List"
+msgstr ""
+
+#: addons/connects/services/sendinblue/class-cpro-service-sendinblue.php:346
+msgctxt "An Template list Id from SendinBlue for Double-optin."
+msgid "Select a Template ID"
 msgstr ""
 
 #: addons/connects/services/sendreach/class-cpro-service-sendreach.php:291

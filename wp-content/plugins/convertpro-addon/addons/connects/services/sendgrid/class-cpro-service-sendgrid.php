@@ -30,7 +30,7 @@ final class CPRO_Service_SendGrid extends CPRO_Service {
 	 * @since 1.2.1
 	 * @var string $id
 	 */
-	public static $mapping_fields = array( 'first_name', 'last_name' );
+	public static $mapping_fields = array( 'first_name', 'last_name', 'phone_number', 'address_line_1', 'address_line_2', 'city', 'state_province_region', 'postal_code', 'country' );
 
 	/**
 	 * SendGrid Custom field array.
@@ -252,7 +252,7 @@ final class CPRO_Service_SendGrid extends CPRO_Service {
 		$opts = array(
 			'headers' => array(
 				'content-Type'  => 'application/json',
-				'authorization' => 'Bearer  ' . $api_key,
+				'authorization' => 'Bearer ' . $api_key,
 			),
 			'body'    => '',
 		);

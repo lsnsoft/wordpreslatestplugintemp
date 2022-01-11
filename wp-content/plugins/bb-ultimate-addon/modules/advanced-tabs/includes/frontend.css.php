@@ -12,6 +12,9 @@ $settings->title_color        = UABB_Helper::uabb_colorpicker( $settings, 'title
 $settings->title_hover_color  = UABB_Helper::uabb_colorpicker( $settings, 'title_hover_color' );
 $settings->title_active_color = UABB_Helper::uabb_colorpicker( $settings, 'title_active_color' );
 
+$settings->description_color        = UABB_Helper::uabb_colorpicker( $settings, 'description_color' );
+$settings->description_active_color = UABB_Helper::uabb_colorpicker( $settings, 'description_active_color' );
+
 $settings->title_background_color        = UABB_Helper::uabb_colorpicker( $settings, 'title_background_color', true );
 $settings->title_background_hover_color  = UABB_Helper::uabb_colorpicker( $settings, 'title_background_hover_color', true );
 $settings->title_active_background_color = UABB_Helper::uabb_colorpicker( $settings, 'title_active_background_color', true );
@@ -25,6 +28,7 @@ $settings->icon_active_color = UABB_Helper::uabb_colorpicker( $settings, 'icon_a
 $settings->content_color            = UABB_Helper::uabb_colorpicker( $settings, 'content_color' );
 $settings->content_background_color = UABB_Helper::uabb_colorpicker( $settings, 'content_background_color', true );
 $settings->tab_focus_color          = UABB_Helper::uabb_colorpicker( $settings, 'tab_focus_color', true );
+$settings->hori_tab_spacing         = ( '' !== esc_attr( $settings->hori_tab_spacing ) ) ? esc_attr( $settings->hori_tab_spacing ) : '0';
 
 if ( ! $version_bb_check ) {
 	$settings->content_border_color  = UABB_Helper::uabb_colorpicker( $settings, 'content_border_color' );
@@ -35,10 +39,16 @@ if ( 'underline' === $settings->style ) {
 	$settings->style         = 'topline';
 	$settings->line_position = 'bottom';
 }
-
+?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content.uabb-tabs.uabb-tabs-layout-horizontal li:not(:first-child) {
+	margin-left: <?php echo esc_attr( $settings->hori_tab_spacing ); ?>px;
+}
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content.uabb-tabs.uabb-tabs-layout-horizontal li {
+	margin-bottom: <?php echo esc_attr( $settings->verti_tab_spacing ); ?>px;
+}
+<?php
 $settings->tab_spacing_size = ( '' !== $settings->tab_spacing_size ) ? $settings->tab_spacing_size : '10';
 ?>
-
 	<?php
 	if ( 'iconfall' !== $settings->style && 'linebox' !== $settings->style ) {
 		if ( 'inline' === $settings->tab_style ) {
@@ -239,10 +249,33 @@ if ( 'iconfall' !== $settings->style ) {
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'title_font_typo',
-				'selector'     => ".fl-node-$id .uabb-tabs .uabb-tabs-nav$id li a,.fl-node-$id .uabb-tab-acc-title .uabb-title-tag",
+				'selector'     => ".fl-node-$id .uabb-tabs .uabb-tabs-nav$id li a,.fl-node-$id .uabb-tab-acc-title .uabb-title-tag,.fl-node-$id .uabb-tabs .uabb-tabs-nav$id .uabb-tab-title",
 			)
 		);
 	}
+}
+?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> .uabb-tab-description {
+	<?php if ( isset( $settings->description_color ) && ! empty( $settings->description_color ) ) { ?>
+	color: <?php echo esc_attr( $settings->description_color ); ?>;
+	<?php } ?>
+}
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> .uabb-tab-current .uabb-tab-description,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> .uabb-tab-current:hover .uabb-tab-description {
+	<?php if ( isset( $settings->description_active_color ) && ! empty( $settings->description_active_color ) ) { ?>
+	color: <?php echo esc_attr( $settings->description_active_color ); ?>;
+	<?php } ?>
+}
+<?php
+if ( class_exists( 'FLBuilderCSS' ) ) {
+	FLBuilderCSS::typography_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'description_typography',
+			'selector'     => ".fl-node-$id .uabb-tabs .uabb-tab-description",
+		)
+	);
 }
 ?>
 <?php if ( ! $version_bb_check ) { ?>
@@ -606,6 +639,7 @@ if ( '' !== $settings->title_hover_color ) {
 }
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs-style-bar > nav > ul li.uabb-tab-current a,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content.uabb-tabs.uabb-tabs-layout-horizontal.uabb-tabs-style-topline li.uabb-tab-current,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs-style-bar .uabb-content-wrap<?php echo esc_attr( $id ); ?> .uabb-content-current > .uabb-tab-acc-title {
 	<?php
 	$color_default = ( '' !== uabb_theme_base_color( $settings->title_active_background_color ) ) ? uabb_theme_base_color( $settings->title_active_background_color ) : '#a7a7a7';
@@ -781,6 +815,7 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-content-wrap<?php echo esc_attr( $id ); ?> > .section > .uabb-content,
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-content-wrap<?php echo esc_attr( $id ); ?> > .section > .uabb-tab-acc-content {
 
+			min-height: fit-content !important;
 			<?php
 			if ( isset( $settings->content_padding_dimension_top_responsive ) ) {
 				echo ( '' !== $settings->content_padding_dimension_top_responsive ) ? 'padding-top:' . esc_attr( $settings->content_padding_dimension_top_responsive ) . 'px;' : '';
@@ -902,6 +937,9 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 <?php if ( 'accordion' === $settings->responsive ) : ?>
 	<?php $responsive_breakpoint = ( '' !== $settings->responsive_breakpoint ) ? $settings->responsive_breakpoint : $global_settings->responsive_breakpoint; ?>
 	@media ( max-width: <?php echo esc_attr( $responsive_breakpoint ); ?>px ) {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs-layout-vertical .uabb-content-wrap {
+			width: 100%;
+		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs-nav<?php echo esc_attr( $id ); ?> {
 			display: none;
 		}

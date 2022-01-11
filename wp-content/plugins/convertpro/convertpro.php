@@ -4,7 +4,7 @@
  * Plugin URI: https://www.convertpro.net
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.5.1
+ * Version: 1.7.4
  * Description: Convert Pro is an advanced lead generation popup plugin with a drag and drop editor that helps you create beautiful popups and opt-in forms to boost your website conversions. With Convert Pro you can build email lists, drive traffic, promote videos, offer lead magnets and a lot more.
  * Text Domain: convertpro
  *

@@ -5,18 +5,9 @@
  *  @package UABB FAQ
  */
 
+$module->render_schema( true );
 ?>
 <div class="uabb-faq-module uabb-faq-layout-<?php echo esc_attr( $settings->layout_style ); ?> uabb__faq-layout-<?php echo esc_attr( $settings->faq_layout ); ?>" >
-	<?php
-	if ( 'yes' === esc_attr( $settings->enable_schema ) ) {
-		?>
-			<script type="application/ld+json">
-					<?php echo $module->render_schema(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</script>
-
-		<?php
-	}
-	?>
 	<?php if ( 'accordion' === esc_attr( $settings->faq_layout ) ) { ?>
 		<div class="<?php echo ( FLBuilderModel::is_builder_active() ) ? 'uabb-faq-edit ' : ''; ?>uabb-module-content uabb-faq-module uabb-faq__layout-accordion
 								<?php
@@ -36,8 +27,8 @@
 				if ( ! empty( $settings->id ) ) {
 					echo ' id="' . sanitize_html_class( $settings->id ) . '-' . esc_attr( $i ) . '"';}
 				?>
-				>
-				<div class="uabb-faq-questions-button uabb-faq-questions uabb-faq-questions<?php echo esc_attr( $id ); ?> uabb-faq-<?php echo esc_attr( $settings->icon_position ); ?>-text" aria-selected="false" role="tab" tabindex="0" aria-expanded="true" aria-controls="expandable">
+				data-index="<?php echo esc_attr( $i ); ?>">
+				<div class="uabb-faq-questions-button uabb-faq-questions-button<?php echo esc_attr( $id ); ?> uabb-faq-questions uabb-faq-questions<?php echo esc_attr( $id ); ?> uabb-faq-<?php echo esc_attr( $settings->icon_position ); ?>-text" aria-selected="false" role="tab" tabindex="0" aria-expanded="true" aria-controls="expandable" data-index="<?php echo esc_attr( $i ); ?>">
 					<?php echo $module->render_icon( 'before' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-faq-question-label" tabindex="0" ><?php echo $settings->faq_items[ $i ]->faq_question; ?></<?php echo esc_attr( $settings->tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					<?php echo $module->render_icon( 'after' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

@@ -53,7 +53,7 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 			define( 'BSF_ANALYTICS_URI', $this->get_analytics_url( $analytics_path ) );
 
 			add_action( 'admin_init', array( $this, 'handle_optin_optout' ) );
-			add_action( 'admin_notices', array( $this, 'option_notice' ) );
+			add_action( 'admin_init', array( $this, 'option_notice' ) );
 			add_action( 'init', array( $this, 'maybe_track_analytics' ), 99 );
 
 			$this->set_actions();
@@ -85,7 +85,12 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 		 * @since 1.0.0
 		 */
 		public function get_analytics_url( $analytics_path ) {
-			return str_replace( WP_CONTENT_DIR, content_url(), $analytics_path );
+
+			$content_dir_path = wp_normalize_path( WP_CONTENT_DIR );
+
+			$analytics_path = wp_normalize_path( $analytics_path );
+
+			return str_replace( $content_dir_path, content_url(), $analytics_path );
 		}
 
 		/**

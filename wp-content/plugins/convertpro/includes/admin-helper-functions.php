@@ -237,7 +237,7 @@ function cp_render_presets( $type, $title, $presets, $tags = false, $resize = 1 
  * @param int    $popup_id int parameter.
  * @param string $title title for duplicated design parameter.
  */
-function cp_duplicate_popup( $popup_id = '', $title ) {
+function cp_duplicate_popup( $popup_id, $title ) {
 
 	if ( ! current_user_can( 'edit_cp_popup' ) ) {
 
@@ -403,7 +403,7 @@ function cp_get_insights_row( $style ) {
 
 	?>
 
-	<div class="cp-row cp-popup-row cp-row-<?php echo esc_attr( $style->ID ); ?> cp-row-width-<?php echo count( $cp_insight_rows ); ?> <?php echo esc_attr( $tag_class ); ?>" data-id="<?php echo esc_attr( $style->ID ); ?>" data-name="<?php echo esc_attr( $style->post_title ); ?>" data-ab-test="<?php echo esc_attr( $has_active_ab_test['status'] ); ?>">
+	<div class="cp-row cp-popup-row cp-row-<?php echo esc_attr( $style->ID ); ?> cp-row-width-<?php echo count( $cp_insight_rows ); ?> <?php echo esc_attr( $tag_class ); ?>" data-id="<?php echo esc_attr( $style->ID ); ?>" data-name="<?php echo esc_attr( $style->post_title ); ?>" data-popup-slug="<?php echo esc_attr( $style->post_name ); ?>" data-ab-test="<?php echo esc_attr( $has_active_ab_test['status'] ); ?>">
 		<div class="cp-acc-4 cp-column-title">
 			<div class="cp-style-title">
 				<?php edit_post_link( $style->post_title, ( ! $is_parent && $active_ab_test ) ? '&#8212; ' : '', '', $style->ID, 'cp_edit_post_link' ); ?>

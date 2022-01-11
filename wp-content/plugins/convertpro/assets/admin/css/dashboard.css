@@ -162,7 +162,6 @@ div.error, div.updated {
 }
 .cp-ga-modal-content .cp-ga-filter-wrap,
 .cp-campaign-select-wrap {
-    border-bottom: 1px solid #ccc;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -778,7 +777,7 @@ select.cp-template-sort {
     font-size: 13px;
     width: auto;
     height: 34px;
-    line-height: 34px;
+    line-height: 20px;
     margin: 0;
     outline: 0;
     padding: 5px;
@@ -1191,6 +1190,7 @@ label {
 }
 
 #cp-edit-dropdown.cp-edit-ab-test .cp-rename-action,
+#cp-edit-dropdown.cp-edit-ab-test .cp-change-slug-action,
 #cp-edit-dropdown.cp-edit-ab-test .cp-campaign-action {
     display: none;
 }
@@ -1771,6 +1771,10 @@ label {
 
 .cp-row.cp-action-button-row {
     padding: 26px 30px;
+}
+
+.cp-change-slug-notice {
+    color: #ee2e2e;
 }
 
 .cp-form-error,
@@ -2551,12 +2555,14 @@ li.select2-results__option {
 
 .cp-edit-action-modal .campaign-action,
 .cp-edit-action-modal .rename-action,
+.cp-edit-action-modal .change-slug-action,
 .cp-edit-action-modal .duplicate-action {
     display: none;
 }
 
 .cp-edit-action-modal.cp-campaign-action .campaign-action,
 .cp-edit-action-modal.cp-rename-action .rename-action,
+.cp-edit-action-modal.cp-change-slug-action .change-slug-action,
 .cp-edit-action-modal.cp-duplicate-action .duplicate-action {
     display: block;
 }
@@ -3128,4 +3134,19 @@ h5.cp-resync-notice {
 }
 .cpro-geolite2-message-error {
     border-left-color: #dc3232;
+}
+
+
+/* Rollback Button UI */
+
+.cp-rollback-wrap .button{
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+    padding: 2px 10px;
+}
+.cp-rollback-wrap .button:hover{
+    background: #135e96;
+    border-color: #135e96;
+    color: #fff;
 }

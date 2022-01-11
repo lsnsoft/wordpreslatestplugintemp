@@ -24,7 +24,9 @@ if ( ! class_exists( 'Astra_Edd_Single_Colors_Configs' ) ) {
 	/**
 	 * Register Easy Digital Downloads Shop Single Color Layout Configurations.
 	 */
-	class Astra_Edd_Single_Colors_Configs extends Astra_Customizer_Config_Base {
+	// @codingStandardsIgnoreStart
+	class Astra_Edd_Single_Colors_Configs extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Easy Digital Downloads Shop Single Color Layout Configurations.
@@ -42,44 +44,52 @@ if ( ! class_exists( 'Astra_Edd_Single_Colors_Configs' ) ) {
 				 * Single Product Title Color
 				 */
 				array(
-					'name'      => 'edd-single-product-title-color',
-					'parent'    => ASTRA_THEME_SETTINGS . '[edd-single-product-colors]',
-					'section'   => 'section-edd-single',
-					'default'   => '',
-					'type'      => 'sub-control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'required'  => array( ASTRA_THEME_SETTINGS . '[edd-single-product-structure]', 'contains', 'title' ),
-					'title'     => __( 'Product Title Color', 'astra-addon' ),
+					'name'              => ASTRA_THEME_SETTINGS . '[edd-single-product-title-color]',
+					'section'           => 'section-edd-single',
+					'default'           => astra_get_option( 'edd-single-product-title-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'title'             => __( 'Product Title', 'astra-addon' ),
+					'priority'          => 231,
 				),
 
 				/**
 				 * Single Product Content Color
 				 */
 				array(
-					'name'      => 'edd-single-product-content-color',
-					'parent'    => ASTRA_THEME_SETTINGS . '[edd-single-product-colors]',
-					'section'   => 'section-edd-single',
-					'default'   => '',
-					'type'      => 'sub-control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'title'     => __( 'Product Content Color', 'astra-addon' ),
+					'name'              => ASTRA_THEME_SETTINGS . '[edd-single-product-content-color]',
+					'section'           => 'section-edd-single',
+					'default'           => astra_get_option( 'edd-single-product-content-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'title'             => __( 'Product Content', 'astra-addon' ),
+					'priority'          => 231,
 				),
 
 				/**
 				 * Single Product Breadcrumb Color
 				 */
 				array(
-					'name'      => 'edd-single-product-navigation-color',
-					'parent'    => ASTRA_THEME_SETTINGS . '[edd-single-product-colors]',
-					'section'   => 'section-edd-single',
-					'default'   => '',
-					'type'      => 'sub-control',
-					'control'   => 'ast-color',
-					'required'  => array( ASTRA_THEME_SETTINGS . '[disable-edd-single-product-nav]', '!=', 1 ),
-					'transport' => 'postMessage',
-					'title'     => __( 'Product Navigation Color', 'astra-addon' ),
+					'name'              => ASTRA_THEME_SETTINGS . '[edd-single-product-navigation-color]',
+					'section'           => 'section-edd-single',
+					'default'           => astra_get_option( 'edd-single-product-navigation-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'context'           => array(
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[disable-edd-single-product-nav]',
+							'operator' => '!=',
+							'value'    => '1',
+						),
+					),
+					'transport'         => 'postMessage',
+					'title'             => __( 'Product Navigation', 'astra-addon' ),
+					'priority'          => 231,
 				),
 			);
 

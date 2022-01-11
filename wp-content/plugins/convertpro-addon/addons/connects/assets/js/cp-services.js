@@ -73,14 +73,14 @@
 			whr_to_find.css( 'visibility', 'hidden' );
 
 			// Standard Events
-			body.delegate( '.cp-md-trigger', 'click', this._serviceSelected );
-			body.delegate( 'select[name=cp_select_account]', 'cp-invoke', this._serviceChange );
-			body.delegate( '.cp-remove-account', 'click', this._removeAccount );
-			body.delegate( '.cp-change-account', 'click', this._changeAccount );
-			body.delegate( '.cp-edit-account', 'click', this._changeAccount );
-			body.delegate( '.cp-customizer-remove-account', 'click', this._deleteAccount );
+			body.on( 'click', '.cp-md-trigger', this._serviceSelected );
+			body.on( 'cp-invoke', 'select[name=cp_select_account]', this._serviceChange );
+			body.on( 'click','.cp-remove-account', this._removeAccount );
+			body.on( 'click','.cp-change-account', this._changeAccount );
+			body.on( 'click','.cp-edit-account', this._changeAccount );
+			body.on( 'click','.cp-customizer-remove-account', this._deleteAccount );
 
-			body.delegate( '.cp-md-close', 'click', this._removeAssets );
+			body.on( 'click', '.cp-md-close', this._removeAssets );
 
 
 			newAccountBtn.on( 'click', this._addAccount );
@@ -313,7 +313,7 @@
 
 			listAccountFrm.find( 'input[name=cp-integration-service]' ).val( currentService );
 
-			if( service == 'mailpoet' || service == 'mymail' ) {
+			if( service == 'mailpoet' || service == 'mymail' || service == 'fluentcrm' ) {
 				// Form show/hide
 				selectAccountFrm.hide();
 				listAccountFrm.show();
@@ -434,7 +434,7 @@
 				addon_security: cpAddonModules.ajax_nonce,
 			}, ConvertPlugServices._assetsDataComplete );
 
-			if( selectedAccount == 'mailpoet' || selectedAccount == 'mymail' ) {
+			if( selectedAccount == 'mailpoet' || selectedAccount == 'mymail' || selectedAccount == 'fluentcrm' ) {
 
 				// Form show/hide
 				selectAccountFrm.hide();
@@ -724,8 +724,8 @@
 				new_url = '',
 				account_title = listAccountFrm.find( 'input[name=cp-integration-account-slug]' ).data('account-title');
 
-			if( service_name == 'mailpoet' || service_name == 'mymail' ) {
-				account_title = ( service_name == 'mailpoet' ) ? 'MailPoet' : 'MyMail';
+			if( service_name == 'mailpoet' || service_name == 'mymail' || service_name == 'fluentcrm'  ) {
+				account_title = ( service_name == 'mailpoet' ) ? 'MailPoet' : ( ( service_name == 'mymail' ) ? 'MyMail' : 'FluentCRM' );
 			}
 
 			new_url = cp_services.image_base_url + service_name + '.png';
@@ -766,8 +766,8 @@
 					$(".cp-test-connection").addClass('cp-hidden');
 				}
 
-				if( service_name == 'mailpoet' || service_name == 'mymail' ) {
-					account_title = ( service_name == 'mailpoet' ) ? 'MailPoet' : 'MyMail';
+				if( service_name == 'mailpoet' || service_name == 'mymail' || service_name == 'fluentcrm'  ) {
+					account_title = ( service_name == 'mailpoet' ) ? 'MailPoet' : ( ( service_name == 'mymail' ) ? 'MyMail' : 'FluentCRM' );
 				}
 
 				new_url = cp_services.image_base_url + service_name + '.png';
@@ -1010,7 +1010,7 @@
 
 			listAccountFrm.find( 'input[name=cp-integration-service]' ).val( currentService );
 
-			if( service == 'mailpoet' || service == 'mymail' ) {
+			if( service == 'mailpoet' || service == 'mymail' || service == 'fluentcrm' ) {
 				// Form show/hide
 				selectAccountFrm.hide();
 				listAccountFrm.show();
@@ -1233,7 +1233,7 @@
 				wrap.html( data.html );
 				mapping_fields = data.mapping_fields;
 
-				if( currentService == 'mailpoet' || currentService == 'mymail' ) {
+				if( currentService == 'mailpoet' || currentService == 'mymail' || currentService == 'fluentcrm' ) {
 					backBtn.hide();
 				}
 
@@ -1282,7 +1282,7 @@
 			saveBtn.show();
 			authenticateBtn.hide();
 
-			if( currentService == 'mailpoet' || currentService == 'mymail' ) {
+			if( currentService == 'mailpoet' || currentService == 'mymail' || currentService == 'fluentcrm' ) {
 				backBtn.hide();
 			}
 

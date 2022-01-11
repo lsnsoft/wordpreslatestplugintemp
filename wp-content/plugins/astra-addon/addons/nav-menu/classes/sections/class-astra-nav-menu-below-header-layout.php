@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Nav_Menu_Below_Header_Layout' ) ) {
 	/**
 	 * Register Mega Menu Customizer Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Nav_Menu_Below_Header_Layout extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Mega Menu Customizer Configurations.
@@ -38,44 +41,46 @@ if ( ! class_exists( 'Astra_Nav_Menu_Below_Header_Layout' ) ) {
 
 			$_configs = array(
 
-				/**
-				 * Option - Below Header Space Divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[below-header-spacing-divider]',
-					'section'  => 'section-below-header',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'required' => array( ASTRA_THEME_SETTINGS . '[below-header-layout]', '!=', 'disabled' ),
-					'title'    => __( 'Spacing', 'astra-addon' ),
-					'priority' => 150,
-					'settings' => array(),
-				),
-
 				// Option - Megamenu Heading Space.
 				array(
-					'name'           => ASTRA_THEME_SETTINGS . '[below-header-megamenu-heading-space]',
-					'default'        => astra_get_option( 'below-header-megamenu-heading-space' ),
-					'type'           => 'control',
-					'transport'      => 'postMessage',
-					'control'        => 'ast-responsive-spacing',
-					'priority'       => 175,
-					'title'          => __( 'Megamenu Heading Space', 'astra-addon' ),
-					'linked_choices' => true,
-					'unit_choices'   => array( 'px', 'em', '%' ),
-					'choices'        => array(
+					'name'              => ASTRA_THEME_SETTINGS . '[below-header-megamenu-heading-space]',
+					'default'           => astra_get_option( 'below-header-megamenu-heading-space' ),
+					'type'              => 'control',
+					'transport'         => 'postMessage',
+					'control'           => 'ast-responsive-spacing',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_responsive_spacing' ),
+					'priority'          => 175,
+					'title'             => __( 'Megamenu Heading Space', 'astra-addon' ),
+					'linked_choices'    => true,
+					'unit_choices'      => array( 'px', 'em', '%' ),
+					'choices'           => array(
 						'top'    => __( 'Top', 'astra-addon' ),
 						'right'  => __( 'Right', 'astra-addon' ),
 						'bottom' => __( 'Bottom', 'astra-addon' ),
 						'left'   => __( 'Left', 'astra-addon' ),
 					),
-					'section'        => 'section-below-header',
-					'required'       => array(
-						'conditions' => array(
-							array( ASTRA_THEME_SETTINGS . '[below-header-section-1]', '==', 'menu' ),
-							array( ASTRA_THEME_SETTINGS . '[below-header-section-2]', '==', 'menu' ),
+					'section'           => 'section-below-header',
+					'context'           => array(
+						'relation' => 'AND',
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[below-header-layout]',
+							'operator' => '!=',
+							'value'    => 'disabled',
 						),
-						'operator'   => 'OR',
+						array(
+							'relation' => 'OR',
+							array(
+								'setting'  => ASTRA_THEME_SETTINGS . '[below-header-section-1]',
+								'operator' => '==',
+								'value'    => 'menu',
+							),
+							array(
+								'setting'  => ASTRA_THEME_SETTINGS . '[below-header-section-2]',
+								'operator' => '==',
+								'value'    => 'menu',
+							),
+						),
+
 					),
 				),
 			);

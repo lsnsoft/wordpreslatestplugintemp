@@ -221,6 +221,7 @@ final class CPRO_Service_GetResponse extends CPRO_Service {
 		}
 
 		$lists    = $api->getCampaigns();
+		$tags     = (array) $api->get_tags( array( 'fields' => 'name' ) );
 		$response = array(
 			'error'          => false,
 			'html'           => '',
@@ -231,6 +232,9 @@ final class CPRO_Service_GetResponse extends CPRO_Service {
 			$response['error'] = __( 'Oops! You\'ve entered the wrong API Key. Please enter the API key and try again.', 'convertpro-addon' );
 		} else {
 			$response['html'] = $this->render_list_field( $lists, $post_data );
+			if ( ! empty( $tags ) ) {
+				$response['html'] .= $this->render_tags_field( $tags, $post_data );
+			}
 		}
 
 		return $response;
@@ -278,6 +282,49 @@ final class CPRO_Service_GetResponse extends CPRO_Service {
 	}
 
 	/**
+	 * Render markup for the tags field.
+	 *
+	 * @since 1.5.0
+	 * @param array  $tags An array of segment data.
+	 * @param object $settings Saved module settings.
+	 * @return string The markup for the tags field.
+	 * @access private
+	 */
+	private function render_tags_field( $tags, $settings ) {
+
+		$options = array(
+			'-1' => __( 'Choose...', 'convertpro-addon' ),
+		);
+		$default = '';
+
+		foreach ( $tags as $tag ) {
+			if ( is_object( $tag ) ) {
+				// tagId is the index name which is returned from the API call.
+				$options[ $tag->tagId ] = $tag->name; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			}
+		}
+
+		if ( isset( $settings['isEdit'] ) && $settings['isEdit'] ) {
+			$default = ( isset( $settings['default']['getresponse_tags'] ) ) ? $settings['default']['getresponse_tags'] : '';
+		}
+
+		ob_start();
+
+		ConvertPlugHelper::render_input_html(
+			'getresponse_tags',
+			array(
+				'class'   => '',
+				'type'    => 'multi-select',
+				'label'   => __( 'Select Tags', 'convertpro-addon' ),
+				'help'    => '',
+				'default' => $default,
+				'options' => $options,
+			)
+		);
+		return ob_get_clean();
+	}
+
+	/**
 	 * Mapping fields.
 	 *
 	 * @since 1.0.0
@@ -292,12 +339,13 @@ final class CPRO_Service_GetResponse extends CPRO_Service {
 	 * @since 1.0.0
 	 * @param object $settings A module settings object.
 	 * @param string $email The email to subscribe.
+	 * @param array  $dynamic_tags get the dynamic tags via checkboxes.
 	 * @return array {
 	 *      @type bool|string $error The error message or false if no error.
 	 * }
 	 * @throws Exception Error Message.
 	 */
-	public function subscribe( $settings, $email ) {
+	public function subscribe( $settings, $email, $dynamic_tags ) {
 		$account_data = ConvertPlugServices::get_account_data( $settings['api_connection'] );
 		$response     = array(
 			'error' => false,
@@ -328,6 +376,7 @@ final class CPRO_Service_GetResponse extends CPRO_Service {
 				$custom_fields = array();
 				$exist_result  = array();
 				$param_array   = array();
+				$tags_arr      = array();
 				$exist_user    = false;
 				$exist_id      = '';
 
@@ -366,12 +415,35 @@ final class CPRO_Service_GetResponse extends CPRO_Service {
 						}
 					}
 				}
+				/**
+				 * Dynamic Tags support from the Checkboxes selection.
+				 * As FluentCRM tags are accepted as array format with tags ID.
+				 * So $dynamic_tags variable will receive in array and convert tags name into associated tags ID,
+				 * to accept in the FluentCRM tags format.
+				 */
+				if ( ! empty( $dynamic_tags ) ) {
+
+					$tags = (array) $api->get_tags( array( 'fields' => 'name' ) );
+					foreach ( $tags as $tag ) {
+						if ( is_object( $tag ) && in_array( $tag->name, $dynamic_tags, true ) ) {
+							// tagId is the index name which is returned from the API call.
+							$tags_arr[] = array( 'tagId' => $tag->tagId ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+						}
+					}
+				}
+
+				if ( isset( $settings['getresponse_tags'] ) && ! empty( $settings['getresponse_tags'] ) ) {
+					foreach ( $settings['getresponse_tags'] as $g ) {
+						$tags_arr[] = array( 'tagId' => $g );
+					}
+				}
 
 				$param_array['email']             = $email;
 				$param_array['dayOfCycle']        = 0;
 				$param_array['campaign']          = array( 'campaignId' => $settings['getresponse_list'] );
 				$param_array['customFieldValues'] = $custom;
 				$param_array['ipAddress']         = $_SERVER['REMOTE_ADDR'];
+				$param_array['tags']              = $tags_arr;
 
 				$exist_result = $api->getContacts(
 					array(

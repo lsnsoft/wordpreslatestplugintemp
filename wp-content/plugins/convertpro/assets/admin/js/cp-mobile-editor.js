@@ -314,9 +314,9 @@
                     if(!$.isEmptyObject(r_panel_data) && 'common' !== index ) {
 
                         var temp_panel_data       = r_panel_data[index][temp_panel_id];
-                        var wt_default_value      = $.parseJSON($('#cp_panel_width').attr('data-default-val'));
+                        var wt_default_value      = JSON.parse($('#cp_panel_width').attr('data-default-val'));
                         var temp_panel_width      = parseInt(wt_default_value[1]);
-                        var ht_default_value      = $.parseJSON($('#cp_panel_height').attr('data-default-val'));
+                        var ht_default_value      = JSON.parse($('#cp_panel_height').attr('data-default-val'));
                         var temp_panel_height     = parseInt(ht_default_value[1]);
                         
                         var desktop_panel_width   = parseInt(bmodel.getDeviceValue(temp_panel_data.panel_width, 'panel_width', 'desktop'));

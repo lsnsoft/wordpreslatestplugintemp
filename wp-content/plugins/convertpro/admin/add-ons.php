@@ -65,7 +65,7 @@ $reset_bundled_url = add_query_arg(
 		<h3 class="bf-ext-sub-title cp-gen-set-title"><?php echo esc_html__( 'Available Addons', 'convertpro' ); ?></h3>
 
 	<?php
-	$nonce                       = wp_create_nonce( 'bsf_install_extension_nonce' );
+	$nonce                       = wp_create_nonce( 'bsf_activate_extension_nonce' );
 	$brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? (array) get_option( 'brainstrom_bundled_products' ) : array();
 
 	if ( isset( $brainstrom_bundled_products[ $product_id ] ) ) {
@@ -95,7 +95,7 @@ $reset_bundled_url = add_query_arg(
 			}
 		}
 		?>
-	<input type="hidden" name="bsf_install_nonce" id="bsf_install_nonce_input" value="<?php echo esc_attr( $nonce ); ?>" >
+	<input type="hidden" name="bsf_activate_extension_nonce" id="bsf_activate_extension_nonce" value="<?php echo esc_attr( $nonce ); ?>" >
 	<ul class="bsf-extensions-list">
 		<?php
 		foreach ( $brainstrom_bundled_products as $key => $bsf_plugin ) :
@@ -132,7 +132,7 @@ $reset_bundled_url = add_query_arg(
 				$class = 'plugin-not-installed';
 			}
 			?>
-		<li id="ext-<?php echo esc_attr( $key ); ?>" class="bsf-extension <?php echo esc_attr( $class ); ?>">
+		<li id="ext-<?php echo esc_attr( $key ); ?>" class="bsf-extension <?php echo esc_attr( $class ); ?> bsf-extension-<?php echo esc_attr( $bsf_plugin->slug ); ?>" data-init="<?php echo esc_attr( $bsf_plugin->init ); ?>">
 			<span class="cp-ext-inner">
 			<?php if ( ! $is_plugin_installed ) : ?>
 								<div class="bsf-extension-start-install">
@@ -181,7 +181,7 @@ $reset_bundled_url = add_query_arg(
 			}
 
 			?>
-			<a target="_blank" rel="noopener noreferrer" class="button button-medium cp-addon-btn extension-button <?php echo esc_attr( $button_class ); ?>" href="<?php echo esc_url( $product_link ); ?>" data-ext="<?php echo esc_attr( $key ); ?>" data-pid="<?php echo esc_attr( $bsf_plugin->id ); ?>" data-bundled="true" data-action="install"><?php echo esc_html( $button ); ?></a>
+			<a target="_blank" rel="noopener noreferrer" class="button button-medium cp-addon-btn extension-button <?php echo esc_attr( $button_class ); ?>" href="<?php echo esc_url( $product_link ); ?>" data-slug="<?php echo esc_attr( $bsf_plugin->slug ); ?>" data-ext="<?php echo esc_attr( $key ); ?>" data-pid="<?php echo esc_attr( $bsf_plugin->id ); ?>" data-bundled="true" data-action="install"><?php echo esc_html( $button ); ?></a>
 	</div>
 		</div>
 	</div>
@@ -313,102 +313,4 @@ $reset_bundled_url = add_query_arg(
 	</div> <!-- bend-content-wrap -->
 </div> <!-- wrap -->
 
-<?php if ( isset( $_GET['noajax'] ) ) : ?>
-	<script type="text/javascript">
-	(function($){
-		$(document).ready(function(){
-			$('.bsf-install-button').on('click',function(e){
-				if((typeof $(this).attr('disabled') !== 'undefined' && $(this).attr('disabled') === 'disabled'))
-					return false;
-				$('.bsf-install-button').attr('disabled',true);
-				var ext = $(this).attr('data-ext');
-				var $ext = $('#ext-'+ext);
-				$ext.find('.bsf-extension-start-install').addClass('show-install');
-			});
-		});
-	})(jQuery);
-	</script>
-<?php else : ?>
-	<script type="text/javascript">
-	(function($){
-		$(document).ready(function(){
-			$('.bsf-install-button').on('click',function(e){
-				e.preventDefault();
 
-				var is_plugin_installed = is_plugin_activated = false;
-
-				if((typeof $(this).attr('disabled') !== 'undefined' && $(this).attr('disabled') === 'disabled'))
-					return false;
-				$(this).attr('disabled',true);
-				var ext = $(this).attr('data-ext');
-				var product_id = $(this).attr('data-pid');
-				var action = 'bsf_'+$(this).attr('data-action');
-				var security = $( "#bsf_install_nonce_input" ).val();
-				var bundled = $(this).attr('data-bundled');
-				var $ext = $('#ext-'+ext);
-				$ext.find('.bsf-extension-start-install').addClass('show-install');
-				var data = {
-					'action': action,
-					'product_id': product_id,
-					'bundled' : bundled,
-					'security' : security
-				};
-
-				var $product_link = $(this).attr('href');
-
-				// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-				jQuery.post(ajaxurl, data, function(response) {
-
-					var redirect = /({.+})/img;
-					var matches = redirect.exec(response);
-
-					if ( typeof matches[1] != "undefined" ) {
-						var responseObj = jQuery.parseJSON( matches[1] );
-
-						if ( responseObj.redirect != "" ) {
-							window.location = responseObj.redirect;
-						}
-					}
-
-					var blank_response = true;
-					var plugin_status = response.split('|');
-					var is_ftp = false;
-					$.each(plugin_status, function(i,res){
-						if(res === 'bsf-plugin-installed') {
-							is_plugin_installed = true;
-							blank_response = false;
-						}
-						if(res === 'bsf-plugin-activated') {
-							is_plugin_activated = true;
-							blank_response = false;
-						}
-						if(/Connection Type/i.test(response)) {
-							is_ftp = true;
-						}
-					});
-					if(is_plugin_installed) {
-						$ext.addClass('bsf-plugin-installed');
-						$ext.find('.bsf-install-button').addClass('bsf-plugin-installed-button').html('Installed <i class="dashicons dashicons-yes"></i>');
-						$ext.find('.bsf-extension-start-install').removeClass('show-install');
-					}
-					if(is_plugin_activated) {
-						$ext.addClass('bsf-plugin-activated');
-					}
-					if(blank_response) {
-						//$ext.find('.bsf-extension-start-install').find('.bsf-extension-start-install-content').html(response);
-						if(is_ftp == true) {
-							$ext.find('.bsf-extension-start-install').find('.bsf-extension-start-install-content').html('<h3>FTP protected, <br/>redirecting to traditional installer.</h3>');
-							$('.bsf-install-button').attr('disabled',true);
-							setTimeout(function(){
-								window.location = $product_link;
-							},2000);
-						} else {
-							$ext.find('.bsf-extension-start-install').find('.bsf-extension-start-install-content').html('<h3>Something went wrong! Contact plugin author.</h3>');
-						}
-					}
-				});
-			});
-		});
-	})(jQuery);
-	</script>
-<?php endif; ?>

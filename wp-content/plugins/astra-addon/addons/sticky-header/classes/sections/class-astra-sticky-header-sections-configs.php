@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Sticky_Header_Sections_Configs' ) ) {
 	/**
 	 * Register Sticky Header - Header Sections Customizer Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Sticky_Header_Sections_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Sticky Header - Header Sections Customizer Configurations.
@@ -37,28 +40,6 @@ if ( ! class_exists( 'Astra_Sticky_Header_Sections_Configs' ) ) {
 		public function register_configuration( $configurations, $wp_customize ) {
 
 			$_config = array(
-				array(
-					'name'            => ASTRA_THEME_SETTINGS . '[header-above-stick]',
-					'default'         => astra_get_option( 'header-above-stick' ),
-					'type'            => 'control',
-					'section'         => 'section-sticky-header',
-					'title'           => __( 'Stick Above Header', 'astra-addon' ),
-					'priority'        => 5,
-					'control'         => 'checkbox',
-					'required'        => array( ASTRA_THEME_SETTINGS . '[above-header-layout]', '!=', 'disabled' ),
-					'active_callback' => 'Astra_Sticky_Header_Configs::is_header_section_active',
-				),
-				array(
-					'name'            => ASTRA_THEME_SETTINGS . '[header-below-stick]',
-					'default'         => astra_get_option( 'header-below-stick' ),
-					'type'            => 'control',
-					'section'         => 'section-sticky-header',
-					'title'           => __( 'Stick Below Header', 'astra-addon' ),
-					'priority'        => 14,
-					'control'         => 'checkbox',
-					'required'        => array( ASTRA_THEME_SETTINGS . '[below-header-layout]', '!=', 'disabled' ),
-					'active_callback' => 'Astra_Sticky_Header_Configs::is_header_section_active',
-				),
 
 				/**
 				 * Header Button - Sticky
@@ -71,6 +52,33 @@ if ( ! class_exists( 'Astra_Sticky_Header_Sections_Configs' ) ) {
 					'section'  => 'section-header-button',
 				),
 			);
+
+			if ( Astra_Sticky_Header_Configs::is_header_section_active() ) {
+				$_config[] = array(
+					'name'      => ASTRA_THEME_SETTINGS . '[header-above-stick]',
+					'default'   => astra_get_option( 'header-above-stick' ),
+					'type'      => 'control',
+					'section'   => 'section-sticky-header',
+					'title'     => __( 'Stick Above Header', 'astra-addon' ),
+					'priority'  => 5,
+					'control'   => Astra_Theme_Extension::$switch_control,
+					'context'   => ! astra_addon_builder_helper()->is_header_footer_builder_active ? array( ASTRA_THEME_SETTINGS . '[above-header-layout]', '!=', 'disabled' ) : '',
+					'transport' => 'refresh',
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+				);
+				$_config[] = array(
+					'name'      => ASTRA_THEME_SETTINGS . '[header-below-stick]',
+					'default'   => astra_get_option( 'header-below-stick' ),
+					'type'      => 'control',
+					'section'   => 'section-sticky-header',
+					'title'     => __( 'Stick Below Header', 'astra-addon' ),
+					'priority'  => 13,
+					'control'   => Astra_Theme_Extension::$switch_control,
+					'context'   => ! astra_addon_builder_helper()->is_header_footer_builder_active ? array( ASTRA_THEME_SETTINGS . '[below-header-layout]', '!=', 'disabled' ) : '',
+					'transport' => 'refresh',
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+				);
+			}
 
 			return array_merge( $configurations, $_config );
 		}

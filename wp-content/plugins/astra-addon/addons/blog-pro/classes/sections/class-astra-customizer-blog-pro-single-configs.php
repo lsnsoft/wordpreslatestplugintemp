@@ -29,7 +29,9 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 	/**
 	 * Register General Customizer Configurations.
 	 */
-	class Astra_Customizer_Blog_Pro_Single_Configs extends Astra_Customizer_Config_Base {
+	// @codingStandardsIgnoreStart
+	class Astra_Customizer_Blog_Pro_Single_Configs extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register General Customizer Configurations.
@@ -51,7 +53,14 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 					'type'     => 'control',
 					'control'  => 'ast-sortable',
 					'default'  => astra_get_option( 'blog-single-meta' ),
-					'required' => array( ASTRA_THEME_SETTINGS . '[blog-single-post-structure]', 'contains', 'single-title-meta' ),
+					'context'  => array(
+						astra_addon_builder_helper()->general_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[blog-single-post-structure]',
+							'operator' => 'contains',
+							'value'    => 'single-title-meta',
+						),
+					),
 					'section'  => 'section-blog-single',
 					'priority' => 5,
 					'title'    => __( 'Meta', 'astra-addon' ),
@@ -66,18 +75,6 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 				),
 
 				/**
-				 * Option: Divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[ast-styling-section-blog-single-width]',
-					'type'     => 'control',
-					'control'  => 'ast-divider',
-					'section'  => 'section-blog-single',
-					'priority' => 5,
-					'settings' => array(),
-				),
-
-				/**
 				 * Option: Author info
 				 */
 				array(
@@ -86,8 +83,9 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 					'type'     => 'control',
 					'section'  => 'section-blog-single',
 					'title'    => __( 'Author Info', 'astra-addon' ),
-					'control'  => 'checkbox',
+					'control'  => Astra_Theme_Extension::$switch_control,
 					'priority' => 9,
+					'divider'  => array( 'ast_class' => 'ast-top-divider ast-bottom-divider' ),
 				),
 
 				/**
@@ -99,8 +97,9 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 					'type'     => 'control',
 					'section'  => 'section-blog-single',
 					'title'    => __( 'Disable Single Post Navigation', 'astra-addon' ),
-					'control'  => 'checkbox',
+					'control'  => Astra_Theme_Extension::$switch_control,
 					'priority' => 9,
+					'divider'  => array( 'ast_class' => 'ast-bottom-divider' ),
 				),
 
 				/**
@@ -112,9 +111,10 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 					'type'        => 'control',
 					'section'     => 'section-blog-single',
 					'title'       => __( 'Auto Load Previous Posts', 'astra-addon' ),
-					'control'     => 'checkbox',
+					'control'     => Astra_Theme_Extension::$switch_control,
 					'description' => __( 'Auto load previous posts cannot be previewed in the customizer.', 'astra-addon' ),
 					'priority'    => 9,
+					'divider'     => array( 'ast_class' => 'ast-bottom-divider' ),
 				),
 
 				/**
@@ -124,68 +124,12 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 					'name'        => ASTRA_THEME_SETTINGS . '[single-featured-image-padding]',
 					'default'     => astra_get_option( 'single-featured-image-padding' ),
 					'type'        => 'control',
-					'control'     => 'checkbox',
+					'control'     => Astra_Theme_Extension::$switch_control,
 					'section'     => 'section-blog-single',
 					'title'       => __( 'Remove Featured Image Padding', 'astra-addon' ),
 					'description' => __( 'This option will not work on full width layouts.', 'astra-addon' ),
 					'priority'    => 9,
-				),
-
-				/**
-				 * Option: Divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[divider-section-single-post-spacing]',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-blog-single',
-					'title'    => __( 'Spacing', 'astra-addon' ),
-					'settings' => array(),
-					'priority' => 15,
-				),
-
-				/**
-				 * Option: Single Post Spacing
-				 */
-				array(
-					'name'           => ASTRA_THEME_SETTINGS . '[single-post-outside-spacing]',
-					'default'        => astra_get_option( 'single-post-outside-spacing' ),
-					'type'           => 'control',
-					'control'        => 'ast-responsive-spacing',
-					'section'        => 'section-blog-single',
-					'title'          => __( 'Outside Container', 'astra-addon' ),
-					'linked_choices' => true,
-					'transport'      => 'postMessage',
-					'unit_choices'   => array( 'px', 'em', '%' ),
-					'choices'        => array(
-						'top'    => __( 'Top', 'astra-addon' ),
-						'right'  => __( 'Right', 'astra-addon' ),
-						'bottom' => __( 'Bottom', 'astra-addon' ),
-						'left'   => __( 'Left', 'astra-addon' ),
-					),
-					'priority'       => 15,
-				),
-
-				/**
-				 * Option: Single Post Margin
-				 */
-				array(
-					'name'           => ASTRA_THEME_SETTINGS . '[single-post-inside-spacing]',
-					'default'        => astra_get_option( 'single-post-inside-spacing' ),
-					'type'           => 'control',
-					'control'        => 'ast-responsive-spacing',
-					'section'        => 'section-blog-single',
-					'title'          => __( 'Inside Container', 'astra-addon' ),
-					'linked_choices' => true,
-					'transport'      => 'postMessage',
-					'unit_choices'   => array( 'px', 'em', '%' ),
-					'choices'        => array(
-						'top'    => __( 'Top', 'astra-addon' ),
-						'right'  => __( 'Right', 'astra-addon' ),
-						'bottom' => __( 'Bottom', 'astra-addon' ),
-						'left'   => __( 'Left', 'astra-addon' ),
-					),
-					'priority'       => 15,
+					'divider'     => array( 'ast_class' => 'ast-bottom-divider' ),
 				),
 			);
 
@@ -195,6 +139,6 @@ if ( ! class_exists( 'Astra_Customizer_Blog_Pro_Single_Configs' ) ) {
 }
 
 /**
- * Kicking this off by calling 'get_instance()' method
+ * Kicking this off by creating new instance.
  */
 new Astra_Customizer_Blog_Pro_Single_Configs();

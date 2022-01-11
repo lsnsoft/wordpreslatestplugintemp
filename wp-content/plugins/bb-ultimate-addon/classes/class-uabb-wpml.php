@@ -52,6 +52,7 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-pricing-box.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-how-to.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-faq.php';
+				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-timeline.php';
 			}
 
 		}
@@ -82,6 +83,11 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 						'field'       => 'text_inline',
 						'type'        => __( 'Heading : Separator Text', 'uabb' ),
 						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'link',
+						'type'        => __( 'Link', 'uabb' ),
+						'editor_type' => 'LINK',
 					),
 				),
 			);
@@ -126,18 +132,6 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 						'field'       => 'btn_link',
 						'type'        => __( 'Call to Action: Button link', 'uabb' ),
 						'editor_type' => 'LINK',
-					),
-				),
-			);
-
-			// Countdown Module.
-			$form['uabb-countdown'] = array(
-				'conditions' => array( 'type' => 'uabb-countdown' ),
-				'fields'     => array(
-					array(
-						'field'       => 'expire_message',
-						'type'        => __( 'Countdown: Timer expiry message', 'uabb' ),
-						'editor_type' => 'VISUAL',
 					),
 				),
 			);
@@ -322,12 +316,12 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'fields'     => array(
 					array(
 						'field'       => 'form_title',
-						'type'        => __( 'Gravity Form Title', 'uabb' ),
+						'type'        => __( 'Contact Form 7 Title', 'uabb' ),
 						'editor_type' => 'LINE',
 					),
 					array(
 						'field'       => 'form_desc',
-						'type'        => __( 'Gravity Form Description', 'uabb' ),
+						'type'        => __( 'Contact Form 7 Description', 'uabb' ),
 						'editor_type' => 'VISUAL',
 					),
 				),
@@ -895,6 +889,18 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'integration-class' => 'WPML_UABB_Infolist',
 			);
 
+			// Image / Icon module.
+			$form['image-icon'] = array(
+				'conditions' => array( 'type' => 'image-icon' ),
+				'fields'     => array(
+					array(
+						'field'       => 'photo_url',
+						'type'        => __( 'Photo : URL', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
+			);
+
 			// Photo.
 			$form['uabb-photo'] = array(
 				'conditions' => array( 'type' => 'uabb-photo' ),
@@ -1273,6 +1279,63 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'conditions'        => array( 'type' => 'uabb-faq' ),
 				'fields'            => array(),
 				'integration-class' => 'WPML_UABB_FAQ',
+			);
+
+			// Search Module.
+			$form['uabb-search'] = array(
+				'conditions' => array( 'type' => 'uabb-search' ),
+				'fields'     => array(
+					array(
+						'field'       => 'placeholder',
+						'type'        => __( 'Placeholder Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'btn_text',
+						'type'        => __( 'Button Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'no_results_message',
+						'type'        => __( 'No Results Message', 'uabb' ),
+						'editor_type' => 'VISUAL',
+					),
+				),
+			);
+
+			// Table of Contents Module.
+			$form['uabb-table-of-contents'] = array(
+				'conditions' => array( 'type' => 'uabb-table-of-contents' ),
+				'fields'     => array(
+					array(
+						'field'       => 'heading_title',
+						'type'        => __( 'Table of Contents: Title Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
+			);
+
+			// UABB Advanced Timeline.
+			$form['uabb-timeline'] = array(
+				'conditions'        => array( 'type' => 'uabb-timeline' ),
+				'fields'            => array(
+					array(
+						'field'       => 'link_text',
+						'type'        => __( 'UABB Advanced Timeline : Link Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'custom_meta_key',
+						'type'        => __( 'UABB Advanced Timeline : Custom Meta Key', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'no_results_message',
+						'type'        => __( 'UABB Advanced Timeline : No Results Message', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
+				'integration-class' => 'WPML_UABB_TIMELINE',
 			);
 
 			return $form;

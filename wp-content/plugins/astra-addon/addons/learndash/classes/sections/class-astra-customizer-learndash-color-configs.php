@@ -29,7 +29,10 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 	/**
 	 * Register Learndash color Customizer Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Customizer_Learndash_Color_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Learndash color Customizer Configurations.
@@ -52,30 +55,51 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 				$_configs = array(
 
 					/**
-					 * Option: Learndash Colors Divider
-					 */
-					array(
-						'name'     => ASTRA_THEME_SETTINGS . '[learndash-color-divider]',
-						'type'     => 'control',
-						'control'  => 'ast-heading',
-						'section'  => 'section-learndash',
-						'title'    => __( 'Colors', 'astra-addon' ),
-						'settings' => array(),
-						'priority' => 40,
-					),
-
-					/**
 					 * Group: Learndash Colors Group
 					 */
 					array(
-						'name'      => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'name'      => ASTRA_THEME_SETTINGS . '[learndash-heading-color-group]',
 						'default'   => astra_get_option( 'learndash-color-group' ),
 						'type'      => 'control',
-						'control'   => 'ast-settings-group',
-						'title'     => __( 'Content', 'astra-addon' ),
+						'control'   => Astra_Theme_Extension::$group_control,
+						'title'     => __( 'Heading Color', 'astra-addon' ),
 						'section'   => 'section-learndash',
 						'transport' => 'postMessage',
 						'priority'  => 41,
+						'divider'   => array( 'ast_class' => 'ast-top-divider' ),
+					),
+					array(
+						'name'      => ASTRA_THEME_SETTINGS . '[learndash-title-color-group]',
+						'default'   => astra_get_option( 'learndash-color-group' ),
+						'type'      => 'control',
+						'control'   => Astra_Theme_Extension::$group_control,
+						'title'     => __( 'Title Color', 'astra-addon' ),
+						'section'   => 'section-learndash',
+						'transport' => 'postMessage',
+						'priority'  => 41,
+					),
+					array(
+						'name'      => ASTRA_THEME_SETTINGS . '[learndash-icon-color-group]',
+						'default'   => astra_get_option( 'learndash-color-group' ),
+						'type'      => 'control',
+						'control'   => Astra_Theme_Extension::$group_control,
+						'title'     => __( 'Icon Color', 'astra-addon' ),
+						'section'   => 'section-learndash',
+						'transport' => 'postMessage',
+						'priority'  => 41,
+					),
+
+					/**
+					 * Option: Separator Color
+					 */
+					array(
+						'name'     => ASTRA_THEME_SETTINGS . '[learndash-table-title-separator-color]',
+						'default'  => astra_get_option( 'learndash-table-title-separator-color' ),
+						'type'     => 'control',
+						'section'  => 'section-learndash',
+						'control'  => 'ast-color',
+						'title'    => __( 'Separator Color', 'astra-addon' ),
+						'priority' => 41,
 					),
 
 					/**
@@ -83,12 +107,12 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-table-heading-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-table-heading-color' ),
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-heading-color-group]',
 						'control'  => 'ast-color',
-						'title'    => __( 'Heading Color', 'astra-addon' ),
+						'title'    => __( 'Normal', 'astra-addon' ),
 						'priority' => 10,
 					),
 
@@ -97,12 +121,12 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-table-heading-bg-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-table-heading-bg-color' ),
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-heading-color-group]',
 						'control'  => 'ast-color',
-						'title'    => __( 'Heading Background Color', 'astra-addon' ),
+						'title'    => __( 'Background', 'astra-addon' ),
 						'priority' => 15,
 					),
 
@@ -111,12 +135,12 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-table-title-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-table-title-color' ),
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-title-color-group]',
 						'control'  => 'ast-color',
-						'title'    => __( 'Title Color', 'astra-addon' ),
+						'title'    => __( 'Normal', 'astra-addon' ),
 						'priority' => 20,
 					),
 
@@ -125,27 +149,13 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-table-title-bg-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-table-title-bg-color' ),
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-title-color-group]',
 						'control'  => 'ast-color',
-						'title'    => __( 'Title Background Color', 'astra-addon' ),
+						'title'    => __( 'Background', 'astra-addon' ),
 						'priority' => 25,
-					),
-
-					/**
-					 * Option: Separator Color
-					 */
-					array(
-						'name'     => 'learndash-table-title-separator-color',
-						'default'  => '',
-						'type'     => 'sub-control',
-						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
-						'control'  => 'ast-color',
-						'title'    => __( 'Separator Color', 'astra-addon' ),
-						'priority' => 30,
 					),
 
 					/**
@@ -153,12 +163,12 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-complete-icon-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-complete-icon-color' ),
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-icon-color-group]',
 						'control'  => 'ast-color',
-						'title'    => __( 'Complete Icon Color', 'astra-addon' ),
+						'title'    => __( 'Complete', 'astra-addon' ),
 						'priority' => 35,
 					),
 
@@ -167,12 +177,12 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-incomplete-icon-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-incomplete-icon-color' ),
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
-						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-color-group]',
+						'parent'   => ASTRA_THEME_SETTINGS . '[learndash-icon-color-group]',
 						'control'  => 'ast-color',
-						'title'    => __( 'Incomplete Icon Color', 'astra-addon' ),
+						'title'    => __( 'Incomplete', 'astra-addon' ),
 						'priority' => 40,
 					),
 				);
@@ -184,12 +194,11 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					array(
 						'name'     => ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]',
 						'type'     => 'control',
-						'control'  => 'checkbox',
+						'control'  => Astra_Theme_Extension::$switch_control,
 						'section'  => 'section-learndash',
 						'title'    => __( 'Check this if you wish to overwrite LearnDash Colors', 'astra-addon' ),
-						'default'  => false,
+						'default'  => astra_get_option( 'learndash-overwrite-colors' ),
 						'priority' => 41,
-						'section'  => 'section-learndash',
 					),
 
 					array(
@@ -199,7 +208,7 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 						'section'  => 'section-learndash',
 						'title'    => __( 'Display Student\'s Gravatar in Primary Header', 'astra-addon' ),
 						'priority' => 10,
-						'control'  => 'checkbox',
+						'control'  => Astra_Theme_Extension::$switch_control,
 					),
 
 					array(
@@ -210,9 +219,12 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 						'section'  => 'section-learndash',
 						'title'    => __( 'Profile Picture Links to:', 'astra-addon' ),
 						'priority' => 15,
-						'required' => array(
-							'conditions' => array(
-								array( ASTRA_THEME_SETTINGS . '[learndash-profile-link-enabled]', '==', true ),
+						'context'  => array(
+							astra_addon_builder_helper()->general_tab_config,
+							array(
+								'setting'  => ASTRA_THEME_SETTINGS . '[learndash-profile-link-enabled]',
+								'operator' => '==',
+								'value'    => true,
 							),
 						),
 					),
@@ -228,7 +240,14 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 						'title'    => __( 'Colors', 'astra-addon' ),
 						'section'  => 'section-learndash',
 						'priority' => 41,
-						'required' => array( ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]', '!=', 0 ),
+						'context'  => array(
+							astra_addon_builder_helper()->general_tab_config,
+							array(
+								'setting'  => ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]',
+								'operator' => '!=',
+								'value'    => 0,
+							),
+						),
 					),
 
 					/**
@@ -236,7 +255,7 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					 */
 					array(
 						'name'     => 'learndash-course-link-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-course-link-color' ),
 						'parent'   => ASTRA_THEME_SETTINGS . '[ldv3-color-group]',
 						'type'     => 'sub-control',
 						'section'  => 'section-learndash',
@@ -246,7 +265,7 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					),
 					array(
 						'name'     => 'learndash-course-highlight-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-course-highlight-color' ),
 						'parent'   => ASTRA_THEME_SETTINGS . '[ldv3-color-group]',
 						'type'     => 'sub-control',
 						'control'  => 'ast-color',
@@ -256,25 +275,39 @@ if ( ! class_exists( 'Astra_Customizer_Learndash_Color_Configs' ) ) {
 					),
 					array(
 						'name'     => 'learndash-course-highlight-text-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-course-highlight-text-color' ),
 						'parent'   => ASTRA_THEME_SETTINGS . '[ldv3-color-group]',
 						'type'     => 'sub-control',
 						'control'  => 'ast-color',
 						'title'    => __( 'Highlight Text Color', 'astra-addon' ),
 						'section'  => 'section-learndash',
 						'priority' => 10,
-						'required' => array( ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]', '!=', 0 ),
+						'context'  => array(
+							astra_addon_builder_helper()->general_tab_config,
+							array(
+								'setting'  => ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]',
+								'operator' => '!=',
+								'value'    => 0,
+							),
+						),
 					),
 					array(
 						'name'     => 'learndash-course-progress-color',
-						'default'  => '',
+						'default'  => astra_get_option( 'learndash-course-progress-color' ),
 						'parent'   => ASTRA_THEME_SETTINGS . '[ldv3-color-group]',
 						'type'     => 'sub-control',
 						'control'  => 'ast-color',
 						'title'    => __( 'Progress Color', 'astra-addon' ),
 						'section'  => 'section-learndash',
 						'priority' => 10,
-						'required' => array( ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]', '!=', 0 ),
+						'context'  => array(
+							astra_addon_builder_helper()->general_tab_config,
+							array(
+								'setting'  => ASTRA_THEME_SETTINGS . '[learndash-overwrite-colors]',
+								'operator' => '!=',
+								'value'    => 0,
+							),
+						),
 					),
 				);
 			}

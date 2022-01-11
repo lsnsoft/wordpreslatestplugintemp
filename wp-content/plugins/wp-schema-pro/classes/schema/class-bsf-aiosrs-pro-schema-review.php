@@ -26,18 +26,6 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 			$schema             = array();
 			$schema['@context'] = 'https://schema.org';
 			$schema['@type']    = 'Review';
-			if ( ( isset( $data['item'] ) && ! empty( $data['item'] ) ) ||
-				( isset( $data['item-image'] ) && ! empty( $data['item-image'] ) ) ) {
-
-				if ( isset( $data['item'] ) && ! empty( $data['item'] ) ) {
-					$schema['name'] = wp_strip_all_tags( $data['item'] );
-
-				}
-				if ( isset( $data['item-image'] ) && ! empty( $data['item-image'] ) ) {
-					$schema['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['item-image'] );
-
-				}
-			}
 
 			/* start Book schema fields */
 
@@ -59,6 +47,13 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 					if ( isset( $data['bsf-aiosrs-book-serial-number'] ) && ! empty( $data['bsf-aiosrs-book-serial-number'] ) ) {
 
 						$schema['itemReviewed']['isbn'] = wp_strip_all_tags( $data['bsf-aiosrs-book-serial-number'] );
+					}
+					if ( isset( $data['bsf-aiosrs-book-description'] ) && ! empty( $data['bsf-aiosrs-book-description'] ) ) {
+						$schema['description'] = wp_strip_all_tags( $data['bsf-aiosrs-book-description'] );
+					}
+					$book_url = get_permalink( $post['ID'] );
+					if ( isset( $book_url ) && ! empty( $book_url ) ) {
+						$schema['url'] = esc_url( $book_url );
 					}
 					break;
 				case 'bsf-aiosrs-course':
@@ -85,28 +80,49 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 						$schema['itemReviewed']['description'] = wp_strip_all_tags( $data['bsf-aiosrs-event-description'] );
 					}
 					if ( isset( $data['bsf-aiosrs-event-image'] ) && ! empty( $data['bsf-aiosrs-event-image'] ) ) {
-						$schema['itemReviewed']['image'] = wp_get_attachment_image_url( $data['bsf-aiosrs-event-image'] );
+						$schema['itemReviewed']['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['bsf-aiosrs-event-image'] );
 					}
 					if ( isset( $data['bsf-aiosrs-event-start-date'] ) && ! empty( $data['bsf-aiosrs-event-start-date'] ) ) {
-						$schema['itemReviewed']['startDate'] = wp_strip_all_tags( $data['bsf-aiosrs-event-start-date'] );
+						if ( 'OfflineEventAttendanceMode' !== $data['bsf-aiosrs-event-event-attendance-mode'] ) {
+							$start_date                          = gmdate( DATE_ISO8601, strtotime( $data['bsf-aiosrs-event-start-date'] ) );
+							$schema['itemReviewed']['startDate'] = wp_strip_all_tags( $start_date );
+						} else {
+							$schema['itemReviewed']['startDate'] = wp_strip_all_tags( $data['bsf-aiosrs-event-start-date'] );
+						}
 					}
-
 					if ( isset( $data['bsf-aiosrs-event-end-date'] ) && ! empty( $data['bsf-aiosrs-event-end-date'] ) ) {
 						$schema['itemReviewed']['endDate'] = wp_strip_all_tags( $data['bsf-aiosrs-event-end-date'] );
+					}
+					if ( isset( $data['bsf-aiosrs-event-event-status'] ) && ! empty( $data['bsf-aiosrs-event-event-status'] ) ) {
+						$schema['itemReviewed']['eventStatus'] = wp_strip_all_tags( $data['bsf-aiosrs-event-event-status'] );
+					}
+
+					if ( isset( $data['bsf-aiosrs-event-event-attendance-mode'] ) && ! empty( $data['bsf-aiosrs-event-event-attendance-mode'] ) ) {
+						$schema['itemReviewed']['eventAttendanceMode'] = wp_strip_all_tags( $data['bsf-aiosrs-event-event-attendance-mode'] );
+					}
+
+					if ( isset( $data['bsf-aiosrs-event-previous-date'] ) && ! empty( $data['bsf-aiosrs-event-previous-date'] ) && 'EventRescheduled' === $data['bsf-aiosrs-event-event-status'] ) {
+							$schema['itemReviewed']['previousStartDate'] = wp_strip_all_tags( $data['bsf-aiosrs-event-previous-date'] );
+					}
+					if ( isset( $data['bsf-aiosrs-event-online-location'] ) && ! empty( $data['bsf-aiosrs-event-online-location'] ) &&
+					( 'OfflineEventAttendanceMode' !== $data['bsf-aiosrs-event-event-attendance-mode'] ) ||
+					( 'MixedEventAttendanceMode' === $data['bsf-aiosrs-event-event-attendance-mode'] ) ) {
+						$schema['itemReviewed']['location']['@type'] = 'VirtualLocation';
+						$schema['itemReviewed']['location']['url']   = esc_url( $data['bsf-aiosrs-event-online-location'] );
 					}
 					if ( isset( $data['bsf-aiosrs-event-performer'] ) && ! empty( $data['bsf-aiosrs-event-performer'] ) ) {
 						$schema['itemReviewed']['performer']['@type'] = 'Person';
 						$schema['itemReviewed']['performer']['name']  = wp_strip_all_tags( $data['bsf-aiosrs-event-performer'] );
 					}
-					if ( isset( $data['bsf-aiosrs-event-location'] ) && ! empty( $data['bsf-aiosrs-event-location'] ) ) {
+					if ( isset( $data['bsf-aiosrs-event-location'] ) && ! empty( $data['bsf-aiosrs-event-location'] ) && 'OnlineEventAttendanceMode' !== $data['bsf-aiosrs-event-event-attendance-mode'] ) {
 						$schema['itemReviewed']['location']['@type'] = 'Place';
 						$schema['itemReviewed']['location']['name']  = wp_strip_all_tags( $data['bsf-aiosrs-event-location'] );
 					}
-					if ( ( isset( $data['bsf-aiosrs-event-location-street'] ) && ! empty( $data['bsf-aiosrs-event-location-street'] ) ) ||
+					if ( ( ( isset( $data['bsf-aiosrs-event-location-street'] ) && ! empty( $data['bsf-aiosrs-event-location-street'] ) ) ||
 					( isset( $data['bsf-aiosrs-event-location-locality'] ) && ! empty( $data['bsf-aiosrs-event-location-locality'] ) ) ||
 					( isset( $data['bsf-aiosrs-event-location-postal'] ) && ! empty( $data['bsf-aiosrs-event-location-postal'] ) ) ||
 					( isset( $data['bsf-aiosrs-event-location-region'] ) && ! empty( $data['bsf-aiosrs-event-location-region'] ) ) ||
-					( isset( $data['bsf-aiosrs-event-location-country'] ) && ! empty( $data['bsf-aiosrs-event-location-country'] ) ) ) {
+					( isset( $data['bsf-aiosrs-event-location-country'] ) && ! empty( $data['bsf-aiosrs-event-location-country'] ) ) ) && ( 'OnlineEventAttendanceMode' !== $data['bsf-aiosrs-event-event-attendance-mode'] ) ) {
 						$schema['itemReviewed']['location']['address']['@type'] = 'PostalAddress';
 
 						if ( isset( $data['bsf-aiosrs-event-location-street'] ) && ! empty( $data['bsf-aiosrs-event-location-street'] ) ) {
@@ -147,6 +163,18 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 							$schema['itemReviewed']['offers']['validFrom'] = wp_strip_all_tags( $data['bsf-aiosrs-event-valid-from'] );
 						}
 					}
+					if ( ( isset( $data['bsf-aiosrs-event-event-organizer-name'] ) && ! empty( $data['bsf-aiosrs-event-event-organizer-name'] ) ) ||
+						( isset( $data['bsf-aiosrs-event-event-organizer-url'] ) && ! empty( $data['bsf-aiosrs-event-event-organizer-url'] ) ) ) {
+
+						$schema['itemReviewed']['organizer']['@type'] = 'Organization';
+
+						if ( isset( $data['bsf-aiosrs-event-event-organizer-name'] ) && ! empty( $data['bsf-aiosrs-event-event-organizer-name'] ) ) {
+							$schema['itemReviewed']['organizer']['name'] = wp_strip_all_tags( $data['bsf-aiosrs-event-event-organizer-name'] );
+						}
+						if ( isset( $data['bsf-aiosrs-event-event-organizer-url'] ) && ! empty( $data['bsf-aiosrs-event-event-organizer-url'] ) ) {
+							$schema['itemReviewed']['organizer']['url'] = esc_url( $data['bsf-aiosrs-event-event-organizer-url'] );
+						}
+					}
 					break;
 				case 'bsf-aiosrs-local-business':
 					$schema['itemReviewed']['@type'] = 'LocalBusiness';
@@ -155,7 +183,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 					}
 					if ( isset( $data['bsf-aiosrs-local-business-image'] ) && ! empty( $data['bsf-aiosrs-local-business-image'] ) ) {
 
-						$schema['itemReviewed']['image'] = wp_get_attachment_image_url( $data['bsf-aiosrs-local-business-image'] );
+						$schema['itemReviewed']['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['bsf-aiosrs-local-business-image'] );
 					}
 					if ( isset( $data['bsf-aiosrs-local-business-telephone'] ) && ! empty( $data['bsf-aiosrs-local-business-telephone'] ) ) {
 						$schema['itemReviewed']['telephone'] = wp_strip_all_tags( $data['bsf-aiosrs-local-business-telephone'] );
@@ -194,7 +222,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 						$schema['itemReviewed']['name'] = wp_strip_all_tags( $data['bsf-aiosrs-recipe-name'] );
 					}
 					if ( isset( $data['bsf-aiosrs-recipe-image'] ) && ! empty( $data['bsf-aiosrs-recipe-image'] ) ) {
-						$schema['itemReviewed']['image'] = wp_get_attachment_image_url( $data['bsf-aiosrs-recipe-image'] );
+						$schema['itemReviewed']['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['bsf-aiosrs-recipe-image'] );
 					}
 					if ( isset( $data['bsf-aiosrs-recipe-author'] ) && ! empty( $data['bsf-aiosrs-recipe-author'] ) ) {
 						$schema['itemReviewed']['author']['@type'] = 'Person';
@@ -255,7 +283,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 							$schema['itemReviewed']['video']['description'] = wp_strip_all_tags( $data['bsf-aiosrs-recipe-video-desc'] );
 						}
 						if ( isset( $data['bsf-aiosrs-recipe-video-image'] ) && ! empty( $data['bsf-aiosrs-recipe-video-image'] ) ) {
-							$schema['itemReviewed']['video']['thumbnailUrl'] = wp_get_attachment_image_url( $data['bsf-aiosrs-recipe-video-image'] );
+							$schema['itemReviewed']['video']['thumbnailUrl'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['bsf-aiosrs-recipe-video-image'] );
 						}
 						if ( isset( $data['bsf-aiosrs-recipe-recipe-video-content-url'] ) && ! empty( $data['bsf-aiosrs-recipe-recipe-video-content-url'] ) ) {
 							$schema['itemReviewed']['video']['contentUrl'] = esc_url( $data['bsf-aiosrs-recipe-recipe-video-content-url'] );
@@ -322,7 +350,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 						$schema['itemReviewed']['name'] = wp_strip_all_tags( $data['bsf-aiosrs-product-name'] );
 					}
 					if ( isset( $data['bsf-aiosrs-product-image'] ) && ! empty( $data['bsf-aiosrs-product-image'] ) ) {
-						$schema['itemReviewed']['image'] = wp_get_attachment_image_url( $data['bsf-aiosrs-product-image'] );
+						$schema['itemReviewed']['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['bsf-aiosrs-product-image'] );
 					}
 
 					if ( isset( $data['bsf-aiosrs-product-description'] ) && ! empty( $data['bsf-aiosrs-product-description'] ) ) {
@@ -336,7 +364,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 						$schema['itemReviewed']['mpn'] = wp_strip_all_tags( $data['bsf-aiosrs-product-mpn'] );
 					}
 					if ( isset( $data['bsf-aiosrs-product-brand-name'] ) && ! empty( $data['bsf-aiosrs-product-brand-name'] ) ) {
-						$schema['itemReviewed']['brand']['@type'] = 'Thing';
+						$schema['itemReviewed']['brand']['@type'] = 'Organization';
 						$schema['itemReviewed']['brand']['name']  = wp_strip_all_tags( $data['bsf-aiosrs-product-brand-name'] );
 					}
 
@@ -362,9 +390,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 							$schema['itemReviewed']['offers']['priceValidUntil'] = wp_strip_all_tags( $data['bsf-aiosrs-product-price-valid-until'] );
 						}
 
-						if ( isset( $data['url'] ) && ! empty( $data['url'] ) ) {
-							$schema['itemReviewed']['offers']['url'] = esc_url( $data['url'] );
-						}
+							$schema['itemReviewed']['offers']['url'] = get_permalink( $post['ID'] );
 
 						if ( ( isset( $data['bsf-aiosrs-product-currency'] ) && ! empty( $data['bsf-aiosrs-product-currency'] ) ) ||
 							( isset( $data['bsf-aiosrs-product-avail'] ) && ! empty( $data['bsf-aiosrs-product-avail'] ) ) ) {
@@ -388,7 +414,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 						$schema['itemReviewed']['sameAs'] = wp_strip_all_tags( $data['bsf-aiosrs-movie-same-As'] );
 					}
 					if ( isset( $data['bsf-aiosrs-movie-image'] ) && ! empty( $data['bsf-aiosrs-movie-image'] ) ) {
-						$schema['itemReviewed']['image'] = wp_get_attachment_image_url( $data['bsf-aiosrs-movie-image'] );
+						$schema['itemReviewed']['image'] = BSF_AIOSRS_Pro_Schema_Template::get_image_schema( $data['bsf-aiosrs-movie-image'] );
 					}
 					if ( isset( $data['bsf-aiosrs-movie-dateCreated'] ) && ! empty( $data['bsf-aiosrs-movie-dateCreated'] ) ) {
 						$schema['itemReviewed']['dateCreated'] = wp_strip_all_tags( $data['bsf-aiosrs-movie-dateCreated'] );
@@ -397,6 +423,10 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 						$schema['itemReviewed']['director']['@type'] = 'Person';
 						$schema['itemReviewed']['director']['name']  = wp_strip_all_tags( $data['bsf-aiosrs-movie-director-name'] );
 					}
+					if ( isset( $data['bsf-aiosrs-movie-description'] ) && ! empty( $data['bsf-aiosrs-movie-description'] ) ) {
+						$schema['description'] = wp_strip_all_tags( $data['bsf-aiosrs-movie-description'] );
+					}
+
 					break;
 				case 'bsf-aiosrs-organization':
 					$schema['itemReviewed']['@type'] = 'Organization';
@@ -437,17 +467,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 				$schema['reviewRating']['@type']       = 'Rating';
 				$schema['reviewRating']['ratingValue'] = wp_strip_all_tags( $data['rating'] );
 			}
-
-			if ( isset( $data['description'] ) && ! empty( $data['description'] ) ) {
-				$schema['description'] = wp_strip_all_tags( $data['description'] );
-			}
 			if ( isset( $data['review-body'] ) && ! empty( $data['review-body'] ) ) {
 				$schema['reviewBody'] = wp_strip_all_tags( $data['review-body'] );
 			}
-			if ( isset( $data['url'] ) && ! empty( $data['url'] ) ) {
-				$schema['url'] = esc_url( $data['url'] );
-			}
-
 			if ( isset( $data['date'] ) && ! empty( $data['date'] ) ) {
 				$schema['datePublished'] = wp_strip_all_tags( $data['date'] );
 			}
@@ -461,8 +483,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_Review' ) ) {
 				$schema['author']['sameAs'] = get_permalink( $post['ID'] );
 			}
 			if ( isset( $data['publisher-name'] ) && ! empty( $data['publisher-name'] ) ) {
-				$schema['publisher']['@type'] = 'Organization';
-				$schema['publisher']['name']  = wp_strip_all_tags( $data['publisher-name'] );
+				$schema['publisher']['@type']  = 'Organization';
+				$schema['publisher']['name']   = wp_strip_all_tags( $data['publisher-name'] );
+				$schema['publisher']['sameAs'] = get_permalink( $post['ID'] );
 			}
 
 			return apply_filters( 'wp_schema_pro_schema_review', $schema, $data, $post );

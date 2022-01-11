@@ -5,7 +5,7 @@
  * @package Astra Addon
  */
 
-add_filter( 'astra_dynamic_css', 'astra_ext_mega_menu_dynamic_css' );
+add_filter( 'astra_addon_dynamic_css', 'astra_addon_mega_menu_dynamic_css' );
 
 /**
  * Dynamic CSS
@@ -14,7 +14,7 @@ add_filter( 'astra_dynamic_css', 'astra_ext_mega_menu_dynamic_css' );
  * @param  string $dynamic_css_filtered Astra Dynamic CSS Filters.
  * @return string
  */
-function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = '' ) {
+function astra_addon_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = '' ) {
 
 	// set page width depending on site layout.
 	$above_header_layout    = astra_get_option( 'above-header-layout' );
@@ -62,31 +62,31 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 				'background-color' => esc_attr( $above_header_menu_h_bg_color['desktop'] ),
 			),
 			// Above header bg color - Added for tablet & mobile devices only.
-			'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu li a:hover' => array(
+			'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item .menu-link:hover' => array(
 				'background-color' => esc_attr( $above_header_submenu_bg_hover_color['desktop'] ),
 			),
 			// Below header bg color - Added for tablet & mobile devices only.
-			'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu li a:hover, .ast-desktop .ast-mega-menu-enabled.ast-below-header-menu li a:focus' => array(
+			'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item .menu-link:hover, .ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item .menu-link:focus' => array(
 				'background-color' => esc_attr( $below_header_menu_hover_bg_color['desktop'] ),
 			),
 			// Below header bg color - Added for tablet & mobile devices only.
-			'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .sub-menu li a:hover' => array(
+			'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .sub-menu .menu-item .menu-link:hover' => array(
 				'background-color' => esc_attr( $below_header_submenu_bg_hover_color['desktop'] ),
 			),
 
 			// Above header color.
-			'.ast-desktop .ast-above-header-navigation .astra-megamenu-li li a:hover, .ast-desktop .ast-above-header-navigation .astra-megamenu-li .menu-item a:focus' => array(
+			'.ast-desktop .ast-above-header-navigation .astra-megamenu-li .menu-item .menu-link:hover, .ast-desktop .ast-above-header-navigation .astra-megamenu-li .menu-item .menu-link:focus' => array(
 				'color' => esc_attr( $above_header_h_color['desktop'] ),
 			),
-			'.ast-desktop .ast-above-header-navigation .ast-above-header-menu .astra-megamenu-li .sub-menu li a:hover, .ast-desktop .ast-above-header-navigation .ast-above-header-menu .astra-megamenu-li .sub-menu .menu-item a:focus' => array(
+			'.ast-desktop .ast-above-header-navigation .ast-above-header-menu .astra-megamenu-li .sub-menu .menu-item .menu-link:hover, .ast-desktop .ast-above-header-navigation .ast-above-header-menu .astra-megamenu-li .sub-menu .menu-item .menu-link:focus' => array(
 				'color' => esc_attr( $above_header_submenu_h_color['desktop'] ),
 			),
 
 			// Below header color.
-			'.ast-desktop .ast-below-header-navigation .astra-megamenu-li li a:hover, .ast-desktop .ast-below-header-navigation .astra-megamenu-li .menu-item a:focus' => array(
+			'.ast-desktop .ast-below-header-navigation .astra-megamenu-li .menu-item .menu-link:hover, .ast-desktop .ast-below-header-navigation .astra-megamenu-li .menu-item .menu-link:focus' => array(
 				'color' => esc_attr( $below_header_h_color['desktop'] ),
 			),
-			'.ast-desktop .ast-below-header-navigation .astra-megamenu-li .sub-menu li a:hover, .ast-desktop .ast-below-header-navigation .astra-megamenu-li .sub-menu .menu-item a:focus' => array(
+			'.ast-desktop .ast-below-header-navigation .astra-megamenu-li .sub-menu .menu-item .menu-link:hover, .ast-desktop .ast-below-header-navigation .astra-megamenu-li .sub-menu .menu-item .menu-link:focus' => array(
 				'color' => esc_attr( $below_header_submneu_h_color['desktop'] ),
 			),
 		);
@@ -180,21 +180,21 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 			'.main-header-menu.ast-mega-menu-enabled .astra-full-megamenu-wrapper' => array(
 				'background-color' => esc_attr( $primary_submenu_bg_color['desktop'] ),
 			),
-			'.ast-desktop .main-header-menu .astra-megamenu-li li a:hover, .ast-desktop .main-header-menu .astra-megamenu-li .menu-item a:focus' => array(
+			'.ast-desktop .main-header-menu .astra-megamenu-li .menu-item .menu-link:hover, .ast-desktop .main-header-menu .astra-megamenu-li .menu-item .menu-link:focus' => array(
 				'color' => esc_attr( $primary_header_h_color['desktop'] ),
 			),
 
-			'.ast-desktop .main-header-menu .astra-megamenu-li .sub-menu li a:hover, .ast-desktop .main-header-menu .astra-megamenu-li .sub-menu .menu-item a:focus' => array(
+			'.ast-desktop .main-header-menu .astra-megamenu-li .sub-menu .menu-item .menu-link:hover, .ast-desktop .main-header-menu .astra-megamenu-li .sub-menu .menu-item .menu-link:focus' => array(
 				'color' => esc_attr( $primary_header_submenu_h_color['desktop'] ),
 			),
 
 			/**
 			 * Primary header bg color
 			 */
-			'.ast-desktop .ast-mega-menu-enabled.main-header-menu li a:hover, .ast-desktop .ast-mega-menu-enabled.main-header-menu li a:focus' => array(
+			'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item .menu-link:hover, .ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item .menu-link:focus' => array(
 				'background-color' => esc_attr( $primary_menu_h_bg_color['desktop'] ),
 			),
-			'.ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu li a:hover, .ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item a:focus' => array(
+			'.ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item .menu-link:hover, .ast-desktop .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item .menu-link:focus' => array(
 				'background-color' => esc_attr( $primary_submenu_h_bg_color['desktop'] ),
 			),
 		);
@@ -233,58 +233,74 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 	$below_mega_menu_heading_color          = astra_get_option( 'below-header-megamenu-heading-color' );
 	$below_mega_menu_heading_h_color        = astra_get_option( 'below-header-megamenu-heading-h-color' );
 
+	/**
+	 * Executing condition for managing backward compatibility in case of Colors when sticky is active.
+	 *
+	 * Because till previous to this version normal header Mega Menu heading colors overriden by sticky colors.
+	 *
+	 * @since 2.6.0
+	 */
+	$astra_settings              = get_option( ASTRA_THEME_SETTINGS );
+	$backward_sticky_header_comp = ( isset( $astra_settings['can-inherit-sticky-colors-in-header'] ) && $astra_settings['can-inherit-sticky-colors-in-header'] ) ? true : false;
+
+	if ( $backward_sticky_header_comp ) {
+		// For above menu colors.
+		$above_mega_menu_heading_color   = $sticky_above_mega_menu_heading_color;
+		$above_mega_menu_heading_h_color = $sticky_above_mega_menu_heading_h_color;
+		// For primary menu colors.
+		$primary_mega_menu_heading_color   = $sticky_mega_menu_heading_color;
+		$primary_mega_menu_heading_h_color = $sticky_mega_menu_heading_h_color;
+		// For below menu colors.
+		$below_mega_menu_heading_color   = $sticky_below_mega_menu_heading_color;
+		$below_mega_menu_heading_h_color = $sticky_below_mega_menu_heading_h_color;
+	}
+
 	$colors = array(
 		// Normal Above Header.
-		'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > a' => array(
+		'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > .menu-link' => array(
 			'color' => esc_attr( $above_mega_menu_heading_color ),
 		),
-		'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading:hover > a, .ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading:focus > a, .ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading > a:hover' => array(
+		'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item.menu-item-heading:hover > .menu-link, .ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu.menu-item .menu-item-heading:focus > .menu-link, .ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item.menu-item-heading.focus > .menu-link, .ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item.menu-item-heading > .menu-link:hover' => array(
 			'color' => esc_attr( $above_mega_menu_heading_h_color ),
 		),
 
 		// Sticky Above Header.
-		'.ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > a, .ast-desktop.ast-above-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > a' => array(
+		'.ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > .menu-link, .ast-desktop.ast-above-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > .menu-link' => array(
 			'color' => esc_attr( $sticky_above_mega_menu_heading_color ),
 		),
-		'.ast-desktop .astra-megamenu-li .menu-item-heading > .menu-link, .ast-desktop .ast-mega-menu-enabled.submenu-with-border .astra-megamenu-li .menu-item-heading > .menu-link, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link' => array(
-			'color' => esc_attr( $sticky_above_mega_menu_heading_color ),
-		),
-		'.ast-desktop .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled.submenu-with-border .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link:hover' => array(
-			'color' => esc_attr( $sticky_above_mega_menu_heading_h_color ),
-		),
-		'.ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading:hover > a, .ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading:focus > a, .ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading > a:hover, .ast-desktop.ast-above-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading:hover > a' => array(
+		'.ast-desktop .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled.submenu-with-border .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading:hover > .menu-link, .ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading:focus > .menu-link, .ast-desktop.ast-above-sticky-header-active .ast-mega-menu-enabled.ast-above-header-menu .sub-menu .menu-item-heading > .menu-link.hover, .ast-desktop.ast-above-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading:hover > .menu-link' => array(
 			'color' => esc_attr( $sticky_above_mega_menu_heading_h_color ),
 		),
 
 		// Primary Header.
-		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a, .ast-desktop .astra-megamenu-li .menu-item-heading > .menu-link, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link' => array(
+		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link' => array(
 			'color' => esc_attr( $primary_mega_menu_heading_color ),
 		),
-		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a:hover, .ast-desktop .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link:hover' => array(
+		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item.menu-item-heading > .menu-link:hover, .ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item.menu-item-heading > .menu-link:focus' => array(
 			'color' => esc_attr( $primary_mega_menu_heading_h_color ),
 		),
 
 		// Sticky Primary Header.
-		'.ast-desktop.ast-primary-sticky-header-active .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a, #ast-fixed-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading > a' => array(
+		'.ast-desktop.ast-primary-sticky-header-active .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item.menu-item-heading > .menu-link, .ast-desktop #ast-fixed-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item.menu-item-heading > .menu-link' => array(
 			'color' => esc_attr( $sticky_mega_menu_heading_color ),
 		),
-		'.ast-desktop.ast-primary-sticky-header-active .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a:hover, #ast-fixed-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading > a:hover' => array(
+		'.ast-desktop.ast-primary-sticky-header-active .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link:hover, .ast-desktop.ast-primary-sticky-header-active .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link:focus, .ast-desktop.ast-primary-sticky-header-active .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link.focus, .ast-desktop #ast-fixed-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading > .menu-link:hover, .ast-desktop #ast-fixed-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading > .menu-link:focus, .ast-desktop #ast-fixed-header .ast-mega-menu-enabled.main-header-menu .sub-menu .menu-item-heading > .menu-link.focus' => array(
 			'color' => esc_attr( $sticky_mega_menu_heading_h_color ),
 		),
 
 		// Normal Below Header.
-		'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > a' => array(
+		'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > .menu-link' => array(
 			'color' => esc_attr( $below_mega_menu_heading_color ),
 		),
-		'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > a:hover' => array(
+		'.ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled.ast-below-header-menu .menu-item.menu-item-heading > .menu-link:hover, .ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled.ast-below-header-menu .menu-item.menu-item-heading > .menu-link:focus, .ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled.ast-below-header-menu .menu-item.menu-item-heading > .menu-link.focus' => array(
 			'color' => esc_attr( $below_mega_menu_heading_h_color ),
 		),
 
 		// Sticky Below Header.
-		'.ast-desktop .astra-megamenu-li .menu-item-heading > .menu-link, .ast-desktop .ast-mega-menu-enabled.submenu-with-border .astra-megamenu-li .menu-item-heading > .menu-link, .ast-desktop .ast-mega-menu-enabled .astra-megamenu-li .menu-item-heading > .menu-link' => array(
+		'.ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled .menu-item-heading > .menu-link, .ast-desktop.ast-below-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > .menu-link' => array(
 			'color' => esc_attr( $sticky_below_mega_menu_heading_color ),
 		),
-		'.ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled.ast-below-header-menu .sub-menu .menu-item-heading:hover > a, .ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled.ast-below-header-menu .sub-menu .menu-item-heading:focus > a, .ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled.ast-below-header-menu .sub-menu .menu-item-heading > a:hover' => array(
+		'.ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled .menu-item-heading > .menu-link:hover, .ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled .menu-item-heading > .menu-link:focus, .ast-desktop.ast-below-sticky-header-active .ast-mega-menu-enabled .menu-item-heading > .menu-link.focus, .ast-desktop.ast-below-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-below-header-menu.menu-item .menu-item-heading > .menu-link:hover, .ast-desktop.ast-below-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > .menu-link:focus, .ast-desktop.ast-below-sticky-header-active #ast-fixed-header .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > .menu-link.focus' => array(
 			'color' => esc_attr( $sticky_below_mega_menu_heading_h_color ),
 		),
 	);
@@ -298,7 +314,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 	$text_transform = astra_get_option( 'primary-header-megamenu-heading-text-transform' );
 
 	$common_css_output = array(
-		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a' => array(
+		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link' => array(
 			'font-family'    => astra_get_css_value( $font_family, 'font' ),
 			'font-weight'    => astra_get_css_value( $font_weight, 'font' ),
 			'font-size'      => astra_responsive_font( $font_size, 'desktop' ),
@@ -315,7 +331,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 	$spacing = array(
 
 		// Site Identity Spacing.
-		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a'  => array(
+		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link'  => array(
 			'padding-top'    => astra_responsive_spacing( $site_identity_spacing, 'top', 'desktop' ),
 			'padding-right'  => astra_responsive_spacing( $site_identity_spacing, 'right', 'desktop' ),
 			'padding-bottom' => astra_responsive_spacing( $site_identity_spacing, 'bottom', 'desktop' ),
@@ -326,7 +342,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 	$tablet_spacing = array(
 
 		// Site Identity Spacing.
-		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a'  => array(
+		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link'  => array(
 			'padding-top'    => astra_responsive_spacing( $site_identity_spacing, 'top', 'tablet' ),
 			'padding-right'  => astra_responsive_spacing( $site_identity_spacing, 'right', 'tablet' ),
 			'padding-bottom' => astra_responsive_spacing( $site_identity_spacing, 'bottom', 'tablet' ),
@@ -336,7 +352,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 
 	// Site Identity Spacing.
 	$mobile_spacing = array(
-		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > a'  => array(
+		'.ast-desktop .ast-mega-menu-enabled.main-header-menu .menu-item-heading > .menu-link'  => array(
 			'padding-top'    => astra_responsive_spacing( $site_identity_spacing, 'top', 'mobile' ),
 			'padding-right'  => astra_responsive_spacing( $site_identity_spacing, 'right', 'mobile' ),
 			'padding-bottom' => astra_responsive_spacing( $site_identity_spacing, 'bottom', 'mobile' ),
@@ -358,7 +374,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		$spacing = array(
 
 			// Site Identity Spacing.
-			'.ast-above-header-navigation .ast-mega-menu-enabled.ast-above-header-menu .astra-megamenu .menu-item-heading > a'  => array(
+			'.ast-above-header-navigation .ast-mega-menu-enabled.ast-above-header-menu .astra-megamenu .menu-item-heading > .menu-link'  => array(
 				'padding-top'    => astra_responsive_spacing( $above_megamenu_space, 'top', 'desktop' ),
 				'padding-right'  => astra_responsive_spacing( $above_megamenu_space, 'right', 'desktop' ),
 				'padding-bottom' => astra_responsive_spacing( $above_megamenu_space, 'bottom', 'desktop' ),
@@ -369,7 +385,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		$tablet_spacing = array(
 
 			// Site Identity Spacing.
-			'.ast-above-header-navigation .ast-mega-menu-enabled.ast-above-header-menu .astra-megamenu .menu-item-heading > a'  => array(
+			'.ast-above-header-navigation .ast-mega-menu-enabled.ast-above-header-menu .astra-megamenu .menu-item-heading > .menu-link'  => array(
 				'padding-top'    => astra_responsive_spacing( $above_megamenu_space, 'top', 'tablet' ),
 				'padding-right'  => astra_responsive_spacing( $above_megamenu_space, 'right', 'tablet' ),
 				'padding-bottom' => astra_responsive_spacing( $above_megamenu_space, 'bottom', 'tablet' ),
@@ -379,7 +395,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 
 		// Site Identity Spacing.
 		$mobile_spacing = array(
-			'.ast-above-header-navigation .ast-mega-menu-enabled.ast-above-header-menu .astra-megamenu .menu-item-heading > a'  => array(
+			'.ast-above-header-navigation .ast-mega-menu-enabled.ast-above-header-menu .astra-megamenu .menu-item-heading > .menu-link'  => array(
 				'padding-top'    => astra_responsive_spacing( $above_megamenu_space, 'top', 'mobile' ),
 				'padding-right'  => astra_responsive_spacing( $above_megamenu_space, 'right', 'mobile' ),
 				'padding-bottom' => astra_responsive_spacing( $above_megamenu_space, 'bottom', 'mobile' ),
@@ -397,7 +413,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		$text_transform = astra_get_option( 'above-header-megamenu-heading-text-transform' );
 
 		$common_css_output = array(
-			'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > a' => array(
+			'.ast-desktop .ast-mega-menu-enabled.ast-above-header-menu .menu-item-heading > .menu-link' => array(
 				'font-family'    => astra_get_css_value( $font_family, 'font' ),
 				'font-weight'    => astra_get_css_value( $font_weight, 'font' ),
 				'font-size'      => astra_responsive_font( $font_size, 'desktop' ),
@@ -419,7 +435,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		$spacing = array(
 
 			// Site Identity Spacing.
-			'.ast-below-header-navigation .ast-mega-menu-enabled.ast-below-header-menu .astra-megamenu .menu-item-heading > a'  => array(
+			'.ast-below-header-navigation .ast-mega-menu-enabled.ast-below-header-menu .astra-megamenu .menu-item-heading > .menu-link'  => array(
 				'padding-top'    => astra_responsive_spacing( $below_megamenu_space, 'top', 'desktop' ),
 				'padding-right'  => astra_responsive_spacing( $below_megamenu_space, 'right', 'desktop' ),
 				'padding-bottom' => astra_responsive_spacing( $below_megamenu_space, 'bottom', 'desktop' ),
@@ -430,7 +446,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		$tablet_spacing = array(
 
 			// Site Identity Spacing.
-			'.ast-below-header-navigation .ast-mega-menu-enabled.ast-below-header-menu .astra-megamenu .menu-item-heading > a'  => array(
+			'.ast-below-header-navigation .ast-mega-menu-enabled.ast-below-header-menu .astra-megamenu .menu-item-heading > .menu-link'  => array(
 				'padding-top'    => astra_responsive_spacing( $below_megamenu_space, 'top', 'tablet' ),
 				'padding-right'  => astra_responsive_spacing( $below_megamenu_space, 'right', 'tablet' ),
 				'padding-bottom' => astra_responsive_spacing( $below_megamenu_space, 'bottom', 'tablet' ),
@@ -440,7 +456,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 
 		// Site Identity Spacing.
 		$mobile_spacing = array(
-			'.ast-below-header-navigation .ast-mega-menu-enabled.ast-below-header-menu .astra-megamenu .menu-item-heading > a'  => array(
+			'.ast-below-header-navigation .ast-mega-menu-enabled.ast-below-header-menu .astra-megamenu .menu-item-heading > .menu-link'  => array(
 				'padding-top'    => astra_responsive_spacing( $below_megamenu_space, 'top', 'mobile' ),
 				'padding-right'  => astra_responsive_spacing( $below_megamenu_space, 'right', 'mobile' ),
 				'padding-bottom' => astra_responsive_spacing( $below_megamenu_space, 'bottom', 'mobile' ),
@@ -458,7 +474,7 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		$text_transform = astra_get_option( 'below-header-megamenu-heading-text-transform' );
 
 		$common_css_output = array(
-			'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > a' => array(
+			'.ast-desktop .ast-mega-menu-enabled.ast-below-header-menu .menu-item-heading > .menu-link' => array(
 				'font-family'    => astra_get_css_value( $font_family, 'font' ),
 				'font-weight'    => astra_get_css_value( $font_weight, 'font' ),
 				'font-size'      => astra_responsive_font( $font_size, 'desktop' ),
@@ -506,6 +522,36 @@ function astra_ext_mega_menu_dynamic_css( $dynamic_css, $dynamic_css_filtered = 
 		/* Parse CSS from array() */
 		$css .= astra_parse_css( $border );
 	}
+
+	if ( false === Astra_Icons::is_svg_icons() ) {
+		$astra_font = array(
+			'.ast-desktop .ast-mega-menu-enabled.main-header-menu > .menu-item-has-children > .menu-link .sub-arrow:after, .ast-desktop .ast-mega-menu-enabled.ast-below-header-menu > .menu-item-has-children > .menu-link .sub-arrow:after, .ast-desktop .ast-mega-menu-enabled.ast-above-header-menu > .menu-item-has-children > .menu-link .sub-arrow:after' => array(
+				'content'                 => '"\e900"',
+				'display'                 => 'inline-block',
+				'font-family'             => 'Astra',
+				'font-size'               => '9px',
+				'font-size'               => '.6rem',
+				'font-weight'             => 'bold',
+				'text-rendering'          => 'auto',
+				'-webkit-font-smoothing'  => 'antialiased',
+				'-moz-osx-font-smoothing' => 'grayscale',
+				'margin-left'             => '10px',
+				'line-height'             => 'normal',
+			),
+		);
+	} else {
+		$astra_font = array(
+			'.ast-header-break-point .menu-text + .icon-arrow, .ast-header-break-point .menu-link .icon-arrow:first-child, .ast-desktop .menu-link > .icon-arrow:first-child, .ast-header-break-point .astra-mm-highlight-label + .icon-arrow' => array(
+				'display' => 'none',
+			),
+			'.ast-header-break-point .sub-menu .menu-link > .icon-arrow:first-child' => array(
+				'display' => 'inline-block',
+			),
+		);
+	}
+
+	/* Parse CSS from array() */
+	$css .= astra_parse_css( $astra_font );
 
 	return $dynamic_css . $css;
 }

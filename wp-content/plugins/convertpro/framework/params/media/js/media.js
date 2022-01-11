@@ -28,7 +28,7 @@
 		}
 
 		//upload image on click of upload button
-		$(".cp-panel-field").find('.cp-upload-media').click(function(e) {
+		$(".cp-panel-field").find('.cp-upload-media').on('click', function(e) {
 
 			_wpPluploadSettings['defaults']['multipart_params']['admin_page']= 'customizer';
 			var button = jQuery(this);

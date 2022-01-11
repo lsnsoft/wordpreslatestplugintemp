@@ -1,6 +1,6 @@
 (function($) {
     UABBBusinessReview = function( settings ) {
-        
+
         this.settings           = settings;
         this.node               = settings.id;
         this.layout             = settings.review_layout;
@@ -33,26 +33,27 @@
         nodeClass   : '',
 
         _init:function() {
-            var nodeClass       = $( this.nodeClass );
+            var self = this,
+                nodeClass       = $( self.nodeClass );
 
-            if( this.layout == 'carousel' ) {
+            if( self.layout == 'carousel' ) {
 
-                if( this.equal_height_box == 'yes' ) {
-                 
-                    jQuery( this.nodeClass ).find( '.uabb-review-layout-carousel' ).on( 'init', this._uabbReviewCarouselHeight );
-                    $( this.nodeClass ).find( '.uabb-review-layout-carousel' ).on('init', $.proxy( this._uabbReviewsCarouselEqualHeight, this ) );
-               
+                if( self.equal_height_box == 'yes' ) {
+
+                    nodeClass.find( '.uabb-review-layout-carousel' ).on( 'init', this._uabbReviewCarouselHeight );
+                    nodeClass.find( '.uabb-review-layout-carousel' ).on('init', $.proxy( this._uabbReviewsCarouselEqualHeight, this ) );
+
                 }
-                    this._uabbReviewCarousel();
+                    self._uabbReviewCarousel();
 
-            } 
+            }
         },
 
         _uabbReviewCarousel:function() {
 
-            var nodeClass   = jQuery(this.nodeClass);
+            var nodeClass   = jQuery(this.nodeClass),
             self = this;
-            
+
             nodeClass.find('.uabb-reviews-module-wrap').uabbslick({
                 dots: self.dots,
                 infinite: self.infinite,
@@ -120,10 +121,10 @@
             });
 
             grid.find('.slick-list.draggable').animate({ height: max_height }, { duration: 200, easing: 'linear' });
-           
+
             max_height = -1;
             wrapper_height = -1;
-            
+
             reviews_wrapper.each(function() {
                 var $this = jQuery( this ),
                     selector = $this.find( '.uabb-review-wrap' ),
@@ -139,7 +140,7 @@
         },
 
         _uabbReviewsCarouselEqualHeight: function() {
-        
+
             var id = $( this ).parents( '.fl-module-uabb-business-reviews' ).data( 'node' );
                 nodeClass = $( '.fl-node-' + this.node );
                 grid = $( nodeClass ).find( '.uabb-review-layout-carousel' );
@@ -152,7 +153,7 @@
                     reviews_wrapper = grid.find('.uabb-review-content-wrap');
                     reviews_active = nodeClass.find('.uabb-review-content');
                 }
-                self = this;
+                var self = this;
             reviews_active.each(function( i ) {
 
                 var this_height = $( this ).outerHeight();
@@ -162,9 +163,9 @@
 
                     } else {
                         review = $( this ).find( '.uabb-review-wrap' );
-                        review_height = review.outerHeight(); 
+                        review_height = review.outerHeight();
                     }
-                   
+
                 if( max_height < review_height ) {
                     max_height = review_height;
                 }
@@ -188,10 +189,10 @@
                 grid.find('.slick-list.draggable').animate({ height: max_height }, { duration: 200, easing: 'linear' });
 
             }
-           
+
             max_height = -1;
             wrapper_height = -1;
-            
+
             reviews_wrapper.each(function() {
                 var $this = jQuery( this ),
                     selector = $this.find( '.uabb-review-wrap' ),

@@ -401,10 +401,8 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 		/**
 		 * Function Name: admin_styles.
 		 * Function Description: admin_styles.
-		 *
-		 * @param string $hook string parameter.
 		 */
-		public function admin_styles( $hook ) {
+		public function admin_styles() {
 
 			if ( ! is_object( get_current_screen() ) ) {
 				return;
@@ -457,8 +455,6 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 		 */
 		public static function target_rule_settings_field( $name, $settings, $value ) {
 			$input_name     = $name;
-			$type           = isset( $settings['type'] ) ? $settings['type'] : 'target_rule';
-			$class          = isset( $settings['class'] ) ? $settings['class'] : '';
 			$rule_type      = isset( $settings['rule_type'] ) ? $settings['rule_type'] : 'target_rule';
 			$add_rule_label = isset( $settings['add_rule_label'] ) ? $settings['add_rule_label'] : __( 'Add Rule', 'wp-schema-pro' );
 			$saved_values   = $value;
@@ -476,7 +472,7 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 			/* Condition Selection */
 			$output .= '<div class="target_rule-condition-wrap" >';
 			$output .= '<select name="' . esc_attr( $input_name ) . '[rule][{{data.id}}]" class="target_rule-condition form-control bsf-input">';
-			$output .= '<option value="">' . __( 'Select', 'wp-schema-pro' ) . '</option>';
+			$output .= '<option value="">' . __( 'Select Target Rule', 'wp-schema-pro' ) . '</option>';
 
 			foreach ( $selection_options as $group => $group_data ) {
 
@@ -501,7 +497,6 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 
 			/* Wrapper Start */
 			$output .= '<div class="bsf-target-rule-wrapper bsf-target-rule-' . $rule_type . '-on-wrap" data-type="' . $rule_type . '">';
-			// $output .= '<input type="hidden" class="form-control bsf-input bsf-target_rule-input" name="' . esc_attr( $input_name ) . '" value=' . $value . ' />';
 			$output .= '<div class="bsf-target-rule-selector-wrapper bsf-target-rule-' . $rule_type . '-on">';
 			$output .= self::generate_target_rule_selector( $rule_type, $selection_options, $input_name, $saved_values, $add_rule_label );
 			$output .= '</div>';
@@ -582,7 +577,7 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 				/* Condition Selection */
 				$output .= '<div class="target_rule-condition-wrap" >';
 				$output .= '<select name="' . esc_attr( $input_name ) . '[rule][' . $index . ']" class="target_rule-condition form-control bsf-input">';
-				$output .= '<option value="">' . __( 'Select', 'wp-schema-pro' ) . '</option>';
+				$output .= '<option value="">' . __( 'Select Target Rule', 'wp-schema-pro' ) . '</option>';
 
 				foreach ( $selection_options as $group => $group_data ) {
 
@@ -833,7 +828,8 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 										}
 									} elseif ( isset( $specific_data[2] ) && ( 'single' === $specific_data[2] ) && 'tax' === $specific_post_type ) {
 
-										if ( is_singular() ) {
+										$current_page_type = self::get_current_page_type();
+										if ( 'is_singular' === $current_page_type ) {
 											$term_details = get_term( $specific_post_id );
 
 											if ( isset( $term_details->taxonomy ) ) {
@@ -900,9 +896,6 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 		 */
 		public static function target_user_role_settings_field( $name, $settings, $value ) {
 			$input_name     = $name;
-			$type           = isset( $settings['type'] ) ? $settings['type'] : 'target_rule';
-			$class          = isset( $settings['class'] ) ? $settings['class'] : '';
-			$rule_type      = isset( $settings['rule_type'] ) ? $settings['rule_type'] : 'target_rule';
 			$add_rule_label = isset( $settings['add_rule_label'] ) ? $settings['add_rule_label'] : __( 'Add Rule', 'wp-schema-pro' );
 			$saved_values   = $value;
 			$output         = '';
@@ -919,7 +912,7 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 					/* Condition Selection */
 					$output     .= '<div class="user_role-condition-wrap" >';
 						$output .= '<select name="' . esc_attr( $input_name ) . '[{{data.id}}]" class="user_role-condition form-control bsf-input select select2-class">';
-						$output .= '<option value="">' . __( 'Select', 'wp-schema-pro' ) . '</option>';
+						$output .= '<option value="">' . __( 'Select Target Rule', 'wp-schema-pro' ) . '</option>';
 
 			foreach ( $selection_options as $group => $group_data ) {
 
@@ -951,7 +944,7 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 					/* Condition Selection */
 					$output     .= '<div class="user_role-condition-wrap" >';
 						$output .= '<select name="' . esc_attr( $input_name ) . '[' . $index . ']" class="user_role-condition form-control bsf-input select select2-class">';
-						$output .= '<option value="">' . __( 'Select', 'wp-schema-pro' ) . '</option>';
+						$output .= '<option value="">' . __( 'Select Target Rule', 'wp-schema-pro' ) . '</option>';
 
 				foreach ( $selection_options as $group => $group_data ) {
 
@@ -981,12 +974,11 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 		 * Parse user role condition.
 		 *
 		 * @since  1.0.0
-		 * @param  int   $post_id Post ID.
 		 * @param  Array $rules   Current user rules.
 		 *
 		 * @return boolean  True = user condition passes. False = User condition does not pass.
 		 */
-		public function parse_user_role_condition( $post_id, $rules ) {
+		public function parse_user_role_condition( $rules ) {
 
 			$show_popup = true;
 
@@ -1075,8 +1067,13 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 					$page_type  = 'is_singular';
 					$current_id = get_the_id();
 				} elseif ( is_admin() ) {
-					$page_type  = 'is_singular';
-					$current_id = get_the_id();
+					$page_type         = 'is_singular';
+					$current_id        = get_the_id();
+					$front_page_get_id = get_option( 'page_on_front' );
+					if ( absint( $front_page_get_id ) === $current_id ) {
+						$page_type  = 'is_front_page';
+						$current_id = get_the_id();
+					}
 				} else {
 					$current_id = get_the_id();
 				}
@@ -1168,11 +1165,13 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 						$meta_args      .= " OR pm.meta_value LIKE '%\"special-front\"%'";
 						$meta_args      .= " OR pm.meta_value LIKE '%\"{$current_post_type}|all\"%'";
 						$meta_args      .= " OR pm.meta_value LIKE '%\"post-{$current_id}\"%'";
-						$taxonomies      = get_object_taxonomies( $q_obj->post_type );
-						$terms           = wp_get_post_terms( $q_obj->ID, $taxonomies );
+						if ( isset( $q_obj ) ) {
+							$taxonomies = get_object_taxonomies( $q_obj->post_type );
+							$terms      = wp_get_post_terms( $q_obj->ID, $taxonomies );
 
-						foreach ( $terms as $key => $term ) {
-							$meta_args .= " OR pm.meta_value LIKE '%\"tax-{$term->term_id}-single-{$term->taxonomy}\"%'";
+							foreach ( $terms as $key => $term ) {
+								$meta_args .= " OR pm.meta_value LIKE '%\"tax-{$term->term_id}-single-{$term->taxonomy}\"%'";
+							}
 						}
 
 						break;
@@ -1209,6 +1208,8 @@ if ( ! class_exists( 'BSF_Target_Rule_Fields' ) ) {
 						break;
 					case '':
 						$current_post_id = get_the_id();
+						break;
+					default:
 						break;
 				}
 

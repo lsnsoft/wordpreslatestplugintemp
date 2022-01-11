@@ -18,7 +18,9 @@ if ( ! class_exists( 'Astra_Customizer_Header_Sections_Partials' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	class Astra_Customizer_Header_Sections_Partials {
+	// @codingStandardsIgnoreStart
+	class Astra_Customizer_Header_Sections_Partials { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -47,7 +49,7 @@ if ( ! class_exists( 'Astra_Customizer_Header_Sections_Partials' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		public function _render_below_header_section_1() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		public static function _render_below_header_section_1() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 			return do_shortcode( astra_get_option( 'below-header-section-1-html' ) );
 		}
 
@@ -56,7 +58,7 @@ if ( ! class_exists( 'Astra_Customizer_Header_Sections_Partials' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		public function _render_below_header_section_2() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		public static function _render_below_header_section_2() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 			return do_shortcode( astra_get_option( 'below-header-section-2-html' ) );
 		}
 

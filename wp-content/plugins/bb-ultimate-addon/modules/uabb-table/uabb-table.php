@@ -31,6 +31,8 @@ class UABBTable extends FLBuilderModule {
 			)
 		);
 
+		$this->add_css( 'font-awesome-5' );
+
 		add_filter( 'wp_handle_upload_prefilter', array( $this, 'uabb_csv_file_handle' ), 10, 1 );
 	}
 	/**
@@ -645,7 +647,9 @@ class UABBTable extends FLBuilderModule {
 			if ( 'custom_header_col_width' === $field ) {
 
 				$custom_column_width = sprintf( /* translators: %s: search term */
-					__( '<div class="uabb-table-description"> This width will be adopted by all the columns below this header cell. </div>', 'uabb' )
+					__( '%1$s This width will be adopted by all the columns below this header cell. %2$s', 'uabb' ),
+					'<div class="uabb-table-description">',
+					'</div>'
 				);
 
 				return $custom_column_width;
@@ -680,7 +684,10 @@ class UABBTable extends FLBuilderModule {
 		if ( 'show_sort' === $field ) {
 
 			$sorting_description = sprintf( /* translators: %s: search term */
-				__( '<div class="uabb-table-description"> <b>Note: </b>Sorting feature will not work with Rowspan or Colspan structure. It will misalign table layout.</div>', 'uabb' )
+				__( '%1$sNote: %2$sSorting feature will not work with Rowspan or Colspan structure. It will misalign table layout.%3$s', 'uabb' ),
+				'<div class="uabb-table-description"> <b>',
+				'</b>',
+				'</div>'
 			);
 
 			return $sorting_description;

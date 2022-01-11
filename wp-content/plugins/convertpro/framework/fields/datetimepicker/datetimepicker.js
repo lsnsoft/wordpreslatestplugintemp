@@ -8,6 +8,7 @@ jQuery(document).ready(function (jQuery) {
       datecontainer_replace = input_datetimepicker_id.replace('cp_', ''),
       datecontainer = jQuery("#" + datecontainer_replace),
       input = jQuery("#" + input_datetimepicker_id),
+      newinput = "#" + input_datetimepicker_id,
       val = '',
       timestring = jQuery(".cp_timezone").val(),
       currenttime = '';
@@ -24,7 +25,6 @@ jQuery(document).ready(function (jQuery) {
         horizontal: 'left',
         vertical: 'bottom'
       },
-      minDate: new Date(currenttime),
       icons: {
         time: 'dashicons dashicons-clock',
         date: 'dashicons dashicons-calendar-alt',
@@ -41,7 +41,7 @@ jQuery(document).ready(function (jQuery) {
       var date = e.date;
       var date_Obj = new Date(date);
 
-      if (input.selector == '#cp_start_date') {
+      if (newinput == '#cp_start_date') {
 
         var strTime = cp_create_date(date_Obj);
         input.attr("value", strTime);
@@ -49,7 +49,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery(document).trigger('cp-datepicker-change', [input, strTime]);
         jQuery("#end_date").data("DateTimePicker").minDate(e.date); // set min date
 
-      } else if (input.selector == '#cp_end_date') {
+      } else if (newinput == '#cp_end_date') {
 
         var endTime = cp_create_date(date_Obj);
         input.attr("value", endTime);

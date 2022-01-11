@@ -37,6 +37,35 @@
 
 		$(".cp-settings-row[data-dep-val='"+ opt_val +"']").show();
 
+		/* Datewise Analytics START. */
+		var start = moment().subtract(29, 'days');
+		var end   = moment();
+
+		function cproPopupsAnalytics( start, end ) {
+			var startFormat = start.format('MMMM D, YYYY');
+			var endFormat   = end.format('MMMM D, YYYY');
+			$( '#cpro-reportrange span' ).html( startFormat + ' - ' + endFormat );
+			$( '#cpro-analytics-dates' ).val( startFormat + ' => ' + endFormat );
+			$( '#cpro-analytics-dates' ).attr( 'data-start-date' ,startFormat );
+			$( '#cpro-analytics-dates' ).attr( 'data-end-date' ,endFormat );
+			$( '#cpro-analytics-dates' ).trigger( 'change', [startFormat, endFormat] );
+		}
+
+	    $('#cpro-reportrange').daterangepicker({
+	        startDate: start,
+	        endDate: end,
+	        ranges: {
+	           'Today': [moment(), moment()],
+	           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+	           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+	           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+	           'This Month': [moment().startOf('month'), moment().endOf('month')],
+	           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	        }
+	    }, cproPopupsAnalytics);
+
+		cproPopupsAnalytics(start, end);
+		/* Datewise Analytics END. */
 	});	
 
 	// Google analytics modal
@@ -50,7 +79,7 @@
 
 	});
 
-	$(".cp-ga-access-code").focus( function() {
+	$(".cp-ga-access-code").on( "focus", function() {
 		$( '.cp-notification-message' ).find( 'label' ).html( '' ).removeClass( 'cpro-open' );
 	} );
 
@@ -126,7 +155,7 @@
 			dataType:'JSON',
 			success:function(result){
 
-				$this.removeAttr( 'disabled' );
+				$this.prop( 'disabled', false );
 
 				if( Boolean( result.success ) == true ) {
 

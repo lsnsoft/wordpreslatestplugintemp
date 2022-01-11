@@ -12,7 +12,9 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 	 *
 	 * @since 1.6.2
 	 */
-	class Addon_Gutenberg_Editor_CSS {
+	// @codingStandardsIgnoreStart
+	class Addon_Gutenberg_Editor_CSS { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Class instance.
@@ -97,7 +99,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Heading - <h1>
 				 */
-				'.edit-post-visual-editor h1, .wp-block-heading h1.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h1' => array(
+				'.edit-post-visual-editor h1, .wp-block-heading h1.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h1, .edit-post-visual-editor h1.block-editor-block-list__block' => array(
 					'font-weight'    => astra_get_css_value( $h1_font_weight, 'font' ),
 					'font-family'    => astra_get_css_value( $h1_font_family, 'font' ),
 					'line-height'    => esc_attr( $h1_line_height ),
@@ -107,7 +109,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Heading - <h2>
 				 */
-				'.edit-post-visual-editor h2, .wp-block-heading h2.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h2' => array(
+				'.edit-post-visual-editor h2, .wp-block-heading h2.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h2, .edit-post-visual-editor h2.block-editor-block-list__block' => array(
 					'font-weight'    => astra_get_css_value( $h2_font_weight, 'font' ),
 					'font-family'    => astra_get_css_value( $h2_font_family, 'font' ),
 					'line-height'    => esc_attr( $h2_line_height ),
@@ -117,7 +119,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Heading - <h3>
 				 */
-				'.edit-post-visual-editor h3, .wp-block-heading h3.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h3' => array(
+				'.edit-post-visual-editor h3, .wp-block-heading h3.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h3, .edit-post-visual-editor h3.block-editor-block-list__block' => array(
 					'font-weight'    => astra_get_css_value( $h3_font_weight, 'font' ),
 					'font-family'    => astra_get_css_value( $h3_font_family, 'font' ),
 					'line-height'    => esc_attr( $h3_line_height ),
@@ -127,7 +129,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Heading - <h4>
 				 */
-				'.edit-post-visual-editor h4, .wp-block-heading h4.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h4' => array(
+				'.edit-post-visual-editor h4, .wp-block-heading h4.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h4, .edit-post-visual-editor h4.block-editor-block-list__block' => array(
 					'font-weight'    => astra_get_css_value( $h4_font_weight, 'font' ),
 					'font-family'    => astra_get_css_value( $h4_font_family, 'font' ),
 					'line-height'    => esc_attr( $h4_line_height ),
@@ -137,7 +139,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Heading - <h5>
 				 */
-				'.edit-post-visual-editor h5, .wp-block-heading h5.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h5' => array(
+				'.edit-post-visual-editor h5, .wp-block-heading h5.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h5, .edit-post-visual-editor h5.block-editor-block-list__block' => array(
 					'font-weight'    => astra_get_css_value( $h5_font_weight, 'font' ),
 					'font-family'    => astra_get_css_value( $h5_font_family, 'font' ),
 					'line-height'    => esc_attr( $h5_line_height ),
@@ -147,7 +149,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Heading - <h6>
 				 */
-				'.edit-post-visual-editor h6, .wp-block-heading h6.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h6' => array(
+				'.edit-post-visual-editor h6, .wp-block-heading h6.editor-rich-text__tinymce, .editor-styles-wrapper .wp-block-uagb-advanced-heading h6, .edit-post-visual-editor h6.block-editor-block-list__block' => array(
 					'font-weight'    => astra_get_css_value( $h6_font_weight, 'font' ),
 					'font-family'    => astra_get_css_value( $h6_font_family, 'font' ),
 					'line-height'    => esc_attr( $h6_line_height ),
@@ -156,7 +158,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 			);
 			$parse_css .= astra_parse_css( $typography_css_output );
 
-			return $dynamic_css .= $parse_css;
+			return $dynamic_css . $parse_css;
 		}
 
 		/**
@@ -184,22 +186,22 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				/**
 				 * Content <h1> to <h6> headings
 				 */
-				'.editor-styles-wrapper .block-editor-block-list__block h1, .wp-block-heading h1.editor-rich-text__tinymce, .editor-post-title__block .editor-post-title__input' => array(
+				'.editor-styles-wrapper .block-editor-block-list__block h1, .wp-block-heading h1.editor-rich-text__tinymce, .editor-post-title__block .editor-post-title__input, .edit-post-visual-editor h1.block-editor-block-list__block' => array(
 					'color' => esc_attr( $h1_color ),
 				),
-				'.editor-styles-wrapper .block-editor-block-list__block h2, .wp-block-heading h2.editor-rich-text__tinymce' => array(
+				'.editor-styles-wrapper .block-editor-block-list__block h2, .wp-block-heading h2.editor-rich-text__tinymce, .edit-post-visual-editor h2.block-editor-block-list__block' => array(
 					'color' => esc_attr( $h2_color ),
 				),
-				'.editor-styles-wrapper .block-editor-block-list__block h3, .wp-block-heading h3.editor-rich-text__tinymce' => array(
+				'.editor-styles-wrapper .block-editor-block-list__block h3, .wp-block-heading h3.editor-rich-text__tinymce, .edit-post-visual-editor h3.block-editor-block-list__block' => array(
 					'color' => esc_attr( $h3_color ),
 				),
-				'.editor-styles-wrapper .block-editor-block-list__block h4, .wp-block-heading h4.editor-rich-text__tinymce' => array(
+				'.editor-styles-wrapper .block-editor-block-list__block h4, .wp-block-heading h4.editor-rich-text__tinymce, .edit-post-visual-editor h4.block-editor-block-list__block' => array(
 					'color' => esc_attr( $h4_color ),
 				),
-				'.editor-styles-wrapper .block-editor-block-list__block h5, .wp-block-heading h5.editor-rich-text__tinymce' => array(
+				'.editor-styles-wrapper .block-editor-block-list__block h5, .wp-block-heading h5.editor-rich-text__tinymce, .edit-post-visual-editor h5.block-editor-block-list__block' => array(
 					'color' => esc_attr( $h5_color ),
 				),
-				'.editor-styles-wrapper .block-editor-block-list__block h6, .wp-block-heading h6.editor-rich-text__tinymce' => array(
+				'.editor-styles-wrapper .block-editor-block-list__block h6, .wp-block-heading h6.editor-rich-text__tinymce, .edit-post-visual-editor h6.block-editor-block-list__block' => array(
 					'color' => esc_attr( $h6_color ),
 				),
 			);
@@ -211,15 +213,6 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 			}
 
 			$parse_css .= astra_parse_css( $colors_and_background_output );
-
-			$container_layout = get_post_meta( get_the_id(), 'site-content-layout', true );
-			if ( 'default' === $container_layout || '' === $container_layout ) {
-				$container_layout = astra_get_option( 'single-' . get_post_type() . '-content-layout' );
-
-				if ( 'default' === $container_layout ) {
-					$container_layout = astra_get_option( 'site-content-layout' );
-				}
-			}
 
 			$boxed_container        = array();
 			$boxed_container_tablet = array();
@@ -234,28 +227,43 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 				}
 			}
 
-			if ( 'content-boxed-container' === $container_layout || 'boxed-container' === $container_layout ) {
+			if ( isset( $container_layout ) ) {
 				$content_bg_obj = astra_get_option( 'content-bg-obj-responsive' );
 
-				$boxed_container        = array(
-					'.block-editor-writing-flow, 
-					.ast-separate-container .block-editor-writing-flow' => astra_get_responsive_background_obj( $content_bg_obj, 'desktop' ),
+				// Setting up "Full-Width / Stretched" layout transparent but not for "Full-Width / Contained" in case of Max-Width site layout.
+				// Because we showcase container with "Full-Width / Contained" layout, so it should be visible as it looks on frontend with their content background styles.
+				$boxed_container = array(
+					'.ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow' => array(
+						'padding' => '20px',
+					),
 				);
+
 				$boxed_container_tablet = array(
-					'.block-editor-writing-flow, 
-					.ast-separate-container .block-editor-writing-flow' => astra_get_responsive_background_obj( $content_bg_obj, 'tablet' ),
+					'.ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow' => array(
+						'padding' => '20px',
+					),
 				);
 				$boxed_container_mobile = array(
-					'.block-editor-writing-flow, 
-					.ast-separate-container .block-editor-writing-flow' => astra_get_responsive_background_obj( $content_bg_obj, 'mobile' ),
+					'.ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow' => array(
+						'padding' => '20px',
+					),
 				);
+
+				if ( astra_addon_has_gcp_typo_preset_compatibility() ) {
+
+					$boxed_container['.ast-separate-container .block-editor-writing-flow, .ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow'] = astra_get_responsive_background_obj( $content_bg_obj, 'desktop' );
+
+					$boxed_container_tablet['.ast-separate-container .block-editor-writing-flow, .ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow'] = astra_get_responsive_background_obj( $content_bg_obj, 'tablet' );
+
+					$boxed_container_mobile['.ast-separate-container .block-editor-writing-flow, .ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow'] = astra_get_responsive_background_obj( $content_bg_obj, 'mobile' );
+				}
 			}
 
 			$parse_css .= astra_parse_css( $boxed_container );
 			$parse_css .= astra_parse_css( $boxed_container_tablet, '', astra_addon_get_tablet_breakpoint() );
 			$parse_css .= astra_parse_css( $boxed_container_mobile, '', astra_addon_get_mobile_breakpoint() );
 
-			return $dynamic_css .= $parse_css;
+			return $dynamic_css . $parse_css;
 		}
 
 		/**
@@ -327,7 +335,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 
 			$parse_css = astra_parse_css( $boxed_container );
 
-			return $dynamic_css .= $parse_css;
+			return $dynamic_css . $parse_css;
 		}
 
 		/**
@@ -456,7 +464,7 @@ if ( ! class_exists( 'Addon_Gutenberg_Editor_CSS' ) ) {
 
 			$css_output .= astra_parse_css( $mobile_css, '', astra_addon_get_mobile_breakpoint() );
 
-			return $dynamic_css .= $css_output;
+			return $dynamic_css . $css_output;
 		}
 
 	}

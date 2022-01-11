@@ -210,7 +210,7 @@ final class CPRO_Service_ConvertKit extends CPRO_Service {
 
 		$default = '';
 		if ( isset( $settings['isEdit'] ) && $settings['isEdit'] ) {
-			$default = ( isset( $settings['default'] ) ) ? ( ( isset( $settings['default']['convertkit_forms'] ) ) ? $settings['default']['convertkit_forms'] : '' ) : '';
+			$default = isset( $settings['default']['convertkit_forms'] ) ? $settings['default']['convertkit_forms'] : '';
 		}
 		ob_start();
 
@@ -251,7 +251,7 @@ final class CPRO_Service_ConvertKit extends CPRO_Service {
 
 		$default = '';
 		if ( isset( $settings['isEdit'] ) && '' !== $settings['isEdit'] ) {
-			$default = ( isset( $settings['default'] ) ) ? ( ( isset( $settings['default']['convertkit_tags'] ) ) ? $settings['default']['convertkit_tags'] : '' ) : '';
+			$default = isset( $settings['default']['convertkit_tags'] ) ? $settings['default']['convertkit_tags'] : '';
 		}
 
 		$options = array(
@@ -284,11 +284,12 @@ final class CPRO_Service_ConvertKit extends CPRO_Service {
 	 * @since 1.0.0
 	 * @param object $settings A module settings object.
 	 * @param string $email The email to subscribe.
+	 * @param array  $dynamic_tags get the dynamic tags via checkboxes.
 	 * @return array {
 	 *      @type bool|string $error The error message or false if no error.
 	 * }
 	 */
-	public function subscribe( $settings, $email ) {
+	public function subscribe( $settings, $email, $dynamic_tags ) {
 		$account_data = ConvertPlugServices::get_account_data( $settings['api_connection'] );
 		$response     = array(
 			'error' => false,
@@ -360,7 +361,35 @@ final class CPRO_Service_ConvertKit extends CPRO_Service {
 				}
 			}
 
-			$convertkit_tags = isset( $settings['convertkit_tags'] ) ? $settings['convertkit_tags'] : '-1';
+			$convertkit_tags = isset( $settings['convertkit_tags'] ) ? $settings['convertkit_tags'] : array();
+
+			/**
+			 * Dynamic Tags support from the Checkboxes, Radio, and Dropdown selection.
+			 * As Convertkit tags are accepted as array format.
+			 * So $dynamic_tags variable will receive in array.
+			 */
+			if ( ! empty( $dynamic_tags ) ) {
+				$get_tags             = $api->get_resources( 'tags' );
+				$filter_selected_tags = array_filter(
+					$get_tags['tags'],
+					function( $tags ) use ( $dynamic_tags ) {
+						return ( in_array( $tags['name'], $dynamic_tags, true ) );
+					}
+				);
+
+				$ck_tags = array();
+				if ( ! empty( $filter_selected_tags ) ) {
+					$ck_tags = array_map(
+						function( $tags_id ) {
+							return (string) $tags_id['id'];
+						},
+						$filter_selected_tags
+					);
+				}
+
+				$convertkit_tags = array_merge( $convertkit_tags, $ck_tags );
+			}
+
 			// Form Subscribe.
 			try {
 				$result = $api->form_subscribe(

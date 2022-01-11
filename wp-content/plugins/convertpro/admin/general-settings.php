@@ -19,6 +19,10 @@
 					'label' => __( 'License', 'convertpro' ),
 					'icon'  => 'awards',
 				),
+				'rollback-ver'   => array(
+					'label' => __( 'Rollback Version', 'convertpro' ),
+					'icon'  => 'image-rotate',
+				),
 				'addons'         => array(
 					'label' => __( 'Addons', 'convertpro' ),
 					'icon'  => 'admin-plugins',
@@ -209,6 +213,9 @@
 		</div>
 		<div class="cp-gen-set-content">
 			<?php require_once CP_V2_BASE_DIR . 'admin/license.php'; ?>
+		</div>
+		<div class="cp-gen-set-content">
+			<?php require_once CP_V2_BASE_DIR . 'admin/rollback-version.php'; ?>
 		</div>
 		<div class="cp-gen-set-content cp-addon-tab">
 			<div class="cp-settings-container">

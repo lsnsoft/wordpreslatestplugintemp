@@ -13,7 +13,10 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Ext_Header_Sections_Loader {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -100,8 +103,7 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 			$defaults['below-header-submenu-bg-hover-color']  = '';
 			$defaults['below-header-submenu-active-color']    = '';
 			$defaults['below-header-submenu-active-bg-color'] = '';
-
-			$defaults['below-header-menu-bg-obj-responsive'] = array(
+			$defaults['below-header-menu-bg-obj-responsive']  = array(
 				'desktop' => array(
 					'background-color'      => '',
 					'background-image'      => '',
@@ -109,6 +111,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'tablet'  => array(
 					'background-color'      => '',
@@ -117,6 +121,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'mobile'  => array(
 					'background-color'      => '',
@@ -125,6 +131,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 			);
 			// Responsive Below Header Background Image & Colors.
@@ -154,6 +162,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'tablet'  => array(
 					'background-color'      => '',
@@ -162,6 +172,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'mobile'  => array(
 					'background-color'      => '',
@@ -170,6 +182,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 			);
 
@@ -348,6 +362,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'tablet'  => array(
 					'background-color'      => '',
@@ -356,6 +372,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'mobile'  => array(
 					'background-color'      => '',
@@ -364,10 +382,12 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 			);
 
-			$defaults['above-header-menu-bg-obj-responsive']          = array(
+			$defaults['above-header-menu-bg-obj-responsive'] = array(
 				'desktop' => array(
 					'background-color'      => '',
 					'background-image'      => '',
@@ -375,6 +395,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'tablet'  => array(
 					'background-color'      => '',
@@ -383,6 +405,8 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 				'mobile'  => array(
 					'background-color'      => '',
@@ -391,8 +415,11 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 					'background-position'   => 'center center',
 					'background-size'       => 'auto',
 					'background-attachment' => 'scroll',
+					'background-type'       => '',
+					'background-media'      => '',
 				),
 			);
+
 			$defaults['above-header-text-color-responsive']           = array(
 				'desktop' => '',
 				'tablet'  => '',
@@ -491,18 +518,21 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 			/**
 			 * Register Sections & Panels
 			 */
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-header-section-panels-configs.php';
+			require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-header-section-panels-configs.php';
 			/**
 			 * Register Partials
 			 */
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-customizer-header-sections-partials.php';
+			require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-customizer-header-sections-partials.php';
 
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-above-header-configs.php';
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-below-header-configs.php';
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-above-header-typo-configs.php';
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-below-header-typo-configs.php';
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-above-header-colors-bg-configs.php';
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-below-header-colors-bg-configs.php';
+			if ( astra_addon_existing_header_footer_configs() ) {
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-above-header-colors-bg-configs.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-above-header-configs.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-above-header-typo-configs.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-below-header-colors-bg-configs.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-below-header-configs.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/sections/class-astra-below-header-typo-configs.php';
+			}
+
 		}
 
 		/**
@@ -511,9 +541,9 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections_Loader' ) ) {
 		public function preview_scripts() {
 
 			if ( SCRIPT_DEBUG ) {
-				wp_enqueue_script( 'astra-below-header-customize-preview-js', ASTRA_EXT_HEADER_SECTIONS_URL . 'assets/js/unminified/customizer-preview.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
+				wp_enqueue_script( 'astra-below-header-customize-preview-js', ASTRA_ADDON_EXT_HEADER_SECTIONS_URL . 'assets/js/unminified/customizer-preview.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
 			} else {
-				wp_enqueue_script( 'astra-below-header-customize-preview-js', ASTRA_EXT_HEADER_SECTIONS_URL . 'assets/js/minified/customizer-preview.min.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
+				wp_enqueue_script( 'astra-below-header-customize-preview-js', ASTRA_ADDON_EXT_HEADER_SECTIONS_URL . 'assets/js/minified/customizer-preview.min.js', array( 'customize-preview', 'astra-customizer-preview-js' ), ASTRA_EXT_VER, true );
 			}
 
 		}

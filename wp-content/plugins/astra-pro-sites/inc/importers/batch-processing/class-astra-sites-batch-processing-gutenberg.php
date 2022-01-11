@@ -120,7 +120,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 			// Is page imported with Starter Sites?
 			// If not then skip batch process.
-			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_enable_for_batch', true );
 			if ( ! $imported_from_demo_site ) {
 				return;
 			}
@@ -146,6 +146,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 				// Replace ID's.
 				foreach ( $ids_mapping as $old_id => $new_id ) {
 					$content = str_replace( '[wpforms id="' . $old_id, '[wpforms id="' . $new_id, $content );
+					$content = str_replace( '{"formId":"' . $old_id . '"}', '{"formId":"' . $new_id . '"}', $content );
 				}
 			}
 
@@ -167,6 +168,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 							$this_site_term = get_term_by( 'slug', $value['slug'], 'category' );
 							if ( ! is_wp_error( $this_site_term ) && $this_site_term ) {
 								$content = str_replace( '"categories":"' . $value['id'], '"categories":"' . $this_site_term->term_id, $content );
+								$content = str_replace( '{"categories":[{"id":' . $value['id'], '{"categories":[{"id":' . $this_site_term->term_id, $content );
+								$content = str_replace( 'categories/' . $value['id'], 'categories/' . $this_site_term->term_id, $content );
+								$content = str_replace( 'categories=' . $value['id'], 'categories=' . $this_site_term->term_id, $content );
 							}
 						}
 					}
@@ -200,8 +204,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 */
 		public function get_content( $content = '' ) {
 
-			$content = stripslashes( $content );
-
 			// Extract all links.
 			preg_match_all( '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match );
 
@@ -218,7 +220,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 			// Extract normal and image links.
 			foreach ( $all_links as $key => $link ) {
-				if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $link ) ) {
+				if ( astra_sites_is_valid_image( $link ) ) {
 
 					// Get all image links.
 					// Avoid *-150x, *-300x and *-1024x images.

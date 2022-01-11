@@ -10,6 +10,7 @@ add_action( 'wp_ajax_cp_delete_popup', 'handle_cp_delete_popup_action' );
 add_action( 'wp_ajax_cp_duplicate_popup', 'handle_cp_popup_duplicate_action' );
 add_action( 'admin_post_cp_delete_campaign', 'handle_cp_delete_campaign_action' );
 add_action( 'wp_ajax_cp_rename_popup', 'cp_rename_popup' );
+add_action( 'wp_ajax_cp_change_popup_slug', 'cp_change_popup_slug' );
 add_action( 'wp_ajax_cp_rename_campaign', 'cp_rename_campaign' );
 add_action( 'cp_get_insight_row_value', 'cp_render_insight_options', 10 );
 add_action( 'cp_get_type_row_value', 'cp_render_style_type', 10 );
@@ -378,6 +379,63 @@ function cp_rename_popup() {
 }
 
 /**
+ * Function Name: cp_change_popup_slug.
+ * Function Description: cp_change_popup_slug.
+ */
+function cp_change_popup_slug() {
+
+	if ( ! current_user_can( 'edit_cp_popup' ) ) {
+		$data = array(
+			'message' => __( 'You are not authorized to perform this action.', 'convertpro' ),
+		);
+		wp_send_json_error( $data );
+	}
+	check_ajax_referer( 'cp_change_popup_slug', 'security' );
+
+	$popup_id        = isset( $_POST['popup_id'] ) ? esc_attr( $_POST['popup_id'] ) : '';
+	$popup_slug_name = isset( $_POST['popup_slug_name'] ) ? esc_attr( $_POST['popup_slug_name'] ) : '';
+
+	if ( '' !== $popup_id ) {
+		// Update post.
+		$popup = array(
+			'ID'        => $popup_id,
+			'post_name' => $popup_slug_name,
+		);
+
+		// Update the post into the database.
+		$result = wp_update_post( $popup );
+
+		if ( ! is_wp_error( $result ) ) {
+			$module_type    = get_post_meta( $popup_id, 'cp_module_type', true );
+			$cp_popups_inst = CP_V2_Popups::get_instance();
+			$display        = '';
+
+			if ( 'inline' === $module_type || 'widget' === $module_type ) {
+				$display = 'inline';
+			}
+
+			$output            = $cp_popups_inst->render( $popup_id, false, '1', $module_type, $display, '' );
+			$output_formattted = htmlspecialchars( $output, ENT_COMPAT, 'UTF-8' );
+
+			update_post_meta( $popup_id, 'html_data', $output_formattted );
+
+			$data = array(
+				'success'        => true,
+				'new_popup_slug' => $popup_slug_name,
+			);
+
+			wp_send_json_success( $data );
+		} else {
+			$data = array(
+				'success' => false,
+				'message' => __( 'Something went wrong.', 'convertpro' ),
+			);
+			wp_send_json_error( $data );
+		}
+	}
+}
+
+/**
  * Function Name: cp_rename_campaign.
  * Function Description: cp rename campaign.
  */
@@ -484,6 +542,14 @@ function cp_get_style_info( $settings, $style_id, $title ) {
 						$confi_rules[] = sprintf( __( 'After %s seconds', 'convertpro' ), $ruleset->load_on_duration );
 					}
 
+					if ( isset( $ruleset->autoload_on_no_page_visit ) && ( '1' === $ruleset->autoload_on_no_page_visit || true === $ruleset->autoload_on_no_page_visit ) ) {
+
+						$page_visit_type  = isset( $ruleset->load_on_page_visit_type ) ? $ruleset->load_on_page_visit_type : 'is-more-than';
+						$page_visit_count = isset( $ruleset->load_on_no_page_visit ) ? $ruleset->load_on_no_page_visit : '1';
+						/* translators: %1$s conditon type and %2$s number */
+						$confi_rules[] = sprintf( __( 'Display when a user viewed number of pages count: %1$s - %2$s', 'convertpro' ), $page_visit_type, $page_visit_count );
+					}
+
 					if ( isset( $ruleset->autoload_on_scroll ) && ( '1' === $ruleset->autoload_on_scroll || true === $ruleset->autoload_on_scroll ) ) {
 						/* translators: %s percentage */
 						$confi_rules[] = sprintf( __( 'After user scrolls the %s%%', 'convertpro' ), $ruleset->load_after_scroll );
@@ -511,6 +577,10 @@ function cp_get_style_info( $settings, $style_id, $title ) {
 					if ( isset( $ruleset->enable_custom_scroll ) && ( '1' === $ruleset->enable_custom_scroll || true === $ruleset->enable_custom_scroll ) ) {
 						/* translators: %s enable scroll class option value */
 						$confi_rules[] = sprintf( __( 'After user reaches the %s on page.', 'convertpro' ), $ruleset->enable_scroll_class );
+					}
+					if ( isset( $ruleset->enable_scheduler ) && ( '1' === $ruleset->enable_scheduler || true === $ruleset->enable_scheduler ) ) {
+						/* translators: %s start date and end date option value */
+						$confi_rules[] = sprintf( __( 'Scheduled: From ( %1$s ) To ( %2$s )', 'convertpro' ), $ruleset->start_date, $ruleset->end_date );
 					}
 
 					$confi_rules_string = implode( ' and ', $confi_rules );
@@ -646,6 +716,15 @@ function cp_get_style_info( $settings, $style_id, $title ) {
 			<?php
 		} elseif ( 'inline' === $cp_module_type ) {
 			?>
+		<tr>
+			<td>
+				<?php
+				$shortcode = '[cp_popup display="inline" style_id="' . $style_id . '" step_id = "1"][/cp_popup]';
+				esc_html_e( 'Shortcode: ', 'convertpro' );
+				echo esc_html( htmlspecialchars( $shortcode, ENT_COMPAT, 'UTF-8' ) );
+				?>
+			</td>
+		</tr>
 		<tr>
 			<td><?php esc_html_e( 'This is an inline form & will be displayed on post/pages you have added the short-code.', 'convertpro' ); ?></td>
 		</tr>

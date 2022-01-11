@@ -98,13 +98,21 @@ $todays_conversion_rate   = $analyics_data['total_conversion_rate'];
 			<h3 class="cp-md-modal-title"><?php esc_html_e( 'Google Analytics', 'convertpro-addon' ); ?></h3>
 		</div>
 		<div class="cp-ga-modal-content">
-			<div class="cp-ga-filter-wrap">
-				<a href="javascript:void(0);" class="cp-ga-filter" data-filter="today" data-style=""><?php esc_html_e( 'Today', 'convertpro-addon' ); ?></a>
-				<a href="javascript:void(0);" class="cp-ga-filter" data-filter="yesterday" data-style=""><?php esc_html_e( 'Yesterday', 'convertpro-addon' ); ?></a>
-				<a href="javascript:void(0);" class="cp-ga-filter" data-filter="week" data-style=""><?php esc_html_e( 'Last 7 Days', 'convertpro-addon' ); ?></a>
-				<a href="javascript:void(0);" class="cp-ga-filter" data-filter="month" data-style=""><?php esc_html_e( 'Last 30 Days', 'convertpro-addon' ); ?></a>
-				<a href="javascript:void(0);" class="cp-ga-filter cp-ga-filter-active" data-filter="lifetime" data-style=""><?php esc_html_e( 'Lifetime', 'convertpro-addon' ); ?></a>
-			</div>
+			<div class="cp-ga-filter-wrap"> <!-- DateWise Start -->
+				<div class="cp-ga-style-filter cpro-reportrange" id="cpro-reportrange">
+					<i class="dashicons dashicons-calendar-alt"></i>
+					<span></span>
+					<input type="hidden" name="cpro-analytics-dates" id="cpro-analytics-dates" data-start-date="" data-end-date="" value="">
+				</div>
+				<div class="cp-ga-style-filter" id="cpro-impressions-count">
+					<?php esc_html_e( 'Impressions: ', 'convertpro-addon' ); ?>
+					<span></span>
+				</div>
+				<div class="cp-ga-style-filter" id="cpro-conversions-count">
+					<?php esc_html_e( 'Conversions: ', 'convertpro-addon' ); ?>
+					<span></span>
+				</div>
+			</div><!-- DateWise End -->
 			<div class="cp_ga_chart_wrap">
 				<div class="edit-screen-overlay" style="overflow: hidden;background: #FCFCFC;width: 100%;height: 100%;top: 0;left: 0;z-index: 9999999;">
 					<div class="cp-absolute-loader" style="visibility: visible;overflow: hidden;">

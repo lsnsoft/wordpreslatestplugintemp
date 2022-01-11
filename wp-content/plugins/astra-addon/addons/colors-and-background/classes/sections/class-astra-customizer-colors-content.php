@@ -29,7 +29,9 @@ if ( ! class_exists( 'Astra_Customizer_Colors_Content' ) ) {
 	/**
 	 * Register General Customizer Configurations.
 	 */
-	class Astra_Customizer_Colors_Content extends Astra_Customizer_Config_Base {
+	// @codingStandardsIgnoreStart
+	class Astra_Customizer_Colors_Content extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register General Customizer Configurations.
@@ -41,128 +43,100 @@ if ( ! class_exists( 'Astra_Customizer_Colors_Content' ) ) {
 		 */
 		public function register_configuration( $configurations, $wp_customize ) {
 
+			$_section = version_compare( ASTRA_THEME_VERSION, '3.7.0', '>=' ) ? 'section-colors-background' : 'section-colors-content';
+
 			$_configs = array(
-
-				/**
-				 * Option: Content divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[content-bg-obj-divider]',
-					'title'    => __( 'Background', 'astra-addon' ),
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-colors-content',
-					'required' => array(
-						'conditions' => array(
-							array( ASTRA_THEME_SETTINGS . '[site-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-							array( ASTRA_THEME_SETTINGS . '[single-page-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-							array( ASTRA_THEME_SETTINGS . '[single-post-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-							array( ASTRA_THEME_SETTINGS . '[archive-post-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-						),
-						'operator'   => 'OR',
-					),
-					'settings' => array(),
-				),
-
-				// Option: Content Background Color.
-				array(
-					'default'   => astra_get_option( 'content-bg-obj-responsive' ),
-					'type'      => 'control',
-					'control'   => 'ast-responsive-background',
-					'name'      => ASTRA_THEME_SETTINGS . '[content-bg-obj-responsive]',
-					'label'     => __( 'Background', 'astra-addon' ),
-					'section'   => 'section-colors-content',
-					'transport' => 'postMessage',
-					'required'  => array(
-						'conditions' => array(
-							array( ASTRA_THEME_SETTINGS . '[site-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-							array( ASTRA_THEME_SETTINGS . '[single-page-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-							array( ASTRA_THEME_SETTINGS . '[single-post-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-							array( ASTRA_THEME_SETTINGS . '[archive-post-content-layout]', '==', array( 'boxed-container', 'content-boxed-container', 'plain-container' ) ),
-						),
-						'operator'   => 'OR',
-					),
-				),
-
-				/**
-				 * Option: heading Color Divider
-				 */
-				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[content-color-divider]',
-					'section'  => 'section-colors-content',
-					'title'    => __( 'Heading Colors', 'astra-addon' ),
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'settings' => array(),
-				),
 
 				// Option: Heading 1 <h1> Color.
 				array(
-					'default'   => '',
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'name'      => ASTRA_THEME_SETTINGS . '[h1-color]',
-					'title'     => __( 'Heading 1 Color', 'astra-addon' ),
-					'section'   => 'section-colors-content',
+					'default'           => astra_get_option( 'h1-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'name'              => ASTRA_THEME_SETTINGS . '[h1-color]',
+					'title'             => __( 'Heading 1', 'astra-addon' ),
+					'section'           => $_section,
 				),
 
 				// Option: Heading 2 <h2> Color.
 				array(
-					'default'   => '',
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'name'      => ASTRA_THEME_SETTINGS . '[h2-color]',
-					'title'     => __( 'Heading 2 Color', 'astra-addon' ),
-					'section'   => 'section-colors-content',
+					'default'           => astra_get_option( 'h2-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'name'              => ASTRA_THEME_SETTINGS . '[h2-color]',
+					'title'             => __( 'Heading 2', 'astra-addon' ),
+					'section'           => $_section,
 				),
 
 				// Option: Heading 3 <h3> Color.
 				array(
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'name'      => ASTRA_THEME_SETTINGS . '[h3-color]',
-					'default'   => '',
-					'title'     => __( 'Heading 3 Color', 'astra-addon' ),
-					'section'   => 'section-colors-content',
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'name'              => ASTRA_THEME_SETTINGS . '[h3-color]',
+					'default'           => astra_get_option( 'h3-color' ),
+					'title'             => __( 'Heading 3', 'astra-addon' ),
+					'section'           => $_section,
 				),
 
 				// Option: Heading 4 <h4> Color.
 				array(
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'default'   => '',
-					'name'      => ASTRA_THEME_SETTINGS . '[h4-color]',
-					'title'     => __( 'Heading 4 Color', 'astra-addon' ),
-					'section'   => 'section-colors-content',
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'default'           => astra_get_option( 'h4-color' ),
+					'name'              => ASTRA_THEME_SETTINGS . '[h4-color]',
+					'title'             => __( 'Heading 4', 'astra-addon' ),
+					'section'           => $_section,
 				),
 
 				// Option: Heading 5 <h5> Color.
 				array(
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'default'   => '',
-					'transport' => 'postMessage',
-					'name'      => ASTRA_THEME_SETTINGS . '[h5-color]',
-					'title'     => __( 'Heading 5 Color', 'astra-addon' ),
-					'section'   => 'section-colors-content',
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'default'           => astra_get_option( 'h5-color' ),
+					'transport'         => 'postMessage',
+					'name'              => ASTRA_THEME_SETTINGS . '[h5-color]',
+					'title'             => __( 'Heading 5', 'astra-addon' ),
+					'section'           => $_section,
 				),
 
 				// Option: Heading 6 <h6> Color.
 				array(
-					'name'      => ASTRA_THEME_SETTINGS . '[h6-color]',
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'transport' => 'postMessage',
-					'default'   => '',
-					'title'     => __( 'Heading 6 Color', 'astra-addon' ),
-					'section'   => 'section-colors-content',
+					'name'              => ASTRA_THEME_SETTINGS . '[h6-color]',
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'default'           => astra_get_option( 'h6-color' ),
+					'title'             => __( 'Heading 6', 'astra-addon' ),
+					'section'           => $_section,
 				),
 
 			);
+
+			if ( astra_addon_has_gcp_typo_preset_compatibility() ) {
+
+				// Option: Content Background Color.
+				$content_bg_option = array(
+					'name'      => ASTRA_THEME_SETTINGS . '[content-bg-obj-responsive]',
+					'default'   => astra_get_option( 'content-bg-obj-responsive' ),
+					'type'      => 'control',
+					'control'   => 'ast-responsive-background',
+					'label'     => __( 'Background', 'astra-addon' ),
+					'section'   => 'section-colors-content',
+					'transport' => 'postMessage',
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
+				);
+
+				array_unshift( $_configs, $content_bg_option );
+			}
 
 			return array_merge( $configurations, $_configs );
 		}

@@ -8,7 +8,7 @@ var ConvertProEditPanel = '';
     cp_params_url = $('#cp_params_url').val();
 
     var param_json = $('#cp_params').val();
-    cp_params = $.parseJSON(param_json);
+    cp_params = JSON.parse(param_json);
     var selected_timezone = '';
 
     ConvertProEditPanel = {
@@ -16,7 +16,7 @@ var ConvertProEditPanel = '';
         init: function () {
 
             // panel edit actions click
-            $('.cp-edit-actions a').click(
+            $('.cp-edit-actions a').on( 'click',
                 function ( e ) {
                     e.preventDefault();
                     var type = $(this).attr('data-type');

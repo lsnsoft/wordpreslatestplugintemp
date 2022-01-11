@@ -1,10 +1,19 @@
 <?php
 /**
- * WXR Importer
+ * WordPress Importer
  *
  * @package WXR Importer
+ *
+ * WordPress Importer
+ * https://github.com/humanmade/WordPress-Importer
+ *
+ * Released under the GNU General Public License v2.0
+ * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
  */
 
+/**
+ * WXR Importer
+ */
 if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 
 	/**
@@ -14,7 +23,7 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 		/**
 		 * Maximum supported WXR version
 		 */
-		const MAX_WXR_VERSION = 1.2;
+		const MAX_WXR_VERSION = '1.2';
 
 		/**
 		 * Regular expression for checking if a post references an attachment
@@ -29,7 +38,7 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 			|
 				# Match anything that looks like an upload URL
 				src=[\'"][^\'"]*(
-					[0-9]{4}/[0-9]{2}/[^\'"]+\.(jpg|jpeg|png|gif)
+					[0-9]{4}/[0-9]{2}/[^\'"]+\.(jpg|jpeg|png|gif|svg)
 				|
 					content/uploads[^\'"]+
 				)[\'"]
@@ -871,14 +880,14 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 
 			$post_exists = $this->post_exists( $data );
 			if ( $post_exists ) {
-				$this->logger->info(
-					sprintf(
-						/* translators: %1$s single post type, %2$s is post title. */
-						__( '%1$s "%2$s" already exists.', 'wordpress-importer' ),
-						$post_type_object->labels->singular_name,
-						$data['post_title']
-					)
+				$message = sprintf(
+					/* translators: %1$s single post type, %2$s is post title. */
+					__( '%1$s "%2$s" already exists.', 'wordpress-importer' ),
+					$post_type_object->labels->singular_name,
+					$data['post_title']
 				);
+
+				$this->logger->info( $message );
 
 				/**
 				 * Post processing already imported.
@@ -1200,7 +1209,6 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 				$post['guid'] = $upload['url'];
 			}
 
-			// as per wp-admin/includes/upload.php.
 			$post_id = wp_insert_attachment( $post, $upload['file'] );
 			if ( is_wp_error( $post_id ) ) {
 				return $post_id;
@@ -2129,7 +2137,10 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 
 				// Run the update.
 				$data['ID'] = $post_id;
-				$result     = wp_update_post( $data, true );
+
+				$data = wp_slash( $data );
+
+				$result = wp_update_post( $data, true );
 				if ( is_wp_error( $result ) ) {
 					$this->logger->warning(
 						sprintf(
@@ -2416,7 +2427,7 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 			}
 
 			// Still nothing, try post_exists, and cache it.
-			$exists                              = post_exists( $data['post_title'], $data['post_content'], $data['post_date'] );
+			$exists                              = post_exists( $data['post_title'], $data['post_content'], $data['post_date'], $data['post_type'] );
 			$this->exists['post'][ $exists_key ] = $exists;
 
 			return $exists;

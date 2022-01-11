@@ -24,7 +24,9 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 	/**
 	 * Register Easy Digital Downloads General Layout Configurations.
 	 */
-	class Astra_Edd_General_Configs extends Astra_Customizer_Config_Base {
+	// @codingStandardsIgnoreStart
+	class Astra_Edd_General_Configs extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Easy Digital Downloads General Layout Configurations.
@@ -36,21 +38,13 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 		 */
 		public function register_configuration( $configurations, $wp_customize ) {
 
-			$_configs = array(
+			$_section = ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ? 'section-header-edd-cart' : 'section-edd-general';
 
-				/**
-				 * Option: Divider
-				 */
-				array(
-					'name'      => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-divider]',
-					'section'   => 'section-edd-general',
-					'title'     => __( 'Header Cart Icon', 'astra-addon' ),
-					'type'      => 'control',
-					'control'   => 'ast-heading',
-					'priority'  => 30,
-					'settings'  => array(),
-					'separator' => false,
-				),
+			$context = ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ? astra_addon_builder_helper()->design_tab : astra_addon_builder_helper()->general_tab;
+
+			$cart_outline_width_context = ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) ? astra_addon_builder_helper()->design_tab_config : astra_addon_builder_helper()->general_tab_config;
+
+			$_configs = array(
 
 				/**
 				 * Option: Header Cart Icon
@@ -59,7 +53,7 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 					'name'     => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon]',
 					'default'  => astra_get_option( 'edd-header-cart-icon' ),
 					'type'     => 'control',
-					'section'  => 'section-edd-general',
+					'section'  => $_section,
 					'title'    => __( 'Icon', 'astra-addon' ),
 					'control'  => 'select',
 					'priority' => 35,
@@ -69,8 +63,83 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 						'bag'     => __( 'Bag', 'astra-addon' ),
 						'basket'  => __( 'Basket', 'astra-addon' ),
 					),
+					'context'  => astra_addon_builder_helper()->general_tab,
 				),
 
+				/**
+				 * Option: Cart Count color
+				 */
+				array(
+					'name'              => ASTRA_THEME_SETTINGS . '[edd-header-cart-product-count-color]',
+					'default'           => astra_get_option( 'edd-header-cart-product-count-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'transport'         => 'postMessage',
+					'title'             => __( 'Count Color', 'astra-addon' ),
+					'context'           => array(
+						Astra_Builder_Helper::$design_tab_config,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon]',
+							'operator' => '!=',
+							'value'    => 'default',
+						),
+					),
+					'section'           => $_section,
+					'priority'          => 45,
+				),
+
+				/**
+				 * Option: Border Width
+				 */
+				array(
+					'name'        => ASTRA_THEME_SETTINGS . '[edd-header-cart-border-width]',
+					'default'     => astra_get_option( 'edd-header-cart-border-width' ),
+					'type'        => 'control',
+					'transport'   => 'postMessage',
+					'section'     => $_section,
+					'context'     => array(
+						$cart_outline_width_context,
+						'relation' => 'AND',
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-style]',
+							'operator' => '==',
+							'value'    => 'outline',
+						),
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon]',
+							'operator' => '!=',
+							'value'    => 'default',
+						),
+					),
+					'title'       => __( 'Border Width', 'astra-addon' ),
+					'suffix'      => 'px',
+					'control'     => 'ast-slider',
+					'priority'    => 46,
+					'input_attrs' => array(
+						'min'  => 0,
+						'step' => 1,
+						'max'  => 20,
+					),
+				),
+			);
+
+			$configurations = array_merge( $configurations, $_configs );
+
+			$_configs = array(
+				/**
+				 * Option: Divider
+				 */
+				array(
+					'name'     => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-divider]',
+					'section'  => $_section,
+					'title'    => __( 'Header Cart Icon', 'astra-addon' ),
+					'type'     => 'control',
+					'control'  => 'ast-heading',
+					'priority' => 30,
+					'settings' => array(),
+					'context'  => astra_addon_builder_helper()->general_tab,
+				),
 				/**
 				 * Option: Icon Style
 				 */
@@ -79,7 +148,7 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 					'default'   => astra_get_option( 'edd-header-cart-icon-style' ),
 					'type'      => 'control',
 					'transport' => 'postMessage',
-					'section'   => 'section-edd-general',
+					'section'   => $_section,
 					'title'     => __( 'Style', 'astra-addon' ),
 					'control'   => 'select',
 					'priority'  => 40,
@@ -88,21 +157,52 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 						'outline' => __( 'Outline', 'astra-addon' ),
 						'fill'    => __( 'Fill', 'astra-addon' ),
 					),
+					'context'   => $context,
+				),
+				/**
+				 * Option: Background color
+				 */
+				array(
+					'name'              => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-color]',
+					'default'           => astra_get_option( 'edd-header-cart-icon-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'title'             => __( 'Color', 'astra-addon' ),
+					'transport'         => 'postMessage',
+					'section'           => $_section,
+					'priority'          => 45,
+					'context'           => array(
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-style]',
+							'operator' => '!=',
+							'value'    => 'none',
+						),
+						astra_addon_builder_helper()->design_tab,
+					),
 				),
 
 				/**
 				 * Option: Background color
 				 */
 				array(
-					'name'      => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-color]',
-					'default'   => astra_get_option( 'edd-header-cart-icon-color' ),
-					'type'      => 'control',
-					'control'   => 'ast-color',
-					'required'  => array( ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-style]', '!=', 'none' ),
-					'title'     => __( 'Color', 'astra-addon' ),
-					'transport' => 'postMessage',
-					'section'   => 'section-edd-general',
-					'priority'  => 45,
+					'name'              => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-color]',
+					'default'           => astra_get_option( 'edd-header-cart-icon-color' ),
+					'type'              => 'control',
+					'control'           => 'ast-color',
+					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_alpha_color' ),
+					'title'             => __( 'Color', 'astra-addon' ),
+					'transport'         => 'postMessage',
+					'section'           => $_section,
+					'priority'          => 45,
+					'context'           => array(
+						$context,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-style]',
+							'operator' => '!=',
+							'value'    => 'none',
+						),
+					),
 				),
 
 				/**
@@ -113,8 +213,7 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 					'default'     => astra_get_option( 'edd-header-cart-icon-radius' ),
 					'type'        => 'control',
 					'transport'   => 'postMessage',
-					'section'     => 'section-edd-general',
-					'required'    => array( ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-style]', '!=', 'none' ),
+					'section'     => $_section,
 					'title'       => __( 'Border Radius', 'astra-addon' ),
 					'control'     => 'ast-slider',
 					'priority'    => 47,
@@ -122,6 +221,15 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 						'min'  => 0,
 						'step' => 1,
 						'max'  => 200,
+					),
+					'suffix'      => 'px',
+					'context'     => array(
+						$context,
+						array(
+							'setting'  => ASTRA_THEME_SETTINGS . '[edd-header-cart-icon-style]',
+							'operator' => '!=',
+							'value'    => 'none',
+						),
 					),
 				),
 
@@ -132,10 +240,11 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 					'name'     => ASTRA_THEME_SETTINGS . '[edd-header-cart-total-display]',
 					'default'  => astra_get_option( 'edd-header-cart-total-display' ),
 					'type'     => 'control',
-					'section'  => 'section-edd-general',
+					'section'  => $_section,
 					'title'    => __( 'Display Cart Totals', 'astra-addon' ),
 					'priority' => 50,
-					'control'  => 'checkbox',
+					'control'  => Astra_Theme_Extension::$switch_control,
+					'context'  => astra_addon_builder_helper()->general_tab,
 				),
 
 				/**
@@ -145,12 +254,29 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 					'name'     => ASTRA_THEME_SETTINGS . '[edd-header-cart-title-display]',
 					'default'  => astra_get_option( 'edd-header-cart-title-display' ),
 					'type'     => 'control',
-					'section'  => 'section-edd-general',
+					'section'  => $_section,
 					'title'    => __( 'Display Cart Title', 'astra-addon' ),
 					'priority' => 55,
-					'control'  => 'checkbox',
+					'control'  => Astra_Theme_Extension::$switch_control,
+					'context'  => astra_addon_builder_helper()->general_tab,
 				),
 			);
+
+			if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+				$_configs = array(
+					/**
+					 * EDD Cart section
+					 */
+					array(
+						'name'     => $_section,
+						'type'     => 'section',
+						'priority' => 5,
+						'title'    => __( 'EDD Cart', 'astra-addon' ),
+						'panel'    => 'panel-header-builder-group',
+					),
+
+				);
+			}
 
 			$configurations = array_merge( $configurations, $_configs );
 
@@ -162,8 +288,3 @@ if ( ! class_exists( 'Astra_Edd_General_Configs' ) ) {
 
 
 new Astra_Edd_General_Configs();
-
-
-
-
-

@@ -132,7 +132,7 @@ if ( ! class_exists( 'Brainstorm_Update_Astra_Pro_Sites' ) ) :
 			// Not have a white label then return the custom nag.
 			if ( empty( $purchase_url ) ) {
 				/* translators: %1$s product purchase link and %2$s find purchase key link */
-				return sprintf( __( '<p>If you don\'t have a license, you can <a target="_blank" href="%1$s">purchase it here »</a></br/>Already have A license? You can find your key in <a target="_blank" href="%2$s">your purchases »</a></p>', 'astra-sites' ), 'https://wpastra.com/pricing/', 'https://store.brainstormforce.com/licenses/' );
+				return sprintf( __( '<p>To find your license key, login to  <a target="_blank" href="%1$s">store account</a> and visit the <a target="_blank" href="%2$s">\'Licenses\'</a> page.</p>', 'astra-sites' ), 'https://store.brainstormforce.com/login/', 'https://store.brainstormforce.com/licenses/' ); // phpcs:ignore WordPress.WP.I18n.NoHtmlWrappedStrings
 			}
 
 			/* translators: %1$s product purchase link */

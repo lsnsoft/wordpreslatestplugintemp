@@ -73,7 +73,7 @@ class CPRO_ConvertKit {
 		  'first_name' 	  => $options['first_name'],
 		  'fields'        => $options['fields'],
 		);
-		if ( '-1' !== $tags ) {
+		if ( ! empty( $tags ) ) {
 			$args['tags'] = $tags;
 		}
 

@@ -343,7 +343,7 @@ final class CPRO_Service_ElasticEmail extends CPRO_Service {
 			try {
 
 				$method    = 'contact/add';
-				$json_data = $api->cp_v2_get_modified_data( $user_data );
+				$json_data = http_build_query( $user_data );
 				$request   = $api->cp_v2_request_elastic_data( $method, $json_data );
 
 				if ( ! $request->success ) {

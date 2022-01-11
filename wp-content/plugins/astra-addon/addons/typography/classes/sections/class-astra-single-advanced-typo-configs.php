@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Single_Advanced_Typo_Configs' ) ) {
 	/**
 	 * Register below header Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Single_Advanced_Typo_Configs extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Side bar typography Customizer Configurations.
@@ -80,12 +83,12 @@ if ( ! class_exists( 'Astra_Single_Advanced_Typo_Configs' ) ) {
 					'section'           => 'section-blog-single',
 					'type'              => 'sub-control',
 					'transport'         => 'postMessage',
-					'default'           => '',
+					'default'           => astra_get_option( 'line-height-entry-title' ),
 					'sanitize_callback' => array( 'Astra_Customizer_Sanitizes', 'sanitize_number_n_blank' ),
 					'title'             => __( 'Line Height', 'astra-addon' ),
 					'control'           => 'ast-slider',
 					'priority'          => 15,
-					'suffix'            => '',
+					'suffix'            => 'em',
 					'input_attrs'       => array(
 						'min'  => 1,
 						'step' => 0.01,

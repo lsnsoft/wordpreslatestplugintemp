@@ -1,27 +1,30 @@
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['bar']});
 
-function drawChart( style, filter = '' ) {
-    
+function drawChart( style, startDate = '', endDate = '' ) {
+
     var jsonData = jQuery.ajax({
         url: cp_ajax.url,
         method: 'post',
         data: {
             action: 'cp_get_ga_data',
             style_id: style,
-            filter: filter,
+            sdate: startDate,
+            edate: endDate,
             security: jQuery( '#cp_get_ga_data_chart_nonce' ).val()
         },
         dataType: "json",
         async: false
     }).responseText;
 
-    var parse_data = JSON.parse( jsonData );
-
-    jQuery.each( parse_data, function( index, value ) {
+    var parseData      = JSON.parse( jsonData );
+    var analyticsCount = parseData.analytics_count;
+    var analyticsData  = parseData.analytics_data;
+    
+    jQuery.each( analyticsData, function( index, value ) {
         // convert date format
         value[0] = new Date( value[0] );
-        parse_data[index] = value;
+        analyticsData[index] = value;
     }); 
 
     // Create the data table.
@@ -29,13 +32,13 @@ function drawChart( style, filter = '' ) {
     data.addColumn('date', 'Date');
     data.addColumn('number', 'Impressions');
     data.addColumn('number', 'Conversions');
-    data.addRows( parse_data  ); 
+    data.addRows( analyticsData );
 
     // Set chart options
 
     var options = {
         'title':'Analytics',
-        'width': 850,
+        'width': 1250,
         'height': 350,
         hAxis: {
           title: 'Date'
@@ -43,26 +46,18 @@ function drawChart( style, filter = '' ) {
         vAxis: {
           title: 'Impressions'
         },
+        colors: [ '#236477', '#74a94a' ],
+        legend: {
+            position: 'none',
+        },
       };
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.charts.Bar(document.getElementById('cp_ga_chart_div'));
     chart.draw( data, options );
-    setTimeout(function(){
-        jQuery('.cp-ga-filter-wrap .cp-ga-filter').removeClass('cp-show');
-    }, 200);
+    jQuery('#cpro-impressions-count span').html( analyticsCount.impressions );
+    jQuery('#cpro-conversions-count span').html( analyticsCount.conversions );
 }
-
-jQuery( document ).on( 'click', '.cp-ga-filter', function( e ) {
-    jQuery(this).addClass( 'cp-show' );
-    var filter = jQuery( this ).data( 'filter' ),
-        style = jQuery( this ).data( 'style' );
-        
-    jQuery( '.cp-ga-filter' ).removeClass( 'cp-ga-filter-active' );
-    jQuery( this ).addClass( 'cp-ga-filter-active' );
-    
-    drawChart( style, filter );   
-} );
 
 jQuery( document ).on( 'click', '.cp-delete-ga-integration', function( e ) {
 
@@ -103,9 +98,24 @@ jQuery(document).on( "click", ".cp-style-analytics", function(e) {
     parentDiv.find(".cp-save-animate-container").removeClass("cp-zoomOut").addClass(" cp-animated cp-zoomIn");
 
     var style = jQuery(this).data("style");
-    jQuery( '.cp-ga-filter' ).data( 'style', style );
-    drawChart(style, '');
+    jQuery( '#cpro-reportrange' ).data( 'style', style );
+
+    // Get the start and end date.
+    var sdate = jQuery( '#cpro-analytics-dates' ).attr( 'data-start-date' );
+    var edate = jQuery( '#cpro-analytics-dates' ).attr( 'data-end-date' );
+
+    drawChart( style, sdate, edate );
 });
+
+
+// Fire this event when date is changed.
+jQuery( '#cpro-analytics-dates' ).on( 'change', function( e, sdate, edate ) {
+    var style = jQuery( '#cpro-reportrange' ).data( 'style' );
+    if ( "undefined" !== typeof style ) {
+        drawChart( style, sdate, edate );
+    }
+} );
+
 
 jQuery(document).on( "click", ".cp-close-wrap", function(e) {
     jQuery(".cp-md-overlay").trigger('click');

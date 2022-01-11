@@ -54,9 +54,13 @@ require_once 'includes/system-info.php';
 require_once 'auto-update/admin-functions.php';
 require_once 'auto-update/updater.php';
 require_once 'class-bsf-update-manager.php';
+require_once 'class-bsf-rollback-version-manager.php';
 require_once 'class-bsf-license-manager.php';
+require_once 'classes/class-bsf-extension-installer.php';
 
 require_once 'classes/class-bsf-core-update.php';
+require_once 'classes/class-bsf-core-rest.php';
+require_once 'classes/class-bsf-rollback-version.php';
 
 if ( defined( 'WP_CLI' ) ) {
 	require 'class-bsf-wp-cli-command.php';
@@ -244,7 +248,7 @@ if ( ! function_exists( 'bsf_extract_product_id' ) ) {
 		}
 
 		// Use of file_get_contents() - https://github.com/WordPress/WordPress-Coding-Standards/pull/1374/files#diff-400e43bc09c24262b43f26fce487fdabR43-R52.
-		$filelines = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$filelines = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Reading local file is OK.
 		if ( stripos( $filelines, 'ID:[' ) !== false ) {
 			preg_match_all( '/ID:\[(.*?)\]/', $filelines, $matches );
 			if ( isset( $matches[1] ) ) {
@@ -262,8 +266,9 @@ if ( ! function_exists( 'init_bsf_core' ) ) {
 	 */
 	function init_bsf_core() {
 
-		$plugins      = get_plugins();
-		$themes       = wp_get_themes();
+		$plugins = get_plugins();
+		$themes = wp_get_themes();
+		$theme_directories = search_theme_directories();
 		$bsf_products = array();
 
 		$bsf_authors = apply_filters(
@@ -307,22 +312,12 @@ if ( ! function_exists( 'init_bsf_core' ) ) {
 			}
 		}
 
-		$brainstrom_products = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-
-		// Remove the brainstorm products which no longer exist on site.
-		if ( ! function_exists( 'get_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-
-		$plugins = get_plugins();
-		$themes  = search_theme_directories();
+		$brainstrom_products = get_option( 'brainstrom_products', array() );
+		$bundled_products = get_option( 'brainstrom_bundled_products', array() );
 
 		if ( ! empty( $brainstrom_products ) ) {
-
 			if ( isset( $brainstrom_products['plugins'] ) ) {
-
 				foreach ( $brainstrom_products['plugins'] as $key => $value ) {
-
 					if ( ! array_key_exists( $value['template'], $plugins ) ) {
 						unset( $brainstrom_products['plugins'][ $key ] );
 					}
@@ -330,10 +325,8 @@ if ( ! function_exists( 'init_bsf_core' ) ) {
 			}
 
 			if ( isset( $brainstrom_products['themes'] ) ) {
-
 				foreach ( $brainstrom_products['themes'] as $key => $value ) {
-
-					if ( ! array_key_exists( $value['template'], $themes ) ) {
+					if ( ! array_key_exists( $value['template'], $theme_directories ) ) {
 						unset( $brainstrom_products['themes'][ $key ] );
 					}
 				}
@@ -359,25 +352,22 @@ if ( ! function_exists( 'init_bsf_core' ) ) {
 			}
 		}
 
+		// Update bundled products.
+		foreach ( $bundled_products as $key => $product ) {
+			$bsf_product = get_brainstorm_product( $key );
+
+			if ( empty( $bsf_product ) ) {
+				unset( $bundled_products[ $key ] );
+			}
+		}
+
 		update_option( 'brainstrom_products', $brainstrom_products );
+		update_option( 'brainstrom_bundled_products', $bundled_products );
 	}
 }
 
 add_action( 'admin_init', 'init_bsf_core' );
 
-if ( is_multisite() ) {
-	$brainstrom_products = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-	if ( ! empty( $brainstrom_products ) ) {
-		$bsf_product_themes = ( isset( $brainstrom_products['themes'] ) ) ? $brainstrom_products['themes'] : array();
-		if ( ! empty( $bsf_product_themes ) ) {
-			foreach ( $bsf_product_themes as $theme_id => $theme ) {
-				global $bsf_theme_template;
-				$template           = $theme['template'];
-				$bsf_theme_template = $template;
-			}
-		}
-	}
-}
 // assets.
 add_action( 'admin_enqueue_scripts', 'register_bsf_core_admin_styles', 1 );
 if ( ! function_exists( 'register_bsf_core_admin_styles' ) ) {
@@ -773,24 +763,16 @@ if ( ! function_exists( 'bsf_set_options' ) ) {
 		if ( isset( $_GET['force-check-update'] ) || isset( $_GET['force-check'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			global $pagenow;
+			global $ultimate_referer;
 
 			if ( 'update-core.php' === $pagenow && '1' === $_GET['force-check'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-				global $ultimate_referer;
 				$ultimate_referer = 'on-force-check-update-update-core';
-				bsf_check_product_update();
-				set_transient( 'bsf_check_product_updates', true, 2 * DAY_IN_SECONDS );
-				update_option( 'bsf_local_transient', current_time( 'timestamp' ) );
-
 			} else {
-
-				global $ultimate_referer;
 				$ultimate_referer = 'on-force-check-update';
-				bsf_check_product_update();
-				set_transient( 'bsf_check_product_updates', true, 2 * DAY_IN_SECONDS );
-				update_option( 'bsf_local_transient', current_time( 'timestamp' ) );
-
 			}
+
+			bsf_check_product_update();
+			update_option( 'bsf_last_update_check', current_time( 'timestamp' ) );
 		}
 
 		// Skip Author registration.
@@ -834,7 +816,6 @@ if ( ! function_exists( 'bsf_set_options' ) ) {
 		$skip_brainstorm_menu_products = apply_filters( 'bsf_skip_braisntorm_menu', $default_skip_brainstorm_menu );
 		$ids                           = array();
 		$skip_brainstorm_menu          = get_site_option( 'bsf_skip_braisntorm_menu', false );
-		$brainstorm_products           = bsf_get_brainstorm_products( true );
 		foreach ( $brainstorm_products as $key => $product ) {
 
 			if ( isset( $product['id'] ) && ! in_array( $product['id'], $skip_brainstorm_menu_products, true ) ) {
@@ -863,7 +844,6 @@ if ( ! function_exists( 'bsf_set_options' ) ) {
 			$ultimate_referer = 'on-refresh-bundled-products';
 			delete_option( 'brainstrom_bundled_products' );
 			get_bundled_plugins();
-			update_option( 'bsf_local_transient_bundled', current_time( 'timestamp' ) );
 
 			$redirect = isset( $_GET['redirect'] ) ? esc_url_raw( urldecode( esc_attr( $_GET['redirect'] ) ) ) : '';
 

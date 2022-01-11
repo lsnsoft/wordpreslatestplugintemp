@@ -320,7 +320,7 @@ if ( ! function_exists( 'bsf_notices' ) ) {
 					);
 
 					if ( ( $is_multisite && $is_network_admin ) || ! $is_multisite ) {
-						echo '<div class="update-nag bsf-update-nag">' . wp_kses( $message, $allowed_html ) . '</div>';
+						echo '<div class="notice notice-warning"><p>' . wp_kses( $message, $allowed_html ) . '</p></div>';
 					}
 				endif;
 			endforeach;

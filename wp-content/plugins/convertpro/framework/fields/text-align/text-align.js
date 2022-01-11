@@ -8,7 +8,7 @@
 	$.fn.cp_text_align = function() { 
 		var wrapper = jQuery(this);
 		var rm_container = jQuery(".cp-text-align-holder-field");
-		rm_container.click(function(){
+		rm_container.on( "click", function(){
 			var $this = jQuery(this);
 			
 			jQuery.each(rm_container,function(index,element){
@@ -16,7 +16,7 @@
 			});
 
 			$this.addClass('selected-text');
-			rm_container.find('input:radio').removeAttr('checked');	
+			rm_container.find('input:radio').prop( "checked", false );	
 			$this.find('input:radio').attr('checked', true);		
 			
 			var r = $this.find('input:radio');

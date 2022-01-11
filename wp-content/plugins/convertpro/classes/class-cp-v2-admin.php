@@ -201,6 +201,11 @@ final class CP_V2_Admin {
 		if ( $this->cpro_popup_editor_condition_check( $hook ) ) {
 			// Woodmart theme JS conflict with CPRO popup editor.
 			wp_dequeue_script( 'wp-color-picker-alpha' );
+			global $wp_version;
+			$wp = '5.6';
+			if ( version_compare( $wp_version, $wp, '>=' ) ) {
+				wp_deregister_script( 'jquery-ui-resizable' );
+			}
 		}
 	}
 
@@ -215,7 +220,6 @@ final class CP_V2_Admin {
 
 		$new_handle = '';
 		wp_enqueue_script( 'jquery' );
-
 		wp_enqueue_style( 'cp-admin-style', CP_V2_BASE_URL . 'assets/admin/css/convertplug-admin.css', array(), CP_V2_VERSION );
 
 		$current_screen = get_current_screen();
@@ -255,6 +259,27 @@ final class CP_V2_Admin {
 
 		$dev_mode = get_option( 'cp_dev_mode' );
 		if ( $this->cpro_popup_editor_condition_check( $hook ) ) {
+
+					// Fix Insert Post Ads plugin JS Conflict with CPro popup editor.
+					wp_dequeue_script( 'insert-post-adschart-admin' );
+
+					// Fix WP Shortcode Pro by MyThemeShop plugin JS Conflict with CPro popup editor.
+					wp_dequeue_script( 'wps-izimodal' );
+					wp_dequeue_script( 'wp-shortcode-admin' );
+
+					// Fix Raffle Ticket Generator - Woocommerce JS Conflict with CPro popup editor.
+					wp_dequeue_script( 'custom-script' );
+					wp_dequeue_script( 'custom-script-12' );
+
+					// Fix Urban Mag theme JS Conflict with CPro popup editor.
+					wp_dequeue_script( 'gdlr-tax-meta' );
+
+					// Fix Ads for WP – Advanced Ads & Adsense Solution for WP & AMP plugin JS Conflict with CPro popup editor.
+					wp_dequeue_script( 'ads-for-wp-admin-js' );
+
+					// Fix Listeo-Core - Directory Plugin by Purethemes plugin JS Conflict with CPro popup editor.
+					wp_dequeue_script( 'listeo_core-settings' );
+					wp_dequeue_script( 'listeo_core-admin' );
 
 					// Enqueue jquery-migrate script in the customizer.
 					wp_enqueue_script( 'jquery-migrate' );
@@ -611,7 +636,9 @@ final class CP_V2_Admin {
 				'select_diff_camp'             => __( 'Please select different campaign to process.', 'convertpro' ),
 				'empty_campaign'               => __( 'Campaign name cannot be empty.', 'convertpro' ),
 				'already_exists_camp'          => __( 'This name is already registered! Please try again using a different name.', 'convertpro' ),
+				'already_exists_slug_name'     => __( 'This Slug name is already registered! Please try again using a different Slug name.', 'convertpro' ),
 				'empty_design'                 => __( 'Design name cannot be empty.', 'convertpro' ),
+				'empty_slug_name'              => __( 'Design Slug name cannot be empty Or It should not contain any space in the name.', 'convertpro' ),
 				'deleting'                     => __( 'Deleting...', 'convertpro' ),
 				'saving'                       => __( 'Saving...', 'convertpro' ),
 				'duplicate'                    => __( 'Duplicate', 'convertpro' ),
@@ -815,15 +842,24 @@ final class CP_V2_Admin {
 					'thickbox',
 				);
 
+				// Load Elements resizable file update for WP 5.6 and above.
+				global $wp_version;
+				$wp                       = '5.6';
+				$cpro_jquery_ui_resizable = 'jquery-ui-resizable';
+				if ( version_compare( preg_replace( '/[^0-9\.]/', '', $wp_version ), $wp, '>=' ) ) {
+					wp_register_script( 'cpro-jquery-ui-resizable', CP_V2_BASE_URL . 'assets/admin/cpro-jquery/cpro-resizable.min.js', array( 'jquery' ), '1.11.4', true );
+					$cpro_jquery_ui_resizable = 'cpro-jquery-ui-resizable';
+				}
 				$scripts = array(
 					'thickbox',
 					'jquery',
 					'wp-color-picker',
 					'jquery-ui-core',
 					'jquery-ui-widget',
+					'jquery-ui-slider',
 					'jquery-ui-draggable',
 					'jquery-ui-droppable',
-					'jquery-ui-resizable',
+					$cpro_jquery_ui_resizable,
 					'jquery-ui-tabs',
 					'jquery-ui-autocomplete',
 				);

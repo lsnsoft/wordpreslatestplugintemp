@@ -1,14 +1,14 @@
-# Copyright (C) 2020 Brainstorm Force
+# Copyright (C) 2021 Brainstorm Force
 # This file is distributed under the same license as the Convert Pro package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Convert Pro 1.5.1\n"
+"Project-Id-Version: Convert Pro 1.7.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/convertpro\n"
-"POT-Creation-Date: 2020-08-12 09:28:08+00:00\n"
+"POT-Creation-Date: 2021-09-28 10:04:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -37,22 +37,22 @@ msgid "Available Addons"
 msgstr ""
 
 #: admin/add-ons.php:140 admin/add-ons.php:242
-#: admin/bsf-core/plugin-installer/admin-functions.php:246
+#: admin/bsf-core/plugin-installer/admin-functions.php:248
 msgid "Downloading"
 msgstr ""
 
 #: admin/add-ons.php:163 admin/add-ons.php:264
-#: admin/bsf-core/plugin-installer/admin-functions.php:271
+#: admin/bsf-core/plugin-installer/admin-functions.php:273
 msgid "Install"
 msgstr ""
 
 #: admin/add-ons.php:168 admin/add-ons.php:268
-#: admin/bsf-core/plugin-installer/admin-functions.php:276
+#: admin/bsf-core/plugin-installer/admin-functions.php:278
 msgid "Validate Purchase"
 msgstr ""
 
 #: admin/add-ons.php:180 admin/add-ons.php:281
-#: admin/bsf-core/plugin-installer/admin-functions.php:287
+#: admin/bsf-core/plugin-installer/admin-functions.php:289
 msgid "Installed"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Refresh Bundled Addons"
 msgstr ""
 
-#: admin/branding.php:11 admin/general-settings.php:43
+#: admin/branding.php:11 admin/general-settings.php:47
 msgid "Branding"
 msgstr ""
 
@@ -89,24 +89,26 @@ msgid "Enable Knowledge Base URL"
 msgstr ""
 
 #: admin/branding.php:81 admin/branding.php:104 admin/branding.php:128
-#: admin/branding.php:154 admin/branding.php:178 admin/general-settings.php:197
-#: admin/general-settings.php:313 admin/general-settings.php:327
-#: admin/general-settings.php:341 admin/general-settings.php:355
-#: admin/general-settings.php:372 framework/style-options.php:40
-#: framework/style-options.php:81 framework/style-options.php:97
-#: framework/style-options.php:187 framework/style-options.php:225
-#: framework/style-options.php:459 framework/style-options.php:500
+#: admin/branding.php:154 admin/branding.php:178 admin/general-settings.php:201
+#: admin/general-settings.php:320 admin/general-settings.php:334
+#: admin/general-settings.php:348 admin/general-settings.php:362
+#: admin/general-settings.php:379 framework/style-options.php:43
+#: framework/style-options.php:84 framework/style-options.php:169
+#: framework/style-options.php:185 framework/style-options.php:275
+#: framework/style-options.php:313 framework/style-options.php:617
+#: framework/style-options.php:658
 msgid "ON"
 msgstr ""
 
 #: admin/branding.php:81 admin/branding.php:104 admin/branding.php:128
-#: admin/branding.php:154 admin/branding.php:178 admin/general-settings.php:197
-#: admin/general-settings.php:313 admin/general-settings.php:327
-#: admin/general-settings.php:341 admin/general-settings.php:355
-#: admin/general-settings.php:372 framework/style-options.php:41
-#: framework/style-options.php:82 framework/style-options.php:98
-#: framework/style-options.php:188 framework/style-options.php:226
-#: framework/style-options.php:460 framework/style-options.php:501
+#: admin/branding.php:154 admin/branding.php:178 admin/general-settings.php:201
+#: admin/general-settings.php:320 admin/general-settings.php:334
+#: admin/general-settings.php:348 admin/general-settings.php:362
+#: admin/general-settings.php:379 framework/style-options.php:44
+#: framework/style-options.php:85 framework/style-options.php:170
+#: framework/style-options.php:186 framework/style-options.php:276
+#: framework/style-options.php:314 framework/style-options.php:618
+#: framework/style-options.php:659
 msgid "OFF"
 msgstr ""
 
@@ -163,49 +165,49 @@ msgid ""
 msgstr ""
 
 #: admin/branding.php:189 admin/cpro-geolite2-maxmind.php:69
-#: admin/email-template.php:61 admin/general-settings.php:206
-#: admin/general-settings.php:384 admin/google-recaptcha.php:49
+#: admin/email-template.php:61 admin/general-settings.php:210
+#: admin/general-settings.php:391 admin/google-recaptcha.php:49
 msgid "Save Settings"
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:211
+#: admin/bsf-analytics/class-bsf-analytics.php:216
 #. translators: %s product name
 msgid ""
 "Want to help make <strong>%1s</strong> even more awesome? Allow us to "
 "collect non-sensitive diagnostic data and usage information. "
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:214
+#: admin/bsf-analytics/class-bsf-analytics.php:219
 msgid "This will be applicable for all sites from the network."
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:238
+#: admin/bsf-analytics/class-bsf-analytics.php:243
 #. translators: %s usage doc link
 msgid " Know More."
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:246
+#: admin/bsf-analytics/class-bsf-analytics.php:251
 msgid "Yes! Allow it"
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:255
+#: admin/bsf-analytics/class-bsf-analytics.php:260
 msgid "No Thanks"
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:359
+#: admin/bsf-analytics/class-bsf-analytics.php:364
 msgid "Usage Tracking"
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:403
+#: admin/bsf-analytics/class-bsf-analytics.php:408
 #. translators: %s Product title
 msgid "Allow %s products to track non-sensitive usage tracking data."
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:406
+#: admin/bsf-analytics/class-bsf-analytics.php:411
 msgid " This will be applicable for all sites from the network."
 msgstr ""
 
-#: admin/bsf-analytics/class-bsf-analytics.php:411
+#: admin/bsf-analytics/class-bsf-analytics.php:416
 msgid "Learn More."
 msgstr ""
 
@@ -230,8 +232,8 @@ msgid "Sign Up & Activate"
 msgstr ""
 
 #: admin/bsf-core/class-bsf-envato-activate.php:138
-#: admin/bsf-core/class-bsf-license-manager.php:499
-#: admin/bsf-core/class-bsf-license-manager.php:723
+#: admin/bsf-core/class-bsf-license-manager.php:508
+#: admin/bsf-core/class-bsf-license-manager.php:732
 msgid "Deactivate License"
 msgstr ""
 
@@ -242,56 +244,83 @@ msgid ""
 msgstr ""
 
 #: admin/bsf-core/class-bsf-envato-activate.php:200
-#: admin/bsf-core/class-bsf-license-manager.php:563
+#: admin/bsf-core/class-bsf-license-manager.php:572
 msgid ""
 "Click on the button below to activate your license and subscribe to our "
 "newsletter."
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:484
+#: admin/bsf-core/class-bsf-license-manager.php:493
 msgid "Product id is missing."
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:498
-#: admin/bsf-core/class-bsf-license-manager.php:707
-#: admin/bsf-core/class-bsf-license-manager.php:722
+#: admin/bsf-core/class-bsf-license-manager.php:507
+#: admin/bsf-core/class-bsf-license-manager.php:716
+#: admin/bsf-core/class-bsf-license-manager.php:731
 msgid "Activate License"
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:565
+#: admin/bsf-core/class-bsf-license-manager.php:574
 msgid "Enter your purchase key and activate automatic updates."
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:594
+#: admin/bsf-core/class-bsf-license-manager.php:603
 msgid "Your license is active."
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:710
+#: admin/bsf-core/class-bsf-license-manager.php:719
 #: admin/general-settings.php:19 admin/license.php:11
 msgid "License"
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:725
+#: admin/bsf-core/class-bsf-license-manager.php:734
 msgid "Your license is not active!"
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:726
+#: admin/bsf-core/class-bsf-license-manager.php:735
 msgid "Your license is activated!"
 msgstr ""
 
-#: admin/bsf-core/class-bsf-license-manager.php:772
-#: framework/classes/class-cp-framework.php:871
-#: framework/style-options.php:1499 framework/style-options.php:1661
-#: framework/style-options.php:2824 framework/style-options.php:2953
-#: framework/style-options.php:5401 framework/style-options.php:5822
-#: framework/types/class-cp-full-screen.php:1029
-#: framework/types/class-cp-full-screen.php:1213
-#: framework/types/class-cp-welcome-mat.php:1024
-#: framework/types/class-cp-welcome-mat.php:1208
+#: admin/bsf-core/class-bsf-license-manager.php:781
+#: framework/classes/class-cp-framework.php:873
+#: framework/style-options.php:1658 framework/style-options.php:1820
+#: framework/style-options.php:2983 framework/style-options.php:3112
+#: framework/style-options.php:5688 framework/style-options.php:6109
+#: framework/types/class-cp-full-screen.php:1032
+#: framework/types/class-cp-full-screen.php:1216
+#: framework/types/class-cp-welcome-mat.php:1026
+#: framework/types/class-cp-welcome-mat.php:1210
 msgid "Close"
 msgstr ""
 
-#: admin/bsf-core/class-bsf-update-manager.php:573
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:51
+msgid "No Versions Found! "
+msgstr ""
+
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:69
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:70
+msgid "Rollback"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:154
+msgid "Rollback #PRODUCT_NAME# Version"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:155
+msgid "Are you sure you want to rollback #PRODUCT_NAME# to version #VERSION#?"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:157
+#: admin/insights.php:343 admin/insights.php:367 admin/insights.php:407
+#: admin/insights.php:431 admin/template.php:117
+msgid "Cancel"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-rollback-version-manager.php:158
+msgid "Continue"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-update-manager.php:578
 #. translators: %1$s: $parent_name %2%s: $registration_page
 msgid ""
 " <br>This plugin is came bundled with the <i>%1$s</i>. For receiving "
@@ -299,57 +328,58 @@ msgid ""
 "href=\"%3$s\">here</a>."
 msgstr ""
 
-#: admin/bsf-core/class-bsf-update-manager.php:576
+#: admin/bsf-core/class-bsf-update-manager.php:581
 #. translators: %1$s: $registration_page %2%s: search term
 msgid "Please <a href=\"%1$s\">activate your license</a> to update the plugin."
 msgstr ""
 
-#: admin/bsf-core/class-bsf-update-manager.php:633
-#: admin/bsf-core/class-bsf-update-manager.php:641
+#: admin/bsf-core/class-bsf-update-manager.php:638
+#: admin/bsf-core/class-bsf-update-manager.php:646
+#: admin/bsf-core/class-bsf-update-manager.php:650
 msgid "Downloading the update..."
 msgstr ""
 
-#: admin/bsf-core/classes/class-bsf-extension-installer.php:51
+#: admin/bsf-core/classes/class-bsf-extension-installer.php:54
 #: classes/class-cp-v2-cloud-templates.php:330
-#: classes/class-cp-v2-cloud-templates.php:682
-#: classes/class-cp-v2-cloud-templates.php:769 includes/ajax-actions.php:36
+#: classes/class-cp-v2-cloud-templates.php:685
+#: classes/class-cp-v2-cloud-templates.php:772 includes/ajax-actions.php:36
 #: includes/ajax-actions.php:116 includes/ajax-actions.php:227
 #: includes/ajax-actions.php:355 includes/ajax-actions.php:514
-#: includes/class-bsf-menu.php:391 includes/insights-actions.php:124
-#: includes/insights-actions.php:252 includes/insights-actions.php:348
-#: includes/insights-actions.php:388
+#: includes/class-bsf-menu.php:405 includes/insights-actions.php:125
+#: includes/insights-actions.php:253 includes/insights-actions.php:349
+#: includes/insights-actions.php:389 includes/insights-actions.php:446
 msgid "You are not authorized to perform this action."
 msgstr ""
 
-#: admin/bsf-core/classes/class-bsf-extension-installer.php:60
+#: admin/bsf-core/classes/class-bsf-extension-installer.php:63
 msgid "No plugin specified"
 msgstr ""
 
-#: admin/bsf-core/classes/class-bsf-extension-installer.php:80
+#: admin/bsf-core/classes/class-bsf-extension-installer.php:83
 msgid "Plugin Activated"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:239
+#: admin/bsf-core/includes/helpers.php:241
 msgid " requires following plugins to be active : "
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:249
+#: admin/bsf-core/includes/helpers.php:251
 msgid " requires following plugins to be installed and activated : "
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:258
+#: admin/bsf-core/includes/helpers.php:260
 msgid "Begin activating plugins"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:262
+#: admin/bsf-core/includes/helpers.php:264
 msgid "Begin installing plugins"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:265
+#: admin/bsf-core/includes/helpers.php:267
 msgid "Dismiss This Notice"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:296
+#: admin/bsf-core/includes/helpers.php:298
 #. translators: %1$s: strong tag %2%s: strong tag  %3%s: anchor tag %4%s:
 #. closing anchor tag
 msgid ""
@@ -386,24 +416,24 @@ msgstr ""
 msgid "Installed Extensions"
 msgstr ""
 
-#: admin/bsf-core/index.php:114 admin/bsf-core/index.php:115
+#: admin/bsf-core/index.php:116 admin/bsf-core/index.php:117
 msgid "Extensions"
 msgstr ""
 
-#: admin/bsf-core/index.php:213
+#: admin/bsf-core/index.php:215
 msgid "iMedica Extensions"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:187
+#: admin/bsf-core/plugin-installer/admin-functions.php:189
 msgid "All available extensions have been installed!"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:198
+#: admin/bsf-core/plugin-installer/admin-functions.php:200
 msgid "No extensions available yet!"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:201
-#: includes/class-bsf-menu.php:553
+#: admin/bsf-core/plugin-installer/admin-functions.php:203
+#: includes/class-bsf-menu.php:567
 msgid "Refresh Bundled Products"
 msgstr ""
 
@@ -451,7 +481,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: admin/create-new.php:89 classes/class-cp-v2-admin.php:784
+#: admin/create-new.php:89 classes/class-cp-v2-admin.php:811
 msgid "Delete Template Data"
 msgstr ""
 
@@ -518,157 +548,161 @@ msgstr ""
 msgid " : URL of your website"
 msgstr ""
 
-#: admin/general-settings.php:15 framework/classes/class-cp-framework.php:706
+#: admin/general-settings.php:15 framework/classes/class-cp-framework.php:708
 msgid "General"
 msgstr ""
 
-#: admin/general-settings.php:23 classes/class-bsf-updater.php:104
+#: admin/general-settings.php:23 admin/rollback-version.php:13
+msgid "Rollback Version"
+msgstr ""
+
+#: admin/general-settings.php:27 classes/class-bsf-updater.php:104
 #: classes/class-bsf-updater.php:161 classes/class-bsf-updater.php:162
 msgid "Addons"
 msgstr ""
 
-#: admin/general-settings.php:27
+#: admin/general-settings.php:31
 msgid "Email Notification"
 msgstr ""
 
-#: admin/general-settings.php:31
+#: admin/general-settings.php:35
 #: framework/fields/cp_google_recaptcha/cp-google-recaptcha.php:38
 msgid "Recaptcha"
 msgstr ""
 
-#: admin/general-settings.php:35
+#: admin/general-settings.php:39
 msgid "MaxMind Geolocation"
 msgstr ""
 
-#: admin/general-settings.php:39 framework/classes/class-cp-framework.php:1068
-#: framework/style-options.php:2561
+#: admin/general-settings.php:43 framework/classes/class-cp-framework.php:1070
+#: framework/style-options.php:2720
 msgid "Advanced"
 msgstr ""
 
-#: admin/general-settings.php:70
+#: admin/general-settings.php:74
 msgid "General Settings"
 msgstr ""
 
-#: admin/general-settings.php:104
+#: admin/general-settings.php:108
 msgid "Top-Level (top)"
 msgstr ""
 
-#: admin/general-settings.php:105
+#: admin/general-settings.php:109
 msgid "Top-Level (middle)"
 msgstr ""
 
-#: admin/general-settings.php:106
+#: admin/general-settings.php:110
 msgid "Top-Level (bottom)"
 msgstr ""
 
-#: admin/general-settings.php:127
+#: admin/general-settings.php:131
 msgid "Global Font "
 msgstr ""
 
-#: admin/general-settings.php:128
+#: admin/general-settings.php:132
 msgid ""
 "Controls font of your call-to-action. This font will be overwritten by "
 "individual element's typography option."
 msgstr ""
 
-#: admin/general-settings.php:179
+#: admin/general-settings.php:183
 msgid "User Inactivity Time "
 msgstr ""
 
-#: admin/general-settings.php:180
+#: admin/general-settings.php:184
 msgid ""
 "This is the time considered to track user inactivity, when you activate the "
 "user inactivity trigger."
 msgstr ""
 
-#: admin/general-settings.php:184
+#: admin/general-settings.php:188
 msgid " Seconds"
 msgstr ""
 
-#: admin/general-settings.php:189
+#: admin/general-settings.php:193
 msgid "Show Credit Link"
 msgstr ""
 
-#: admin/general-settings.php:190
+#: admin/general-settings.php:194
 msgid ""
 "By enabling this, you agree to display a tiny credit link over the overlay "
 "when a popup is displayed."
 msgstr ""
 
-#: admin/general-settings.php:249
+#: admin/general-settings.php:256
 msgid "Advanced Settings"
 msgstr ""
 
-#: admin/general-settings.php:256
+#: admin/general-settings.php:263
 msgid "Admin Menu Position "
 msgstr ""
 
-#: admin/general-settings.php:258
+#: admin/general-settings.php:265
 #. translators: %s: Convert Pro Name
 msgid "%s will be listed under the menu you select here."
 msgstr ""
 
-#: admin/general-settings.php:276
+#: admin/general-settings.php:283
 #. translators: %s percentage
 msgid "Allow %s For"
 msgstr ""
 
-#: admin/general-settings.php:277
+#: admin/general-settings.php:284
 #. translators: %s percentage
 msgid ""
 "The site administrator has complete access to %s. Select the user roles you "
 "wish to grant access to."
 msgstr ""
 
-#: admin/general-settings.php:305
+#: admin/general-settings.php:312
 msgid "Add Antispam field to the form"
 msgstr ""
 
-#: admin/general-settings.php:306
+#: admin/general-settings.php:313
 msgid ""
 "Enabling this will add an antispam field to all call-to-action forms. "
 "Convert Pro uses Honeypot field technique to fight spam."
 msgstr ""
 
-#: admin/general-settings.php:319
+#: admin/general-settings.php:326
 msgid "MX Record Validation For Email"
 msgstr ""
 
-#: admin/general-settings.php:320
+#: admin/general-settings.php:327
 msgid "Enabling this will check whether the entered Email ID is valid or fake."
 msgstr ""
 
-#: admin/general-settings.php:333
+#: admin/general-settings.php:340
 msgid "Developer Mode "
 msgstr ""
 
-#: admin/general-settings.php:334
+#: admin/general-settings.php:341
 msgid ""
 "Enabling this will help you debug an issue with a particular design by "
 "viewing the respective CSS/JS file associated with it."
 msgstr ""
 
-#: admin/general-settings.php:347
+#: admin/general-settings.php:354
 msgid "Allow Beta Updates "
 msgstr ""
 
-#: admin/general-settings.php:348
+#: admin/general-settings.php:355
 msgid "Enable this option to receive update notifications for beta versions."
 msgstr ""
 
-#: admin/general-settings.php:364
+#: admin/general-settings.php:371
 msgid "Allow images load on document ready "
 msgstr ""
 
-#: admin/general-settings.php:365
+#: admin/general-settings.php:372
 msgid "Enable this option to load images on load of document."
 msgstr ""
 
-#: admin/general-settings.php:397
+#: admin/general-settings.php:404
 msgid "Cache"
 msgstr ""
 
-#: admin/general-settings.php:398
+#: admin/general-settings.php:405
 msgid ""
 "HTML data of your call-to-action is dynamically generated and cached each "
 "time you create or edit a call-to-action. There might be chances that cache "
@@ -677,7 +711,7 @@ msgid ""
 "clicking the button below."
 msgstr ""
 
-#: admin/general-settings.php:400 classes/class-cp-v2-admin.php:242
+#: admin/general-settings.php:407 classes/class-cp-v2-admin.php:246
 msgid "Clear Cache"
 msgstr ""
 
@@ -733,8 +767,8 @@ msgstr ""
 msgid "Call-to-action"
 msgstr ""
 
-#: admin/insights.php:105 admin/insights.php:290
-#: includes/class-bsf-menu.php:116
+#: admin/insights.php:105 admin/insights.php:294
+#: includes/class-bsf-menu.php:118
 msgid "Create New"
 msgstr ""
 
@@ -746,8 +780,8 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: admin/insights.php:120 admin/insights.php:389
-#: classes/class-cp-v2-admin.php:617
+#: admin/insights.php:120 admin/insights.php:432
+#: classes/class-cp-v2-admin.php:644
 msgid "Duplicate"
 msgstr ""
 
@@ -755,116 +789,148 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: admin/insights.php:130 admin/insights.php:134
+#: admin/insights.php:129
+msgid "Change Slug"
+msgstr ""
+
+#: admin/insights.php:134 admin/insights.php:138
 msgid "Delete"
 msgstr ""
 
-#: admin/insights.php:132
+#: admin/insights.php:136
 msgid ""
 "This call to action is part of an A/B test. Please delete the test to be "
 "able to delete this call to action."
 msgstr ""
 
-#: admin/insights.php:176
+#: admin/insights.php:180
 msgid "Are you sure you want to delete this campaign?"
 msgstr ""
 
-#: admin/insights.php:189
+#: admin/insights.php:193
 msgid "Delete campaign"
 msgstr ""
 
-#: admin/insights.php:193
+#: admin/insights.php:197
 msgid "View details"
 msgstr ""
 
-#: admin/insights.php:205
+#: admin/insights.php:209
 msgid "Insight"
 msgstr ""
 
-#: admin/insights.php:208 framework/style-options.php:1483
-#: framework/style-options.php:5585 framework/style-options.php:5727
-#: framework/types/class-cp-before-after.php:495
-#: framework/types/class-cp-full-screen.php:446
-#: framework/types/class-cp-full-screen.php:1013
-#: framework/types/class-cp-info-bar.php:389
+#: admin/insights.php:212 framework/style-options.php:1642
+#: framework/style-options.php:5872 framework/style-options.php:6014
+#: framework/types/class-cp-before-after.php:499
+#: framework/types/class-cp-full-screen.php:449
+#: framework/types/class-cp-full-screen.php:1016
+#: framework/types/class-cp-info-bar.php:392
 #: framework/types/class-cp-inline.php:429
-#: framework/types/class-cp-modal-popup.php:440
-#: framework/types/class-cp-modal-popup.php:754
-#: framework/types/class-cp-slide-in.php:426
-#: framework/types/class-cp-welcome-mat.php:464
-#: framework/types/class-cp-welcome-mat.php:1008
+#: framework/types/class-cp-modal-popup.php:443
+#: framework/types/class-cp-modal-popup.php:757
+#: framework/types/class-cp-slide-in.php:429
+#: framework/types/class-cp-welcome-mat.php:466
+#: framework/types/class-cp-welcome-mat.php:1010
 #: framework/types/class-cp-widget.php:460
 msgid "Type"
 msgstr ""
 
-#: admin/insights.php:211
+#: admin/insights.php:215
 msgid "Status"
 msgstr ""
 
-#: admin/insights.php:222 framework/fields/cp_email/cp-email.php:42
-#: framework/style-options.php:3607 framework/style-options.php:3765
-#: framework/style-options.php:3780 framework/style-options.php:3793
-#: framework/style-options.php:3794 framework/style-options.php:4154
-#: framework/style-options.php:4167 framework/style-options.php:4352
-#: framework/style-options.php:4364 framework/style-options.php:4565
-#: framework/style-options.php:4998 framework/style-options.php:5056
-#: framework/style-options.php:5126
+#: admin/insights.php:226 framework/fields/cp_email/cp-email.php:42
+#: framework/style-options.php:3766 framework/style-options.php:3924
+#: framework/style-options.php:3939 framework/style-options.php:3952
+#: framework/style-options.php:3953 framework/style-options.php:4190
+#: framework/style-options.php:4203 framework/style-options.php:4441
+#: framework/style-options.php:4454 framework/style-options.php:4639
+#: framework/style-options.php:4651 framework/style-options.php:4852
+#: framework/style-options.php:5285 framework/style-options.php:5343
+#: framework/style-options.php:5413
 msgid "Name"
 msgstr ""
 
-#: admin/insights.php:254
+#: admin/insights.php:258
 #. translators: %s percentage
 msgid "You have not yet created a call-to-action! "
 msgstr ""
 
-#: admin/insights.php:256
+#: admin/insights.php:260
 msgid "Create one"
 msgstr ""
 
-#: admin/insights.php:258
+#: admin/insights.php:262
 msgid " quickly!"
 msgstr ""
 
-#: admin/insights.php:280
+#: admin/insights.php:284
 msgid "Display Title cannot be empty."
 msgstr ""
 
-#: admin/insights.php:283
+#: admin/insights.php:287
 msgid "Select / Create a Group"
 msgstr ""
 
-#: admin/insights.php:289
+#: admin/insights.php:293
 msgid "Use Existing"
 msgstr ""
 
-#: admin/insights.php:319
+#: admin/insights.php:323
 msgid "Select Group"
 msgstr ""
 
-#: admin/insights.php:334
+#: admin/insights.php:338
 msgid "Group Name"
 msgstr ""
 
-#: admin/insights.php:339 admin/insights.php:363 admin/insights.php:388
-#: admin/template.php:117
-msgid "Cancel"
-msgstr ""
-
-#: admin/insights.php:340 admin/insights.php:364
+#: admin/insights.php:344 admin/insights.php:368 admin/insights.php:408
 #: framework/connect-popup.php:105 framework/style-customizer.php:223
 msgid "Save"
 msgstr ""
 
-#: admin/insights.php:350
+#: admin/insights.php:354
 msgid "Rename Your Call-to-action"
 msgstr ""
 
-#: admin/insights.php:357 admin/insights.php:382 admin/template.php:111
+#: admin/insights.php:361 admin/insights.php:425 admin/template.php:111
 msgid "Call-to-action Name"
 msgstr ""
 
-#: admin/insights.php:375
+#: admin/insights.php:378
+msgid "Change Your Call-to-action Slug"
+msgstr ""
+
+#: admin/insights.php:383
+msgid "Note: "
+msgstr ""
+
+#: admin/insights.php:387
+msgid ""
+"It is not recommended to change the slug if you already have analytics "
+"running for this CTA. Changing the slug will result in resetting the "
+"analytics. Both impressions and conversions will set to 0. Existing "
+"analytics data will be deleted for this CTA."
+msgstr ""
+
+#: admin/insights.php:391
+msgid "You can refer to the article "
+msgstr ""
+
+#: admin/insights.php:392
+msgid "here."
+msgstr ""
+
+#: admin/insights.php:401
+msgid "Call-to-action Slug ( ex: your-slug-name )"
+msgstr ""
+
+#: admin/insights.php:418
 msgid "Duplicate Your Call-to-action"
+msgstr ""
+
+#: admin/rollback-version.php:18
+msgid "Please activate the license for Rollback Feature."
 msgstr ""
 
 #: admin/template.php:26
@@ -896,210 +962,222 @@ msgstr ""
 msgid "<a href=\"%s\">Settings</a>"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:243
+#: classes/class-cp-v2-admin.php:247
 msgid "Clearing cache..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:244
+#: classes/class-cp-v2-admin.php:248
 msgid "Cleared"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454
 msgid "Years"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454
 msgid "Months"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454
 msgid "Weeks"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454
 msgid "Days"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436 framework/style-options.php:1863
-#: framework/style-options.php:2037
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454 framework/style-options.php:2022
+#: framework/style-options.php:2196
 msgid "Hours"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436 framework/style-options.php:1906
-#: framework/style-options.php:2080
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454 framework/style-options.php:2065
+#: framework/style-options.php:2239
 msgid "Minutes"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:475 classes/class-cp-v2-admin.php:517
-#: classes/class-cp-v2-model.php:436 framework/style-options.php:2159
+#: classes/class-cp-v2-admin.php:500 classes/class-cp-v2-admin.php:542
+#: classes/class-cp-v2-model.php:454 framework/style-options.php:2318
 msgid "Seconds"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439 framework/style-options.php:1748
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457 framework/style-options.php:1907
 msgid "Year"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439 framework/style-options.php:1782
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457 framework/style-options.php:1941
 msgid "Month"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457
 msgid "Week"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439 framework/style-options.php:1813
-#: framework/style-options.php:1986
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457 framework/style-options.php:1972
+#: framework/style-options.php:2145
 msgid "Day"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457
 msgid "Hour"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457
 msgid "Minute"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:476 classes/class-cp-v2-admin.php:518
-#: classes/class-cp-v2-model.php:439
+#: classes/class-cp-v2-admin.php:501 classes/class-cp-v2-admin.php:543
+#: classes/class-cp-v2-model.php:457
 msgid "Second"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:596
+#: classes/class-cp-v2-admin.php:621
 msgid ""
 "Please note that the scroll between range trigger will not work as expected "
 "when you have it enabled in more than one rulesets."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:597
+#: classes/class-cp-v2-admin.php:622
 msgid "Specific Pages, Posts, Categories or Taxonomies."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:598
+#: classes/class-cp-v2-admin.php:623
 msgid "Specific Countries."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:599
+#: classes/class-cp-v2-admin.php:624
 msgid "Select post types"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:600
+#: classes/class-cp-v2-admin.php:625
 msgid "This is a hidden field.This text will not appear at frontend."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:601
+#: classes/class-cp-v2-admin.php:626
 msgid "This is a recaptcha field.This will appear at frontend."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:602
+#: classes/class-cp-v2-admin.php:627
 msgid "Click Here"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:603
+#: classes/class-cp-v2-admin.php:628
 msgid "Search Settings..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:604
+#: classes/class-cp-v2-admin.php:629
 msgid "Search Mailer..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:605 framework/style-customizer.php:436
+#: classes/class-cp-v2-admin.php:630 framework/style-customizer.php:436
 msgid "Search Shapes..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:606
+#: classes/class-cp-v2-admin.php:631
 msgid "Refreshed"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:607
+#: classes/class-cp-v2-admin.php:632
 msgid "Use This"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:608
+#: classes/class-cp-v2-admin.php:633
 msgid "Try Again"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:610
+#: classes/class-cp-v2-admin.php:635
 #. translators: %s link
 msgid "Are you sure you want to delete this call-to-action?"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:611
+#: classes/class-cp-v2-admin.php:636
 msgid "Please select different campaign to process."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:612
+#: classes/class-cp-v2-admin.php:637
 msgid "Campaign name cannot be empty."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:613
+#: classes/class-cp-v2-admin.php:638
 msgid "This name is already registered! Please try again using a different name."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:614
+#: classes/class-cp-v2-admin.php:639
+msgid ""
+"This Slug name is already registered! Please try again using a different "
+"Slug name."
+msgstr ""
+
+#: classes/class-cp-v2-admin.php:640
 msgid "Design name cannot be empty."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:615
+#: classes/class-cp-v2-admin.php:641
+msgid ""
+"Design Slug name cannot be empty Or It should not contain any space in the "
+"name."
+msgstr ""
+
+#: classes/class-cp-v2-admin.php:642
 msgid "Deleting..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:616
+#: classes/class-cp-v2-admin.php:643
 msgid "Saving..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:618
+#: classes/class-cp-v2-admin.php:645
 msgid "Duplicating..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:619
+#: classes/class-cp-v2-admin.php:646
 msgid "Creating..."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:620
+#: classes/class-cp-v2-admin.php:647
 msgid "SAVED"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:621
+#: classes/class-cp-v2-admin.php:648
 msgid "ERROR"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:622
+#: classes/class-cp-v2-admin.php:649
 msgid "SAVE CHANGES"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:623 classes/class-cp-v2-model.php:446
+#: classes/class-cp-v2-admin.php:650 classes/class-cp-v2-model.php:464
 msgid ""
 "This form is not connected with any mailer service! Please contact web "
 "administrator."
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:624
+#: classes/class-cp-v2-admin.php:651
 msgid "Do you really want to delete Step"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:625
+#: classes/class-cp-v2-admin.php:652
 msgid "Are you sure you want to delete this ruleset?"
 msgstr ""
 
-#: classes/class-cp-v2-admin.php:795
+#: classes/class-cp-v2-admin.php:822
 msgid "Refresh Cloud Templates"
 msgstr ""
 
 #: classes/class-cp-v2-cloud-templates.php:100
-#: includes/common-helper-functions.php:2930
+#: includes/common-helper-functions.php:2972
 msgid "Select Your Goal"
 msgstr ""
 
@@ -1158,14 +1236,14 @@ msgstr ""
 msgid "900 italic"
 msgstr ""
 
-#: classes/class-cp-v2-loader.php:255
+#: classes/class-cp-v2-loader.php:262
 msgid ""
 "Your server seems to be running outdated, unsupported and vulnerable "
 "version of PHP. You are advised to contact your host provider and upgrade "
 "to PHP version 5.6 or greater."
 msgstr ""
 
-#: classes/class-cp-v2-loader.php:410
+#: classes/class-cp-v2-loader.php:424
 msgid "You currently have two versions of"
 msgstr ""
 
@@ -1173,15 +1251,15 @@ msgstr ""
 msgid "Convert Pro"
 msgstr ""
 
-#: classes/class-cp-v2-loader.php:413
+#: classes/class-cp-v2-loader.php:427
 msgid "active on this site. Please"
 msgstr ""
 
-#: classes/class-cp-v2-loader.php:415
+#: classes/class-cp-v2-loader.php:429
 msgid "deactivate one"
 msgstr ""
 
-#: classes/class-cp-v2-loader.php:416
+#: classes/class-cp-v2-loader.php:430
 msgid " before continuing."
 msgstr ""
 
@@ -1195,7 +1273,7 @@ msgstr ""
 msgid "Failed to download the MaxMind database."
 msgstr ""
 
-#: classes/class-cp-v2-model.php:451
+#: classes/class-cp-v2-model.php:469
 msgid "Invalid Email Address!"
 msgstr ""
 
@@ -1257,8 +1335,8 @@ msgstr ""
 msgid "No connections found"
 msgstr ""
 
-#: classes/class-cp-v2-post-type.php:128 includes/class-bsf-menu.php:161
-#: includes/class-bsf-menu.php:162
+#: classes/class-cp-v2-post-type.php:128 includes/class-bsf-menu.php:175
+#: includes/class-bsf-menu.php:176
 msgid "API Connections"
 msgstr ""
 
@@ -1289,569 +1367,571 @@ msgstr ""
 msgid "No widgets added yet. Please add widgets from %s -> Create New -> Widget"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:710
-#: framework/style-options.php:1486
-#: framework/types/class-cp-full-screen.php:1016
-#: framework/types/class-cp-welcome-mat.php:1011
+#: framework/classes/class-cp-framework.php:712
+#: framework/style-options.php:1645
+#: framework/types/class-cp-full-screen.php:1019
+#: framework/types/class-cp-welcome-mat.php:1013
 msgid "Text"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:717
-#: framework/style-options.php:5326 framework/style-options.php:5442
+#: framework/classes/class-cp-framework.php:719
+#: framework/style-options.php:5613 framework/style-options.php:5729
 msgid "Button Text"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:718
+#: framework/classes/class-cp-framework.php:720
 msgid "Button Default Text"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:728
-#: framework/types/class-cp-before-after.php:915
-#: framework/types/class-cp-full-screen.php:1270
-#: framework/types/class-cp-info-bar.php:1049
+#: framework/classes/class-cp-framework.php:730
+#: framework/types/class-cp-before-after.php:919
+#: framework/types/class-cp-full-screen.php:1273
+#: framework/types/class-cp-info-bar.php:1052
 #: framework/types/class-cp-inline.php:849
-#: framework/types/class-cp-modal-popup.php:1117
-#: framework/types/class-cp-slide-in.php:1088
-#: framework/types/class-cp-welcome-mat.php:1265
+#: framework/types/class-cp-modal-popup.php:1120
+#: framework/types/class-cp-slide-in.php:1091
+#: framework/types/class-cp-welcome-mat.php:1267
 #: framework/types/class-cp-widget.php:857
 msgid "Font Family"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:741
-#: framework/style-options.php:1527 framework/style-options.php:3128
-#: framework/style-options.php:3297 framework/style-options.php:3464
-#: framework/style-options.php:5465
-#: framework/types/class-cp-before-after.php:955
-#: framework/types/class-cp-full-screen.php:1057
-#: framework/types/class-cp-full-screen.php:1310
-#: framework/types/class-cp-info-bar.php:829
-#: framework/types/class-cp-info-bar.php:1089
+#: framework/classes/class-cp-framework.php:743
+#: framework/style-options.php:1686 framework/style-options.php:3287
+#: framework/style-options.php:3456 framework/style-options.php:3623
+#: framework/style-options.php:5752
+#: framework/types/class-cp-before-after.php:959
+#: framework/types/class-cp-full-screen.php:1060
+#: framework/types/class-cp-full-screen.php:1313
+#: framework/types/class-cp-info-bar.php:832
+#: framework/types/class-cp-info-bar.php:1092
 #: framework/types/class-cp-inline.php:889
-#: framework/types/class-cp-modal-popup.php:1157
-#: framework/types/class-cp-slide-in.php:813
-#: framework/types/class-cp-slide-in.php:1128
-#: framework/types/class-cp-welcome-mat.php:1052
-#: framework/types/class-cp-welcome-mat.php:1305
+#: framework/types/class-cp-modal-popup.php:1160
+#: framework/types/class-cp-slide-in.php:816
+#: framework/types/class-cp-slide-in.php:1131
+#: framework/types/class-cp-welcome-mat.php:1054
+#: framework/types/class-cp-welcome-mat.php:1307
 #: framework/types/class-cp-widget.php:897
 msgid "Font Size"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:754
-#: framework/style-options.php:1540 framework/style-options.php:3141
-#: framework/style-options.php:3310 framework/style-options.php:3478
-#: framework/style-options.php:4838
-#: framework/types/class-cp-full-screen.php:1070
-#: framework/types/class-cp-welcome-mat.php:1065
+#: framework/classes/class-cp-framework.php:756
+#: framework/style-options.php:1699 framework/style-options.php:3300
+#: framework/style-options.php:3469 framework/style-options.php:3637
+#: framework/style-options.php:5125
+#: framework/types/class-cp-full-screen.php:1073
+#: framework/types/class-cp-welcome-mat.php:1067
 msgid "Line Height"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:769
-#: framework/style-options.php:1556 framework/style-options.php:3156
-#: framework/style-options.php:3325 framework/style-options.php:3493
-#: framework/style-options.php:5478
-#: framework/types/class-cp-before-after.php:981
-#: framework/types/class-cp-full-screen.php:1086
-#: framework/types/class-cp-full-screen.php:1336
-#: framework/types/class-cp-info-bar.php:1115
+#: framework/classes/class-cp-framework.php:771
+#: framework/style-options.php:1715 framework/style-options.php:3315
+#: framework/style-options.php:3484 framework/style-options.php:3652
+#: framework/style-options.php:5765
+#: framework/types/class-cp-before-after.php:985
+#: framework/types/class-cp-full-screen.php:1089
+#: framework/types/class-cp-full-screen.php:1339
+#: framework/types/class-cp-info-bar.php:1118
 #: framework/types/class-cp-inline.php:915
-#: framework/types/class-cp-modal-popup.php:1183
-#: framework/types/class-cp-slide-in.php:1154
-#: framework/types/class-cp-welcome-mat.php:1081
-#: framework/types/class-cp-welcome-mat.php:1331
+#: framework/types/class-cp-modal-popup.php:1186
+#: framework/types/class-cp-slide-in.php:1157
+#: framework/types/class-cp-welcome-mat.php:1083
+#: framework/types/class-cp-welcome-mat.php:1333
 #: framework/types/class-cp-widget.php:923
 msgid "Letter Spacing"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:784
-#: framework/style-options.php:1572 framework/style-options.php:2328
-#: framework/style-options.php:3171 framework/style-options.php:3340
-#: framework/style-options.php:3508 framework/style-options.php:5491
-#: framework/types/class-cp-before-after.php:1002
-#: framework/types/class-cp-full-screen.php:1102
-#: framework/types/class-cp-full-screen.php:1357
-#: framework/types/class-cp-info-bar.php:1136
+#: framework/classes/class-cp-framework.php:786
+#: framework/style-options.php:1731 framework/style-options.php:2487
+#: framework/style-options.php:3330 framework/style-options.php:3499
+#: framework/style-options.php:3667 framework/style-options.php:5778
+#: framework/types/class-cp-before-after.php:1006
+#: framework/types/class-cp-full-screen.php:1105
+#: framework/types/class-cp-full-screen.php:1360
+#: framework/types/class-cp-info-bar.php:1139
 #: framework/types/class-cp-inline.php:936
-#: framework/types/class-cp-modal-popup.php:1204
-#: framework/types/class-cp-slide-in.php:1175
-#: framework/types/class-cp-welcome-mat.php:1097
-#: framework/types/class-cp-welcome-mat.php:1352
+#: framework/types/class-cp-modal-popup.php:1207
+#: framework/types/class-cp-slide-in.php:1178
+#: framework/types/class-cp-welcome-mat.php:1099
+#: framework/types/class-cp-welcome-mat.php:1354
 #: framework/types/class-cp-widget.php:944
 msgid "Text Alignment"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:802
-#: framework/style-options.php:1590 framework/style-options.php:2770
-#: framework/style-options.php:3189 framework/style-options.php:3358
-#: framework/style-options.php:3526
-#: framework/types/class-cp-before-after.php:366
-#: framework/types/class-cp-before-after.php:1032
-#: framework/types/class-cp-full-screen.php:317
-#: framework/types/class-cp-full-screen.php:1120
-#: framework/types/class-cp-full-screen.php:1387
-#: framework/types/class-cp-info-bar.php:261
-#: framework/types/class-cp-info-bar.php:1166
+#: framework/classes/class-cp-framework.php:804
+#: framework/style-options.php:1749 framework/style-options.php:2929
+#: framework/style-options.php:3348 framework/style-options.php:3517
+#: framework/style-options.php:3685
+#: framework/types/class-cp-before-after.php:370
+#: framework/types/class-cp-before-after.php:1036
+#: framework/types/class-cp-full-screen.php:320
+#: framework/types/class-cp-full-screen.php:1123
+#: framework/types/class-cp-full-screen.php:1390
+#: framework/types/class-cp-info-bar.php:264
+#: framework/types/class-cp-info-bar.php:1169
 #: framework/types/class-cp-inline.php:300
 #: framework/types/class-cp-inline.php:966
-#: framework/types/class-cp-modal-popup.php:311
-#: framework/types/class-cp-modal-popup.php:636
-#: framework/types/class-cp-modal-popup.php:1234
-#: framework/types/class-cp-slide-in.php:297
-#: framework/types/class-cp-slide-in.php:1205
-#: framework/types/class-cp-welcome-mat.php:335
-#: framework/types/class-cp-welcome-mat.php:1115
-#: framework/types/class-cp-welcome-mat.php:1382
+#: framework/types/class-cp-modal-popup.php:314
+#: framework/types/class-cp-modal-popup.php:639
+#: framework/types/class-cp-modal-popup.php:1237
+#: framework/types/class-cp-slide-in.php:300
+#: framework/types/class-cp-slide-in.php:1208
+#: framework/types/class-cp-welcome-mat.php:337
+#: framework/types/class-cp-welcome-mat.php:1117
+#: framework/types/class-cp-welcome-mat.php:1384
 #: framework/types/class-cp-widget.php:331
 #: framework/types/class-cp-widget.php:974
 msgid "Color"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:812
+#: framework/classes/class-cp-framework.php:814
 msgid "Title Hover Color"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:825
+#: framework/classes/class-cp-framework.php:827
 msgid "Colors"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:831
-#: framework/style-options.php:1601 framework/style-options.php:2366
-#: framework/style-options.php:5365
-#: framework/types/class-cp-before-after.php:588
-#: framework/types/class-cp-before-after.php:1087
-#: framework/types/class-cp-full-screen.php:539
-#: framework/types/class-cp-full-screen.php:1131
-#: framework/types/class-cp-full-screen.php:1442
-#: framework/types/class-cp-info-bar.php:479
-#: framework/types/class-cp-info-bar.php:880
-#: framework/types/class-cp-info-bar.php:1221
+#: framework/classes/class-cp-framework.php:833
+#: framework/style-options.php:1760 framework/style-options.php:2525
+#: framework/style-options.php:5652
+#: framework/types/class-cp-before-after.php:592
+#: framework/types/class-cp-before-after.php:1091
+#: framework/types/class-cp-full-screen.php:542
+#: framework/types/class-cp-full-screen.php:1134
+#: framework/types/class-cp-full-screen.php:1445
+#: framework/types/class-cp-info-bar.php:482
+#: framework/types/class-cp-info-bar.php:883
+#: framework/types/class-cp-info-bar.php:1224
 #: framework/types/class-cp-inline.php:522
 #: framework/types/class-cp-inline.php:1021
-#: framework/types/class-cp-modal-popup.php:533
-#: framework/types/class-cp-modal-popup.php:1289
-#: framework/types/class-cp-slide-in.php:519
-#: framework/types/class-cp-slide-in.php:864
-#: framework/types/class-cp-slide-in.php:1260
-#: framework/types/class-cp-welcome-mat.php:557
-#: framework/types/class-cp-welcome-mat.php:1126
-#: framework/types/class-cp-welcome-mat.php:1437
+#: framework/types/class-cp-modal-popup.php:536
+#: framework/types/class-cp-modal-popup.php:1292
+#: framework/types/class-cp-slide-in.php:522
+#: framework/types/class-cp-slide-in.php:867
+#: framework/types/class-cp-slide-in.php:1263
+#: framework/types/class-cp-welcome-mat.php:559
+#: framework/types/class-cp-welcome-mat.php:1128
+#: framework/types/class-cp-welcome-mat.php:1439
 #: framework/types/class-cp-widget.php:553
 #: framework/types/class-cp-widget.php:1029
 msgid "Background Color"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:841
-#: framework/style-options.php:5375
+#: framework/classes/class-cp-framework.php:843
+#: framework/style-options.php:5662
 msgid "Background Hover Color"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:854
+#: framework/classes/class-cp-framework.php:856
 msgid "Action"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:860
+#: framework/classes/class-cp-framework.php:862
 msgid "Field Action"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:864
-#: framework/classes/class-cp-framework.php:1147
-#: framework/classes/class-cp-framework.php:1236
-#: framework/style-options.php:1449 framework/style-options.php:1453
-#: framework/style-options.php:1655 framework/style-options.php:2244
-#: framework/style-options.php:2261 framework/style-options.php:2390
-#: framework/style-options.php:2817 framework/style-options.php:2854
-#: framework/style-options.php:2950 framework/style-options.php:5394
-#: framework/style-options.php:5815
-#: framework/types/class-cp-full-screen.php:1207
-#: framework/types/class-cp-welcome-mat.php:1202
+#: framework/classes/class-cp-framework.php:866
+#: framework/classes/class-cp-framework.php:1149
+#: framework/classes/class-cp-framework.php:1238
+#: framework/style-options.php:1608 framework/style-options.php:1612
+#: framework/style-options.php:1814 framework/style-options.php:2403
+#: framework/style-options.php:2420 framework/style-options.php:2549
+#: framework/style-options.php:2976 framework/style-options.php:3013
+#: framework/style-options.php:3109 framework/style-options.php:5681
+#: framework/style-options.php:6102
+#: framework/types/class-cp-full-screen.php:1210
+#: framework/types/class-cp-welcome-mat.php:1204
 msgid "None"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:865
-#: framework/style-options.php:1656 framework/style-options.php:2818
-#: framework/style-options.php:5395 framework/style-options.php:5816
-#: framework/types/class-cp-full-screen.php:1208
-#: framework/types/class-cp-welcome-mat.php:1203
+#: framework/classes/class-cp-framework.php:867
+#: framework/style-options.php:1815 framework/style-options.php:2977
+#: framework/style-options.php:5682 framework/style-options.php:6103
+#: framework/types/class-cp-full-screen.php:1211
+#: framework/types/class-cp-welcome-mat.php:1205
 msgid "Submit"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:866
-#: framework/style-options.php:1657 framework/style-options.php:2819
-#: framework/style-options.php:5396 framework/style-options.php:5817
-#: framework/types/class-cp-full-screen.php:1209
-#: framework/types/class-cp-welcome-mat.php:1204
+#: framework/classes/class-cp-framework.php:868
+#: framework/style-options.php:1816 framework/style-options.php:2978
+#: framework/style-options.php:5683 framework/style-options.php:6104
+#: framework/types/class-cp-full-screen.php:1212
+#: framework/types/class-cp-welcome-mat.php:1206
 msgid "Submit & Go to Step"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:867
-#: framework/style-options.php:2820 framework/style-options.php:5397
-#: framework/style-options.php:5818
+#: framework/classes/class-cp-framework.php:869
+#: framework/style-options.php:2979 framework/style-options.php:5684
+#: framework/style-options.php:6105
 msgid "Submit & Go to URL"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:868
-#: framework/style-options.php:1658 framework/style-options.php:2821
-#: framework/style-options.php:5398 framework/style-options.php:5819
-#: framework/types/class-cp-full-screen.php:1210
-#: framework/types/class-cp-welcome-mat.php:1205
+#: framework/classes/class-cp-framework.php:870
+#: framework/style-options.php:1817 framework/style-options.php:2980
+#: framework/style-options.php:5685 framework/style-options.php:6106
+#: framework/types/class-cp-full-screen.php:1213
+#: framework/types/class-cp-welcome-mat.php:1207
 msgid "Submit & Close"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:869
-#: framework/style-options.php:1659 framework/style-options.php:2822
-#: framework/style-options.php:2951 framework/style-options.php:5399
-#: framework/types/class-cp-full-screen.php:1211
-#: framework/types/class-cp-welcome-mat.php:1206
+#: framework/classes/class-cp-framework.php:871
+#: framework/style-options.php:1818 framework/style-options.php:2981
+#: framework/style-options.php:3110 framework/style-options.php:5686
+#: framework/types/class-cp-full-screen.php:1214
+#: framework/types/class-cp-welcome-mat.php:1208
 msgid "Go to URL"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:870
-#: framework/style-options.php:1660 framework/style-options.php:2823
-#: framework/style-options.php:2952 framework/style-options.php:5400
-#: framework/types/class-cp-full-screen.php:1212
-#: framework/types/class-cp-welcome-mat.php:1207
+#: framework/classes/class-cp-framework.php:872
+#: framework/style-options.php:1819 framework/style-options.php:2982
+#: framework/style-options.php:3111 framework/style-options.php:5687
+#: framework/types/class-cp-full-screen.php:1215
+#: framework/types/class-cp-welcome-mat.php:1209
 msgid "Go to Step"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:872
-#: framework/style-options.php:2825 framework/style-options.php:5402
-#: framework/style-options.php:5823
+#: framework/classes/class-cp-framework.php:874
+#: framework/style-options.php:2984 framework/style-options.php:5689
+#: framework/style-options.php:6110
 msgid "Close Page"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:873
-#: framework/style-options.php:2826 framework/style-options.php:5403
-#: framework/style-options.php:5824
+#: framework/classes/class-cp-framework.php:875
+#: framework/style-options.php:2985 framework/style-options.php:5690
+#: framework/style-options.php:6111
 msgid "Close & Go to URL"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:884
+#: framework/classes/class-cp-framework.php:886
 msgid "Successful Submission Message"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:885
+#: framework/classes/class-cp-framework.php:887
 msgid "Thank You for Subscribing!"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:914
+#: framework/classes/class-cp-framework.php:916
 msgid "Pass through GET parameter"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:915
+#: framework/classes/class-cp-framework.php:917
 msgid "Turn on this option if you wish to pass the form values as GET parameter."
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:918
-#: framework/classes/class-cp-framework.php:1324
+#: framework/classes/class-cp-framework.php:920
+#: framework/classes/class-cp-framework.php:1326
 msgid "Yes"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:919
-#: framework/classes/class-cp-framework.php:1325
+#: framework/classes/class-cp-framework.php:921
+#: framework/classes/class-cp-framework.php:1327
 msgid "No"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:936
+#: framework/classes/class-cp-framework.php:938
 msgid "Enter URL here"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:963
+#: framework/classes/class-cp-framework.php:965
 msgid "Enter URL Target"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:994
+#: framework/classes/class-cp-framework.php:996
 msgid "Enter URL Follow"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1012
+#: framework/classes/class-cp-framework.php:1014
 msgid "Select Step"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1037
+#: framework/classes/class-cp-framework.php:1039
 msgid "Count as a conversion"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1040
-#: framework/classes/class-cp-framework.php:1275
-#: framework/style-options.php:242 framework/style-options.php:282
-#: framework/style-options.php:352 framework/style-options.php:426
-#: framework/style-options.php:581 framework/style-options.php:670
-#: framework/style-options.php:865 framework/style-options.php:1011
-#: framework/style-options.php:1136 framework/style-options.php:1200
-#: framework/style-options.php:1283 framework/style-options.php:2486
-#: framework/style-options.php:2502 framework/style-options.php:2518
-#: framework/style-options.php:2534 framework/style-options.php:2550
-#: framework/style-options.php:3622 framework/style-options.php:3638
-#: framework/style-options.php:3808 framework/style-options.php:3824
-#: framework/style-options.php:3995 framework/style-options.php:4011
-#: framework/style-options.php:4182 framework/style-options.php:4209
-#: framework/style-options.php:4380 framework/style-options.php:4396
-#: framework/style-options.php:4591 framework/style-options.php:4805
-#: framework/style-options.php:5169 framework/style-options.php:5918
-#: framework/types/class-cp-info-bar.php:745
-#: framework/types/class-cp-info-bar.php:770
-#: framework/types/class-cp-info-bar.php:810
-#: framework/types/class-cp-modal-popup.php:867
-#: framework/types/class-cp-slide-in.php:794
-#: framework/types/class-cp-slide-in.php:943
+#: framework/classes/class-cp-framework.php:1042
+#: framework/classes/class-cp-framework.php:1277
+#: framework/style-options.php:330 framework/style-options.php:440
+#: framework/style-options.php:510 framework/style-options.php:584
+#: framework/style-options.php:739 framework/style-options.php:828
+#: framework/style-options.php:1023 framework/style-options.php:1169
+#: framework/style-options.php:1294 framework/style-options.php:1358
+#: framework/style-options.php:1441 framework/style-options.php:2645
+#: framework/style-options.php:2661 framework/style-options.php:2677
+#: framework/style-options.php:2693 framework/style-options.php:2709
+#: framework/style-options.php:3781 framework/style-options.php:3797
+#: framework/style-options.php:3967 framework/style-options.php:3983
+#: framework/style-options.php:4000 framework/style-options.php:4218
+#: framework/style-options.php:4234 framework/style-options.php:4251
+#: framework/style-options.php:4469 framework/style-options.php:4496
+#: framework/style-options.php:4667 framework/style-options.php:4683
+#: framework/style-options.php:4878 framework/style-options.php:5092
+#: framework/style-options.php:5456 framework/style-options.php:6205
+#: framework/types/class-cp-info-bar.php:748
+#: framework/types/class-cp-info-bar.php:773
+#: framework/types/class-cp-info-bar.php:813
+#: framework/types/class-cp-modal-popup.php:870
+#: framework/types/class-cp-slide-in.php:797
+#: framework/types/class-cp-slide-in.php:946
 msgid "YES"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1041
-#: framework/classes/class-cp-framework.php:1276
-#: framework/style-options.php:243 framework/style-options.php:283
-#: framework/style-options.php:353 framework/style-options.php:427
-#: framework/style-options.php:582 framework/style-options.php:671
-#: framework/style-options.php:866 framework/style-options.php:1012
-#: framework/style-options.php:1137 framework/style-options.php:1201
-#: framework/style-options.php:1284 framework/style-options.php:2487
-#: framework/style-options.php:2503 framework/style-options.php:2519
-#: framework/style-options.php:2535 framework/style-options.php:2551
-#: framework/style-options.php:3623 framework/style-options.php:3639
-#: framework/style-options.php:3809 framework/style-options.php:3825
-#: framework/style-options.php:3996 framework/style-options.php:4012
-#: framework/style-options.php:4183 framework/style-options.php:4210
-#: framework/style-options.php:4381 framework/style-options.php:4397
-#: framework/style-options.php:4592 framework/style-options.php:4806
-#: framework/style-options.php:5170 framework/style-options.php:5919
-#: framework/types/class-cp-info-bar.php:746
-#: framework/types/class-cp-info-bar.php:771
-#: framework/types/class-cp-info-bar.php:811
-#: framework/types/class-cp-modal-popup.php:868
-#: framework/types/class-cp-slide-in.php:795
-#: framework/types/class-cp-slide-in.php:944
+#: framework/classes/class-cp-framework.php:1043
+#: framework/classes/class-cp-framework.php:1278
+#: framework/style-options.php:331 framework/style-options.php:441
+#: framework/style-options.php:511 framework/style-options.php:585
+#: framework/style-options.php:740 framework/style-options.php:829
+#: framework/style-options.php:1024 framework/style-options.php:1170
+#: framework/style-options.php:1295 framework/style-options.php:1359
+#: framework/style-options.php:1442 framework/style-options.php:2646
+#: framework/style-options.php:2662 framework/style-options.php:2678
+#: framework/style-options.php:2694 framework/style-options.php:2710
+#: framework/style-options.php:3782 framework/style-options.php:3798
+#: framework/style-options.php:3968 framework/style-options.php:3984
+#: framework/style-options.php:4001 framework/style-options.php:4219
+#: framework/style-options.php:4235 framework/style-options.php:4252
+#: framework/style-options.php:4470 framework/style-options.php:4497
+#: framework/style-options.php:4668 framework/style-options.php:4684
+#: framework/style-options.php:4879 framework/style-options.php:5093
+#: framework/style-options.php:5457 framework/style-options.php:6206
+#: framework/types/class-cp-info-bar.php:749
+#: framework/types/class-cp-info-bar.php:774
+#: framework/types/class-cp-info-bar.php:814
+#: framework/types/class-cp-modal-popup.php:871
+#: framework/types/class-cp-slide-in.php:798
+#: framework/types/class-cp-slide-in.php:947
 msgid "NO"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1074
-#: framework/classes/class-cp-framework.php:1080
-#: framework/style-options.php:3655 framework/style-options.php:3841
-#: framework/style-options.php:4028 framework/style-options.php:4226
-#: framework/style-options.php:4413 framework/style-options.php:4624
-#: framework/style-options.php:4855 framework/style-options.php:5186
+#: framework/classes/class-cp-framework.php:1076
+#: framework/classes/class-cp-framework.php:1082
+#: framework/style-options.php:3814 framework/style-options.php:4064
+#: framework/style-options.php:4315 framework/style-options.php:4513
+#: framework/style-options.php:4700 framework/style-options.php:4911
+#: framework/style-options.php:5142 framework/style-options.php:5473
 msgid "Animation"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1099
+#: framework/classes/class-cp-framework.php:1101
 msgid "Animation Delay"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1117
+#: framework/classes/class-cp-framework.php:1119
 msgid "Animation Duration"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1134
-#: framework/style-options.php:2377
-#: framework/types/class-cp-before-after.php:1108
-#: framework/types/class-cp-full-screen.php:1463
-#: framework/types/class-cp-info-bar.php:1242
+#: framework/classes/class-cp-framework.php:1136
+#: framework/style-options.php:2536
+#: framework/types/class-cp-before-after.php:1112
+#: framework/types/class-cp-full-screen.php:1466
+#: framework/types/class-cp-info-bar.php:1245
 #: framework/types/class-cp-inline.php:1042
-#: framework/types/class-cp-modal-popup.php:1310
-#: framework/types/class-cp-slide-in.php:1281
-#: framework/types/class-cp-welcome-mat.php:1458
+#: framework/types/class-cp-modal-popup.php:1313
+#: framework/types/class-cp-slide-in.php:1284
+#: framework/types/class-cp-welcome-mat.php:1460
 #: framework/types/class-cp-widget.php:1050
 msgid "Border"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1141
-#: framework/style-options.php:2384
-#: framework/types/class-cp-before-after.php:707
-#: framework/types/class-cp-before-after.php:1122
-#: framework/types/class-cp-full-screen.php:658
-#: framework/types/class-cp-full-screen.php:1477
-#: framework/types/class-cp-info-bar.php:593
-#: framework/types/class-cp-info-bar.php:1256
+#: framework/classes/class-cp-framework.php:1143
+#: framework/style-options.php:2543
+#: framework/types/class-cp-before-after.php:711
+#: framework/types/class-cp-before-after.php:1126
+#: framework/types/class-cp-full-screen.php:661
+#: framework/types/class-cp-full-screen.php:1480
+#: framework/types/class-cp-info-bar.php:596
+#: framework/types/class-cp-info-bar.php:1259
 #: framework/types/class-cp-inline.php:641
 #: framework/types/class-cp-inline.php:1056
-#: framework/types/class-cp-modal-popup.php:901
-#: framework/types/class-cp-modal-popup.php:1324
-#: framework/types/class-cp-slide-in.php:636
-#: framework/types/class-cp-slide-in.php:1295
-#: framework/types/class-cp-welcome-mat.php:657
-#: framework/types/class-cp-welcome-mat.php:1472
+#: framework/types/class-cp-modal-popup.php:904
+#: framework/types/class-cp-modal-popup.php:1327
+#: framework/types/class-cp-slide-in.php:639
+#: framework/types/class-cp-slide-in.php:1298
+#: framework/types/class-cp-welcome-mat.php:659
+#: framework/types/class-cp-welcome-mat.php:1474
 #: framework/types/class-cp-widget.php:672
 #: framework/types/class-cp-widget.php:1064
 msgid "Border Style"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1144
-#: framework/style-options.php:1446 framework/style-options.php:2387
+#: framework/classes/class-cp-framework.php:1146
+#: framework/style-options.php:1605 framework/style-options.php:2546
 msgid "Solid"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1145
-#: framework/style-options.php:1447 framework/style-options.php:2388
+#: framework/classes/class-cp-framework.php:1147
+#: framework/style-options.php:1606 framework/style-options.php:2547
 msgid "Dotted"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1146
-#: framework/style-options.php:1448 framework/style-options.php:2389
+#: framework/classes/class-cp-framework.php:1148
+#: framework/style-options.php:1607 framework/style-options.php:2548
 msgid "Dashed"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1159
-#: framework/style-options.php:2403
-#: framework/types/class-cp-before-after.php:725
-#: framework/types/class-cp-before-after.php:1195
-#: framework/types/class-cp-full-screen.php:676
-#: framework/types/class-cp-full-screen.php:1550
-#: framework/types/class-cp-info-bar.php:611
-#: framework/types/class-cp-info-bar.php:1329
+#: framework/classes/class-cp-framework.php:1161
+#: framework/style-options.php:2562
+#: framework/types/class-cp-before-after.php:729
+#: framework/types/class-cp-before-after.php:1199
+#: framework/types/class-cp-full-screen.php:679
+#: framework/types/class-cp-full-screen.php:1553
+#: framework/types/class-cp-info-bar.php:614
+#: framework/types/class-cp-info-bar.php:1332
 #: framework/types/class-cp-inline.php:659
 #: framework/types/class-cp-inline.php:1129
-#: framework/types/class-cp-modal-popup.php:919
-#: framework/types/class-cp-modal-popup.php:1397
-#: framework/types/class-cp-slide-in.php:654
-#: framework/types/class-cp-slide-in.php:1368
-#: framework/types/class-cp-welcome-mat.php:675
-#: framework/types/class-cp-welcome-mat.php:1545
+#: framework/types/class-cp-modal-popup.php:922
+#: framework/types/class-cp-modal-popup.php:1400
+#: framework/types/class-cp-slide-in.php:657
+#: framework/types/class-cp-slide-in.php:1371
+#: framework/types/class-cp-welcome-mat.php:677
+#: framework/types/class-cp-welcome-mat.php:1547
 #: framework/types/class-cp-widget.php:690
 #: framework/types/class-cp-widget.php:1137
 msgid "Border Color"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1177
+#: framework/classes/class-cp-framework.php:1179
 msgid "Border Hover Color"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1195
-#: framework/style-options.php:2420
-#: framework/types/class-cp-before-after.php:748
-#: framework/types/class-cp-before-after.php:1142
-#: framework/types/class-cp-full-screen.php:699
-#: framework/types/class-cp-full-screen.php:1497
-#: framework/types/class-cp-info-bar.php:634
-#: framework/types/class-cp-info-bar.php:1276
+#: framework/classes/class-cp-framework.php:1197
+#: framework/style-options.php:2579
+#: framework/types/class-cp-before-after.php:752
+#: framework/types/class-cp-before-after.php:1146
+#: framework/types/class-cp-full-screen.php:702
+#: framework/types/class-cp-full-screen.php:1500
+#: framework/types/class-cp-info-bar.php:637
+#: framework/types/class-cp-info-bar.php:1279
 #: framework/types/class-cp-inline.php:682
 #: framework/types/class-cp-inline.php:1076
-#: framework/types/class-cp-modal-popup.php:942
-#: framework/types/class-cp-modal-popup.php:1344
-#: framework/types/class-cp-slide-in.php:677
-#: framework/types/class-cp-slide-in.php:1315
-#: framework/types/class-cp-welcome-mat.php:698
-#: framework/types/class-cp-welcome-mat.php:1492
+#: framework/types/class-cp-modal-popup.php:945
+#: framework/types/class-cp-modal-popup.php:1347
+#: framework/types/class-cp-slide-in.php:680
+#: framework/types/class-cp-slide-in.php:1318
+#: framework/types/class-cp-welcome-mat.php:700
+#: framework/types/class-cp-welcome-mat.php:1494
 #: framework/types/class-cp-widget.php:713
 #: framework/types/class-cp-widget.php:1084
 msgid "Border Width"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1213
-#: framework/style-options.php:2439
-#: framework/types/class-cp-before-after.php:1171
-#: framework/types/class-cp-full-screen.php:1526
-#: framework/types/class-cp-info-bar.php:1305
+#: framework/classes/class-cp-framework.php:1215
+#: framework/style-options.php:2598
+#: framework/types/class-cp-before-after.php:1175
+#: framework/types/class-cp-full-screen.php:1529
+#: framework/types/class-cp-info-bar.php:1308
 #: framework/types/class-cp-inline.php:1105
-#: framework/types/class-cp-modal-popup.php:1373
-#: framework/types/class-cp-slide-in.php:1344
-#: framework/types/class-cp-welcome-mat.php:1521
+#: framework/types/class-cp-modal-popup.php:1376
+#: framework/types/class-cp-slide-in.php:1347
+#: framework/types/class-cp-welcome-mat.php:1523
 #: framework/types/class-cp-widget.php:1113
 msgid "Border Radius"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1225
-#: framework/classes/class-cp-framework.php:1233
-#: framework/types/class-cp-before-after.php:1245
-#: framework/types/class-cp-full-screen.php:1600
-#: framework/types/class-cp-info-bar.php:1379
+#: framework/classes/class-cp-framework.php:1227
+#: framework/classes/class-cp-framework.php:1235
+#: framework/types/class-cp-before-after.php:1249
+#: framework/types/class-cp-full-screen.php:1603
+#: framework/types/class-cp-info-bar.php:1382
 #: framework/types/class-cp-inline.php:1179
-#: framework/types/class-cp-modal-popup.php:1447
-#: framework/types/class-cp-slide-in.php:1418
-#: framework/types/class-cp-welcome-mat.php:1595
+#: framework/types/class-cp-modal-popup.php:1450
+#: framework/types/class-cp-slide-in.php:1421
+#: framework/types/class-cp-welcome-mat.php:1597
 #: framework/types/class-cp-widget.php:1187
 msgid "Box Shadow"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1237
+#: framework/classes/class-cp-framework.php:1239
 msgid "Inset"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1238
-#: framework/style-options.php:2855
+#: framework/classes/class-cp-framework.php:1240
+#: framework/style-options.php:3014
 msgid "Outset"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1249
-#: framework/types/class-cp-full-screen.php:945
-#: framework/types/class-cp-full-screen.php:1181
-#: framework/types/class-cp-info-bar.php:721
-#: framework/types/class-cp-welcome-mat.php:940
-#: framework/types/class-cp-welcome-mat.php:1176
+#: framework/classes/class-cp-framework.php:1251
+#: framework/types/class-cp-full-screen.php:948
+#: framework/types/class-cp-full-screen.php:1184
+#: framework/types/class-cp-info-bar.php:724
+#: framework/types/class-cp-welcome-mat.php:942
+#: framework/types/class-cp-welcome-mat.php:1178
 msgid "Position"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1256
-#: framework/types/class-cp-full-screen.php:952
-#: framework/types/class-cp-full-screen.php:1188
-#: framework/types/class-cp-welcome-mat.php:947
-#: framework/types/class-cp-welcome-mat.php:1183
+#: framework/classes/class-cp-framework.php:1258
+#: framework/types/class-cp-full-screen.php:955
+#: framework/types/class-cp-full-screen.php:1191
+#: framework/types/class-cp-welcome-mat.php:949
+#: framework/types/class-cp-welcome-mat.php:1185
 msgid "Field Respective To"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1259
-#: framework/types/class-cp-full-screen.php:955
-#: framework/types/class-cp-full-screen.php:1191
-#: framework/types/class-cp-welcome-mat.php:950
-#: framework/types/class-cp-welcome-mat.php:1186
+#: framework/classes/class-cp-framework.php:1261
+#: framework/types/class-cp-full-screen.php:958
+#: framework/types/class-cp-full-screen.php:1194
+#: framework/types/class-cp-welcome-mat.php:952
+#: framework/types/class-cp-welcome-mat.php:1188
 msgid "Overlay"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1260
-#: framework/types/class-cp-full-screen.php:956
-#: framework/types/class-cp-full-screen.php:1192
-#: framework/types/class-cp-welcome-mat.php:951
-#: framework/types/class-cp-welcome-mat.php:1187
+#: framework/classes/class-cp-framework.php:1262
+#: framework/types/class-cp-full-screen.php:959
+#: framework/types/class-cp-full-screen.php:1195
+#: framework/types/class-cp-welcome-mat.php:953
+#: framework/types/class-cp-welcome-mat.php:1189
 msgid "Panel"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1273
+#: framework/classes/class-cp-framework.php:1275
 msgid "Hide Area Outside Canvas"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1313
+#: framework/classes/class-cp-framework.php:1315
 msgid "Behavior"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1320
+#: framework/classes/class-cp-framework.php:1322
 msgid "Disable Click Event"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1321
+#: framework/classes/class-cp-framework.php:1323
 msgid ""
 "Turn on this option if you wish to disable mouse click event on your "
 "element."
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1336
-#: framework/style-options.php:3204 framework/style-options.php:3372
-#: framework/style-options.php:3540
+#: framework/classes/class-cp-framework.php:1338
+#: framework/style-options.php:3363 framework/style-options.php:3531
+#: framework/style-options.php:3699
 msgid "Layout"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1375
+#: framework/classes/class-cp-framework.php:1377
 msgid "Rotation Angle"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1389
-#: framework/style-options.php:2452 framework/style-options.php:4510
-#: framework/types/class-cp-before-after.php:1279
-#: framework/types/class-cp-before-after.php:1294
-#: framework/types/class-cp-full-screen.php:1634
-#: framework/types/class-cp-full-screen.php:1649
-#: framework/types/class-cp-info-bar.php:1413
-#: framework/types/class-cp-info-bar.php:1428
+#: framework/classes/class-cp-framework.php:1391
+#: framework/style-options.php:2611 framework/style-options.php:4797
+#: framework/types/class-cp-before-after.php:1283
+#: framework/types/class-cp-before-after.php:1298
+#: framework/types/class-cp-full-screen.php:1637
+#: framework/types/class-cp-full-screen.php:1652
+#: framework/types/class-cp-info-bar.php:1416
+#: framework/types/class-cp-info-bar.php:1431
 #: framework/types/class-cp-inline.php:1213
 #: framework/types/class-cp-inline.php:1228
-#: framework/types/class-cp-modal-popup.php:1481
-#: framework/types/class-cp-modal-popup.php:1496
-#: framework/types/class-cp-slide-in.php:1452
-#: framework/types/class-cp-slide-in.php:1467
-#: framework/types/class-cp-welcome-mat.php:1629
-#: framework/types/class-cp-welcome-mat.php:1644
+#: framework/types/class-cp-modal-popup.php:1484
+#: framework/types/class-cp-modal-popup.php:1499
+#: framework/types/class-cp-slide-in.php:1455
+#: framework/types/class-cp-slide-in.php:1470
+#: framework/types/class-cp-welcome-mat.php:1631
+#: framework/types/class-cp-welcome-mat.php:1646
 #: framework/types/class-cp-widget.php:1221
 #: framework/types/class-cp-widget.php:1236
 msgid "Padding"
 msgstr ""
 
-#: framework/classes/class-cp-framework.php:1402
+#: framework/classes/class-cp-framework.php:1404
 msgid "Custom Class"
 msgstr ""
 
@@ -1913,19 +1993,19 @@ msgid "Y Repeat"
 msgstr ""
 
 #: framework/fields/background/background.php:55
-#: framework/types/class-cp-before-after.php:817
+#: framework/types/class-cp-before-after.php:821
 #: framework/types/class-cp-inline.php:751
 msgid "Center"
 msgstr ""
 
 #: framework/fields/background/background.php:56
-#: framework/types/class-cp-before-after.php:816
+#: framework/types/class-cp-before-after.php:820
 #: framework/types/class-cp-inline.php:750
 msgid "Left"
 msgstr ""
 
 #: framework/fields/background/background.php:57
-#: framework/types/class-cp-before-after.php:818
+#: framework/types/class-cp-before-after.php:822
 #: framework/types/class-cp-inline.php:752
 msgid "Right"
 msgstr ""
@@ -1998,31 +2078,31 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: framework/fields/connect/connect.php:121
+#: framework/fields/connect/connect.php:124
 msgid "You cannot connect with third party services now!"
 msgstr ""
 
-#: framework/fields/connect/connect.php:125
+#: framework/fields/connect/connect.php:128
 #. translators: %s Convert Pro add on link
 msgid "Please make sure the "
 msgstr ""
 
-#: framework/fields/connect/connect.php:126
+#: framework/fields/connect/connect.php:129
 msgid " - Addon is installed and activated. You can do that "
 msgstr ""
 
-#: framework/fields/connect/connect.php:134
+#: framework/fields/connect/connect.php:137
 #. translators: %s connect add on link
 msgid "Please make sure you have activated the "
 msgstr ""
 
-#: framework/fields/connect/connect.php:136
+#: framework/fields/connect/connect.php:139
 msgid " addon. You can do that "
 msgstr ""
 
 #: framework/fields/cp_button/cp-button.php:43
 #: framework/fields/cp_gradient_button/cp-gradient-button.php:43
-#: framework/fields/cp_hidden/cp-hidden.php:35 framework/style-options.php:5309
+#: framework/fields/cp_hidden/cp-hidden.php:35 framework/style-options.php:5596
 msgid "Button"
 msgstr ""
 
@@ -2055,21 +2135,21 @@ msgid "UPLOAD"
 msgstr ""
 
 #: framework/fields/cp_checkbox/cp-checkbox.php:39
-#: framework/style-options.php:4751 framework/style-options.php:4766
+#: framework/style-options.php:5038 framework/style-options.php:5053
 msgid "Check Box"
 msgstr ""
 
 #: framework/fields/cp_close_image/cp-close-image.php:39
-#: framework/style-options.php:2639
-#: framework/types/class-cp-full-screen.php:862
-#: framework/types/class-cp-welcome-mat.php:857
+#: framework/style-options.php:2798
+#: framework/types/class-cp-full-screen.php:865
+#: framework/types/class-cp-welcome-mat.php:859
 msgid "Close Image"
 msgstr ""
 
 #: framework/fields/cp_close_link/cp-close-link.php:38
-#: framework/style-options.php:1468
-#: framework/types/class-cp-full-screen.php:998
-#: framework/types/class-cp-welcome-mat.php:993
+#: framework/style-options.php:1627
+#: framework/types/class-cp-full-screen.php:1001
+#: framework/types/class-cp-welcome-mat.php:995
 msgid "Close Link"
 msgstr ""
 
@@ -2078,7 +2158,7 @@ msgid "Close Text"
 msgstr ""
 
 #: framework/fields/cp_countdown/cp-countdown.php:56
-#: framework/style-options.php:1683
+#: framework/style-options.php:1842
 msgid "Countdown"
 msgstr ""
 
@@ -2086,7 +2166,7 @@ msgstr ""
 msgid "HTML"
 msgstr ""
 
-#: framework/fields/cp_date/cp-date.php:40 framework/style-options.php:5111
+#: framework/fields/cp_date/cp-date.php:40 framework/style-options.php:5398
 msgid "Date"
 msgstr ""
 
@@ -2103,18 +2183,18 @@ msgstr ""
 msgid "No Shapes Found"
 msgstr ""
 
-#: framework/fields/cp_email/cp-email.php:40 framework/style-options.php:3591
-#: framework/style-options.php:3608
+#: framework/fields/cp_email/cp-email.php:40 framework/style-options.php:3750
+#: framework/style-options.php:3767
 msgid "Email"
 msgstr ""
 
 #: framework/fields/cp_google_recaptcha/cp-google-recaptcha.php:39
-#: framework/style-options.php:5041
+#: framework/style-options.php:5328
 msgid "Recaptcha Info"
 msgstr ""
 
 #: framework/fields/cp_heading/cp-heading.php:42
-#: framework/style-options.php:3423
+#: framework/style-options.php:3582
 msgid "Heading"
 msgstr ""
 
@@ -2123,29 +2203,34 @@ msgid "Hidden"
 msgstr ""
 
 #: framework/fields/cp_hidden_input/cp-hidden-input.php:39
-#: framework/style-options.php:4982
+#: framework/style-options.php:5269
 msgid "Hidden Input"
 msgstr ""
 
-#: framework/fields/cp_image/cp-image.php:39 framework/style-options.php:1487
-#: framework/style-options.php:2610 framework/style-options.php:2909
-#: framework/types/class-cp-before-after.php:368
-#: framework/types/class-cp-full-screen.php:319
-#: framework/types/class-cp-full-screen.php:833
-#: framework/types/class-cp-full-screen.php:1017
-#: framework/types/class-cp-info-bar.php:263
+#: framework/fields/cp_image/cp-image.php:39 framework/style-options.php:1646
+#: framework/style-options.php:2769 framework/style-options.php:3068
+#: framework/types/class-cp-before-after.php:372
+#: framework/types/class-cp-full-screen.php:322
+#: framework/types/class-cp-full-screen.php:836
+#: framework/types/class-cp-full-screen.php:1020
+#: framework/types/class-cp-info-bar.php:266
 #: framework/types/class-cp-inline.php:302
-#: framework/types/class-cp-modal-popup.php:313
-#: framework/types/class-cp-slide-in.php:299
-#: framework/types/class-cp-welcome-mat.php:337
-#: framework/types/class-cp-welcome-mat.php:828
-#: framework/types/class-cp-welcome-mat.php:1012
+#: framework/types/class-cp-modal-popup.php:316
+#: framework/types/class-cp-slide-in.php:302
+#: framework/types/class-cp-welcome-mat.php:339
+#: framework/types/class-cp-welcome-mat.php:830
+#: framework/types/class-cp-welcome-mat.php:1014
 #: framework/types/class-cp-widget.php:333
 msgid "Image"
 msgstr ""
 
+#: framework/fields/cp_number/cp-number.php:39
+#: framework/fields/cp_text/cp-text.php:39
+msgid "Placeholder Text"
+msgstr ""
+
 #: framework/fields/cp_paragraph/cp-paragraph.php:42
-#: framework/style-options.php:3086
+#: framework/style-options.php:3245
 msgid "Paragraph"
 msgstr ""
 
@@ -2154,12 +2239,8 @@ msgid "Radio Button"
 msgstr ""
 
 #: framework/fields/cp_sub_heading/cp-sub-heading.php:42
-#: framework/style-options.php:3255
+#: framework/style-options.php:3414
 msgid "Subheading"
-msgstr ""
-
-#: framework/fields/cp_text/cp-text.php:39
-msgid "Placeholder Text"
 msgstr ""
 
 #: framework/fields/cp_textarea/cp-textarea.php:40
@@ -2170,7 +2251,7 @@ msgstr ""
 msgid "Enter Message Here"
 msgstr ""
 
-#: framework/fields/cp_video/cp-video.php:37 framework/style-options.php:5844
+#: framework/fields/cp_video/cp-video.php:37 framework/style-options.php:6131
 msgid "Video"
 msgstr ""
 
@@ -2274,22 +2355,22 @@ msgstr ""
 
 #: framework/fields/target_geo_rule/target-geo-rule.php:188
 #: framework/fields/target_rule/target-rule.php:318
-#: framework/style-options.php:804 framework/style-options.php:836
+#: framework/style-options.php:962 framework/style-options.php:994
 msgid "Add Exclusion Rule"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:64
-#: includes/insights-actions.php:761
+#: includes/insights-actions.php:840
 msgid "Entire Website"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:65
-#: includes/insights-actions.php:765
+#: includes/insights-actions.php:844
 msgid "All Singulars"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:66
-#: includes/insights-actions.php:769
+#: includes/insights-actions.php:848
 msgid "All Archives"
 msgstr ""
 
@@ -2298,32 +2379,32 @@ msgid "Special Pages"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:73
-#: includes/insights-actions.php:773
+#: includes/insights-actions.php:852
 msgid "404 Page"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:74
-#: includes/insights-actions.php:777
+#: includes/insights-actions.php:856
 msgid "Search Page"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:75
-#: includes/insights-actions.php:781
+#: includes/insights-actions.php:860
 msgid "Blog / Posts Page"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:76
-#: includes/insights-actions.php:785
+#: includes/insights-actions.php:864
 msgid "Front Page"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:77
-#: includes/insights-actions.php:789
+#: includes/insights-actions.php:868
 msgid "Date Archive"
 msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:78
-#: includes/insights-actions.php:793
+#: includes/insights-actions.php:872
 msgid "Author Archive"
 msgstr ""
 
@@ -2338,7 +2419,7 @@ msgstr ""
 
 #: framework/fields/target_rule/target-rule.php:198
 #: framework/fields/target_rule/target-rule.php:209
-#: includes/insights-actions.php:819
+#: includes/insights-actions.php:898
 #. translators: %s percentage.
 #. translators: %s percentage
 #. translators: %s enable scroll class option value
@@ -2407,7 +2488,7 @@ msgstr ""
 
 #: framework/style-customizer.php:525
 msgid ""
-"Triggers within a Ruleset work as AND, \r\n"
+"Triggers within a Ruleset work as AND, \n"
 "Triggers from different Ruleset works as OR"
 msgstr ""
 
@@ -2443,7 +2524,7 @@ msgstr ""
 msgid "Show On Mobile"
 msgstr ""
 
-#: framework/style-customizer.php:816 includes/common-helper-functions.php:2333
+#: framework/style-customizer.php:816 includes/common-helper-functions.php:2375
 #. translators: %s CPRO_BRANDING_NAME
 #. translators: %s link
 msgid "Powered by %s"
@@ -2495,1197 +2576,1279 @@ msgstr ""
 msgid "I understand, Continue!"
 msgstr ""
 
-#: framework/style-options.php:55
+#: framework/style-options.php:58
 msgid "Display when a user is on the page for at least:"
 msgstr ""
 
-#: framework/style-options.php:56
+#: framework/style-options.php:59
 msgid ""
 "By default, this modal will be effective for all. However using controls "
 "above, you can hide it for certain visitors."
 msgstr ""
 
-#: framework/style-options.php:79
+#: framework/style-options.php:99
+msgid "Display when a user viewed number of pages count:"
+msgstr ""
+
+#: framework/style-options.php:122
+msgid "Is more than"
+msgstr ""
+
+#: framework/style-options.php:123
+msgid "Is less than"
+msgstr ""
+
+#: framework/style-options.php:143
+msgid ""
+"<strong>Note: </strong>If Cookie is enabled and user performs the "
+"Close/Submit action, then on next visit of the site, this popup will not be "
+"triggered as the cookie will be set for it.\n"
+"<br><br><strong>For more information you can refer to the article <a "
+"rel=\"noopener\" target=\"_blank\" "
+"href=\"https://www.convertpro.net/docs/trigger-popup-based-on-page-visits/\""
+">here.</a></strong>"
+msgstr ""
+
+#: framework/style-options.php:167
 msgid "Display when a user is about to leave the site"
 msgstr ""
 
-#: framework/style-options.php:112
+#: framework/style-options.php:200
 msgid ""
 "<strong>After Scroll Trigger - </strong>Please keep the first slider value "
 "higher than the second. <a rel=\"noopener\" target=\"_blank\" "
 "href=\"https://www.convertpro.net/docs/after-scroll-trigger-for-slide-in-"
-"and-infobar/\">Know more.</a><br><br>\r\n"
+"and-infobar/\">Know more.</a><br><br>\n"
 "\t\t\t\t<strong>Display Within Range - </strong>Please keep the second "
 "slider value higher than the first. <a rel=\"noopener\" target=\"_blank\" "
 "href=\"https://www.convertpro.net/docs/display-within-range-call-to-action-"
 "in-convert-pro/\">Know more.</a>"
 msgstr ""
 
-#: framework/style-options.php:136
+#: framework/style-options.php:224
 msgid "Display at - Display when a user scrolls the page:"
 msgstr ""
 
-#: framework/style-options.php:160
+#: framework/style-options.php:248
 msgid "Hide at - Close when a user scrolls the page:"
 msgstr ""
 
-#: framework/style-options.php:185
+#: framework/style-options.php:273
 #. translators: %s percentage
 msgid "Display when a user is inactive for %s seconds"
 msgstr ""
 
-#: framework/style-options.php:203
+#: framework/style-options.php:291
 #. translators: %s percentage
 msgid ""
 "You can change inactivity time <a rel='noopener' target='_blank' "
 "href='%s'>here.</a>"
 msgstr ""
 
-#: framework/style-options.php:223
+#: framework/style-options.php:311
 msgid "Display when a user finishes reading the full blog post"
 msgstr ""
 
-#: framework/style-options.php:240 framework/style-options.php:770
-#: includes/insights-actions.php:508
+#: framework/style-options.php:328 framework/style-options.php:928
+#: includes/insights-actions.php:574
 msgid "Display Inline"
 msgstr ""
 
-#: framework/style-options.php:244
+#: framework/style-options.php:332
 msgid "If enabled, module will display inline as a part of page / post content."
 msgstr ""
 
-#: framework/style-options.php:256
+#: framework/style-options.php:344
 msgid "Display Inline Position"
 msgstr ""
 
-#: framework/style-options.php:258
+#: framework/style-options.php:346
 msgid "Select the position, where you want to display module inline."
 msgstr ""
 
-#: framework/style-options.php:260
+#: framework/style-options.php:348
 msgid "Before Post"
 msgstr ""
 
-#: framework/style-options.php:261
+#: framework/style-options.php:349
 msgid "After Post"
 msgstr ""
 
-#: framework/style-options.php:262
+#: framework/style-options.php:350
 msgid "Both"
 msgstr ""
 
-#: framework/style-options.php:297
+#: framework/style-options.php:351
+msgid "Inside Post/Page Content"
+msgstr ""
+
+#: framework/style-options.php:369
+msgid "Location on post/page"
+msgstr ""
+
+#: framework/style-options.php:371
+msgid ""
+"Popup will be displayed at a selected location on post/page block editor "
+"only."
+msgstr ""
+
+#: framework/style-options.php:373
+msgid "After certain number of blocks"
+msgstr ""
+
+#: framework/style-options.php:374
+msgid "Before certain number of Heading blocks"
+msgstr ""
+
+#: framework/style-options.php:392
+msgid "Layout will be inserted after selected number of blocks:"
+msgstr ""
+
+#: framework/style-options.php:415
+msgid "Layout will be inserted before the selected number of Heading blocks."
+msgstr ""
+
+#: framework/style-options.php:455
 msgid "Display when following CSS Class / ID is visible:"
 msgstr ""
 
-#: framework/style-options.php:317
+#: framework/style-options.php:475
 msgid ""
 "You can add multiple classes or IDs seprated by comma. Example - #button, "
 ".widget-title, .site-description"
 msgstr ""
 
-#: framework/style-options.php:336
+#: framework/style-options.php:494
 msgid ""
 "<strong>Enable this if you want to show this call-to-action when a "
 "particular cookie is set</strong>"
 msgstr ""
 
-#: framework/style-options.php:366
+#: framework/style-options.php:524
 msgid "Enter cookie name / names that will trigger the CTA"
 msgstr ""
 
-#: framework/style-options.php:368
+#: framework/style-options.php:526
 msgid ""
 "Enter the cookie name or names which when set, you wish to trigger this "
 "call-to-action."
 msgstr ""
 
-#: framework/style-options.php:386 framework/style-options.php:899
+#: framework/style-options.php:544 framework/style-options.php:1057
 msgid ""
 "You can add multiple Cookie names separated by a comma. Ex - "
 "firstcookie_name,secondcookie_name,thirdcookie_name"
 msgstr ""
 
-#: framework/style-options.php:405
+#: framework/style-options.php:563
 msgid ""
 "Do you want to hide this CTA when a particular cookie is set? You can do "
 "that <a class='hide-cta-class'>here</a>"
 msgstr ""
 
-#: framework/style-options.php:443 framework/style-options.php:919
+#: framework/style-options.php:601 framework/style-options.php:1077
 msgid "<strong>By default it will be shown to all visitors</strong>"
 msgstr ""
 
-#: framework/style-options.php:461 framework/style-options.php:479
+#: framework/style-options.php:619 framework/style-options.php:637
 msgid "Do you wish to display this to visitors who are First Time or Returning?"
 msgstr ""
 
-#: framework/style-options.php:473
+#: framework/style-options.php:631
 msgid "Visitor Type"
 msgstr ""
 
-#: framework/style-options.php:475
+#: framework/style-options.php:633
 msgid "First Time Visitors Only"
 msgstr ""
 
-#: framework/style-options.php:476
+#: framework/style-options.php:634
 msgid "Returning Visitors Only"
 msgstr ""
 
-#: framework/style-options.php:502 framework/style-options.php:520
+#: framework/style-options.php:660 framework/style-options.php:678
 msgid "Track the source your visitors come from"
 msgstr ""
 
-#: framework/style-options.php:514
+#: framework/style-options.php:672
 msgid "Display Type"
 msgstr ""
 
-#: framework/style-options.php:516
+#: framework/style-options.php:674
 msgid "Hide From"
 msgstr ""
 
-#: framework/style-options.php:517
+#: framework/style-options.php:675
 msgid "Display To"
 msgstr ""
 
-#: framework/style-options.php:538
+#: framework/style-options.php:696
 msgid "Visitors coming from -"
 msgstr ""
 
-#: framework/style-options.php:541
+#: framework/style-options.php:699
 msgid ""
 "Display it to visitors who come from a particular domain / domains. Mention "
 "the domain name or list of domain names separated by a comma. Eg: "
 "google.com, facebook.com"
 msgstr ""
 
-#: framework/style-options.php:558
+#: framework/style-options.php:716
 msgid "Visitors who come from -"
 msgstr ""
 
-#: framework/style-options.php:561
+#: framework/style-options.php:719
 msgid ""
 "Hide it from visitors who come from a particular domain / domains. Mention "
 "the domain name or list of domain names separated by a comma. Eg: "
 "google.com, facebook.com"
 msgstr ""
 
-#: framework/style-options.php:579
+#: framework/style-options.php:737
 msgid "Do you wish to schedule this design to display later?"
 msgstr ""
 
-#: framework/style-options.php:595
+#: framework/style-options.php:753
 msgid "Select the time period between which you wish to display this design."
 msgstr ""
 
-#: framework/style-options.php:614 framework/style-options.php:5951
+#: framework/style-options.php:772 framework/style-options.php:6238
 msgid "Start Time"
 msgstr ""
 
-#: framework/style-options.php:616
+#: framework/style-options.php:774
 msgid "Select the particular date and time you wish to start displaying this."
 msgstr ""
 
-#: framework/style-options.php:633
+#: framework/style-options.php:791
 msgid "End Time"
 msgstr ""
 
-#: framework/style-options.php:652
+#: framework/style-options.php:810
 msgid "Display when the user clicks a link, button or any element"
 msgstr ""
 
-#: framework/style-options.php:685
+#: framework/style-options.php:843
 msgid "Copy link code"
 msgstr ""
 
-#: framework/style-options.php:686
+#: framework/style-options.php:844
 msgid "Copy Link Code"
 msgstr ""
 
-#: framework/style-options.php:705
+#: framework/style-options.php:863
 msgid ""
 "Paste this copied code in your page. Call-to-action will appear when a user "
 "clicks on it."
 msgstr ""
 
-#: framework/style-options.php:726
+#: framework/style-options.php:884
 msgid "Enter your CSS Class or ID"
 msgstr ""
 
-#: framework/style-options.php:746
+#: framework/style-options.php:904
 msgid ""
 "Enter unique CSS Class / ID name of the element. Call-to-action will appear "
 "when a user clicks on it. You can add multiple classes or IDs separated by "
 "comma. <br><br>Example - #button, .widget-title, .site-description"
 msgstr ""
 
-#: framework/style-options.php:771
+#: framework/style-options.php:929
 msgid ""
 "Use this shortcode to display this call-to-action inline as a part of the "
 "page content / Widget area."
 msgstr ""
 
-#: framework/style-options.php:784 framework/style-options.php:817
+#: framework/style-options.php:942 framework/style-options.php:975
 msgid "Display Rules"
 msgstr ""
 
-#: framework/style-options.php:788
+#: framework/style-options.php:946
 msgid "Add Display Rule"
 msgstr ""
 
-#: framework/style-options.php:800 framework/style-options.php:832
+#: framework/style-options.php:958 framework/style-options.php:990
 msgid "Exclusion Rules"
 msgstr ""
 
-#: framework/style-options.php:849
+#: framework/style-options.php:1007
 msgid ""
 "<strong>Enable this if you want to hide this call-to-action when a "
 "particular cookie is set</strong>"
 msgstr ""
 
-#: framework/style-options.php:879
+#: framework/style-options.php:1037
 msgid "Enter cookie name / names that will hide the CTA"
 msgstr ""
 
-#: framework/style-options.php:881
+#: framework/style-options.php:1039
 msgid ""
 "Enter the cookie name or names which when set, you wish to hide this "
 "call-to-action."
 msgstr ""
 
-#: framework/style-options.php:933
+#: framework/style-options.php:1091
 msgid "Logged-in Users"
 msgstr ""
 
-#: framework/style-options.php:935 framework/style-options.php:5935
+#: framework/style-options.php:1093 framework/style-options.php:6222
 msgid "SHOW"
 msgstr ""
 
-#: framework/style-options.php:936 framework/style-options.php:5936
+#: framework/style-options.php:1094 framework/style-options.php:6223
 msgid "HIDE"
 msgstr ""
 
-#: framework/style-options.php:937
+#: framework/style-options.php:1095
 msgid ""
 "Does your website have a login functionality? If yes, do you wish to "
 "display this to logged in users?"
 msgstr ""
 
-#: framework/style-options.php:951
+#: framework/style-options.php:1109
 msgid "Logged in users will see this too!"
 msgstr ""
 
-#: framework/style-options.php:970
+#: framework/style-options.php:1128
 msgid "Logged in users will not see this."
 msgstr ""
 
-#: framework/style-options.php:989
+#: framework/style-options.php:1147
 msgid "Select device on which you wish to hide this call-to-action."
 msgstr ""
 
-#: framework/style-options.php:992
+#: framework/style-options.php:1150
 msgid "Desktop"
 msgstr ""
 
-#: framework/style-options.php:993
+#: framework/style-options.php:1151
 msgid "Tablet"
 msgstr ""
 
-#: framework/style-options.php:994
+#: framework/style-options.php:1152
 msgid "Mobile"
 msgstr ""
 
-#: framework/style-options.php:996
+#: framework/style-options.php:1154
 msgid "Select the device/devices you wish to hide this call-to-action on."
 msgstr ""
 
-#: framework/style-options.php:1009
+#: framework/style-options.php:1167
 msgid ""
 "Do you wish to hide this call-to-action after a visitor closes it or after "
 "successful submission?"
 msgstr ""
 
-#: framework/style-options.php:1013
+#: framework/style-options.php:1171
 msgid ""
 "Decide whether you wish to enable cookies. If enabled, you can hide it from "
 "a visitor who has closed it or from the one who has submitted it "
-"successfully.\r\n"
+"successfully.\n"
 "                "
 msgstr ""
 
-#: framework/style-options.php:1030
+#: framework/style-options.php:1188
 msgid "This will not be shown to repeated visitors for the set number of days."
 msgstr ""
 
-#: framework/style-options.php:1050
+#: framework/style-options.php:1208
 msgid ""
 "This will be displayed again when the visitor arrives on the website; "
 "irrespective of whether he has submitted the form or closed it earlier."
 msgstr ""
 
-#: framework/style-options.php:1070
+#: framework/style-options.php:1228
 msgid "Hide for 'X' number of days after conversion"
 msgstr ""
 
-#: framework/style-options.php:1076 framework/style-options.php:1180
+#: framework/style-options.php:1234 framework/style-options.php:1338
 msgid ""
 "Select the value of 'X'. This will not be shown for set number of days "
 "after conversion."
 msgstr ""
 
-#: framework/style-options.php:1094
+#: framework/style-options.php:1252
 msgid "Hide for 'X' number of days after closing"
 msgstr ""
 
-#: framework/style-options.php:1100 framework/style-options.php:1244
+#: framework/style-options.php:1258 framework/style-options.php:1402
 msgid ""
 "Select the value of 'X'. This will not be shown for set number of days "
 "after closing."
 msgstr ""
 
-#: framework/style-options.php:1118
+#: framework/style-options.php:1276
 msgid ""
 "If you want to set a specific cookie after submission or closing of the "
 "call-to-action, you can do that here :"
 msgstr ""
 
-#: framework/style-options.php:1134
+#: framework/style-options.php:1292
 msgid "Set a cookie after successful submission."
 msgstr ""
 
-#: framework/style-options.php:1138 framework/style-options.php:1202
+#: framework/style-options.php:1296 framework/style-options.php:1360
 msgid ""
 "You can add multiple Cookie names separated by a comma. Ex - "
 "firstcookie_name,secondcookie_name,thirdcookie_name."
 msgstr ""
 
-#: framework/style-options.php:1154 framework/style-options.php:1218
+#: framework/style-options.php:1312 framework/style-options.php:1376
 msgid "Enter cookie name / names"
 msgstr ""
 
-#: framework/style-options.php:1156 framework/style-options.php:1220
+#: framework/style-options.php:1314 framework/style-options.php:1378
 msgid "Enter the cookie name or names."
 msgstr ""
 
-#: framework/style-options.php:1174
+#: framework/style-options.php:1332
 msgid "Set for 'X' number of days after conversion"
 msgstr ""
 
-#: framework/style-options.php:1198
+#: framework/style-options.php:1356
 msgid "Set a cookie after visitor closes it."
 msgstr ""
 
-#: framework/style-options.php:1238
+#: framework/style-options.php:1396
 msgid "Set for 'X' number of days after closing"
 msgstr ""
 
-#: framework/style-options.php:1268
+#: framework/style-options.php:1426
 msgid "Collect Leads Using"
 msgstr ""
 
-#: framework/style-options.php:1281
+#: framework/style-options.php:1439
 msgid "Enable Email Notification"
 msgstr ""
 
-#: framework/style-options.php:1285
+#: framework/style-options.php:1443
 msgid "If enabled, all the lead data will be sent to the specified email ID."
 msgstr ""
 
-#: framework/style-options.php:1297
+#: framework/style-options.php:1455
 msgid "Enter Email"
 msgstr ""
 
-#: framework/style-options.php:1299
+#: framework/style-options.php:1457
 msgid ""
 "All the lead data will be sent to this email ID. This happens when you are "
 "not connected to any service/mailer."
 msgstr ""
 
-#: framework/style-options.php:1317
+#: framework/style-options.php:1475
 #. translators: %s percentage
 msgid ""
 "You can modify email template <a rel='noopener' target='_blank' "
 "href='%s'>here.</a>"
 msgstr ""
 
-#: framework/style-options.php:1383
+#: framework/style-options.php:1541
 msgid "No Effect"
 msgstr ""
 
-#: framework/style-options.php:1384
+#: framework/style-options.php:1542
 msgid "Bounce"
 msgstr ""
 
-#: framework/style-options.php:1385
+#: framework/style-options.php:1543
 msgid "Bounce In"
 msgstr ""
 
-#: framework/style-options.php:1386
+#: framework/style-options.php:1544
 msgid "Fade In"
 msgstr ""
 
-#: framework/style-options.php:1387
+#: framework/style-options.php:1545
 msgid "Fade In & Scale"
 msgstr ""
 
-#: framework/style-options.php:1388
+#: framework/style-options.php:1546
 msgid "Jello"
 msgstr ""
 
-#: framework/style-options.php:1389
+#: framework/style-options.php:1547
 msgid "Light Speed In"
 msgstr ""
 
-#: framework/style-options.php:1390
+#: framework/style-options.php:1548
 msgid "Shake"
 msgstr ""
 
-#: framework/style-options.php:1391
+#: framework/style-options.php:1549
 msgid "Slide In Down"
 msgstr ""
 
-#: framework/style-options.php:1392
+#: framework/style-options.php:1550
 msgid "Slide In Right"
 msgstr ""
 
-#: framework/style-options.php:1393
+#: framework/style-options.php:1551
 msgid "Slide In Left"
 msgstr ""
 
-#: framework/style-options.php:1394
+#: framework/style-options.php:1552
 msgid "Slide In Up"
 msgstr ""
 
-#: framework/style-options.php:1395
+#: framework/style-options.php:1553
 msgid "Tada"
 msgstr ""
 
-#: framework/style-options.php:1413 framework/style-options.php:5143
+#: framework/style-options.php:1571 framework/style-options.php:5430
 msgid "MM/DD/YYYY"
 msgstr ""
 
-#: framework/style-options.php:1414
+#: framework/style-options.php:1572
 msgid "MM-DD-YYYY"
 msgstr ""
 
-#: framework/style-options.php:1415
+#: framework/style-options.php:1573
 msgid "DD/MM/YYYY"
 msgstr ""
 
-#: framework/style-options.php:1416
+#: framework/style-options.php:1574
 msgid "DD-MM-YYYY"
 msgstr ""
 
-#: framework/style-options.php:1417
+#: framework/style-options.php:1575
+msgid "YYYY-MM-DD"
+msgstr ""
+
+#: framework/style-options.php:1576
 msgid "MM/DD"
 msgstr ""
 
-#: framework/style-options.php:1435
+#: framework/style-options.php:1594
 msgid "Fade Out"
 msgstr ""
 
-#: framework/style-options.php:1454
+#: framework/style-options.php:1613
 msgid "Capitalize"
 msgstr ""
 
-#: framework/style-options.php:1455
+#: framework/style-options.php:1614
 msgid "Uppercase"
 msgstr ""
 
-#: framework/style-options.php:1456
+#: framework/style-options.php:1615
 msgid "Lowercase"
 msgstr ""
 
-#: framework/style-options.php:1498
-#: framework/types/class-cp-full-screen.php:1028
-#: framework/types/class-cp-welcome-mat.php:1023
+#: framework/style-options.php:1657
+#: framework/types/class-cp-full-screen.php:1031
+#: framework/types/class-cp-welcome-mat.php:1025
 msgid "Enter Text"
 msgstr ""
 
-#: framework/style-options.php:1575 framework/style-options.php:2331
-#: framework/style-options.php:3173 framework/style-options.php:3342
-#: framework/style-options.php:3510 framework/style-options.php:5493
-#: framework/types/class-cp-before-after.php:1006
-#: framework/types/class-cp-full-screen.php:1105
-#: framework/types/class-cp-full-screen.php:1361
-#: framework/types/class-cp-info-bar.php:1140
+#: framework/style-options.php:1734 framework/style-options.php:2490
+#: framework/style-options.php:3332 framework/style-options.php:3501
+#: framework/style-options.php:3669 framework/style-options.php:5780
+#: framework/types/class-cp-before-after.php:1010
+#: framework/types/class-cp-full-screen.php:1108
+#: framework/types/class-cp-full-screen.php:1364
+#: framework/types/class-cp-info-bar.php:1143
 #: framework/types/class-cp-inline.php:940
-#: framework/types/class-cp-modal-popup.php:1208
-#: framework/types/class-cp-slide-in.php:1179
-#: framework/types/class-cp-welcome-mat.php:1100
-#: framework/types/class-cp-welcome-mat.php:1356
+#: framework/types/class-cp-modal-popup.php:1211
+#: framework/types/class-cp-slide-in.php:1182
+#: framework/types/class-cp-welcome-mat.php:1102
+#: framework/types/class-cp-welcome-mat.php:1358
 #: framework/types/class-cp-widget.php:948
 msgid "center"
 msgstr ""
 
-#: framework/style-options.php:1576 framework/style-options.php:2332
-#: framework/style-options.php:3174 framework/style-options.php:3343
-#: framework/style-options.php:3511 framework/style-options.php:5494
-#: framework/types/class-cp-before-after.php:1007
-#: framework/types/class-cp-full-screen.php:1106
-#: framework/types/class-cp-full-screen.php:1362
-#: framework/types/class-cp-info-bar.php:1141
+#: framework/style-options.php:1735 framework/style-options.php:2491
+#: framework/style-options.php:3333 framework/style-options.php:3502
+#: framework/style-options.php:3670 framework/style-options.php:5781
+#: framework/types/class-cp-before-after.php:1011
+#: framework/types/class-cp-full-screen.php:1109
+#: framework/types/class-cp-full-screen.php:1365
+#: framework/types/class-cp-info-bar.php:1144
 #: framework/types/class-cp-inline.php:941
-#: framework/types/class-cp-modal-popup.php:1209
-#: framework/types/class-cp-slide-in.php:1180
-#: framework/types/class-cp-welcome-mat.php:1101
-#: framework/types/class-cp-welcome-mat.php:1357
+#: framework/types/class-cp-modal-popup.php:1212
+#: framework/types/class-cp-slide-in.php:1183
+#: framework/types/class-cp-welcome-mat.php:1103
+#: framework/types/class-cp-welcome-mat.php:1359
 #: framework/types/class-cp-widget.php:949
 msgid "left"
 msgstr ""
 
-#: framework/style-options.php:1577 framework/style-options.php:2333
-#: framework/style-options.php:3175 framework/style-options.php:3344
-#: framework/style-options.php:3512 framework/style-options.php:5495
-#: framework/types/class-cp-before-after.php:1008
-#: framework/types/class-cp-full-screen.php:1107
-#: framework/types/class-cp-full-screen.php:1363
-#: framework/types/class-cp-info-bar.php:1142
+#: framework/style-options.php:1736 framework/style-options.php:2492
+#: framework/style-options.php:3334 framework/style-options.php:3503
+#: framework/style-options.php:3671 framework/style-options.php:5782
+#: framework/types/class-cp-before-after.php:1012
+#: framework/types/class-cp-full-screen.php:1110
+#: framework/types/class-cp-full-screen.php:1366
+#: framework/types/class-cp-info-bar.php:1145
 #: framework/types/class-cp-inline.php:942
-#: framework/types/class-cp-modal-popup.php:1210
-#: framework/types/class-cp-slide-in.php:1181
-#: framework/types/class-cp-welcome-mat.php:1102
-#: framework/types/class-cp-welcome-mat.php:1358
+#: framework/types/class-cp-modal-popup.php:1213
+#: framework/types/class-cp-slide-in.php:1184
+#: framework/types/class-cp-welcome-mat.php:1104
+#: framework/types/class-cp-welcome-mat.php:1360
 #: framework/types/class-cp-widget.php:950
 msgid "right"
 msgstr ""
 
-#: framework/style-options.php:1578 framework/style-options.php:2334
-#: framework/style-options.php:3176 framework/style-options.php:3345
-#: framework/style-options.php:3513 framework/style-options.php:5496
-#: framework/types/class-cp-before-after.php:1009
-#: framework/types/class-cp-full-screen.php:1108
-#: framework/types/class-cp-full-screen.php:1364
-#: framework/types/class-cp-info-bar.php:1143
+#: framework/style-options.php:1737 framework/style-options.php:2493
+#: framework/style-options.php:3335 framework/style-options.php:3504
+#: framework/style-options.php:3672 framework/style-options.php:5783
+#: framework/types/class-cp-before-after.php:1013
+#: framework/types/class-cp-full-screen.php:1111
+#: framework/types/class-cp-full-screen.php:1367
+#: framework/types/class-cp-info-bar.php:1146
 #: framework/types/class-cp-inline.php:943
-#: framework/types/class-cp-modal-popup.php:1211
-#: framework/types/class-cp-slide-in.php:1182
-#: framework/types/class-cp-welcome-mat.php:1103
-#: framework/types/class-cp-welcome-mat.php:1359
+#: framework/types/class-cp-modal-popup.php:1214
+#: framework/types/class-cp-slide-in.php:1185
+#: framework/types/class-cp-welcome-mat.php:1105
+#: framework/types/class-cp-welcome-mat.php:1361
 #: framework/types/class-cp-widget.php:951
 msgid "justify"
 msgstr ""
 
-#: framework/style-options.php:1616 framework/style-options.php:2566
-#: framework/style-options.php:2689 framework/style-options.php:2865
-#: framework/style-options.php:3211 framework/style-options.php:3379
-#: framework/style-options.php:3547 framework/style-options.php:3719
-#: framework/style-options.php:3906 framework/style-options.php:4093
-#: framework/style-options.php:4291 framework/style-options.php:4477
-#: framework/style-options.php:4689 framework/style-options.php:4920
-#: framework/style-options.php:5251 framework/style-options.php:5971
-#: framework/types/class-cp-before-after.php:288
-#: framework/types/class-cp-full-screen.php:237
-#: framework/types/class-cp-full-screen.php:912
-#: framework/types/class-cp-full-screen.php:1146
-#: framework/types/class-cp-info-bar.php:205
-#: framework/types/class-cp-info-bar.php:929
+#: framework/style-options.php:1775 framework/style-options.php:2725
+#: framework/style-options.php:2848 framework/style-options.php:3024
+#: framework/style-options.php:3370 framework/style-options.php:3538
+#: framework/style-options.php:3706 framework/style-options.php:3878
+#: framework/style-options.php:4129 framework/style-options.php:4380
+#: framework/style-options.php:4578 framework/style-options.php:4764
+#: framework/style-options.php:4976 framework/style-options.php:5207
+#: framework/style-options.php:5538 framework/style-options.php:6258
+#: framework/types/class-cp-before-after.php:292
+#: framework/types/class-cp-full-screen.php:240
+#: framework/types/class-cp-full-screen.php:915
+#: framework/types/class-cp-full-screen.php:1149
+#: framework/types/class-cp-info-bar.php:208
+#: framework/types/class-cp-info-bar.php:932
 #: framework/types/class-cp-inline.php:222
-#: framework/types/class-cp-modal-popup.php:231
-#: framework/types/class-cp-slide-in.php:219
-#: framework/types/class-cp-slide-in.php:968
-#: framework/types/class-cp-welcome-mat.php:256
-#: framework/types/class-cp-welcome-mat.php:907
-#: framework/types/class-cp-welcome-mat.php:1141
+#: framework/types/class-cp-modal-popup.php:234
+#: framework/types/class-cp-slide-in.php:222
+#: framework/types/class-cp-slide-in.php:971
+#: framework/types/class-cp-welcome-mat.php:258
+#: framework/types/class-cp-welcome-mat.php:909
+#: framework/types/class-cp-welcome-mat.php:1143
 #: framework/types/class-cp-widget.php:227
 msgid "Width"
 msgstr ""
 
-#: framework/style-options.php:1633 framework/style-options.php:2583
-#: framework/style-options.php:2706 framework/style-options.php:2882
-#: framework/style-options.php:3228 framework/style-options.php:3396
-#: framework/style-options.php:3564 framework/style-options.php:3736
-#: framework/style-options.php:3923 framework/style-options.php:4110
-#: framework/style-options.php:4308 framework/style-options.php:4494
-#: framework/style-options.php:4706 framework/style-options.php:4937
-#: framework/style-options.php:5268 framework/style-options.php:5988
-#: framework/types/class-cp-before-after.php:314
-#: framework/types/class-cp-full-screen.php:264
-#: framework/types/class-cp-full-screen.php:929
-#: framework/types/class-cp-full-screen.php:1163
-#: framework/types/class-cp-info-bar.php:231
-#: framework/types/class-cp-info-bar.php:959
+#: framework/style-options.php:1792 framework/style-options.php:2742
+#: framework/style-options.php:2865 framework/style-options.php:3041
+#: framework/style-options.php:3387 framework/style-options.php:3555
+#: framework/style-options.php:3723 framework/style-options.php:3895
+#: framework/style-options.php:4146 framework/style-options.php:4397
+#: framework/style-options.php:4595 framework/style-options.php:4781
+#: framework/style-options.php:4993 framework/style-options.php:5224
+#: framework/style-options.php:5555 framework/style-options.php:6275
+#: framework/types/class-cp-before-after.php:318
+#: framework/types/class-cp-full-screen.php:267
+#: framework/types/class-cp-full-screen.php:932
+#: framework/types/class-cp-full-screen.php:1166
+#: framework/types/class-cp-info-bar.php:234
+#: framework/types/class-cp-info-bar.php:962
 #: framework/types/class-cp-inline.php:248
-#: framework/types/class-cp-modal-popup.php:258
-#: framework/types/class-cp-slide-in.php:245
-#: framework/types/class-cp-slide-in.php:998
-#: framework/types/class-cp-welcome-mat.php:282
-#: framework/types/class-cp-welcome-mat.php:924
-#: framework/types/class-cp-welcome-mat.php:1158
+#: framework/types/class-cp-modal-popup.php:261
+#: framework/types/class-cp-slide-in.php:248
+#: framework/types/class-cp-slide-in.php:1001
+#: framework/types/class-cp-welcome-mat.php:284
+#: framework/types/class-cp-welcome-mat.php:926
+#: framework/types/class-cp-welcome-mat.php:1160
 #: framework/types/class-cp-widget.php:253
 msgid "Height"
 msgstr ""
 
-#: framework/style-options.php:1692
+#: framework/style-options.php:1851
 msgid "Timer"
 msgstr ""
 
-#: framework/style-options.php:1698
+#: framework/style-options.php:1857
 msgid "Timer Type"
 msgstr ""
 
-#: framework/style-options.php:1702
+#: framework/style-options.php:1861
 msgid "Fixed"
 msgstr ""
 
-#: framework/style-options.php:1703
+#: framework/style-options.php:1862
 msgid "Evergreen"
 msgstr ""
 
-#: framework/style-options.php:1714
+#: framework/style-options.php:1873
 msgid "Timer Timezone"
 msgstr ""
 
-#: framework/style-options.php:1732
+#: framework/style-options.php:1891
 msgid "Display As"
 msgstr ""
 
-#: framework/style-options.php:1736
+#: framework/style-options.php:1895
 msgid "Block"
 msgstr ""
 
-#: framework/style-options.php:1737
+#: framework/style-options.php:1896
 msgid "Inline"
 msgstr ""
 
-#: framework/style-options.php:2240 framework/style-options.php:2257
+#: framework/style-options.php:2399 framework/style-options.php:2416
 msgid "Action After Timer Expiry"
 msgstr ""
 
-#: framework/style-options.php:2245 framework/style-options.php:2262
+#: framework/style-options.php:2404 framework/style-options.php:2421
 msgid "Do not show popup again"
 msgstr ""
 
-#: framework/style-options.php:2263
+#: framework/style-options.php:2422
 msgid "Reset Timer"
 msgstr ""
 
-#: framework/style-options.php:2282
+#: framework/style-options.php:2441
 msgid "Number Font Size"
 msgstr ""
 
-#: framework/style-options.php:2296
+#: framework/style-options.php:2455
 msgid "Text Font Size"
 msgstr ""
 
-#: framework/style-options.php:2308
+#: framework/style-options.php:2467
 msgid "Number Color"
 msgstr ""
 
-#: framework/style-options.php:2318 framework/style-options.php:5343
-#: framework/style-options.php:5514
-#: framework/types/class-cp-before-after.php:1046
-#: framework/types/class-cp-full-screen.php:1401
-#: framework/types/class-cp-info-bar.php:855
-#: framework/types/class-cp-info-bar.php:1180
+#: framework/style-options.php:2477 framework/style-options.php:5630
+#: framework/style-options.php:5801
+#: framework/types/class-cp-before-after.php:1050
+#: framework/types/class-cp-full-screen.php:1404
+#: framework/types/class-cp-info-bar.php:858
+#: framework/types/class-cp-info-bar.php:1183
 #: framework/types/class-cp-inline.php:980
-#: framework/types/class-cp-modal-popup.php:1248
-#: framework/types/class-cp-slide-in.php:839
-#: framework/types/class-cp-slide-in.php:1219
-#: framework/types/class-cp-welcome-mat.php:1396
+#: framework/types/class-cp-modal-popup.php:1251
+#: framework/types/class-cp-slide-in.php:842
+#: framework/types/class-cp-slide-in.php:1222
+#: framework/types/class-cp-welcome-mat.php:1398
 #: framework/types/class-cp-widget.php:988
 msgid "Text Color"
 msgstr ""
 
-#: framework/style-options.php:2345
+#: framework/style-options.php:2504
 msgid "Design"
 msgstr ""
 
-#: framework/style-options.php:2351
+#: framework/style-options.php:2510
 msgid "Text Inside/Outside of Box"
 msgstr ""
 
-#: framework/style-options.php:2355
+#: framework/style-options.php:2514
 msgid "Outside"
 msgstr ""
 
-#: framework/style-options.php:2356
+#: framework/style-options.php:2515
 msgid "Inside"
 msgstr ""
 
-#: framework/style-options.php:2464
+#: framework/style-options.php:2623
 msgid "Space between Text and Number"
 msgstr ""
 
-#: framework/style-options.php:2482
+#: framework/style-options.php:2641
 msgid "Show Months"
 msgstr ""
 
-#: framework/style-options.php:2498
+#: framework/style-options.php:2657
 msgid "Show Days"
 msgstr ""
 
-#: framework/style-options.php:2514
+#: framework/style-options.php:2673
 msgid "Show Hours"
 msgstr ""
 
-#: framework/style-options.php:2530
+#: framework/style-options.php:2689
 msgid "Show Minutes"
 msgstr ""
 
-#: framework/style-options.php:2546
+#: framework/style-options.php:2705
 msgid "Show Seconds"
 msgstr ""
 
-#: framework/style-options.php:2625
-#: framework/types/class-cp-full-screen.php:848
-#: framework/types/class-cp-welcome-mat.php:843
+#: framework/style-options.php:2784
+#: framework/types/class-cp-full-screen.php:851
+#: framework/types/class-cp-welcome-mat.php:845
 msgid "Image Source"
 msgstr ""
 
-#: framework/style-options.php:2628
-#: framework/types/class-cp-full-screen.php:851
-#: framework/types/class-cp-welcome-mat.php:846
+#: framework/style-options.php:2787
+#: framework/types/class-cp-full-screen.php:854
+#: framework/types/class-cp-welcome-mat.php:848
 msgid "Upload Image"
 msgstr ""
 
-#: framework/style-options.php:2629
-#: framework/types/class-cp-full-screen.php:852
-#: framework/types/class-cp-welcome-mat.php:847
+#: framework/style-options.php:2788
+#: framework/types/class-cp-full-screen.php:855
+#: framework/types/class-cp-welcome-mat.php:849
 msgid "Predefined Icons"
 msgstr ""
 
-#: framework/style-options.php:2656 framework/style-options.php:2924
-#: framework/types/class-cp-full-screen.php:879
-#: framework/types/class-cp-welcome-mat.php:874
+#: framework/style-options.php:2815 framework/style-options.php:3083
+#: framework/types/class-cp-full-screen.php:882
+#: framework/types/class-cp-welcome-mat.php:876
 msgid "Module Image"
 msgstr ""
 
-#: framework/style-options.php:2754
+#: framework/style-options.php:2913
 msgid "Shape"
 msgstr ""
 
-#: framework/style-options.php:2781
+#: framework/style-options.php:2940
 msgid "Hover Color"
 msgstr ""
 
-#: framework/style-options.php:2792
+#: framework/style-options.php:2951
 msgid "Border Thickness"
 msgstr ""
 
-#: framework/style-options.php:2842
+#: framework/style-options.php:3001
 msgid "Shadow"
 msgstr ""
 
-#: framework/style-options.php:3012
+#: framework/style-options.php:3171
 msgid "Custom HTML"
 msgstr ""
 
-#: framework/style-options.php:3013 framework/style-options.php:3029
+#: framework/style-options.php:3172 framework/style-options.php:3188
 msgid "This is custom <b>HTML</b>. Edit this text from left side panel."
 msgstr ""
 
-#: framework/style-options.php:3028
+#: framework/style-options.php:3187
 msgid "Enter HTML"
 msgstr ""
 
-#: framework/style-options.php:3103 framework/style-options.php:3272
-#: framework/style-options.php:3439
+#: framework/style-options.php:3262 framework/style-options.php:3431
+#: framework/style-options.php:3598
 msgid "Title"
 msgstr ""
 
-#: framework/style-options.php:3104 framework/style-options.php:3273
-#: framework/style-options.php:3440
+#: framework/style-options.php:3263 framework/style-options.php:3432
+#: framework/style-options.php:3599
 msgid "Enter Heading"
 msgstr ""
 
-#: framework/style-options.php:3618 framework/style-options.php:3804
-#: framework/style-options.php:3991 framework/style-options.php:4178
-#: framework/style-options.php:4376
+#: framework/style-options.php:3777 framework/style-options.php:3963
+#: framework/style-options.php:4214 framework/style-options.php:4465
+#: framework/style-options.php:4663
 msgid "Name as a Placeholder"
 msgstr ""
 
-#: framework/style-options.php:3634 framework/style-options.php:3820
-#: framework/style-options.php:4007 framework/style-options.php:4205
-#: framework/style-options.php:4392 framework/style-options.php:4587
-#: framework/style-options.php:4801 framework/style-options.php:5165
+#: framework/style-options.php:3793 framework/style-options.php:3979
+#: framework/style-options.php:4230 framework/style-options.php:4492
+#: framework/style-options.php:4679 framework/style-options.php:4874
+#: framework/style-options.php:5088 framework/style-options.php:5452
 msgid "Required"
 msgstr ""
 
-#: framework/style-options.php:3714 framework/style-options.php:3900
-#: framework/style-options.php:4087 framework/style-options.php:4285
-#: framework/style-options.php:4472 framework/style-options.php:4683
-#: framework/style-options.php:4914 framework/style-options.php:5245
+#: framework/style-options.php:3873 framework/style-options.php:4123
+#: framework/style-options.php:4374 framework/style-options.php:4572
+#: framework/style-options.php:4759 framework/style-options.php:4970
+#: framework/style-options.php:5201 framework/style-options.php:5532
 msgid "Size"
 msgstr ""
 
-#: framework/style-options.php:3952 framework/style-options.php:3981
-msgid "Phone"
+#: framework/style-options.php:3995 framework/style-options.php:4246
+msgid "Enable Validation"
 msgstr ""
 
-#: framework/style-options.php:3967 framework/style-options.php:3980
-msgid "Number"
+#: framework/style-options.php:3998 framework/style-options.php:4247
+msgid "Do you wish to Enable the validation?"
 msgstr ""
 
-#: framework/style-options.php:4139
-msgid "Dropdown"
+#: framework/style-options.php:4013 framework/style-options.php:4264
+msgid "Enter the Regular Expression"
 msgstr ""
 
-#: framework/style-options.php:4194 framework/style-options.php:4576
-#: framework/style-options.php:4790
-msgid "Options"
+#: framework/style-options.php:4030 framework/style-options.php:4281
+msgid "Enter the Message Title"
 msgstr ""
 
-#: framework/style-options.php:4337
-msgid "Textarea"
+#: framework/style-options.php:4031
+msgid "Enter the Name"
 msgstr ""
 
-#: framework/style-options.php:4365
-msgid "Enter message here"
-msgstr ""
-
-#: framework/style-options.php:4537 framework/style-options.php:4552
-msgid "Radio"
-msgstr ""
-
-#: framework/style-options.php:4566 framework/style-options.php:4780
-msgid "Placeholder text"
-msgstr ""
-
-#: framework/style-options.php:4604
-msgid "Radio Button Orientation"
-msgstr ""
-
-#: framework/style-options.php:4607 framework/style-options.php:4821
-msgid "Vertical"
-msgstr ""
-
-#: framework/style-options.php:4608 framework/style-options.php:4822
-msgid "Horizontal"
-msgstr ""
-
-#: framework/style-options.php:4722
-msgid "Radio Size"
-msgstr ""
-
-#: framework/style-options.php:4779
-msgid "Label"
-msgstr ""
-
-#: framework/style-options.php:4818
-msgid "Checkbox Button Orientation"
-msgstr ""
-
-#: framework/style-options.php:4953
-msgid "Checkbox Size"
-msgstr ""
-
-#: framework/style-options.php:5013
-msgid "Hidden Field Value"
-msgstr ""
-
-#: framework/style-options.php:5071
-msgid "Recaptcha Site key"
-msgstr ""
-
-#: framework/style-options.php:5087
+#: framework/style-options.php:4048 framework/style-options.php:4299
+#: framework/style-options.php:5374
 #. translators:%s module name .
 msgid "%s "
 msgstr ""
 
-#: framework/style-options.php:5142
+#: framework/style-options.php:4175 framework/style-options.php:4204
+msgid "Phone"
+msgstr ""
+
+#: framework/style-options.php:4265
+msgid "[0-9]{10}"
+msgstr ""
+
+#: framework/style-options.php:4282
+msgid "Enter the Number."
+msgstr ""
+
+#: framework/style-options.php:4426
+msgid "Dropdown"
+msgstr ""
+
+#: framework/style-options.php:4481 framework/style-options.php:4863
+#: framework/style-options.php:5077
+msgid "Options"
+msgstr ""
+
+#: framework/style-options.php:4624
+msgid "Textarea"
+msgstr ""
+
+#: framework/style-options.php:4652
+msgid "Enter message here"
+msgstr ""
+
+#: framework/style-options.php:4824 framework/style-options.php:4839
+msgid "Radio"
+msgstr ""
+
+#: framework/style-options.php:4853 framework/style-options.php:5067
+msgid "Placeholder text"
+msgstr ""
+
+#: framework/style-options.php:4891
+msgid "Radio Button Orientation"
+msgstr ""
+
+#: framework/style-options.php:4894 framework/style-options.php:5108
+msgid "Vertical"
+msgstr ""
+
+#: framework/style-options.php:4895 framework/style-options.php:5109
+msgid "Horizontal"
+msgstr ""
+
+#: framework/style-options.php:5009
+msgid "Radio Size"
+msgstr ""
+
+#: framework/style-options.php:5066
+msgid "Label"
+msgstr ""
+
+#: framework/style-options.php:5105
+msgid "Checkbox Button Orientation"
+msgstr ""
+
+#: framework/style-options.php:5240
+msgid "Checkbox Size"
+msgstr ""
+
+#: framework/style-options.php:5300
+msgid "Hidden Field Value"
+msgstr ""
+
+#: framework/style-options.php:5358
+msgid "Recaptcha Site key"
+msgstr ""
+
+#: framework/style-options.php:5429
 msgid "Placeholder"
 msgstr ""
 
-#: framework/style-options.php:5327 framework/style-options.php:5443
+#: framework/style-options.php:5614 framework/style-options.php:5730
 msgid "Subscribe"
 msgstr ""
 
-#: framework/style-options.php:5354 framework/style-options.php:5525
+#: framework/style-options.php:5641 framework/style-options.php:5812
 msgid "Text Hover Color"
 msgstr ""
 
-#: framework/style-options.php:5425
+#: framework/style-options.php:5712
 msgid "Gradient Button"
 msgstr ""
 
-#: framework/style-options.php:5537
+#: framework/style-options.php:5824
 msgid "First Background Color"
 msgstr ""
 
-#: framework/style-options.php:5547
+#: framework/style-options.php:5834
 msgid "Second Background Color"
 msgstr ""
 
-#: framework/style-options.php:5557
-#: framework/types/class-cp-before-after.php:437
-#: framework/types/class-cp-full-screen.php:388
-#: framework/types/class-cp-info-bar.php:331
+#: framework/style-options.php:5844
+#: framework/types/class-cp-before-after.php:441
+#: framework/types/class-cp-full-screen.php:391
+#: framework/types/class-cp-info-bar.php:334
 #: framework/types/class-cp-inline.php:371
-#: framework/types/class-cp-modal-popup.php:382
-#: framework/types/class-cp-slide-in.php:368
-#: framework/types/class-cp-welcome-mat.php:406
+#: framework/types/class-cp-modal-popup.php:385
+#: framework/types/class-cp-slide-in.php:371
+#: framework/types/class-cp-welcome-mat.php:408
 #: framework/types/class-cp-widget.php:402
 msgid "Gradient Start Location"
 msgstr ""
 
-#: framework/style-options.php:5571
-#: framework/types/class-cp-before-after.php:466
-#: framework/types/class-cp-full-screen.php:417
-#: framework/types/class-cp-info-bar.php:360
+#: framework/style-options.php:5858
+#: framework/types/class-cp-before-after.php:470
+#: framework/types/class-cp-full-screen.php:420
+#: framework/types/class-cp-info-bar.php:363
 #: framework/types/class-cp-inline.php:400
-#: framework/types/class-cp-modal-popup.php:411
-#: framework/types/class-cp-slide-in.php:397
-#: framework/types/class-cp-welcome-mat.php:435
+#: framework/types/class-cp-modal-popup.php:414
+#: framework/types/class-cp-slide-in.php:400
+#: framework/types/class-cp-welcome-mat.php:437
 #: framework/types/class-cp-widget.php:431
 msgid "Gradient End Location"
 msgstr ""
 
-#: framework/style-options.php:5588 framework/style-options.php:5730
-#: framework/types/class-cp-before-after.php:498
-#: framework/types/class-cp-full-screen.php:449
-#: framework/types/class-cp-info-bar.php:392
+#: framework/style-options.php:5875 framework/style-options.php:6017
+#: framework/types/class-cp-before-after.php:502
+#: framework/types/class-cp-full-screen.php:452
+#: framework/types/class-cp-info-bar.php:395
 #: framework/types/class-cp-inline.php:432
-#: framework/types/class-cp-modal-popup.php:443
-#: framework/types/class-cp-modal-popup.php:757
-#: framework/types/class-cp-slide-in.php:429
-#: framework/types/class-cp-welcome-mat.php:467
+#: framework/types/class-cp-modal-popup.php:446
+#: framework/types/class-cp-modal-popup.php:760
+#: framework/types/class-cp-slide-in.php:432
+#: framework/types/class-cp-welcome-mat.php:469
 #: framework/types/class-cp-widget.php:463
 msgid "Linear"
 msgstr ""
 
-#: framework/style-options.php:5589 framework/style-options.php:5731
-#: framework/types/class-cp-before-after.php:499
-#: framework/types/class-cp-full-screen.php:450
-#: framework/types/class-cp-info-bar.php:393
+#: framework/style-options.php:5876 framework/style-options.php:6018
+#: framework/types/class-cp-before-after.php:503
+#: framework/types/class-cp-full-screen.php:453
+#: framework/types/class-cp-info-bar.php:396
 #: framework/types/class-cp-inline.php:433
-#: framework/types/class-cp-modal-popup.php:444
-#: framework/types/class-cp-modal-popup.php:758
-#: framework/types/class-cp-slide-in.php:430
-#: framework/types/class-cp-welcome-mat.php:468
+#: framework/types/class-cp-modal-popup.php:447
+#: framework/types/class-cp-modal-popup.php:761
+#: framework/types/class-cp-slide-in.php:433
+#: framework/types/class-cp-welcome-mat.php:470
 #: framework/types/class-cp-widget.php:464
 msgid "Radial"
 msgstr ""
 
-#: framework/style-options.php:5599 framework/style-options.php:5625
-#: framework/types/class-cp-before-after.php:523
-#: framework/types/class-cp-before-after.php:559
-#: framework/types/class-cp-full-screen.php:474
-#: framework/types/class-cp-full-screen.php:510
-#: framework/types/class-cp-info-bar.php:416
-#: framework/types/class-cp-info-bar.php:451
+#: framework/style-options.php:5886 framework/style-options.php:5912
+#: framework/types/class-cp-before-after.php:527
+#: framework/types/class-cp-before-after.php:563
+#: framework/types/class-cp-full-screen.php:477
+#: framework/types/class-cp-full-screen.php:513
+#: framework/types/class-cp-info-bar.php:419
+#: framework/types/class-cp-info-bar.php:454
 #: framework/types/class-cp-inline.php:457
 #: framework/types/class-cp-inline.php:493
-#: framework/types/class-cp-modal-popup.php:468
-#: framework/types/class-cp-modal-popup.php:504
-#: framework/types/class-cp-modal-popup.php:780
-#: framework/types/class-cp-slide-in.php:454
-#: framework/types/class-cp-slide-in.php:490
-#: framework/types/class-cp-welcome-mat.php:492
-#: framework/types/class-cp-welcome-mat.php:528
+#: framework/types/class-cp-modal-popup.php:471
+#: framework/types/class-cp-modal-popup.php:507
+#: framework/types/class-cp-modal-popup.php:783
+#: framework/types/class-cp-slide-in.php:457
+#: framework/types/class-cp-slide-in.php:493
+#: framework/types/class-cp-welcome-mat.php:494
+#: framework/types/class-cp-welcome-mat.php:530
 #: framework/types/class-cp-widget.php:488
 #: framework/types/class-cp-widget.php:524
 msgid "Gradient Direction"
 msgstr ""
 
-#: framework/style-options.php:5602 framework/style-options.php:5749
-#: framework/types/class-cp-before-after.php:527
-#: framework/types/class-cp-full-screen.php:478
-#: framework/types/class-cp-info-bar.php:420
+#: framework/style-options.php:5889 framework/style-options.php:6036
+#: framework/types/class-cp-before-after.php:531
+#: framework/types/class-cp-full-screen.php:481
+#: framework/types/class-cp-info-bar.php:423
 #: framework/types/class-cp-inline.php:461
-#: framework/types/class-cp-modal-popup.php:472
-#: framework/types/class-cp-modal-popup.php:784
-#: framework/types/class-cp-slide-in.php:458
-#: framework/types/class-cp-welcome-mat.php:496
+#: framework/types/class-cp-modal-popup.php:475
+#: framework/types/class-cp-modal-popup.php:787
+#: framework/types/class-cp-slide-in.php:461
+#: framework/types/class-cp-welcome-mat.php:498
 #: framework/types/class-cp-widget.php:492
 msgid "Center Center"
 msgstr ""
 
-#: framework/style-options.php:5603 framework/style-options.php:5750
-#: framework/types/class-cp-before-after.php:528
-#: framework/types/class-cp-full-screen.php:479
-#: framework/types/class-cp-info-bar.php:421
+#: framework/style-options.php:5890 framework/style-options.php:6037
+#: framework/types/class-cp-before-after.php:532
+#: framework/types/class-cp-full-screen.php:482
+#: framework/types/class-cp-info-bar.php:424
 #: framework/types/class-cp-inline.php:462
-#: framework/types/class-cp-modal-popup.php:473
-#: framework/types/class-cp-modal-popup.php:785
-#: framework/types/class-cp-slide-in.php:459
-#: framework/types/class-cp-slide-in.php:774
-#: framework/types/class-cp-welcome-mat.php:497
+#: framework/types/class-cp-modal-popup.php:476
+#: framework/types/class-cp-modal-popup.php:788
+#: framework/types/class-cp-slide-in.php:462
+#: framework/types/class-cp-slide-in.php:777
+#: framework/types/class-cp-welcome-mat.php:499
 #: framework/types/class-cp-widget.php:493
 msgid "Center Left"
 msgstr ""
 
-#: framework/style-options.php:5604 framework/style-options.php:5751
-#: framework/types/class-cp-before-after.php:529
-#: framework/types/class-cp-full-screen.php:480
-#: framework/types/class-cp-info-bar.php:422
+#: framework/style-options.php:5891 framework/style-options.php:6038
+#: framework/types/class-cp-before-after.php:533
+#: framework/types/class-cp-full-screen.php:483
+#: framework/types/class-cp-info-bar.php:425
 #: framework/types/class-cp-inline.php:463
-#: framework/types/class-cp-modal-popup.php:474
-#: framework/types/class-cp-modal-popup.php:786
-#: framework/types/class-cp-slide-in.php:460
-#: framework/types/class-cp-slide-in.php:775
-#: framework/types/class-cp-welcome-mat.php:498
+#: framework/types/class-cp-modal-popup.php:477
+#: framework/types/class-cp-modal-popup.php:789
+#: framework/types/class-cp-slide-in.php:463
+#: framework/types/class-cp-slide-in.php:778
+#: framework/types/class-cp-welcome-mat.php:500
 #: framework/types/class-cp-widget.php:494
 msgid "Center Right"
 msgstr ""
 
-#: framework/style-options.php:5605 framework/style-options.php:5752
-#: framework/types/class-cp-before-after.php:530
-#: framework/types/class-cp-full-screen.php:481
-#: framework/types/class-cp-info-bar.php:423
-#: framework/types/class-cp-inline.php:464
-#: framework/types/class-cp-modal-popup.php:475
-#: framework/types/class-cp-modal-popup.php:787
-#: framework/types/class-cp-slide-in.php:461
-#: framework/types/class-cp-slide-in.php:770
-#: framework/types/class-cp-welcome-mat.php:499
-#: framework/types/class-cp-widget.php:495
-msgid "Top Center"
-msgstr ""
-
-#: framework/style-options.php:5606 framework/style-options.php:5753
-#: framework/types/class-cp-before-after.php:531
-#: framework/types/class-cp-full-screen.php:482
-#: framework/types/class-cp-info-bar.php:424
-#: framework/types/class-cp-inline.php:465
-#: framework/types/class-cp-modal-popup.php:476
-#: framework/types/class-cp-modal-popup.php:788
-#: framework/types/class-cp-slide-in.php:462
-#: framework/types/class-cp-slide-in.php:768
-#: framework/types/class-cp-welcome-mat.php:500
-#: framework/types/class-cp-widget.php:496
-msgid "Top Left"
-msgstr ""
-
-#: framework/style-options.php:5607 framework/style-options.php:5754
-#: framework/types/class-cp-before-after.php:532
-#: framework/types/class-cp-full-screen.php:483
-#: framework/types/class-cp-info-bar.php:425
-#: framework/types/class-cp-inline.php:466
-#: framework/types/class-cp-modal-popup.php:477
-#: framework/types/class-cp-modal-popup.php:789
-#: framework/types/class-cp-slide-in.php:463
-#: framework/types/class-cp-slide-in.php:769
-#: framework/types/class-cp-welcome-mat.php:501
-#: framework/types/class-cp-widget.php:497
-msgid "Top Right"
-msgstr ""
-
-#: framework/style-options.php:5608 framework/style-options.php:5755
-#: framework/types/class-cp-before-after.php:533
+#: framework/style-options.php:5892 framework/style-options.php:6039
+#: framework/types/class-cp-before-after.php:534
 #: framework/types/class-cp-full-screen.php:484
 #: framework/types/class-cp-info-bar.php:426
-#: framework/types/class-cp-inline.php:467
+#: framework/types/class-cp-inline.php:464
 #: framework/types/class-cp-modal-popup.php:478
 #: framework/types/class-cp-modal-popup.php:790
 #: framework/types/class-cp-slide-in.php:464
 #: framework/types/class-cp-slide-in.php:773
-#: framework/types/class-cp-welcome-mat.php:502
-#: framework/types/class-cp-widget.php:498
-msgid "Bottom Center"
+#: framework/types/class-cp-welcome-mat.php:501
+#: framework/types/class-cp-widget.php:495
+msgid "Top Center"
 msgstr ""
 
-#: framework/style-options.php:5609 framework/style-options.php:5756
-#: framework/types/class-cp-before-after.php:534
+#: framework/style-options.php:5893 framework/style-options.php:6040
+#: framework/types/class-cp-before-after.php:535
 #: framework/types/class-cp-full-screen.php:485
 #: framework/types/class-cp-info-bar.php:427
-#: framework/types/class-cp-inline.php:468
+#: framework/types/class-cp-inline.php:465
 #: framework/types/class-cp-modal-popup.php:479
 #: framework/types/class-cp-modal-popup.php:791
 #: framework/types/class-cp-slide-in.php:465
 #: framework/types/class-cp-slide-in.php:771
-#: framework/types/class-cp-welcome-mat.php:503
-#: framework/types/class-cp-widget.php:499
-msgid "Bottom Left"
+#: framework/types/class-cp-welcome-mat.php:502
+#: framework/types/class-cp-widget.php:496
+msgid "Top Left"
 msgstr ""
 
-#: framework/style-options.php:5610 framework/style-options.php:5757
-#: framework/types/class-cp-before-after.php:535
+#: framework/style-options.php:5894 framework/style-options.php:6041
+#: framework/types/class-cp-before-after.php:536
 #: framework/types/class-cp-full-screen.php:486
 #: framework/types/class-cp-info-bar.php:428
-#: framework/types/class-cp-inline.php:469
+#: framework/types/class-cp-inline.php:466
 #: framework/types/class-cp-modal-popup.php:480
 #: framework/types/class-cp-modal-popup.php:792
 #: framework/types/class-cp-slide-in.php:466
 #: framework/types/class-cp-slide-in.php:772
+#: framework/types/class-cp-welcome-mat.php:503
+#: framework/types/class-cp-widget.php:497
+msgid "Top Right"
+msgstr ""
+
+#: framework/style-options.php:5895 framework/style-options.php:6042
+#: framework/types/class-cp-before-after.php:537
+#: framework/types/class-cp-full-screen.php:487
+#: framework/types/class-cp-info-bar.php:429
+#: framework/types/class-cp-inline.php:467
+#: framework/types/class-cp-modal-popup.php:481
+#: framework/types/class-cp-modal-popup.php:793
+#: framework/types/class-cp-slide-in.php:467
+#: framework/types/class-cp-slide-in.php:776
 #: framework/types/class-cp-welcome-mat.php:504
+#: framework/types/class-cp-widget.php:498
+msgid "Bottom Center"
+msgstr ""
+
+#: framework/style-options.php:5896 framework/style-options.php:6043
+#: framework/types/class-cp-before-after.php:538
+#: framework/types/class-cp-full-screen.php:488
+#: framework/types/class-cp-info-bar.php:430
+#: framework/types/class-cp-inline.php:468
+#: framework/types/class-cp-modal-popup.php:482
+#: framework/types/class-cp-modal-popup.php:794
+#: framework/types/class-cp-slide-in.php:468
+#: framework/types/class-cp-slide-in.php:774
+#: framework/types/class-cp-welcome-mat.php:505
+#: framework/types/class-cp-widget.php:499
+msgid "Bottom Left"
+msgstr ""
+
+#: framework/style-options.php:5897 framework/style-options.php:6044
+#: framework/types/class-cp-before-after.php:539
+#: framework/types/class-cp-full-screen.php:489
+#: framework/types/class-cp-info-bar.php:431
+#: framework/types/class-cp-inline.php:469
+#: framework/types/class-cp-modal-popup.php:483
+#: framework/types/class-cp-modal-popup.php:795
+#: framework/types/class-cp-slide-in.php:469
+#: framework/types/class-cp-slide-in.php:775
+#: framework/types/class-cp-welcome-mat.php:506
 #: framework/types/class-cp-widget.php:500
 msgid "Bottom Right"
 msgstr ""
 
-#: framework/style-options.php:5645
+#: framework/style-options.php:5932
 msgid "On Hover Color"
 msgstr ""
 
-#: framework/style-options.php:5648
-#: framework/types/class-cp-before-after.php:343
-#: framework/types/class-cp-full-screen.php:294
+#: framework/style-options.php:5935
+#: framework/types/class-cp-before-after.php:347
+#: framework/types/class-cp-full-screen.php:297
 #: framework/types/class-cp-inline.php:277
-#: framework/types/class-cp-modal-popup.php:288
-#: framework/types/class-cp-slide-in.php:274
-#: framework/types/class-cp-welcome-mat.php:312
+#: framework/types/class-cp-modal-popup.php:291
+#: framework/types/class-cp-slide-in.php:277
+#: framework/types/class-cp-welcome-mat.php:314
 #: framework/types/class-cp-widget.php:308
 msgid "Custom"
 msgstr ""
 
-#: framework/style-options.php:5649
-#: framework/types/class-cp-before-after.php:342
-#: framework/types/class-cp-full-screen.php:293
+#: framework/style-options.php:5936
+#: framework/types/class-cp-before-after.php:346
+#: framework/types/class-cp-full-screen.php:296
 #: framework/types/class-cp-inline.php:276
-#: framework/types/class-cp-modal-popup.php:287
-#: framework/types/class-cp-slide-in.php:273
-#: framework/types/class-cp-welcome-mat.php:311
+#: framework/types/class-cp-modal-popup.php:290
+#: framework/types/class-cp-slide-in.php:276
+#: framework/types/class-cp-welcome-mat.php:313
 #: framework/types/class-cp-widget.php:307
 msgid "Inherit"
 msgstr ""
 
-#: framework/style-options.php:5659
+#: framework/style-options.php:5946
 msgid "First Hover Background Color"
 msgstr ""
 
-#: framework/style-options.php:5674
+#: framework/style-options.php:5961
 msgid "Second Hover Background Color"
 msgstr ""
 
-#: framework/style-options.php:5689
+#: framework/style-options.php:5976
 msgid "Hover Start Location"
 msgstr ""
 
-#: framework/style-options.php:5708
+#: framework/style-options.php:5995
 msgid "Hover End Location"
 msgstr ""
 
-#: framework/style-options.php:5746 framework/style-options.php:5780
+#: framework/style-options.php:6033 framework/style-options.php:6067
 msgid "Hover Gradient Direction"
 msgstr ""
 
-#: framework/style-options.php:5820
+#: framework/style-options.php:6107
 msgid "Go To URL"
 msgstr ""
 
-#: framework/style-options.php:5821
+#: framework/style-options.php:6108
 msgid "Go To Step"
 msgstr ""
 
-#: framework/style-options.php:5858
+#: framework/style-options.php:6145
 msgid "Source"
 msgstr ""
 
-#: framework/style-options.php:5862
+#: framework/style-options.php:6149
 msgid "YouTube"
 msgstr ""
 
-#: framework/style-options.php:5863
+#: framework/style-options.php:6150
 msgid "Vimeo"
 msgstr ""
 
-#: framework/style-options.php:5864
+#: framework/style-options.php:6151
 msgid "Custom URL"
 msgstr ""
 
-#: framework/style-options.php:5875
+#: framework/style-options.php:6162
 msgid "Video ID"
 msgstr ""
 
-#: framework/style-options.php:5899
+#: framework/style-options.php:6186
 msgid "Video URL"
 msgstr ""
 
-#: framework/style-options.php:5921
+#: framework/style-options.php:6208
 msgid "Autoplay"
 msgstr ""
 
-#: framework/style-options.php:5943
+#: framework/style-options.php:6230
 msgid "Player Controls"
 msgstr ""
 
@@ -3699,111 +3862,111 @@ msgid ""
 "post on a page."
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:295
-#: framework/types/class-cp-full-screen.php:245
-#: framework/types/class-cp-info-bar.php:212
+#: framework/types/class-cp-before-after.php:299
+#: framework/types/class-cp-full-screen.php:248
+#: framework/types/class-cp-info-bar.php:215
 #: framework/types/class-cp-inline.php:229
-#: framework/types/class-cp-modal-popup.php:239
-#: framework/types/class-cp-slide-in.php:226
-#: framework/types/class-cp-welcome-mat.php:263
+#: framework/types/class-cp-modal-popup.php:242
+#: framework/types/class-cp-slide-in.php:229
+#: framework/types/class-cp-welcome-mat.php:265
 #: framework/types/class-cp-widget.php:234
 msgid "Width for Panel"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:321
-#: framework/types/class-cp-full-screen.php:272
-#: framework/types/class-cp-info-bar.php:238
+#: framework/types/class-cp-before-after.php:325
+#: framework/types/class-cp-full-screen.php:275
+#: framework/types/class-cp-info-bar.php:241
 #: framework/types/class-cp-inline.php:255
-#: framework/types/class-cp-modal-popup.php:266
-#: framework/types/class-cp-slide-in.php:252
-#: framework/types/class-cp-welcome-mat.php:290
+#: framework/types/class-cp-modal-popup.php:269
+#: framework/types/class-cp-slide-in.php:255
+#: framework/types/class-cp-welcome-mat.php:292
 #: framework/types/class-cp-widget.php:260
 msgid "Height for Panel"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:340
-#: framework/types/class-cp-full-screen.php:291
+#: framework/types/class-cp-before-after.php:344
+#: framework/types/class-cp-full-screen.php:294
 #: framework/types/class-cp-inline.php:274
-#: framework/types/class-cp-modal-popup.php:285
-#: framework/types/class-cp-slide-in.php:271
-#: framework/types/class-cp-welcome-mat.php:309
+#: framework/types/class-cp-modal-popup.php:288
+#: framework/types/class-cp-slide-in.php:274
+#: framework/types/class-cp-welcome-mat.php:311
 #: framework/types/class-cp-widget.php:305
 msgid "Background Properties"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:344
-#: framework/types/class-cp-full-screen.php:295
+#: framework/types/class-cp-before-after.php:348
+#: framework/types/class-cp-full-screen.php:298
 #: framework/types/class-cp-inline.php:278
-#: framework/types/class-cp-modal-popup.php:289
-#: framework/types/class-cp-slide-in.php:275
-#: framework/types/class-cp-welcome-mat.php:313
+#: framework/types/class-cp-modal-popup.php:292
+#: framework/types/class-cp-slide-in.php:278
+#: framework/types/class-cp-welcome-mat.php:315
 #: framework/types/class-cp-widget.php:309
 msgid "If enabled, background properties will get inherited from first step"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:362
-#: framework/types/class-cp-full-screen.php:313
-#: framework/types/class-cp-info-bar.php:257
+#: framework/types/class-cp-before-after.php:366
+#: framework/types/class-cp-full-screen.php:316
+#: framework/types/class-cp-info-bar.php:260
 #: framework/types/class-cp-inline.php:296
-#: framework/types/class-cp-modal-popup.php:307
-#: framework/types/class-cp-slide-in.php:293
-#: framework/types/class-cp-welcome-mat.php:331
+#: framework/types/class-cp-modal-popup.php:310
+#: framework/types/class-cp-slide-in.php:296
+#: framework/types/class-cp-welcome-mat.php:333
 #: framework/types/class-cp-widget.php:327
 msgid "Background Type"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:367
-#: framework/types/class-cp-full-screen.php:318
-#: framework/types/class-cp-info-bar.php:262
+#: framework/types/class-cp-before-after.php:371
+#: framework/types/class-cp-full-screen.php:321
+#: framework/types/class-cp-info-bar.php:265
 #: framework/types/class-cp-inline.php:301
-#: framework/types/class-cp-modal-popup.php:312
-#: framework/types/class-cp-modal-popup.php:637
-#: framework/types/class-cp-slide-in.php:298
-#: framework/types/class-cp-welcome-mat.php:336
+#: framework/types/class-cp-modal-popup.php:315
+#: framework/types/class-cp-modal-popup.php:640
+#: framework/types/class-cp-slide-in.php:301
+#: framework/types/class-cp-welcome-mat.php:338
 #: framework/types/class-cp-widget.php:332
 msgid "Gradient"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:387
-#: framework/types/class-cp-full-screen.php:338
-#: framework/types/class-cp-info-bar.php:281
+#: framework/types/class-cp-before-after.php:391
+#: framework/types/class-cp-full-screen.php:341
+#: framework/types/class-cp-info-bar.php:284
 #: framework/types/class-cp-inline.php:321
-#: framework/types/class-cp-modal-popup.php:332
-#: framework/types/class-cp-slide-in.php:318
-#: framework/types/class-cp-welcome-mat.php:356
+#: framework/types/class-cp-modal-popup.php:335
+#: framework/types/class-cp-slide-in.php:321
+#: framework/types/class-cp-welcome-mat.php:358
 #: framework/types/class-cp-widget.php:352
 msgid "First Color"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:412
-#: framework/types/class-cp-full-screen.php:363
-#: framework/types/class-cp-info-bar.php:306
+#: framework/types/class-cp-before-after.php:416
+#: framework/types/class-cp-full-screen.php:366
+#: framework/types/class-cp-info-bar.php:309
 #: framework/types/class-cp-inline.php:346
-#: framework/types/class-cp-modal-popup.php:357
-#: framework/types/class-cp-slide-in.php:343
-#: framework/types/class-cp-welcome-mat.php:381
+#: framework/types/class-cp-modal-popup.php:360
+#: framework/types/class-cp-slide-in.php:346
+#: framework/types/class-cp-welcome-mat.php:383
 #: framework/types/class-cp-widget.php:377
 msgid "Second Color"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:613
-#: framework/types/class-cp-full-screen.php:564
-#: framework/types/class-cp-info-bar.php:503
+#: framework/types/class-cp-before-after.php:617
+#: framework/types/class-cp-full-screen.php:567
+#: framework/types/class-cp-info-bar.php:506
 #: framework/types/class-cp-inline.php:547
-#: framework/types/class-cp-modal-popup.php:558
-#: framework/types/class-cp-slide-in.php:544
-#: framework/types/class-cp-welcome-mat.php:582
+#: framework/types/class-cp-modal-popup.php:561
+#: framework/types/class-cp-slide-in.php:547
+#: framework/types/class-cp-welcome-mat.php:584
 #: framework/types/class-cp-widget.php:578
 msgid "Background Image"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:615
-#: framework/types/class-cp-full-screen.php:566
-#: framework/types/class-cp-info-bar.php:505
+#: framework/types/class-cp-before-after.php:619
+#: framework/types/class-cp-full-screen.php:569
+#: framework/types/class-cp-info-bar.php:508
 #: framework/types/class-cp-inline.php:549
-#: framework/types/class-cp-modal-popup.php:560
-#: framework/types/class-cp-slide-in.php:546
-#: framework/types/class-cp-welcome-mat.php:584
+#: framework/types/class-cp-modal-popup.php:563
+#: framework/types/class-cp-slide-in.php:549
+#: framework/types/class-cp-welcome-mat.php:586
 #: framework/types/class-cp-widget.php:580
 msgid ""
 "You can provide an image that would be appear behind the content in the "
@@ -3811,100 +3974,100 @@ msgid ""
 "chosen must be transparent."
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:662
-#: framework/types/class-cp-full-screen.php:613
-#: framework/types/class-cp-info-bar.php:550
+#: framework/types/class-cp-before-after.php:666
+#: framework/types/class-cp-full-screen.php:616
+#: framework/types/class-cp-info-bar.php:553
 #: framework/types/class-cp-inline.php:596
-#: framework/types/class-cp-modal-popup.php:607
-#: framework/types/class-cp-slide-in.php:593
-#: framework/types/class-cp-welcome-mat.php:631
+#: framework/types/class-cp-modal-popup.php:610
+#: framework/types/class-cp-slide-in.php:596
+#: framework/types/class-cp-welcome-mat.php:633
 #: framework/types/class-cp-widget.php:627
 msgid "Background Overlay Color"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:688
-#: framework/types/class-cp-full-screen.php:639
-#: framework/types/class-cp-info-bar.php:574
+#: framework/types/class-cp-before-after.php:692
+#: framework/types/class-cp-full-screen.php:642
+#: framework/types/class-cp-info-bar.php:577
 #: framework/types/class-cp-inline.php:622
-#: framework/types/class-cp-modal-popup.php:882
-#: framework/types/class-cp-slide-in.php:617
+#: framework/types/class-cp-modal-popup.php:885
+#: framework/types/class-cp-slide-in.php:620
 #: framework/types/class-cp-widget.php:653
 msgid "Entry Animation Effect"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:774
-#: framework/types/class-cp-full-screen.php:725
-#: framework/types/class-cp-info-bar.php:660
+#: framework/types/class-cp-before-after.php:778
+#: framework/types/class-cp-full-screen.php:728
+#: framework/types/class-cp-info-bar.php:663
 #: framework/types/class-cp-inline.php:708
-#: framework/types/class-cp-modal-popup.php:968
-#: framework/types/class-cp-slide-in.php:726
-#: framework/types/class-cp-welcome-mat.php:724
+#: framework/types/class-cp-modal-popup.php:971
+#: framework/types/class-cp-slide-in.php:729
+#: framework/types/class-cp-welcome-mat.php:726
 #: framework/types/class-cp-widget.php:739
 msgid "Rounded Corners"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:812
+#: framework/types/class-cp-before-after.php:816
 msgid "Design Position"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:814
+#: framework/types/class-cp-before-after.php:818
 #: framework/types/class-cp-inline.php:748
 msgid ""
 "This position will be set for entire call-to-action. This will affect on "
 "frontend only."
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:835
-#: framework/types/class-cp-full-screen.php:767
-#: framework/types/class-cp-info-bar.php:698
+#: framework/types/class-cp-before-after.php:839
+#: framework/types/class-cp-full-screen.php:770
+#: framework/types/class-cp-info-bar.php:701
 #: framework/types/class-cp-inline.php:769
-#: framework/types/class-cp-modal-popup.php:1006
-#: framework/types/class-cp-slide-in.php:703
-#: framework/types/class-cp-welcome-mat.php:762
+#: framework/types/class-cp-modal-popup.php:1009
+#: framework/types/class-cp-slide-in.php:706
+#: framework/types/class-cp-welcome-mat.php:764
 #: framework/types/class-cp-widget.php:777
 msgid "Mobile Breakpoint"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:841
-#: framework/types/class-cp-full-screen.php:773
-#: framework/types/class-cp-info-bar.php:704
+#: framework/types/class-cp-before-after.php:845
+#: framework/types/class-cp-full-screen.php:776
+#: framework/types/class-cp-info-bar.php:707
 #: framework/types/class-cp-inline.php:775
-#: framework/types/class-cp-modal-popup.php:1012
-#: framework/types/class-cp-slide-in.php:709
-#: framework/types/class-cp-welcome-mat.php:768
+#: framework/types/class-cp-modal-popup.php:1015
+#: framework/types/class-cp-slide-in.php:712
+#: framework/types/class-cp-welcome-mat.php:770
 #: framework/types/class-cp-widget.php:783
 msgid "Responsive breakpoint for mobile."
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:935
-#: framework/types/class-cp-full-screen.php:1290
-#: framework/types/class-cp-info-bar.php:1069
+#: framework/types/class-cp-before-after.php:939
+#: framework/types/class-cp-full-screen.php:1293
+#: framework/types/class-cp-info-bar.php:1072
 #: framework/types/class-cp-inline.php:869
-#: framework/types/class-cp-modal-popup.php:1137
-#: framework/types/class-cp-slide-in.php:1108
-#: framework/types/class-cp-welcome-mat.php:1285
+#: framework/types/class-cp-modal-popup.php:1140
+#: framework/types/class-cp-slide-in.php:1111
+#: framework/types/class-cp-welcome-mat.php:1287
 #: framework/types/class-cp-widget.php:877
 msgid "Text Transform"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:1066
-#: framework/types/class-cp-full-screen.php:1421
-#: framework/types/class-cp-info-bar.php:1200
+#: framework/types/class-cp-before-after.php:1070
+#: framework/types/class-cp-full-screen.php:1424
+#: framework/types/class-cp-info-bar.php:1203
 #: framework/types/class-cp-inline.php:1000
-#: framework/types/class-cp-modal-popup.php:1268
-#: framework/types/class-cp-slide-in.php:1239
-#: framework/types/class-cp-welcome-mat.php:1416
+#: framework/types/class-cp-modal-popup.php:1271
+#: framework/types/class-cp-slide-in.php:1242
+#: framework/types/class-cp-welcome-mat.php:1418
 #: framework/types/class-cp-widget.php:1008
 msgid "Placeholder Color"
 msgstr ""
 
-#: framework/types/class-cp-before-after.php:1219
-#: framework/types/class-cp-full-screen.php:1574
-#: framework/types/class-cp-info-bar.php:1353
+#: framework/types/class-cp-before-after.php:1223
+#: framework/types/class-cp-full-screen.php:1577
+#: framework/types/class-cp-info-bar.php:1356
 #: framework/types/class-cp-inline.php:1153
-#: framework/types/class-cp-modal-popup.php:1421
-#: framework/types/class-cp-slide-in.php:1392
-#: framework/types/class-cp-welcome-mat.php:1569
+#: framework/types/class-cp-modal-popup.php:1424
+#: framework/types/class-cp-slide-in.php:1395
+#: framework/types/class-cp-welcome-mat.php:1571
 #: framework/types/class-cp-widget.php:1161
 msgid "Active Field Border Color"
 msgstr ""
@@ -3925,9 +4088,9 @@ msgstr ""
 msgid "After Scroll"
 msgstr ""
 
-#: framework/types/class-cp-full-screen.php:787
-#: framework/types/class-cp-modal-popup.php:1029
-#: framework/types/class-cp-welcome-mat.php:782
+#: framework/types/class-cp-full-screen.php:790
+#: framework/types/class-cp-modal-popup.php:1032
+#: framework/types/class-cp-welcome-mat.php:784
 msgid "Credit Link Color"
 msgstr ""
 
@@ -3941,56 +4104,56 @@ msgid ""
 "bottom of the page."
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:725
+#: framework/types/class-cp-info-bar.php:728
 msgid "Top"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:726
+#: framework/types/class-cp-info-bar.php:729
 msgid "Bottom"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:743
+#: framework/types/class-cp-info-bar.php:746
 msgid "Push Page Down"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:747
+#: framework/types/class-cp-info-bar.php:750
 msgid "Push page down when info bar is enabled."
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:768
+#: framework/types/class-cp-info-bar.php:771
 msgid "Disable Sticky Info-bar"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:772
+#: framework/types/class-cp-info-bar.php:775
 msgid "Disable the Info bar as Sticky."
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:808
+#: framework/types/class-cp-info-bar.php:811
 msgid "InfoBar Toggle"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:812
-#: framework/types/class-cp-slide-in.php:796
+#: framework/types/class-cp-info-bar.php:815
+#: framework/types/class-cp-slide-in.php:799
 msgid "Enable toggle at its position."
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:905
-#: framework/types/class-cp-slide-in.php:917
+#: framework/types/class-cp-info-bar.php:908
+#: framework/types/class-cp-slide-in.php:920
 msgid "Enter Toggle Text"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:907
-#: framework/types/class-cp-slide-in.php:919
+#: framework/types/class-cp-info-bar.php:910
+#: framework/types/class-cp-slide-in.php:922
 msgid "Enter text which will appear on toggle button."
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:935
-#: framework/types/class-cp-slide-in.php:974
+#: framework/types/class-cp-info-bar.php:938
+#: framework/types/class-cp-slide-in.php:977
 msgid "Width for Toggle"
 msgstr ""
 
-#: framework/types/class-cp-info-bar.php:965
-#: framework/types/class-cp-slide-in.php:1004
+#: framework/types/class-cp-info-bar.php:968
+#: framework/types/class-cp-slide-in.php:1007
 msgid "Height for toggle button"
 msgstr ""
 
@@ -4012,43 +4175,43 @@ msgstr ""
 msgid "Modal Popup"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:633
+#: framework/types/class-cp-modal-popup.php:636
 msgid "Overlay Type"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:654
+#: framework/types/class-cp-modal-popup.php:657
 msgid "Color 1"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:677
+#: framework/types/class-cp-modal-popup.php:680
 msgid "Location 1"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:704
+#: framework/types/class-cp-modal-popup.php:707
 msgid "Color 2"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:727
+#: framework/types/class-cp-modal-popup.php:730
 msgid "Location 2"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:814
+#: framework/types/class-cp-modal-popup.php:817
 msgid "Angle"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:841
+#: framework/types/class-cp-modal-popup.php:844
 msgid "Overlay Color"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:844
+#: framework/types/class-cp-modal-popup.php:847
 msgid "Select Overlay color."
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:865
+#: framework/types/class-cp-modal-popup.php:868
 msgid "Close on Overlay Click"
 msgstr ""
 
-#: framework/types/class-cp-modal-popup.php:869
+#: framework/types/class-cp-modal-popup.php:872
 msgid "If enabled, modal will close when user click on Overlay."
 msgstr ""
 
@@ -4062,35 +4225,35 @@ msgid ""
 "the screen."
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:764
+#: framework/types/class-cp-slide-in.php:767
 msgid "Slide In Position"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:792
+#: framework/types/class-cp-slide-in.php:795
 msgid "Slide In Toggle"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:889
+#: framework/types/class-cp-slide-in.php:892
 msgid "Type of Toggle"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:891
+#: framework/types/class-cp-slide-in.php:894
 msgid "Select the type of toggle"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:893
+#: framework/types/class-cp-slide-in.php:896
 msgid "Sticky"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:894
+#: framework/types/class-cp-slide-in.php:897
 msgid "Hide on click"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:941
+#: framework/types/class-cp-slide-in.php:944
 msgid "Display Icon To Minimize Toggle"
 msgstr ""
 
-#: framework/types/class-cp-slide-in.php:945
+#: framework/types/class-cp-slide-in.php:948
 msgid "Enable icon to mimimize toggle."
 msgstr ""
 
@@ -4118,7 +4281,7 @@ msgstr ""
 msgid "Margin"
 msgstr ""
 
-#: includes/admin-helper-functions.php:244 includes/insights-actions.php:182
+#: includes/admin-helper-functions.php:244 includes/insights-actions.php:183
 msgid "You do not have permissions to perform this action"
 msgstr ""
 
@@ -4169,32 +4332,32 @@ msgstr ""
 msgid "Something went wrong"
 msgstr ""
 
-#: includes/class-bsf-menu.php:112 includes/class-bsf-menu.php:522
+#: includes/class-bsf-menu.php:114 includes/class-bsf-menu.php:536
 msgid "Dashboard"
 msgstr ""
 
-#: includes/class-bsf-menu.php:120
+#: includes/class-bsf-menu.php:122
 msgid "Settings"
 msgstr ""
 
-#: includes/class-bsf-menu.php:350
+#: includes/class-bsf-menu.php:364
 msgid "Knowledge Base"
 msgstr ""
 
-#: includes/class-bsf-menu.php:365
+#: includes/class-bsf-menu.php:379
 msgid "Request Support"
 msgstr ""
 
-#: includes/class-bsf-menu.php:550
+#: includes/class-bsf-menu.php:564
 msgid "Version"
 msgstr ""
 
-#: includes/common-helper-functions.php:3059
+#: includes/common-helper-functions.php:3101
 msgid "You are not connected to any service."
 msgstr ""
 
-#: includes/common-helper-functions.php:3102
-#: includes/common-helper-functions.php:3118
+#: includes/common-helper-functions.php:3144
+#: includes/common-helper-functions.php:3160
 #. translators: %s site URL
 msgid ""
 "[FORM_SUBMISSION_DATA]\n"
@@ -4205,7 +4368,7 @@ msgid ""
 "<strong>[DESIGN_NAME]</strong> on %2$s (%3$s)"
 msgstr ""
 
-#: includes/common-helper-functions.php:3105
+#: includes/common-helper-functions.php:3147
 #. Translators: %s style name
 msgid "Call-to-action \"%s\" is not connected to any service."
 msgstr ""
@@ -5206,55 +5369,64 @@ msgstr ""
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/insights-actions.php:57
+#: includes/insights-actions.php:58
 #. translators: %s Test name
 msgid "A/B - %s"
 msgstr ""
 
-#: includes/insights-actions.php:59
+#: includes/insights-actions.php:60
 msgid "A/B Test is running."
 msgstr ""
 
-#: includes/insights-actions.php:82
+#: includes/insights-actions.php:83
 msgid "Info"
 msgstr ""
 
-#: includes/insights-actions.php:166
+#: includes/insights-actions.php:167
 msgid "Campaign already exist"
 msgstr ""
 
-#: includes/insights-actions.php:437
+#: includes/insights-actions.php:431
+msgid "Something went wrong."
+msgstr ""
+
+#: includes/insights-actions.php:495
 msgid "Behavior Quick View - "
 msgstr ""
 
-#: includes/insights-actions.php:443
+#: includes/insights-actions.php:501
 #. translators: %s percentage
 msgid "ID"
 msgstr ""
 
-#: includes/insights-actions.php:445
+#: includes/insights-actions.php:503
 msgid "Slug"
 msgstr ""
 
-#: includes/insights-actions.php:460
+#: includes/insights-actions.php:518
 msgid "When should this call-to-action appear?"
 msgstr ""
 
-#: includes/insights-actions.php:479
+#: includes/insights-actions.php:537
 msgid "Exit Intent"
 msgstr ""
 
-#: includes/insights-actions.php:484
+#: includes/insights-actions.php:542
 #. translators: %s seconds
 msgid "After %s seconds"
 msgstr ""
 
-#: includes/insights-actions.php:489
+#: includes/insights-actions.php:550
+#. translators: %1$s conditon type and %2$s number
+msgid "Display when a user viewed number of pages count: %1$s - %2$s"
+msgstr ""
+
+#: includes/insights-actions.php:555
 #. translators: %s percentage
 msgid "After user scrolls the %s%%"
 msgstr ""
 
-#: includes/insights-actions.php:494
+#: includes/insights-actions.php:560
 #. translators: %s percentage
 msgid ""
 "Display within Range - Will appear when user scrolls to %1$s%% and close "
@@ -5262,114 +5434,123 @@ msgid ""
 "and %4$s%% of the page)"
 msgstr ""
 
-#: includes/insights-actions.php:500
+#: includes/insights-actions.php:566
 #. translators: %s seconds
 msgid "Inactivitiy for %s Seconds"
 msgstr ""
 
-#: includes/insights-actions.php:504
+#: includes/insights-actions.php:570
 msgid "After user reaches the end of a blog post."
 msgstr ""
 
-#: includes/insights-actions.php:513
+#: includes/insights-actions.php:579
 #. translators: %s enable scroll class option value
 msgid "After user reaches the %s on page."
 msgstr ""
 
-#: includes/insights-actions.php:530
+#: includes/insights-actions.php:583
+#. translators: %s start date and end date option value
+msgid "Scheduled: From ( %1$s ) To ( %2$s )"
+msgstr ""
+
+#: includes/insights-actions.php:600
 msgid "Visible to all"
 msgstr ""
 
-#: includes/insights-actions.php:548 includes/insights-actions.php:674
+#: includes/insights-actions.php:618 includes/insights-actions.php:753
 msgid "Where is this call-to-action enabled/disabled?"
 msgstr ""
 
-#: includes/insights-actions.php:561 includes/insights-actions.php:685
+#: includes/insights-actions.php:631 includes/insights-actions.php:764
 msgid "Enabled on"
 msgstr ""
 
-#: includes/insights-actions.php:566 includes/insights-actions.php:690
+#: includes/insights-actions.php:636 includes/insights-actions.php:769
 msgid "Disabled on"
 msgstr ""
 
-#: includes/insights-actions.php:572 includes/insights-actions.php:696
+#: includes/insights-actions.php:642 includes/insights-actions.php:775
 msgid "Who should see this call-to-action?"
 msgstr ""
 
-#: includes/insights-actions.php:578 includes/insights-actions.php:701
+#: includes/insights-actions.php:648 includes/insights-actions.php:780
 msgid "Everyone including logged in users."
 msgstr ""
 
-#: includes/insights-actions.php:586 includes/insights-actions.php:706
+#: includes/insights-actions.php:656 includes/insights-actions.php:785
 msgid "Everyone including first time visitors."
 msgstr ""
 
-#: includes/insights-actions.php:595 includes/insights-actions.php:712
+#: includes/insights-actions.php:665 includes/insights-actions.php:791
 msgid "Hide On Devices - "
 msgstr ""
 
-#: includes/insights-actions.php:606
+#: includes/insights-actions.php:676
 msgid "Ruleset"
 msgstr ""
 
-#: includes/insights-actions.php:625
+#: includes/insights-actions.php:695
 msgid "How frequently do you wish to show this call-to-action?"
 msgstr ""
 
-#: includes/insights-actions.php:631
+#: includes/insights-actions.php:701
 msgid "Hide for -"
 msgstr ""
 
-#: includes/insights-actions.php:633
+#: includes/insights-actions.php:703
 msgid " days after conversion "
 msgstr ""
 
-#: includes/insights-actions.php:635
+#: includes/insights-actions.php:705
 msgid " days after closing "
 msgstr ""
 
-#: includes/insights-actions.php:640
+#: includes/insights-actions.php:710
 msgid "It will appear every time a visitor arrives on your website."
 msgstr ""
 
-#: includes/insights-actions.php:650
+#: includes/insights-actions.php:723
+msgid "Shortcode: "
+msgstr ""
+
+#: includes/insights-actions.php:729
 msgid ""
 "This is an inline form & will be displayed on post/pages you have added the "
 "short-code."
 msgstr ""
 
-#: includes/insights-actions.php:656
+#: includes/insights-actions.php:735
 msgid "What is the call-to-action inline position?"
 msgstr ""
 
-#: includes/insights-actions.php:659
+#: includes/insights-actions.php:738
 msgid "Both Before and After the post."
 msgstr ""
 
-#: includes/insights-actions.php:662
+#: includes/insights-actions.php:741
 msgid "Before the posts."
 msgstr ""
 
-#: includes/insights-actions.php:664
+#: includes/insights-actions.php:743
 msgid "After the posts."
 msgstr ""
 
-#: includes/insights-actions.php:723
+#: includes/insights-actions.php:802
 msgid ""
 "This is a widget form & will be displayed on post/pages you have added the "
 "widget."
 msgstr ""
 
-#: includes/insights-actions.php:807
+#: includes/insights-actions.php:886
 msgid "Archive"
 msgstr ""
 
-#: includes/insights-actions.php:810
+#: includes/insights-actions.php:889
 #. translators: %s enable scroll class option value
 msgid "All %1$s %2$s"
 msgstr ""
 
-#: lib/notices/class-astra-notices.php:125
+#: lib/astra-notices/class-astra-notices.php:119
 msgid "WordPress Nonce not validated."
 msgstr ""
 

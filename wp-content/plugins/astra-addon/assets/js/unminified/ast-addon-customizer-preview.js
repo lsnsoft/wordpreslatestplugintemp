@@ -123,7 +123,6 @@ function astra_color_responsive_css( addon, control, css_property, selector ) {
 				);
 
 			} else {
-				wp.customize.preview.send( 'refresh' );
 				jQuery( 'style#' + control + '-' + addon ).remove();
 			}
 
@@ -143,11 +142,13 @@ function astra_apply_responsive_background_css( control, selector, device, singl
 
 			addon = ( addon ) ? addon : 'header';
 
+			control = control.replace( '[', '-' );
+			control = control.replace( ']', '' );
+
 			if( '' === bg_obj[device] || undefined === bg_obj[device] ){
 				return;
 			}
-			jQuery( 'style#' + control + '-' + device + '-' + addon ).remove();
-		
+
 			var gen_bg_css 	= '';
 			var bg_img		= bg_obj[device]['background-image'];
 			var bg_tab_img	= bg_obj['tablet']['background-image'];
@@ -156,50 +157,71 @@ function astra_apply_responsive_background_css( control, selector, device, singl
 			var tablet_css  = ( bg_obj['tablet']['background-image'] ) ? true : false;
 			var desktop_css = ( bg_obj['desktop']['background-image'] ) ? true : false;
 
-			if ( '' !== bg_img && '' !== bg_color ) {
-				if ( undefined !== bg_color ) {
-					gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_img + ');';
-				}
-			} else if ( '' !== bg_img ) {
-				gen_bg_css = 'background-image: url(' + bg_img + ');';
-			} else if ( '' !== bg_color ) {
-				if( 'mobile' === device ) {
-					if( true == desktop_css && true == tablet_css ) {
-						gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_tab_img + ');';
-					} else if( true == desktop_css ) {
-						gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_desk_img + ');';
-					} else if( true == tablet_css ) {
-						gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_tab_img + ');';
-					} else {
-						gen_bg_css = 'background-color: ' + bg_color + ';';
-						gen_bg_css += 'background-image: none;';
-					}
-				} else if( 'tablet' === device ) {
-					if( true == desktop_css ) {
-						gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_desk_img + ');';
-					} else {
-						gen_bg_css = 'background-color: ' + bg_color + ';';
-						gen_bg_css += 'background-image: none;';
-					}
-				} else {
-					gen_bg_css = 'background-color: ' + bg_color + ';';
-					gen_bg_css += 'background-image: none;';
-				}
+			if( undefined !== bg_obj[device]['background-type'] && '' !== bg_obj[device]['background-type'] ) {
 
-				if( ! selector.includes( singleColorSelector ) ) {
-					selector += ', ' + singleColorSelector;
+				if ( ( 'color' === bg_obj[device]['background-type'] ) ) {
+
+					if ( '' !== bg_img && '' !== bg_color && undefined !== bg_color && 'unset' !== bg_color ) {
+
+						gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_img + ');';
+					} else if ( 'mobile' === device ) {
+						if ( desktop_css ) {
+
+							gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_desk_img + ');';
+						} else if ( tablet_css ) {
+
+							gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_tab_img + ');';
+						} else {
+							gen_bg_css = 'background-color: ' + bg_color + ';';
+							gen_bg_css += 'background-image: none;';
+						}
+
+					} else if ( 'tablet' === device ) {
+
+						if ( desktop_css ) {
+
+							gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_desk_img + ');';
+						} else {
+							gen_bg_css = 'background-color: ' + bg_color + ';';
+							gen_bg_css += 'background-image: none;';
+						}
+
+
+					} else if ( undefined === bg_img || '' === bg_img ) {
+
+						gen_bg_css = 'background-color: ' + bg_color + ';';
+						gen_bg_css += 'background-image: none;';
+
+					}
+				} else if ( 'image' === bg_obj[device]['background-type'] ) {
+
+					if ( '' !== bg_img && '' !== bg_color && undefined !== bg_color && 'unset' !== bg_color && ! bg_color.includes("linear-gradient") && ! bg_color.includes("radial-gradient") ) {
+
+						gen_bg_css = 'background-image: linear-gradient(to right, ' + bg_color + ', ' + bg_color + '), url(' + bg_img + ');';
+					}
+					if ( ( undefined === bg_color || '' === bg_color || 'unset' === bg_color || bg_color.includes("linear-gradient") || bg_color.includes("radial-gradient") ) && '' !== bg_img ) {
+						gen_bg_css = 'background-image: url(' + bg_img + ');';
+					}
+				} else if ( 'gradient' === bg_obj[device]['background-type'] ) {
+					if ( '' !== bg_color && 'unset' !== bg_color ) {
+						gen_bg_css = 'background-image: ' + bg_color + ';';
+					}
 				}
 			}
 
+			if ( '' !== bg_img ) {
 
-			if ( '' != bg_img ) {
 				gen_bg_css += 'background-repeat: ' + bg_obj[device]['background-repeat'] + ';';
 				gen_bg_css += 'background-position: ' + bg_obj[device]['background-position'] + ';';
 				gen_bg_css += 'background-size: ' + bg_obj[device]['background-size'] + ';';
 				gen_bg_css += 'background-attachment: ' + bg_obj[device]['background-attachment'] + ';';
 			}
-			
-			if ( 'desktop' == device ) {	
+
+			// Remove old.
+			jQuery( 'style#' + control + '-' + device + '-' + addon ).remove();
+
+
+			if ( 'desktop' == device ) {
 				var dynamicStyle = '<style id="' + control + '-' + device + '-' + addon + '">'
 					+ selector + '	{ ' + gen_bg_css + ' }'
 				+ '</style>'
@@ -220,7 +242,7 @@ function astra_apply_responsive_background_css( control, selector, device, singl
 				dynamicStyle
 			);
 		});
-	});    
+	});
 }
 
 
@@ -247,7 +269,7 @@ function astra_responsive_background_obj_css( wp_customize, bg_obj, ctrl_name, s
 			gen_bg_css = 'background-color: ' + bg_color + ';';
 			// gen_bg_css += 'background-image: none;';
 		}
-		
+
 		if ( '' !== bg_img ) {
 
 			gen_bg_css += 'background-repeat: ' + bg_obj[device]['background-repeat'] + ';';
@@ -257,7 +279,7 @@ function astra_responsive_background_obj_css( wp_customize, bg_obj, ctrl_name, s
 		} else {
 			gen_bg_css += 'background-image: none;';
 		}
-		
+
 		if ( 'desktop' == device ) {
 			var dynamicStyle = style.replace( "{{css}}", gen_bg_css );
 		}
@@ -276,7 +298,7 @@ function astra_responsive_background_obj_css( wp_customize, bg_obj, ctrl_name, s
  */
 function astra_responsive_background_obj_refresh( bg_obj ) {
 	if ( undefined !== bg_obj['desktop'] && undefined !== bg_obj['tablet'] && undefined !== bg_obj['mobile'] ) {
-		if ( 
+		if (
 				( '' === bg_obj['desktop']['background-color'] )
 				&&
 				( '' === bg_obj['tablet']['background-color'] )

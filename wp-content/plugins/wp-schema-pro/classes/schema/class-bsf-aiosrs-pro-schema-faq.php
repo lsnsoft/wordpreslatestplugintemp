@@ -24,20 +24,22 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Schema_FAQ' ) ) {
 		 */
 		public static function render( $data, $post ) {
 			global $post;
-			$schema  = array();
-			$post_id = get_the_ID();
-			if ( isset( $data['question-answer'] ) && ! empty( $data['question-answer'] ) ) {
+			$schema = array();
+			if ( isset( $data['question-answer'][0]['question'] ) && ! empty( $data['question-answer'][0]['question'] ) ) {
+
 				$schema['@context'] = 'https://schema.org';
 				$schema['type']     = 'FAQPage';
 				foreach ( $data['question-answer'] as $key => $value ) {
-					$schema['mainEntity'][ $key ]['@type']                   = 'Question';
-					$schema['mainEntity'][ $key ]['name']                    = $value['question'];
-					$schema['mainEntity'][ $key ]['acceptedAnswer']['@type'] = 'Answer';
-					$schema['mainEntity'][ $key ]['acceptedAnswer']['text']  = $value['answer'];
-
+					if ( isset( $value['question'] ) && ! empty( $value['question'] ) ) {
+						$schema['mainEntity'][ $key ]['@type'] = 'Question';
+						$schema['mainEntity'][ $key ]['name']  = $value['question'];
+					}
+					if ( isset( $value['answer'] ) && ! empty( $value['answer'] ) ) {
+						$schema['mainEntity'][ $key ]['acceptedAnswer']['@type'] = 'Answer';
+						$schema['mainEntity'][ $key ]['acceptedAnswer']['text']  = $value['answer'];
+					}
 				}
 			}
-
 			return apply_filters( 'wp_schema_pro_schema_faq', $schema, $data, $post );
 		}
 

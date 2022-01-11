@@ -98,7 +98,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 
 			// Is page imported with Starter Sites?
 			// If not then skip batch process.
-			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_enable_for_batch', true );
 			if ( ! $imported_from_demo_site ) {
 				return;
 			}
@@ -129,9 +129,12 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 			}
 
 			$post->set_editor_data( $editor_data );
+			$post->set_needs_compile( $post->get_needs_compile() );
 			$post->set_editor_version( BRIZY_EDITOR_VERSION );
-			$post->set_needs_compile( true );
+			$post->set_compiler_version( BRIZY_EDITOR_VERSION );
+			$post->set_plugin_version( BRIZY_VERSION );
 			$post->saveStorage();
+			$post->savePost();
 		}
 
 	}

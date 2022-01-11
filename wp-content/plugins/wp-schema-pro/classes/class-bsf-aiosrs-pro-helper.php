@@ -56,6 +56,9 @@ class BSF_AIOSRS_Pro_Helper {
 			'pinterest'   => '',
 			'soundcloud'  => '',
 			'tumblr'      => '',
+			'wikipedia'   => '',
+			'myspace'     => '',
+			'other'       => array(),
 		),
 
 		// Global Schemas.
@@ -69,10 +72,10 @@ class BSF_AIOSRS_Pro_Helper {
 
 		// Advanced Settings.
 		'aiosrs-pro-settings'              => array(
-			'quick-test'          => 1,
+			'quick-test'          => '1',
 			'menu-position'       => 'options-general.php',
 			'schema-location'     => 'head',
-			'yoast-compatibility' => 1,
+			'yoast-compatibility' => '1',
 			'schema-validation'   => '',
 			'default_image'       => '',
 			'delete-schema-data'  => '',
@@ -81,15 +84,20 @@ class BSF_AIOSRS_Pro_Helper {
 
 		// Corporate Contact.
 		'wp-schema-pro-corporate-contact'  => array(
-			'contact-type'      => '',
-			'telephone'         => '',
-			'url'               => '',
-			'email'             => '',
-			'areaServed'        => '',
-			'contact-hear'      => '',
-			'contact-toll'      => '',
-			'availableLanguage' => '',
-			'cp-schema-type'    => '',
+			'contact-type'       => '',
+			'telephone'          => '',
+			'url'                => '',
+			'email'              => '',
+			'areaServed'         => '',
+			'contact-hear'       => '',
+			'contact-toll'       => '',
+			'availableLanguage'  => '',
+			'cp-schema-type'     => '',
+			'areaserved-type'    => '',
+			'country'            => array(),
+			'place'              => '',
+			'contact-page-id'    => '',
+			'contact-type-other' => '',
 
 		),
 
@@ -100,12 +108,13 @@ class BSF_AIOSRS_Pro_Helper {
 			'sp_plugin_desc'        => '',
 			'sp_plugin_author_name' => '',
 			'sp_plugin_author_url'  => '',
-			'sp_hide_label'         => '',
+			'sp_hide_label'         => 'disabled',
 		),
 		'wp-schema-pro-breadcrumb-setting' => array(
-			'product'     => '',
-			'product_cat' => '',
-			'product_tag' => '',
+			'product'      => '',
+			'product_cat'  => '',
+			'product_tag'  => '',
+			'enable_bread' => '1',
 		),
 	);
 
@@ -143,11 +152,7 @@ class BSF_AIOSRS_Pro_Helper {
 	 */
 	public static function bsf_schema_pro_enqueue_admin_script() {
 		global $pagenow;
-		if ( 'post-new.php' === $pagenow || 'post.php' === $pagenow ) {
-			return true;
-		} else {
-			return false;
-		}
+			return 'post-new.php' === $pagenow || 'post.php' === $pagenow;
 	}
 
 	/**
@@ -174,6 +179,12 @@ class BSF_AIOSRS_Pro_Helper {
 		delete_option( BSF_AIOSRS_PRO_CACHE_KEY );
 	}
 
+	/**
+	 *  Return the WP_debug.
+	 */
+	public static function bsf_schema_pro_is_wp_debug_enable() {
+		return true === ( defined( 'WP_DEBUG' ) && WP_DEBUG );
+	}
 }
 
 

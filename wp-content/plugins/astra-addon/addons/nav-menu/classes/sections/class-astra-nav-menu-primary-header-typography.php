@@ -24,7 +24,10 @@ if ( ! class_exists( 'Astra_Nav_Menu_Primary_Header_Typography' ) ) {
 	/**
 	 * Register Mega Menu Customizer Configurations.
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Nav_Menu_Primary_Header_Typography extends Astra_Customizer_Config_Base {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Register Mega Menu Customizer Configurations.
@@ -39,24 +42,15 @@ if ( ! class_exists( 'Astra_Nav_Menu_Primary_Header_Typography' ) ) {
 			$_configs = array(
 
 				array(
-					'name'     => ASTRA_THEME_SETTINGS . '[primary-header-typography-styling-divider]',
-					'type'     => 'control',
-					'control'  => 'ast-heading',
-					'section'  => 'section-primary-menu',
-					'title'    => __( 'Typography', 'astra-addon' ),
-					'priority' => 71,
-					'settings' => array(),
-				),
-
-				array(
 					'name'      => ASTRA_THEME_SETTINGS . '[primary-mega-menu-col-typography]',
 					'default'   => astra_get_option( 'primary-mega-menu-col-typography' ),
 					'type'      => 'control',
 					'control'   => 'ast-settings-group',
-					'title'     => __( 'Mega Menu Column Heading', 'astra-addon' ),
+					'title'     => __( 'Mega Menu Heading Font', 'astra-addon' ),
 					'section'   => 'section-primary-menu',
 					'transport' => 'postMessage',
 					'priority'  => 72,
+					'divider'   => array( 'ast_class' => 'ast-bottom-divider' ),
 				),
 
 				// Option: Primary Megamenu Header Menu Font Family.

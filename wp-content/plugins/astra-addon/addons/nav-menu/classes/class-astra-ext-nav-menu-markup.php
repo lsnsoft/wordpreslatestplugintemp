@@ -17,7 +17,10 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 	 *
 	 * @since 1.6.0
 	 */
+	// @codingStandardsIgnoreStart
 	final class Astra_Ext_Nav_Menu_Markup {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -96,6 +99,10 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 			$font_family_below = astra_get_option( 'below-header-megamenu-heading-font-family' );
 			$font_weight_below = astra_get_option( 'below-header-megamenu-heading-font-weight' );
 			Astra_Fonts::add_font( $font_family_below, $font_weight_below );
+
+			$font_family_mobile_submenu = astra_get_option( 'header-font-family-mobile-menu-sub-menu' );
+			$font_weight_mobile_submenu = astra_get_option( 'header-font-weight-mobile-menu-sub-menu' );
+			Astra_Fonts::add_font( $font_family_mobile_submenu, $font_weight_mobile_submenu );
 		}
 
 		/**
@@ -128,7 +135,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 						);
 					?>
 				</a>
-			</p>               
+			</p>
 			<?php
 		}
 
@@ -166,6 +173,17 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 			$menu_item->megamenu_widgets_list = get_post_meta( $menu_item->ID, '_menu_item_megamenu_widgets_list', true );
 
 			$menu_item->megamenu_template = get_post_meta( $menu_item->ID, '_menu_item_megamenu_template', true );
+			$menu_item->custom_width      = get_post_meta( $menu_item->ID, '_menu_item_megamenu_custom_width', true );
+
+			$menu_item->megamenu_margin_top    = get_post_meta( $menu_item->ID, '_menu_item_megamenu_margin_top', true );
+			$menu_item->megamenu_margin_right  = get_post_meta( $menu_item->ID, '_menu_item_megamenu_margin_right', true );
+			$menu_item->megamenu_margin_bottom = get_post_meta( $menu_item->ID, '_menu_item_megamenu_margin_bottom', true );
+			$menu_item->megamenu_margin_left   = get_post_meta( $menu_item->ID, '_menu_item_megamenu_margin_left', true );
+
+			$menu_item->megamenu_padding_top    = get_post_meta( $menu_item->ID, '_menu_item_megamenu_padding_top', true );
+			$menu_item->megamenu_padding_right  = get_post_meta( $menu_item->ID, '_menu_item_megamenu_padding_right', true );
+			$menu_item->megamenu_padding_bottom = get_post_meta( $menu_item->ID, '_menu_item_megamenu_padding_bottom', true );
+			$menu_item->megamenu_padding_left   = get_post_meta( $menu_item->ID, '_menu_item_megamenu_padding_left', true );
 
 			return $menu_item;
 		}
@@ -177,7 +195,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 		 */
 		public function edit_walker() {
 
-			require_once ASTRA_EXT_NAV_MENU_DIR . 'classes/class-astra-walker-nav-menu-edit-custom.php';
+			require_once ASTRA_ADDON_EXT_NAV_MENU_DIR . 'classes/class-astra-walker-nav-menu-edit-custom.php';
 			return 'Astra_Walker_Nav_Menu_Edit_Custom';
 		}
 
@@ -187,7 +205,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 		 * @return void.
 		 */
 		public static function load_walker() {
-			require_once ASTRA_EXT_NAV_MENU_DIR . 'classes/class-astra-custom-nav-walker.php';
+			require_once ASTRA_ADDON_EXT_NAV_MENU_DIR . 'classes/class-astra-custom-nav-walker.php';
 		}
 
 		/**
@@ -214,6 +232,12 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 
 			$post_types['Posts'] = 'post';
 			$post_types['Pages'] = 'page';
+
+			$has_wp_block_suport = post_type_exists( 'wp_block' );
+
+			if ( $has_wp_block_suport ) {
+				$post_types['Reusable Blocks'] = 'wp_block';
+			}
 
 			foreach ( $post_types as $key => $post_type ) {
 
@@ -272,6 +296,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 
 			if ( has_nav_menu( 'primary' ) ) {
 				add_filter( 'astra_primary_menu_classes', array( $this, 'add_primary_menu_classes' ) );
+				add_filter( 'astra_secondary_menu_menu_classes', array( $this, 'add_primary_menu_classes' ) );
 			}
 		}
 
@@ -385,6 +410,17 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 			$megamenu_disable_title           = get_post_meta( $menu_item_id, '_menu_item_megamenu_disable_title', true );
 			$megamenu_enable_heading          = get_post_meta( $menu_item_id, '_menu_item_megamenu_enable_heading', true );
 			$megamenu_disable_link            = get_post_meta( $menu_item_id, '_menu_item_megamenu_disable_link', true );
+			$custom_width                     = get_post_meta( $menu_item_id, '_menu_item_megamenu_custom_width', true );
+
+			$megamenu_margin_top    = get_post_meta( $menu_item_id, '_menu_item_megamenu_margin_top', true );
+			$megamenu_margin_right  = get_post_meta( $menu_item_id, '_menu_item_megamenu_margin_right', true );
+			$megamenu_margin_bottom = get_post_meta( $menu_item_id, '_menu_item_megamenu_margin_bottom', true );
+			$megamenu_margin_left   = get_post_meta( $menu_item_id, '_menu_item_megamenu_margin_left', true );
+
+			$megamenu_padding_top    = get_post_meta( $menu_item_id, '_menu_item_megamenu_padding_top', true );
+			$megamenu_padding_right  = get_post_meta( $menu_item_id, '_menu_item_megamenu_padding_right', true );
+			$megamenu_padding_bottom = get_post_meta( $menu_item_id, '_menu_item_megamenu_padding_bottom', true );
+			$megamenu_padding_left   = get_post_meta( $menu_item_id, '_menu_item_megamenu_padding_left', true );
 
 			$parent_megamenu = get_post_meta( $menu_parent_id, '_menu_item_megamenu', true );
 
@@ -428,7 +464,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 						);
 					?>
 				</h2>
-				<span class="ast-editing-label" data-label="<?php esc_attr_e( 'Editing', 'astra-addon' ); ?>"></span>	
+				<span class="ast-editing-label" data-label="<?php esc_attr_e( 'Editing', 'astra-addon' ); ?>"></span>
 				<div class="astra-mm-close dashicons dashicons-no-alt"></div>
 			</div>
 			<div class="ast-mm-settings">
@@ -446,11 +482,11 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 						<div class="astra-option-input-container">
 							<input type="checkbox" id="edit-menu-item-megamenu-<?php echo esc_attr( $menu_item_id ); ?>" class="code edit-menu-item-megamenu" value="megamenu" name="megamenu" <?php checked( $megamenu, 'megamenu' ); ?> />
 						</div>
-					</div>					
+					</div>
 					<div class="astra-mm-settings-wrap field-mm-width" <?php echo $mm_container_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
 						<div class="ast-mm-label-container">
 							<label for="edit-menu-item-megamenu_width-<?php echo esc_attr( $menu_item_id ); ?>">
-								<?php esc_html_e( 'Mega Menu width', 'astra-addon' ); ?>
+								<?php esc_html_e( 'Mega Menu Width', 'astra-addon' ); ?>
 							</label>
 						</div>
 						<div class="astra-option-input-container">
@@ -462,9 +498,25 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 									<?php esc_attr_e( 'Menu Container Width', 'astra-addon' ); ?>
 								</option>
 								<option value="full" <?php selected( $megamenu_width, 'full' ); ?> >
-									<?php esc_attr_e( 'Full', 'astra-addon' ); ?>
+									<?php esc_attr_e( 'Full Width', 'astra-addon' ); ?>
+								</option>
+								<option value="full-stretched" <?php selected( $megamenu_width, 'full-stretched' ); ?> >
+									<?php esc_attr_e( 'Full Width Stretched', 'astra-addon' ); ?>
+								</option>
+								<option value="custom" <?php selected( $megamenu_width, 'custom' ); ?> >
+									<?php esc_attr_e( 'Custom Width', 'astra-addon' ); ?>
 								</option>
 							</select>
+						</div>
+					</div>
+					<div class="astra-mm-settings-wrap mm-custom-width-wrap">
+						<div class="ast-mm-label-container">
+							<label for="mega-menu-item-megamenu_custom_width-<?php echo esc_attr( $menu_item_id ); ?>">
+								<?php esc_html_e( 'Custom Width (in px)', 'astra-addon' ); ?>
+							</label>
+						</div>
+						<div class="astra-option-input-container">
+							<input type="number" class="ast-mm-input" id="mega-menu-item-megamenu_custom_width-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_custom_width" / value="<?php echo esc_attr( $custom_width ); ?>" >
 						</div>
 					</div>
 					<div class="astra-mm-settings-wrap field-mm-width" <?php echo $mm_container_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
@@ -474,7 +526,14 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 							</label>
 						</div>
 						<div class="astra-option-input-container">
-							<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus[control]=' . ASTRA_THEME_SETTINGS . '[primary-header-megamenu-heading-color]' ) ); ?>" for="edit-menu-item-megamenu_heading_color_link">
+						<?php
+							$url = admin_url( 'customize.php?autofocus[control]=' . ASTRA_THEME_SETTINGS . '[primary-header-megamenu-heading-color]' );
+						if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+							$url = admin_url( 'customize.php?autofocus[control]=' . ASTRA_THEME_SETTINGS . '[header-menu1-mega-menu-col-color-group]&context=design' );
+						}
+
+						?>
+							<a href="<?php echo esc_url( $url ); ?>" for="edit-menu-item-megamenu_heading_color_link">
 								<?php esc_html_e( 'Click Here!', 'astra-addon' ); ?>
 							</a>
 						</div>
@@ -484,7 +543,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 						<div class="ast-mm-label-container">
 							<label for="edit-menu-item-megamenu_enable_heading-<?php echo esc_attr( $menu_item_id ); ?>">
 								<?php esc_html_e( 'Make this menu as column heading?', 'astra-addon' ); ?>
-							</label>	
+							</label>
 						</div>
 						<div class="astra-option-input-container">
 							<input type="checkbox" id="edit-menu-item-megamenu_enable_heading-<?php echo esc_attr( $menu_item_id ); ?>" class="code edit-menu-item-megamenu_enable_heading" value="enable-heading" name="megamenu_enable_heading"<?php checked( $megamenu_enable_heading, 'enable-heading' ); ?> />
@@ -546,7 +605,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 
 						<div class="ast-mm-label-container">
 							<label>
-								<?php esc_html_e( 'Background image', 'astra-addon' ); ?>
+								<?php esc_html_e( 'Background Image', 'astra-addon' ); ?>
 							</label>
 						</div>
 						<?php
@@ -584,9 +643,9 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 							?>
 							<select id="edit-menu-item-megamenu_bg_repeat-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_bg_repeat">
 								<?php foreach ( $bg_sizes as $key => $value ) { ?>
-									<option <?php selected( $megamenu_bg_repeat, $key ); ?> value="<?php echo esc_attr( $key ); ?>"> 
+									<option <?php selected( $megamenu_bg_repeat, $key ); ?> value="<?php echo esc_attr( $key ); ?>">
 										<?php echo esc_html( $value ); ?>
-									</option>		
+									</option>
 								<?php } ?>
 							</select>
 						</div>
@@ -611,9 +670,9 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 							?>
 							<select id="edit-menu-item-megamenu_bg_size-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_bg_size">
 								<?php foreach ( $bg_sizes as $key => $value ) { ?>
-									<option <?php selected( $megamenu_bg_size, $key ); ?> value="<?php echo esc_attr( $key ); ?>"> 
+									<option <?php selected( $megamenu_bg_size, $key ); ?> value="<?php echo esc_attr( $key ); ?>">
 										<?php echo esc_html( $value ); ?>
-									</option>		
+									</option>
 								<?php } ?>
 							</select>
 						</div>
@@ -642,16 +701,16 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 							?>
 							<select id="edit-menu-item-megamenu_bg_position-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_bg_position">
 								<?php foreach ( $bg_positions as $key => $value ) { ?>
-									<option <?php selected( $megamenu_bg_position, $key ); ?> value="<?php echo esc_attr( $key ); ?>"> 
+									<option <?php selected( $megamenu_bg_position, $key ); ?> value="<?php echo esc_attr( $key ); ?>">
 										<?php echo esc_attr( $value ); ?>
-									</option>		
+									</option>
 								<?php } ?>
 							</select>
 						</div>
 					</div>
 				</div>
 				<div class="astra-mm-option-container field-mm-color" <?php echo $mm_container_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
-					<h2 class="astra-mm-option-heading"><?php esc_html_e( 'Override Colors for this mega menu?', 'astra-addon' ); ?></h2>
+					<h2 class="astra-mm-option-heading"><?php esc_html_e( 'Override Colors for this Mega Menu?', 'astra-addon' ); ?></h2>
 					<div class="astra-mm-settings-wrap field-mm-text-color">
 						<div class="ast-mm-label-container">
 							<label>
@@ -736,13 +795,12 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 							<select id="edit-menu-item-megamenu_template-<?php echo esc_attr( $menu_item_id ); ?>" class="form-control ast-input ast-select2-container" name="menu-item-megamenu_template" / >
 
 								<?php
-								$selected_template = $megamenu_template;
 
-								if ( ! empty( $selected_template ) ) {
+								if ( ! empty( $megamenu_template ) ) {
 
-									$template_title = get_the_title( (int) $selected_template );
+									$template_title = get_the_title( (int) $megamenu_template );
 
-									echo "<option selected='selected' value='" . esc_attr( $selected_template ) . "'>" . esc_attr( $template_title ) . '</option>';
+									echo "<option selected='selected' value='" . esc_attr( $megamenu_template ) . "'>" . esc_attr( $template_title ) . '</option>';
 								}
 
 								?>
@@ -789,7 +847,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 					<div class="astra-mm-settings-wrap">
 						<div class="ast-mm-label-container">
 							<label for="edit-menu-item-megamenu_highlight_label-<?php echo esc_attr( $menu_item_id ); ?>">
-								<?php esc_html_e( 'Menu Highlight label', 'astra-addon' ); ?>
+								<?php esc_html_e( 'Menu Highlight Label', 'astra-addon' ); ?>
 							</label>
 						</div>
 						<div class="astra-option-input-container">
@@ -814,6 +872,64 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 						</div>
 						<div class="astra-option-input-container">
 							<input type="text" data-alpha="true" class="ast-mm-input astra-wp-color-input" id="edit-menu-item-megamenu_label_bg_color-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_label_bg_color" value="<?php echo esc_attr( $megamenu_label_bg_color ); ?>"/>
+						</div>
+					</div>
+				</div>
+				<div class="astra-mm-option-container field-mm-highlight-label field-mm-advanced-options" >
+					<h2 class="astra-mm-option-heading"><?php esc_html_e( 'Advanced', 'astra-addon' ); ?></h2>
+					<div class="astra-mm-settings-wrap">
+						<div class="ast-mm-label-container">
+							<label for="edit-menu-item-megamenu_margin_top-<?php echo esc_attr( $menu_item_id ); ?>">
+								<?php esc_html_e( 'Margin (in px)', 'astra-addon' ); ?>
+							</label>
+						</div>
+						<div class="astra-option-input-container spacing-wrapper">
+							<ul class="ast-mm-spacing-wrap">
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_margin_top-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_margin_top" / value="<?php echo esc_attr( $megamenu_margin_top ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Top', 'astra-addon' ); ?> </span>
+								</li>
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_margin_right-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_margin_right" / value="<?php echo esc_attr( $megamenu_margin_right ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Right', 'astra-addon' ); ?> </span>
+								</li>
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_margin_bottom-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_margin_bottom" / value="<?php echo esc_attr( $megamenu_margin_bottom ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Bottom', 'astra-addon' ); ?> </span>
+								</li>
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_margin_left-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_margin_left" / value="<?php echo esc_attr( $megamenu_margin_left ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Left', 'astra-addon' ); ?> </span>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="astra-mm-settings-wrap">
+						<div class="ast-mm-label-container">
+							<label for="edit-menu-item-megamenu_padding_top-<?php echo esc_attr( $menu_item_id ); ?>">
+								<?php esc_html_e( 'Padding (in px)', 'astra-addon' ); ?>
+							</label>
+						</div>
+						<div class="astra-option-input-container spacing-wrapper">
+							<ul class="ast-mm-spacing-wrap">
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_padding_top-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_padding_top" / value="<?php echo esc_attr( $megamenu_padding_top ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Top', 'astra-addon' ); ?> </span>
+								</li>
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_padding_right-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_padding_right" / value="<?php echo esc_attr( $megamenu_padding_right ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Right', 'astra-addon' ); ?> </span>
+								</li>
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_padding_bottom-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_padding_bottom" / value="<?php echo esc_attr( $megamenu_padding_bottom ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Bottom', 'astra-addon' ); ?> </span>
+								</li>
+								<li clas="spacing-input-item">
+									<input type="number" class="ast-mm-input" id="edit-menu-item-megamenu_padding_left-<?php echo esc_attr( $menu_item_id ); ?>" name="menu-item-megamenu_padding_left" / value="<?php echo esc_attr( $megamenu_padding_left ); ?>" >
+									<span class="ast-spacing-title"> <?php esc_html_e( 'Left', 'astra-addon' ); ?> </span>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -861,7 +977,7 @@ if ( ! class_exists( 'Astra_Ext_Nav_Menu_Markup' ) ) {
 				// Update meta values.
 				foreach ( $fields as $key => $value ) {
 
-					$key = str_replace( 'menu-item-', '', $key );
+					$key = sanitize_text_field( str_replace( 'menu-item-', '', $key ) );
 
 					if ( 'megamenu_custom_text' == $key ) {
 						$value = wp_kses_post( wp_unslash( $value ) );

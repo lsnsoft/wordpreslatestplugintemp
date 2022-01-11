@@ -13,8 +13,9 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Headers_Loader' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	class Astra_Ext_Advanced_Headers_Loader {
-
+	// @codingStandardsIgnoreStart
+	class Astra_Ext_Advanced_Headers_Loader { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -84,9 +85,9 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Headers_Loader' ) ) {
 		 */
 		private static function load_files() {
 			// Classes.
-			include_once ASTRA_EXT_ADVANCED_HEADERS_DIR . 'classes/class-astra-ext-advanced-headers-data.php';
+			include_once ASTRA_ADDON_EXT_ADVANCED_HEADERS_DIR . 'classes/class-astra-ext-advanced-headers-data.php';
 			// Load Astra Breadcrumbs.
-			include_once ASTRA_EXT_ADVANCED_HEADERS_DIR . 'classes/astra-breadcrumbs.php';
+			include_once ASTRA_ADDON_EXT_ADVANCED_HEADERS_DIR . 'classes/astra-breadcrumbs.php';
 		}
 
 
@@ -240,17 +241,46 @@ if ( ! class_exists( 'Astra_Ext_Advanced_Headers_Loader' ) ) {
 				// Styles.
 				wp_enqueue_media();
 
+				/**
+				 * Localize wp-color-picker & wpColorPickerL10n.
+				 *
+				 * This is only needed in WordPress version >= 5.5 because wpColorPickerL10n has been removed.
+				 *
+				 * @see https://github.com/WordPress/WordPress/commit/7e7b70cd1ae5772229abb769d0823411112c748b
+				 *
+				 * This is should be removed once the issue is fixed from wp-color-picker-alpha repo.
+				 * @see https://github.com/kallookoo/wp-color-picker-alpha/issues/35
+				 *
+				 * @since 2.6.3
+				 */
+				global $wp_version;
+
+				if ( version_compare( $wp_version, '5.4.99', '>=' ) ) {
+					wp_localize_script(
+						'wp-color-picker',
+						'wpColorPickerL10n',
+						array(
+							'clear'            => __( 'Clear', 'astra-addon' ),
+							'clearAriaLabel'   => __( 'Clear color', 'astra-addon' ),
+							'defaultString'    => __( 'Default', 'astra-addon' ),
+							'defaultAriaLabel' => __( 'Select default color', 'astra-addon' ),
+							'pick'             => __( 'Select Color', 'astra-addon' ),
+							'defaultLabel'     => __( 'Color value', 'astra-addon' ),
+						)
+					);
+				}
+
 				// Scripts.
 				if ( SCRIPT_DEBUG ) {
 
-					wp_enqueue_style( 'astra-advanced-headers-admin-edit', ASTRA_EXT_ADVANCED_HEADERS_URL . 'assets/css/unminified/astra-advanced-headers-admin-edit' . $rtl . '.css', array( 'wp-color-picker' ), ASTRA_EXT_VER );
+					wp_enqueue_style( 'astra-advanced-headers-admin-edit', ASTRA_ADDON_EXT_ADVANCED_HEADERS_URL . 'assets/css/unminified/astra-advanced-headers-admin-edit' . $rtl . '.css', array( 'wp-color-picker' ), ASTRA_EXT_VER );
 
-					wp_enqueue_script( 'astra-advanced-headers-admin', ASTRA_EXT_ADVANCED_HEADERS_URL . 'assets/js/unminified/astra-advanced-headers-admin.js', array( 'jquery', 'wp-color-picker', 'astra-color-alpha', 'jquery-ui-tooltip' ), ASTRA_EXT_VER, false );
+					wp_enqueue_script( 'astra-advanced-headers-admin', ASTRA_ADDON_EXT_ADVANCED_HEADERS_URL . 'assets/js/unminified/astra-advanced-headers-admin.js', array( 'jquery', 'wp-color-picker', 'astra-color-alpha', 'jquery-ui-tooltip' ), ASTRA_EXT_VER, false );
 
 				} else {
-					wp_enqueue_style( 'astra-advanced-headers-admin-edit', ASTRA_EXT_ADVANCED_HEADERS_URL . 'assets/css/minified/astra-advanced-headers-admin-edit' . $rtl . '.min.css', array( 'wp-color-picker' ), ASTRA_EXT_VER );
+					wp_enqueue_style( 'astra-advanced-headers-admin-edit', ASTRA_ADDON_EXT_ADVANCED_HEADERS_URL . 'assets/css/minified/astra-advanced-headers-admin-edit' . $rtl . '.min.css', array( 'wp-color-picker' ), ASTRA_EXT_VER );
 
-					wp_enqueue_script( 'astra-advanced-headers-admin', ASTRA_EXT_ADVANCED_HEADERS_URL . 'assets/js/minified/astra-advanced-headers-admin.min.js', array( 'jquery', 'wp-color-picker', 'astra-color-alpha', 'jquery-ui-tooltip' ), ASTRA_EXT_VER, false );
+					wp_enqueue_script( 'astra-advanced-headers-admin', ASTRA_ADDON_EXT_ADVANCED_HEADERS_URL . 'assets/js/minified/astra-advanced-headers-admin.min.js', array( 'jquery', 'wp-color-picker', 'astra-color-alpha', 'jquery-ui-tooltip' ), ASTRA_EXT_VER, false );
 				}
 			}
 		}

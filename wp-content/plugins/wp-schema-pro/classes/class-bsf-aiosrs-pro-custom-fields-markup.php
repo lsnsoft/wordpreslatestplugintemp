@@ -39,6 +39,14 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 		public static $meta_options = array();
 
 		/**
+		 * Custom user role.
+		 *
+		 * @since 2.1.2
+		 * @var array $allowed_user_roles
+		 */
+		public static $allowed_user_roles = array();
+
+		/**
 		 * Mapping Fields.
 		 *
 		 * @since 1.0
@@ -59,9 +67,9 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 		 * Constructor function.
 		 */
 		public function __construct() {
-
-			add_action( 'load-post.php', array( $this, 'init_metabox' ) );
-			add_action( 'load-post-new.php', array( $this, 'init_metabox' ) );
+			add_action( 'admin_init', array( $this, 'aiosrs_custom_allowed_user_role' ) );
+				add_action( 'load-post.php', array( $this, 'init_metabox' ) );
+				add_action( 'load-post-new.php', array( $this, 'init_metabox' ) );
 			add_action( 'admin_head', array( $this, 'meta_boxes_style' ) );
 			add_shortcode( 'aiosrs_pro_custom_field', array( $this, 'shortcode_callback' ) );
 			add_action( 'wp_ajax_aiosrs_reset_post_rating', array( $this, 'aiosrs_reset_post_rating_callback' ) );
@@ -75,6 +83,16 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 			);
 		}
 
+		/**
+		 *  Init Metabox user rile dependancies.
+		 */
+		public function aiosrs_custom_allowed_user_role() {
+			$allowed_user = apply_filters(
+				'wp_schema_pro_role',
+				array( 'administrator' )
+			);
+			update_option( 'custom_user_role', $allowed_user );
+		}
 
 		/**
 		 * Rest star rating.
@@ -85,7 +103,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 				wp_send_json_error();
 			}
 
-			wp_verify_nonce( $_POST['nonce'], 'schema-pro-reset-rating' );
+			check_ajax_referer( 'schema-pro-reset-rating', 'nonce' );
 
 			$response = array(
 				'success' => false,
@@ -161,9 +179,15 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 			if ( 'aiosrs-schema' === $current_post_type ) {
 				return;
 			}
-
-			add_action( 'add_meta_boxes', array( $this, 'setup_meta_box' ) );
-			add_action( 'save_post', array( $this, 'save_meta_box' ) );
+			$allowed_user_roles = array();
+			$user               = wp_get_current_user();
+			if ( is_array( $allowed_user_roles ) ) {
+				$allowed_user_roles = get_option( 'custom_user_role' );
+			}
+			if ( array_intersect( $allowed_user_roles, (array) $user->roles ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'setup_meta_box' ) );
+				add_action( 'save_post', array( $this, 'save_meta_box' ) );
+			}
 		}
 
 		/**
@@ -181,7 +205,6 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 
 			$schema_post_result = BSF_Target_Rule_Fields::get_instance()->get_posts_by_conditions( 'aiosrs-schema', $option, $current_post_id );
 			if ( is_array( $schema_post_result ) && ! empty( $schema_post_result ) ) {
-
 				$current_post_id = get_the_id();
 				foreach ( $schema_post_result as $post_id => $post_data ) {
 
@@ -204,7 +227,6 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 							}
 						}
 					}
-
 					$custom_fields = array();
 					foreach ( $schema_meta as $schema_key => $schema_value ) {
 
@@ -218,18 +240,60 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 							$item_schema_key    = isset( $item_schema_key ) ? $item_schema_key : '';
 							$schema_field_value = isset( $schema_meta_item_fields[ $item_schema_key ] ) ? $schema_meta_item_fields[ $item_schema_key ] : null;
 						}
-
+						if ( 'applicant-location' === $schema_key ) {
+							$schema_field_value = array(
+								'label'       => esc_html__( 'Applicant Location', 'wp-schema-pro' ),
+								'type'        => 'text',
+								'default'     => 'none',
+								'required'    => false,
+								'description' => esc_html__( 'The geographic location(s) in which employees may be located to be eligible for the Remote job.', 'wp-schema-pro' ),
+							);
+						}
+						$repeater_values = array();
 						if ( $schema_field_value ) {
 
 							if ( 'repeater' === $schema_field_value['type'] ) {
 
 								$repeater_values = get_post_meta( $current_post_id, $schema_type . '-' . $post_id . '-' . $schema_key, true );
+								// Added backward applicant location field dependancy.
+								if ( 'remote-location' === $schema_key ) {
+									$applicant_location_string = get_post_meta( $current_post_id, 'job-posting-' . $post_id . '-applicant-location', true );
+									$dep_count                 = get_option( 'wp_backward_field' . $current_post_id . '' . $post_id );
+									$dep_count                 = ! empty( $dep_count ) ? $dep_count : '';
+									if ( $applicant_location_string !== $dep_count && '' === $dep_count ) {
+
+										$deprecated_application_location = array(
+											array(
+												'applicant-location' => ! empty( $applicant_location_string ) ? $applicant_location_string : '',
+												'applicant-location-fieldtype' => 'custom-field',
+												'applicant-location-connected' => 'none',
+												'applicant-location-custom' => ! empty( $applicant_location_string ) ? $applicant_location_string : '',
+												'applicant-location-specific' => 'none',
+											),
+										);
+										if ( isset( $deprecated_application_location ) && ! empty( $deprecated_application_location ) ) {
+											if ( ! empty( $repeater_values ) ) {
+												$repeater_values = array_merge( $deprecated_application_location, $repeater_values );
+												update_option( 'wp_backward_field' . $current_post_id . '' . $post_id, $applicant_location_string );
+											} else {
+												$repeater_values = $deprecated_application_location;
+												update_option( 'wp_backward_field' . $current_post_id . '' . $post_id, $applicant_location_string );
+											}
+										}
+										update_post_meta( $current_post_id, $schema_type . '-' . $post_id . '-' . $schema_key, $repeater_values );
+									}
+								}
+
+								if ( ! is_array( $repeater_values ) || empty( $repeater_values ) ) {
+
+									$repeater_values = $schema_meta[ $schema_key ];
+								}
 
 								$repeter_fields = $schema_meta_fields[ $schema_key ]['fields'];
 
 								$tmp_fields = array();
 
-								foreach ( $schema_meta[ $schema_key ] as $index => $repeater_value ) {
+								foreach ( $repeater_values as $index => $repeater_value ) {
 
 									foreach ( $schema_field_value['fields'] as $field_key => $field ) {
 
@@ -263,6 +327,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 											'global_fieldtype' => $selected_field,
 											'global_default' => $selected_value,
 											'class'       => isset( $field['class'] ) ? $field['class'] : '',
+											'subkey_data' => $field,
 
 										);
 									}
@@ -327,9 +392,14 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 									'global_default'   => '',
 								);
 							} else {
-
+								if ( ! isset( $schema_meta['bsf-aiosrs-software-application-rating'] ) ) {
+									$schema_meta['bsf-aiosrs-software-application-rating'] = '';
+								}
+								if ( ! isset( $schema_meta['bsf-aiosrs-product-rating'] ) ) {
+									$schema_meta['bsf-aiosrs-product-rating'] = '';
+								}
 								// Skip review count in case of Accept user rating.
-								if ( 'review-count' === $schema_key && 'accept-user-rating' === $schema_meta['rating'] ) {
+								if ( ( 'bsf-aiosrs-product-review-count' === $schema_key || 'bsf-aiosrs-software-application-review-count' === $schema_key || 'review-count' === $schema_key ) && ( 'accept-user-rating' === $schema_meta['rating'] || 'accept-user-rating' === $schema_meta['bsf-aiosrs-software-application-rating'] || 'accept-user-rating' === $schema_meta['bsf-aiosrs-product-rating'] ) ) {
 									continue;
 								}
 
@@ -401,9 +471,14 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 		 */
 		public function setup_meta_box() {
 
+			$brand_settings = BSF_AIOSRS_Pro_Helper::$settings['wp-schema-pro-branding-settings'];
 			$this->init_static_fields();
 			if ( ! empty( self::$meta_boxes ) ) {
-				$title = __( 'Schema Pro', 'wp-schema-pro' );
+				if ( '' !== $brand_settings['sp_plugin_name'] ) {
+					$title = __( $brand_settings['sp_plugin_name'], 'wp-schema-pro' ); //phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+				} else {
+					$title = __( 'Schema Pro', 'wp-schema-pro' );
+				}
 				if ( count( self::$meta_boxes ) === 1 ) {
 					$key    = key( self::$meta_boxes );
 					$title .= ' - ' . self::$meta_boxes[ $key ]['post_title'];
@@ -588,7 +663,6 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 										<?php self::get_field_markup( $option, $meta_box['ID'], $meta_box['schema_type'], $stored ); ?>
 									<?php else : ?>
 									<div class="wpsp-local-fields" style="<?php echo ( $set_col_span ) ? 'width: 38.5%' : ''; ?> ">
-
 										<input class="wpsp-default-hidden-value" type="hidden" name="<?php echo esc_attr( $option['name'] ); ?>" value="<?php echo esc_attr( $default ); ?>">
 										<input class="wpsp-default-hidden-fieldtype" type="hidden" name="<?php echo esc_attr( $fieldtype ); ?>" value="<?php echo esc_attr( $selected_field ); ?>">
 
@@ -741,7 +815,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 						<?php
 					} else {
 						?>
-						<input type="number" class="bsf-rating-field" style="width: 35%" step="0.5" min="0" max="5" name="<?php echo esc_attr( $option['name'] ); ?>" value="<?php echo esc_attr( $option_default ); ?>">
+						<input type="number" class="bsf-rating-field" style="width: 35%" step="0.1" min="1" max="5" name="<?php echo esc_attr( $option['name'] ); ?>" value="<?php echo esc_attr( $option_default ); ?>">
 						<?php
 						self::get_star_rating_markup( $option_default );
 					}
@@ -772,14 +846,19 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 						<a href="#" class="aiosrs-image-select"><?php esc_html_e( 'Select Image', 'wp-schema-pro' ); ?></a>
 						<a href="#" class="aiosrs-image-remove dashicons dashicons-no-alt wp-ui-text-highlight"></a>
 						<?php if ( isset( $image_url ) && ! empty( $image_url ) ) : ?>
-							<a href="#" class="aiosrs-image-select img"><img src="<?php echo esc_url( $image_url ); ?>" /></a>
+							<a href="#" class="aiosrs-image-select img" ><img src="<?php echo esc_url( $image_url ); ?>" alt ="" /></a>
 						<?php endif; ?>
 					</div>
 					<?php
 					break;
 				case 'textarea':
-					?>
-					<textarea name="<?php echo esc_attr( $option['name'] ); ?>"><?php echo esc_attr( $option_default ); ?></textarea>
+					$textarea_row_size = '';
+					if ( 'custom-markup' === $schema_type ) {
+						$textarea_row_size = 10;
+						?>
+						<input type="hidden" id ="custom-schema-schema-field" class="custom-schema-schema-field" name="custom-schema-schema-field" value="<?php echo esc_attr( $schema_id ); ?>">
+					<?php } ?>
+					<textarea name="<?php echo esc_attr( $option['name'] ); ?> " rows="<?php echo esc_attr( $textarea_row_size ); ?>" placeholder = "<?php echo ( 'custom-markup' === $schema_type ) ? esc_html_e( 'Add your snippet here...', 'wp-schema-pro' ) : ''; ?>"><?php echo esc_attr( $option_default ); ?></textarea>
 					<?php
 					break;
 				case 'multi-select':
@@ -832,18 +911,25 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 					<?php
 					break;
 				case 'repeater-target':
+					$add_button_tooltip = __( 'By clicking on this, it will allow you to fill advanced data.', 'wp-schema-pro' );
 					?>
 					<div class="bsf-aiosrs-schema-type-wrap">
+						<span title="<?php echo esc_html( $add_button_tooltip ); ?>" class="bsf-aiosrs-schema-heading-help wpsp-show-repeater-target-field dashicons dashicons-plus-alt"></span>
+						<span class="bsf-aiosrs-schema-heading-help wpsp-hide-repeater-target-field bsf-hidden dashicons dashicons-dismiss"></span>
 						<?php foreach ( $option['fields'] as $fields ) : ?>
 							<div class="aiosrs-pro-repeater-table-wrap">
 								<a href="#" class="bsf-repeater-close dashicons dashicons-no-alt"></a>
 								<table class="aiosrs-pro-repeater-table">
 									<tbody>
 									<?php foreach ( $fields as $field ) : ?>
+										<?php $required_class = ''; ?>
 										<tr class="bsf-aiosrs-schema-row bsf-aiosrs-schema-row-text-type ">
 											<td class="bsf-aiosrs-schema-row-heading">
-												<label>
-													<?php echo esc_attr( $field['label'] ); ?> <span class="required">*</span>
+												<label class="<?php echo esc_attr( $required_class ); ?>">
+													<?php echo esc_attr( $field['label'] ); ?>
+													<?php if ( isset( $field['required'] ) && $field['required'] ) { ?>
+													<span class="required">*</span>
+													<?php } ?>
 												</label>
 											</td>
 											<td class="bsf-aiosrs-schema-row-content">
@@ -870,7 +956,7 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 						<span class="bsf-aiosrs-schema-heading-help wpsp-hide-repeater-field bsf-hidden dashicons dashicons-dismiss"></span>
 						<?php foreach ( $option['fields'] as $index => $fields ) : ?>
 							<div class="aiosrs-pro-repeater-table-wrap">
-								<a href="#" class="bsf-repeater-target-close dashicons dashicons-no-alt"></a>
+								<a href="#" class="bsf-repeater-close dashicons dashicons-no-alt"></a>
 								<table class="aiosrs-pro-repeater-table">
 									<tbody>
 									<?php
@@ -1004,9 +1090,11 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 							</div>
 
 						<?php endforeach; ?>
-						<!-- <button type="button" class="bsf-repeater-add-new-btn button">+ Add</button>-->
+						<button type="button" class="bsf-repeater-add-new-btn button">+ Add</button>
 					</div>
 					<?php
+					break;
+				default:
 					break;
 			}
 			?>
@@ -1091,39 +1179,39 @@ if ( ! class_exists( 'BSF_AIOSRS_Pro_Custom_Fields_Markup' ) ) {
 			 */
 			$this->init_static_fields( $post_id );
 			$post_meta = self::$meta_options;
-
 			foreach ( $post_meta as $key => $data ) {
+				if ( is_numeric( $key ) ) {
+					// Sanitize values.
+					$sanitize_filter = ( isset( $data['type'] ) ) ? $data['type'] : 'text';
 
-				// Sanitize values.
-				$sanitize_filter = ( isset( $data['type'] ) ) ? $data['type'] : 'text';
+					switch ( $sanitize_filter ) {
 
-				switch ( $sanitize_filter ) {
+						case 'FILTER_SANITIZE_STRING':
+							$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_SANITIZE_STRING );
+							break;
 
-					case 'FILTER_SANITIZE_STRING':
-						$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_SANITIZE_STRING );
-						break;
+						case 'FILTER_SANITIZE_URL':
+							$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_SANITIZE_URL );
+							break;
 
-					case 'FILTER_SANITIZE_URL':
-						$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_SANITIZE_URL );
-						break;
+						case 'FILTER_SANITIZE_NUMBER_INT':
+							$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_SANITIZE_NUMBER_INT );
+							break;
 
-					case 'FILTER_SANITIZE_NUMBER_INT':
-						$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_SANITIZE_NUMBER_INT );
-						break;
+						case 'repeater-target':
+						case 'repeater':
+							$meta_value = $_POST[ $data['name'] ];
 
-					case 'repeater-target':
-					case 'repeater':
-						$meta_value = $_POST[ $data['name'] ];
+							break;
 
-						break;
+						default:
+							$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_DEFAULT );
+							break;
+					}
 
-					default:
-						$meta_value = filter_input( INPUT_POST, $data['name'], FILTER_DEFAULT );
-						break;
+					update_post_meta( $post_id, $data['name'] . '-fieldtype', filter_input( INPUT_POST, $data['name'] . '-fieldtype', FILTER_SANITIZE_STRING ) );
+					update_post_meta( $post_id, $data['name'], $meta_value );
 				}
-
-				update_post_meta( $post_id, $data['name'] . '-fieldtype', filter_input( INPUT_POST, $data['name'] . '-fieldtype', FILTER_SANITIZE_STRING ) );
-				update_post_meta( $post_id, $data['name'], $meta_value );
 			}
 
 			// Deleteing the cached structured data.

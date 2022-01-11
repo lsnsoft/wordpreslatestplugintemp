@@ -582,7 +582,9 @@ if ( ! class_exists( 'Cp_Framework' ) ) {
 			$tags               = isset( $properties['opts']['tags'] ) ? $properties['opts']['tags'] : false;
 			$setting_value      = '';
 
-			if ( $_GET['post'] === $style_id ) {
+			$wpml_style_id = isset( $_GET['post'] ) ? sanitize_text_field( $_GET['post'] ) : get_the_ID() + 1;
+
+			if ( (int) $wpml_style_id === (int) $style_id ) {
 
 				if ( '' === $this->popups_get_post_meta[ $section_slug ] ) {
 					$this->popups_get_post_meta[ $section_slug ] = get_post_meta( $style_id, $section_slug, true );

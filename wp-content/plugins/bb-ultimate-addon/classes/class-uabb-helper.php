@@ -70,6 +70,14 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 * @var object instance
 		 */
 		private static $instance;
+
+		/**
+		 * Branding Name
+		 *
+		 * @var branding_name
+		 */
+		private static $branding_name;
+
 		/**
 		 *  Initiator
 		 */
@@ -102,11 +110,136 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				add_filter( 'bsf_product_icons_uabb', array( $this, 'uabb_plugin_icon_url' ) );
 			}
 			add_action( 'init', __CLASS__ . '::uabb_get_branding_for_docs' );
+			add_action( 'wp_head', __CLASS__ . '::uabb_render_faq_schema' );
+			add_action( 'wp_footer', __CLASS__ . '::uabb_force_render_faq_schema' );
 
-			if ( isset( self::$is_branding_enabled ) && 'yes' === self::$is_branding_enabled ) {
+			if ( ! self::$branding_name ) {
+				self::$branding_name = self::get_uabb_whitelabel_string( 'name', false );
+			}
+
+			if ( self::$branding_name && '' !== self::$branding_name ) {
 				add_filter( 'bsf_white_label_options', array( $this, 'uabb_bsf_analytics_white_label' ) );
 			}
 
+		}
+
+		/**
+		 * Renders FAQ schema
+		 *
+		 * @param boolean $force gets if schema is force rendered.
+		 */
+		public static function uabb_render_faq_schema( $force = false ) {
+
+			$enabled_modules = self::get_builder_uabb_modules();
+
+			if ( array_key_exists( 'uabb-faq', $enabled_modules ) ) {
+				if ( ! is_callable( 'FLBuilderModel::get_nodes' ) ) {
+					return;
+				}
+
+				$schema_data = array(
+					'@context'   => 'https://schema.org',
+					'@type'      => 'FAQPage',
+					'mainEntity' => array(),
+				);
+
+				if ( ! $force ) {
+					$nodes   = FLBuilderModel::get_nodes();
+					$modules = array();
+
+					foreach ( $nodes as $node ) {
+						if ( ! is_object( $node ) ) {
+							continue;
+						}
+
+						if ( 'module' === $node->type ) {
+							if ( 'uabb-faq' === $node->settings->type ) {
+								$modules[] = $node;
+							}
+						}
+
+						if ( 'module' !== $node->type && isset( $node->template_id ) ) {
+							$template_id      = $node->template_id;
+							$template_node_id = $node->template_node_id;
+							$post_id          = FLBuilderModel::get_node_template_post_id( $template_id );
+							$data             = FLBuilderModel::get_layout_data( 'published', $post_id );
+
+							foreach ( $data as $global_node ) {
+								if ( 'module' === $global_node->type && 'uabb-faq' === $global_node->settings->type ) {
+									$modules[] = $global_node;
+								}
+							}
+						}
+					}
+
+					if ( empty( $modules ) ) {
+						return;
+					}
+
+					foreach ( $modules as $node ) {
+						$settings = $node->settings;
+
+						if ( isset( $settings->enable_schema ) && 'no' === $settings->enable_schema ) {
+							continue;
+						}
+
+						if ( ! is_callable( 'FLBuilderModel::get_module' ) ) {
+							continue;
+						}
+
+						$module = FLBuilderModel::get_module( $node );
+
+						$items = $module->get_faq_items();
+
+						$count = count( $items );
+
+						for ( $i = 0; $i < $count; $i++ ) {
+							if ( ! is_object( $items[ $i ] ) ) {
+								continue;
+							}
+
+							$item = (object) array(
+								'@type'          => 'Question',
+								'name'           => $items[ $i ]->faq_question,
+								'acceptedAnswer' => (object) array(
+									'@type' => 'Answer',
+									'text'  => $items[ $i ]->faq_answer,
+								),
+							);
+
+							$schema_data['mainEntity'][] = $item;
+						}
+					}
+				} else {
+					global $uabb_faq_schema_items;
+
+					$schema_data['mainEntity'] = $uabb_faq_schema_items;
+				}
+
+				if ( ! empty( $schema_data['mainEntity'] ) ) {
+					echo '<script type="application/ld+json">';
+					echo wp_json_encode( $schema_data );
+					echo '</script>';
+				}
+			}
+		}
+
+		/**
+		 * Renders FAQ schema when module is rendered through
+		 * shortcode inside other module.
+		 *
+		 * @return void
+		 */
+		public static function uabb_force_render_faq_schema() {
+			/**
+			 * Hook to determine whether the schema should render
+			 * forcefully or not.
+			 *
+			 * @param bool
+			 */
+			if ( apply_filters( 'uabb_faq_schema_force_render', false ) ) {
+				self::uabb_render_faq_schema( true );
+			}
 		}
 
 		/**
@@ -339,8 +472,11 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				'uabb-table-of-contents'   => 'Table Of Contents',
 				'uabb-login-form'          => 'Login Form',
 				'uabb-how-to'              => 'How To',
-				'uabb-faq'                 => 'FAQ',
+				'uabb-faq'                 => 'FAQ Schema',
 				'uabb-devices'             => 'Devices',
+				'uabb-search'              => 'Search',
+				'uabb-star-rating'         => 'Star Rating',
+				'uabb-timeline'            => 'Advanced Timeline',
 			);
 
 			/* Include Contact form styler */
@@ -355,15 +491,22 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			if ( class_exists( 'WPForms_Pro' ) || class_exists( 'WPForms_Lite' ) ) {
 				$modules_array['uabb-wp-forms-styler'] = 'WPForms Styler';
 			}
+			if ( function_exists( 'wpFluentForm' ) ) {
+				$modules_array['uabb-fluent-form-styler'] = 'WP Fluent Forms Styler';
+			}
 			/* Include WooCommerce modules*/
 			if ( class_exists( 'WooCommerce' ) ) {
 				$modules_array['uabb-woo-products']    = 'Woo - Products';
 				$modules_array['uabb-woo-categories']  = 'Woo - Categories';
 				$modules_array['uabb-woo-add-to-cart'] = 'Woo - Add To Cart';
+				$modules_array['uabb-woo-mini-cart']   = 'Woo - Mini Cart';
 			}
 			/* Include Caldera Forms Styler */
 			if ( class_exists( 'Caldera_Forms' ) || class_exists( 'Caldera_Forms_Forms' ) ) {
-				$modules_array['uabb-caldera-form-styler'] = 'Caldera Forms Styler';
+				$forms = \Caldera_Forms_Forms::get_forms( true );
+				if ( ! empty( $forms ) ) {
+					$modules_array['uabb-caldera-form-styler'] = 'Caldera Forms Styler';
+				}
 			}
 			natcasesort( $modules_array );
 			return $modules_array;

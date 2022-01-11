@@ -81,7 +81,7 @@ if ( ! class_exists( 'CPRO_Grid' ) ) {
 		 */
 		public function load_script() {
 			echo '<script>		
-			jQuery( ".cp-grid-setting" ).click(function(event) {		
+			jQuery( ".cp-grid-setting" ).on( "click", function(event) {		
 				jQuery( ".cp-grid-panel" ).toggleClass( "cp-disable-grid" );
 				jQuery( this ).toggleClass( "cp-active-link-color" );
 			});</script>';

@@ -28,12 +28,12 @@ if ( 'none' !== $settings->image_type ) {
 	<div class="uabb-infobox-left-right-wrap">
 	<?php
 	if ( 'module' === $settings->cta_type && ! empty( $settings->link ) ) {
-		echo '<a href="' . $settings->link . '" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . ' class="uabb-infobox-module-link"></a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<a href="' . $settings->link . '" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . ' class="uabb-infobox-module-link" aria-label="' . esc_attr__( 'Go to', 'uabb' ) . ' ' . $settings->link . '"></a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	// Image left.
 	$module->render_image( 'left' );
 	// phpcs:ignore Squiz.PHP.EmbeddedPhp.ContentAfterEnd
-	?><div class="uabb-infobox-content"> 
+	?><div class="uabb-infobox-content">
 			<?php
 			// Image above title.
 			$module->render_image( 'above-title' );
@@ -55,7 +55,7 @@ if ( 'none' !== $settings->image_type ) {
 				// Button CTA.
 				$module->render_button();
 				?>
-			</div> 
+			</div>
 				<?php
 			}
 			?>

@@ -57,7 +57,7 @@ if ( ! class_exists( 'CPRO_Import_Export' ) ) {
 
 			wp_enqueue_media();
 
-			wp_register_script( 'cp-import-export', CP_IMPORT_EXPORT_BASE_URL . '/assets/js/cp-import-export.js', array( 'jquery' ), time(), true );
+			wp_register_script( 'cp-import-export', CP_IMPORT_EXPORT_BASE_URL . 'assets/js/cp-import-export.js', array( 'jquery' ), time(), true );
 			wp_localize_script(
 				'cp-import-export',
 				'cp_import_export',

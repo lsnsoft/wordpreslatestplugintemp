@@ -5,8 +5,8 @@
  * @package Astra Addon
  */
 
-define( 'ASTRA_EXT_HEADER_SECTIONS_DIR', ASTRA_EXT_DIR . 'addons/header-sections/' );
-define( 'ASTRA_EXT_HEADER_SECTIONS_URL', ASTRA_EXT_URI . 'addons/header-sections/' );
+define( 'ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR', ASTRA_EXT_DIR . 'addons/header-sections/' );
+define( 'ASTRA_ADDON_EXT_HEADER_SECTIONS_URL', ASTRA_EXT_URI . 'addons/header-sections/' );
 
 if ( ! class_exists( 'Astra_Ext_Header_Sections' ) ) {
 
@@ -15,7 +15,10 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
+	// @codingStandardsIgnoreStart
 	class Astra_Ext_Header_Sections {
+ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Member Variable
@@ -39,13 +42,17 @@ if ( ! class_exists( 'Astra_Ext_Header_Sections' ) ) {
 		 */
 		public function __construct() {
 
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-ext-header-sections-loader.php';
-			require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-ext-header-sections-markup.php';
+			if ( true === astra_addon_builder_helper()->is_header_footer_builder_active ) {
+				return;
+			}
+
+			require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-ext-header-sections-loader.php';
+			require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/class-astra-ext-header-sections-markup.php';
 
 			// Include front end files.
 			if ( ! is_admin() ) {
-				require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/above-header-dynamic.css.php';
-				require_once ASTRA_EXT_HEADER_SECTIONS_DIR . 'classes/below-header-dynamic.css.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/above-header-dynamic.css.php';
+				require_once ASTRA_ADDON_EXT_HEADER_SECTIONS_DIR . 'classes/below-header-dynamic.css.php';
 			}
 		}
 	}

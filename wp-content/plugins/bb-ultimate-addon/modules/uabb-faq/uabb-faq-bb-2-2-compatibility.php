@@ -14,6 +14,29 @@ FLBuilder::register_module(
 		'items'           => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
+				'preset_section'   => array(
+					'title'  => __( 'Presets', 'uabb' ),
+					'fields' => array(
+						'preset_select' => array(
+							'type'    => 'select',
+							'label'   => __( 'Preset', 'uabb' ),
+							'help'    => __( 'Before changing presets, save the content you added to the module. Otherwise, your content will be overwritten with the default one.', 'uabb' ),
+							'default' => 'none',
+							'class'   => 'uabb-preset-select multiple',
+							'options' => array(
+								'none'     => __( 'Default', 'uabb' ),
+								'preset-1' => __( 'Preset 1', 'uabb' ),
+								'preset-2' => __( 'Preset 2', 'uabb' ),
+								'preset-3' => __( 'Preset 3', 'uabb' ),
+								'preset-4' => __( 'Preset 4', 'uabb' ),
+								'preset-5' => __( 'Preset 5', 'uabb' ),
+							),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
+					),
+				),
 				'faq_section'      => array(
 					'title'  => __( 'FAQ', 'uabb' ),
 					'fields' => array(
@@ -227,7 +250,7 @@ FLBuilder::register_module(
 						'faq_title_bg_color'       => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
-							'default'     => 'f6f6f6',
+							'default'     => 'f9f9f9',
 							'show_reset'  => true,
 							'show_alpha'  => true,
 							'connections' => array( 'color' ),
@@ -239,7 +262,7 @@ FLBuilder::register_module(
 						),
 						'faq_title_bg_hover_color' => array(
 							'type'        => 'color',
-							'label'       => __( 'Background Hover/Focus Color', 'uabb' ),
+							'label'       => __( 'Background Hover/Active Color', 'uabb' ),
 							'show_reset'  => true,
 							'show_alpha'  => true,
 							'connections' => array( 'color' ),
@@ -312,6 +335,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'show_reset'  => true,
 							'show_alpha'  => true,
+							'default'     => 'f9f9f9',
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -507,11 +531,13 @@ FLBuilder::register_settings_form(
 							'faq_question' => array(
 								'type'        => 'text',
 								'label'       => __( 'Question', 'uabb' ),
+								'default'     => __( 'What is FAQ?', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'faq_answer'   => array(
 								'type'        => 'editor',
 								'label'       => __( 'Answer', 'uabb' ),
+								'default'     => __( 'This is FAQ answer. Click to edit this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 						),

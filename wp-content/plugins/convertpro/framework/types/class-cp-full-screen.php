@@ -88,6 +88,9 @@ class CP_Full_Screen extends cp_Framework {
 				'inline_shortcode',
 				'show_after_within_scroll_info',
 				'close_after_scroll',
+				'select_inline_location',
+				'number_of_layout',
+				'number_of_layout_heading',
 			),
 			$options
 		);

@@ -95,7 +95,7 @@ var t_id = -1;
 
                     // check if source is valid json
                     try {
-                        var parsed_src = jQuery.parseJSON(lsrc)
+                        var parsed_src = JSON.parse(lsrc)
                         //must be valid JSON
                     } catch (e) {
                         //must not be valid JSON  
@@ -513,8 +513,8 @@ var t_id = -1;
 
                 if (global_cp_cookies.get("cp_v2_ab_test-" + i) != undefined) {
 
-                    var completedArr = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test_completed-" + i)),
-                        pendingArr = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test_pending-" + i));
+                    var completedArr = JSON.parse(global_cp_cookies.get("cp_v2_ab_test_completed-" + i)),
+                        pendingArr = JSON.parse(global_cp_cookies.get("cp_v2_ab_test_pending-" + i));
 
                     if ((completedArr) && (completedArr.length == 0 || pendingArr.length == 0)) {
 
@@ -683,6 +683,7 @@ var t_id = -1;
                     'wrap': settings.popup_wrap,
                     'normal_cookie': cookie_name,
                     'temp_cookie': 'temp_' + cookie_name,
+                    'page_visits': true,
                     'live': false,
                 }
 
@@ -692,8 +693,8 @@ var t_id = -1;
                 }
 
                 if (false !== settings.popup_wrap) {
-                    this.popups['configure'] = jQuery.parseJSON(settings.popup_wrap.find('.panel-settings').val());
-                    this.popups['rulesets'] = jQuery.parseJSON(settings.popup_wrap.find('.panel-rulesets').val());
+                    this.popups['configure'] = JSON.parse(settings.popup_wrap.find('.panel-settings').val());
+                    this.popups['rulesets'] = JSON.parse(settings.popup_wrap.find('.panel-rulesets').val());
                 }
             },
 
@@ -729,7 +730,7 @@ var t_id = -1;
                 /* Set cookies for first time visitors */
                 if (!global_cp_cookies.get('cppro-ft')) {
 
-                    global_cp_cookies.set('cppro-ft', true, { expires: 2601 });
+                    global_cp_cookies.set('cppro-ft', true, { expires: 365 });
                     global_cp_cookies.set('cppro-ft-style', true);
 
                     // set cookie which will expire in 24 hours i.e. 1 Day
@@ -1235,7 +1236,7 @@ var t_id = -1;
 
                 if (t_id != -1) {
                     if (global_cp_cookies.get("cp_v2_ab_test-" + t_id) != undefined) {
-                        var completedArr = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test_completed-" + t_id));
+                        var completedArr = JSON.parse(global_cp_cookies.get("cp_v2_ab_test_completed-" + t_id));
                         var show_style = parseInt(global_cp_cookies.get("cp_v2_ab_test_show-" + t_id));
 
                         if (show_style == style) {
@@ -1430,6 +1431,7 @@ var t_id = -1;
                 var filterRulsets = rulesets.filter(function (ruleset) {
 
                     return '1' == ruleset.autoload_on_duration
+                        || '1' == ruleset.autoload_on_no_page_visit
                         || '1' == ruleset.autoload_on_scroll
                         || '1' == ruleset.enable_after_post
                         || '1' == ruleset.enable_custom_class
@@ -1481,7 +1483,6 @@ var t_id = -1;
 
                 var rule_passed = true;
 
-
                 $.each(rules, function (rule, data) {
 
                     switch (rule) {
@@ -1498,6 +1499,46 @@ var t_id = -1;
 
                                 if (time_now >= execute_time) {
                                     passed_rules['autoload_on_duration'] = true;
+                                }
+                            }
+                            break;
+
+                        case 'autoload_on_no_page_visit':
+
+                            if ('1' == data) {
+
+                                active_rules['autoload_on_no_page_visit'] = true;
+                                passed_rules['autoload_on_no_page_visit'] = false;
+
+                                var page_count    = parseInt(rules.load_on_no_page_visit);
+                                var disabled_upto = page_count - 1;
+                                var module_id     = $this.getSetting('id');
+                                var get_num_loads = parseInt( global_cp_cookies.get('cp_style_' + module_id + '_pagevisits' ) );
+
+                                if ( $this.getSetting('page_visits') ) {
+                                    if (isNaN(get_num_loads) || get_num_loads == 0) {
+                                        global_cp_cookies.set('cp_style_' + module_id + '_pagevisits', 1 );
+                                    } else {
+                                        global_cp_cookies.set('cp_style_' + module_id + '_pagevisits', get_num_loads + 1 );
+                                    }
+                                    $this.setSetting('page_visits', false);
+                                }
+
+                                var count_load = parseInt( global_cp_cookies.get('cp_style_' + module_id + '_pagevisits' ) );
+                                var operator   = rules.load_on_page_visit_type;
+
+                                switch(operator) {
+                                    case 'is-more-than':
+                                        if( count_load >= page_count ) {
+                                            passed_rules['autoload_on_no_page_visit'] = true;
+                                        }
+                                    break;
+
+                                    case 'is-less-than':
+                                        if( count_load < page_count ) {
+                                            passed_rules['autoload_on_no_page_visit'] = true;
+                                        }
+                                    break;
                                 }
                             }
                             break;
@@ -1653,7 +1694,7 @@ var t_id = -1;
 
                 var cp_cookies = global_cp_cookies;
                 var cookieName = element.closest('.cp-popup-container').data('style');
-                var configure_settings = jQuery.parseJSON(element.closest('.cp-popup-container').find(".panel-settings[data-section='configure']").val());
+                var configure_settings = JSON.parse(element.closest('.cp-popup-container').find(".panel-settings[data-section='configure']").val());
                 var cookieTime = parseInt(configure_settings.conversion_cookie);
                 var cookie_enable_submit = parseInt(configure_settings.cookies_enabled_submit);
                 var cookie = cp_cookies.get(cookieName);
@@ -1697,7 +1738,7 @@ var t_id = -1;
                     if (cookieTime) {
                         if (abtest_id != -1) {
                             if (cp_cookies.get("cp_v2_ab_test-" + abtest_id) != undefined) {
-                                var abtest_array = jQuery.parseJSON(cp_cookies.get("cp_v2_ab_test-" + abtest_id));
+                                var abtest_array = JSON.parse(cp_cookies.get("cp_v2_ab_test-" + abtest_id));
                                 for (var ab = 0; ab < abtest_array.length; ab++) {
                                     cp_cookies.set('cp_style_' + abtest_array[ab], true, { expires: cookieTime });
                                 }
@@ -1747,7 +1788,7 @@ var t_id = -1;
                     if (abtest_id != -1) {
                         if (global_cp_cookies.get("cp_v2_ab_test-" + abtest_id) != undefined) {
 
-                            var abtest_array = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test-" + abtest_id));
+                            var abtest_array = JSON.parse(global_cp_cookies.get("cp_v2_ab_test-" + abtest_id));
                             for (var ab = 0; ab < abtest_array.length; ab++) {
                                 global_cp_cookies.set('cp_style_' + abtest_array[ab], true, { expires: cookieTime });
                             }
@@ -1826,7 +1867,7 @@ var t_id = -1;
                     is_ab_test = true;
 
                     var style = this.getSetting('id');
-                    var completedArr = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test_completed-" + t_id));
+                    var completedArr = JSON.parse(global_cp_cookies.get("cp_v2_ab_test_completed-" + t_id));
                     var show_style = parseInt(global_cp_cookies.get("cp_v2_ab_test_show-" + t_id));
 
 
@@ -1866,12 +1907,13 @@ var t_id = -1;
                 $(window).scrollTop(0);
                 $('body').addClass('cpro-wel-mat-open');
                 $('html').addClass('cpro-overflow-mat');
+
                 $('.cpro-wel-mat-open').css('padding-top', win_ht + 'px');
 
                 modal_container.find(".cp-popup").addClass('cp-animated cp-slideInDown');
                 modal_container.addClass('cpro-open');
 
-                $(window).scroll(function () {
+                $(window).on( 'scroll', function () {
                     $this._closeWelcomeMat();
                 });
 
@@ -1979,6 +2021,13 @@ var t_id = -1;
                                             year
                                         ].join('-');
                                         break;
+                                    case 'YYYY-MM-DD':
+                                        formattedDate = [
+                                            year,
+                                            month < 10 ? '0' + month : month,
+                                            day < 10 ? '0' + day : day
+                                        ].join('-');
+                                        break;
                                 }
                                 $(element).val(formattedDate);
                             }
@@ -1994,7 +2043,6 @@ var t_id = -1;
 
                 $(document).trigger('cp-load-field-animation', [modal]);
             } else {
-
                 initConvertPro[design_id] = new ConvertProPopup();
                 initConvertPro[design_id].init({ popup_id: design_id, popup_type: module_type, popup_wrap: $this });
             }
@@ -2033,7 +2081,7 @@ var t_id = -1;
 
     /* Resize Event */
     var cpResizeTimer;
-    $(window).resize(function () {
+    $(window).on( 'resize', function () {
 
         //  Model height
         ConvertProHelper._modelHeight();
@@ -2369,8 +2417,8 @@ var t_id = -1;
         var t_id = initConvertPro[style_id]._getCurrentABTest();
 
         if (t_id != -1) {
-            completedArr = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test_completed-" + t_id));
-            pendingArr = jQuery.parseJSON(global_cp_cookies.get("cp_v2_ab_test_pending-" + t_id));
+            completedArr = JSON.parse(global_cp_cookies.get("cp_v2_ab_test_completed-" + t_id));
+            pendingArr = JSON.parse(global_cp_cookies.get("cp_v2_ab_test_pending-" + t_id));
 
             if (jQuery.inArray(style_id, pendingArr) >= 0) {
 

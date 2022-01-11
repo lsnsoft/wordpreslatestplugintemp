@@ -1299,7 +1299,11 @@ a.cp-ur-buttons .cp-ur-text {
 
 #configure .cp-number-field {
     width: 140px;
-    right: 15px;
+    right: 30px;
+}
+
+#configure .after-number-of-page-visits .cp-number-field {
+    width: 70px;
 }
 
 .cp-module-type-before_after-wrap #configure .cp-panel-content:first-child {
@@ -1312,6 +1316,12 @@ a.cp-ur-buttons .cp-ur-text {
     #configure .cp-number-field {
         right: 45px;
     }
+}
+
+.configure-content [data-element="load_on_page_visit_type"] {
+    position: absolute;
+    top: 60px;
+    right: 120px;
 }
 
 .cp-number-field {
@@ -1604,8 +1614,21 @@ span.target_geo_rule-condition-delete:hover {
 }
 
 /* Customizer tab  */
+.cp-customizer-tab select {
+    display: inline-block;
+    border: 1px solid #eaeaea;
+    color: #555;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    font-size: 13px;
+    height: 36px;
+    border-radius: 2px;
+    box-shadow: none;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
 
-.cp-customizer-tab select,
 .cp-customizer-tab textarea,
 .cp-customizer-tab input[type="text"],
 .cp-customizer-tab input[type="number"],
@@ -2059,6 +2082,10 @@ img.cp-target.cp-field-element.cp-close-image {
 .cp-param-label {
     float: left;
     width: 60%;
+}
+
+.cpro-reg-ex-validation-link .cp-edit-param-title {
+    border-bottom: unset;
 }
 
 .cp-edit-param-title {
@@ -3544,10 +3571,12 @@ html.cp-connect-section-open .cp-steps-wrapper{
     cursor: pointer;
 }
 
+.cp-edit-panel-field .cp-tooltip-icon,
 .cp-element-container .cp-tooltip-icon {
     visibility: hidden;
 }
 
+.cp-edit-panel-field:hover .cp-tooltip-icon,
 .cp-element-container:hover .cp-tooltip-icon {
     visibility: visible;
 }
@@ -4033,6 +4062,11 @@ label.cp-error{
 }
 
 /* Date Picker */
+/* Datepicker not visible in WP 5.6 */
+.cp-datetime-picker .bootstrap-datetimepicker-widget {
+      display: block;
+}
+
 .bootstrap-datetimepicker-widget {
     width: 100%!important;
 }
@@ -4238,6 +4272,16 @@ select.cp-target.cp-field-element.cp-form-input-field.cp-form-field.cp-dropdown-
 
 /* Style the After Scroll / Display within Range Message*/
 .cp_show_after_within_scroll_info {
+    position: relative;
+    background: #f7f7f7;
+    border: 1px solid #eaeaea;
+    padding: 10px 25px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/* Style the note for After number of page view Message*/
+.cp-show-note-page-view {
     position: relative;
     background: #f7f7f7;
     border: 1px solid #eaeaea;

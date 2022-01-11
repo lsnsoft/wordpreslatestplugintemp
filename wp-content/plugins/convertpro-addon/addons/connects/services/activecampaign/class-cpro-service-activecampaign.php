@@ -385,11 +385,12 @@ final class CPRO_Service_ActiveCampaign extends CPRO_Service {
 	 * @since 1.0.0
 	 * @param object $settings A module settings object.
 	 * @param string $email The email to subscribe.
+	 * @param array  $dynamic_tags get the dynamic tags via checkboxes.
 	 * @return array {
 	 *      @type bool|string $error The error message or false if no error.
 	 * }
 	 */
-	public function subscribe( $settings, $email ) {
+	public function subscribe( $settings, $email, $dynamic_tags ) {
 
 		$account  = ConvertPlugServices::get_account_data( $settings['api_connection'] );
 		$api      = $this->get_api( $account['api_url'], $account['api_key'] );
@@ -438,9 +439,20 @@ final class CPRO_Service_ActiveCampaign extends CPRO_Service {
 				$data['field'] = $custom_arr;
 			}
 
+			/**
+			 * Dynamic Tags support from the Checkboxes selection.
+			 * As Active Campaign tags are accepted as string format separated by commas.
+			 * So $dynamic_tags variable will receive in array and convert it into string,
+			 * to accept in the AC tags format.
+			 */
+			$data['tags'] = '';
+			if ( ! empty( $dynamic_tags ) ) {
+				$data['tags'] .= implode( ',', $dynamic_tags ) . ',';
+			}
+
 			// Tags.
 			if ( isset( $settings['activecampaign_tags'] ) && ! empty( $settings['activecampaign_tags'] ) ) {
-				$data['tags'] = $settings['activecampaign_tags'];
+				$data['tags'] .= $settings['activecampaign_tags'];
 			}
 
 			// Subscribe.
