@@ -5,9 +5,9 @@
 <?php endif; ?>
 
 <?php if ( 'hide' == $settings->play_pause ) : ?>
-		.fl-node-<?php echo $id; ?> .mejs-playpause-button {
-			display: none !important;
-		}		
+	.fl-node-<?php echo $id; ?> .mejs-playpause-button {
+		display: none !important;
+	}	
 <?php endif; ?>
 
 <?php if ( 'hide' == $settings->timer ) : ?>
@@ -58,6 +58,12 @@
 .fl-node-<?php echo $id; ?> .fl-video-poster {
 	display: <?php echo ( 'yes' === $settings->video_lightbox ? 'block' : 'none' ); ?>;
 }
+
+<?php if ( 'media_library' === $settings->video_type ) : ?>
+	.fl-node-<?php echo $id; ?> .fl-wp-video .mejs-overlay-loading {
+		display: none;
+	}
+<?php endif; ?>
 
 <?php
 // Click action - lightbox

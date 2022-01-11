@@ -93,6 +93,7 @@ final class FLBuilderAJAX {
 		self::add_action( 'reset_col_widths', 'FLBuilderModel::reset_col_widths', array( 'group_id' ) );
 		self::add_action( 'resize_row_content', 'FLBuilderModel::resize_row_content', array( 'node', 'width' ) );
 		self::add_action( 'save_settings', 'FLBuilderModel::save_settings', array( 'node_id', 'settings' ) );
+		self::add_action( 'verify_settings', 'FLBuilderModel::verify_settings', array( 'settings' ) );
 		self::add_action( 'save_layout_settings', 'FLBuilderModel::save_layout_settings', array( 'settings' ) );
 		self::add_action( 'save_global_settings', 'FLBuilderModel::save_global_settings', array( 'settings' ) );
 		self::add_action( 'save_color_presets', 'FLBuilderModel::save_color_presets', array( 'presets' ) );
@@ -107,6 +108,7 @@ final class FLBuilderAJAX {
 		self::add_action( 'clear_cache', 'FLBuilderModel::delete_all_asset_cache' );
 
 		// FLBuilderAJAXLayout
+		self::add_action( 'get_layout', 'FLBuilderAJAXLayout::get_layout' );
 		self::add_action( 'render_layout', 'FLBuilderAJAXLayout::render' );
 		self::add_action( 'render_node', 'FLBuilderAJAXLayout::render', array( 'node_id' ) );
 		self::add_action( 'render_new_row', 'FLBuilderAJAXLayout::render_new_row', array( 'cols', 'position', 'module' ) );
@@ -221,7 +223,7 @@ final class FLBuilderAJAX {
 		/**
 		 * Allow developers to hook before the action runs.
 		 * @see fl_ajax_before_
-		 * @link https://kb.wpbeaverbuilder.com/article/116-plugin-action-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		do_action( 'fl_ajax_before_' . $action['action'], $keys_args );
 
@@ -234,7 +236,7 @@ final class FLBuilderAJAX {
 		/**
 		 * Allow developers to hook after the action runs.
 		 * @see fl_ajax_after_
-		 * @link https://kb.wpbeaverbuilder.com/article/116-plugin-action-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		do_action( 'fl_ajax_after_' . $action['action'], $keys_args );
 

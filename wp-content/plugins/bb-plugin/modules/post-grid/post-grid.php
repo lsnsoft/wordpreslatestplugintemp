@@ -126,7 +126,7 @@ class FLPostGridModule extends FLBuilderModule {
 			$this->add_js( 'jquery-infinitescroll' );
 		}
 
-		if ( FLBuilderModel::is_builder_active() || $this->settings->show_comments ) {
+		if ( FLBuilderModel::is_builder_active() || ( in_array( $this->settings->layout, array( 'grid', 'columns' ), true ) && $this->settings->show_comments_grid ) ) {
 			$this->add_css( 'font-awesome-5' );
 		}
 
@@ -272,18 +272,25 @@ class FLPostGridModule extends FLBuilderModule {
 	 */
 	public function render_content() {
 
+		global $post;
 		if ( ! has_filter( 'the_content', 'wpautop' ) && empty( $this->settings->content_length ) ) {
 			add_filter( 'the_content', 'wpautop' );
 		}
 
-		ob_start();
-		the_content();
-		$content = ob_get_clean();
+		if ( get_post_meta( $post->ID, '_fl_builder_enabled', true ) ) {
 
-		if ( ! empty( $this->settings->content_length ) ) {
-			$content = wpautop( wp_trim_words( $content, $this->settings->content_length, '...' ) );
+			/**
+			 * Replace WP content with our layout data.
+			 */
+			ob_start();
+			FLBuilder::render_content_by_id( $post->ID );
+			$post->post_content = ob_get_clean();
+			$content            = get_the_content( null, false, $post );
+		} else {
+			ob_start();
+			the_content();
+			$content = ob_get_clean();
 		}
-
 		echo $content;
 	}
 
@@ -294,11 +301,13 @@ class FLPostGridModule extends FLBuilderModule {
 	 * @return void
 	 */
 	public function render_excerpt() {
+
+		global $post;
 		if ( ! empty( $this->settings->content_length ) ) {
 			add_filter( 'excerpt_length', array( $this, 'set_custom_excerpt_length' ), 9999 );
 		}
 
-		the_excerpt();
+		FLBuilderLoop::the_excerpt();
 
 		if ( ! empty( $this->settings->content_length ) ) {
 			remove_filter( 'excerpt_length', array( $this, 'set_custom_excerpt_length' ), 9999 );
@@ -938,6 +947,11 @@ FLBuilder::register_module('FLPostGridModule', array(
 							'excerpt' => __( 'Excerpt', 'fl-builder' ),
 							'full'    => __( 'Full Text', 'fl-builder' ),
 						),
+						'toggle'  => array(
+							'excerpt' => array(
+								'fields' => array( 'content_length' ),
+							),
+						),
 					),
 					'content_length' => array(
 						'type'    => 'unit',
@@ -950,7 +964,6 @@ FLBuilder::register_module('FLPostGridModule', array(
 							'step' => 1,
 						),
 					),
-
 					'show_more_link' => array(
 						'type'    => 'select',
 						'label'   => __( 'More Link', 'fl-builder' ),

@@ -87,7 +87,7 @@ final class FLBuilderUtils {
 			$data = json_decode( $data );
 		}
 
-		// Decode object properies or array values.
+		// Decode object properties or array values.
 		if ( is_object( $data ) || is_array( $data ) ) {
 
 			foreach ( $data as $key => $val ) {
@@ -282,13 +282,13 @@ final class FLBuilderUtils {
 	/**
 	 * @since 2.4
 	 */
-	public static function get_safe_url() {
+	public static function get_safe_url( $post_id ) {
 
 		global $post;
 
 		$_original = $post;
 
-		$status = $post->post_status;
+		setup_postdata( $post_id );
 
 		$post->post_status = 'draft';
 
@@ -306,4 +306,28 @@ final class FLBuilderUtils {
 		return apply_filters( 'fl_lazyload', "loading='$loading'" );
 	}
 
+	/**
+	 * @since 2.4.1
+	 */
+	public static function get_current_user_role() {
+		if ( is_user_logged_in() ) {
+			global $wp_roles;
+			$user = wp_get_current_user();
+			$role = (array) $user->roles;
+			if ( isset( $role[0] ) && isset( $wp_roles->roles[ $role[0] ] ) ) {
+				return esc_attr( $wp_roles->roles[ $role[0] ]['name'] );
+			}
+			if ( isset( $role[0] ) ) {
+				return $role[0];
+			}
+			return 'Unknown';
+		}
+	}
+
+	/**
+	 * @since 2.5
+	 */
+	public static function update_option( $option, $value, $autoload = false ) {
+		return update_option( $option, $value, $autoload );
+	}
 }

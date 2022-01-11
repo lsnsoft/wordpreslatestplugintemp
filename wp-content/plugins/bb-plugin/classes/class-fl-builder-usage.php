@@ -247,7 +247,7 @@ final class FLBuilderUsage {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		$data                   = array(
+		$data                             = array(
 			'modules' => array(),
 			'license' => array(),
 			'themer'  => array(
@@ -263,13 +263,19 @@ final class FLBuilderUsage {
 				'unpinned' => 0,
 			),
 		);
-		$users                  = count_users();
-		$plugins_data           = get_plugins();
-		$data['plugins']        = count( $plugins_data );
-		$data['plugins_active'] = 0;
+		$users                            = count_users();
+		$plugins_data                     = get_plugins();
+		$data['plugins']                  = count( $plugins_data );
+		$data['plugins_active']           = 0;
+		$data['active_plugins_installed'] = array();
 
 		foreach ( (array) $plugins_data as $plugin_slug => $plugin ) {
 			if ( is_plugin_active( $plugin_slug ) ) {
+				$data['active_plugins_installed'][] = array(
+					'name'    => $plugin['Name'],
+					'version' => $plugin['Version'],
+					'slug'    => $plugin_slug,
+				);
 				$data['plugins_active'] ++;
 			}
 		}

@@ -11,6 +11,7 @@ final class FLBuilderCompatibility {
 
 		// Actions
 		add_action( 'after_setup_theme', array( __CLASS__, 'pro_icons_enable' ) );
+		add_action( 'after_setup_theme', array( __CLASS__, 'fix_woof_posts_module' ) );
 		add_action( 'fl_builder_photo_cropped', array( __CLASS__, 'tinypng_support' ), 10, 2 );
 		add_action( 'plugins_loaded', array( __CLASS__, 'wc_memberships_support' ), 11 );
 		add_action( 'plugins_loaded', array( __CLASS__, 'admin_ssl_upload_fix' ), 11 );
@@ -31,7 +32,9 @@ final class FLBuilderCompatibility {
 		add_action( 'template_redirect', array( __CLASS__, 'fix_frontend_dashboard_plugin' ), 1000 );
 		add_action( 'template_redirect', array( __CLASS__, 'fix_um_switcher' ) );
 		add_action( 'template_redirect', array( __CLASS__, 'fix_pipedrive' ) );
+		add_action( 'template_redirect', array( __CLASS__, 'fix_klaviyo_themer_layout' ) );
 		add_action( 'template_redirect', array( __CLASS__, 'aggiungi_script_instafeed_owl' ), 1000 );
+		add_action( 'template_redirect', array( __CLASS__, 'fix_happyfoxchat' ) );
 		add_action( 'tribe_events_pro_widget_render', array( __CLASS__, 'tribe_events_pro_widget_render_fix' ), 10, 3 );
 		add_action( 'wp_footer', array( __CLASS__, 'fix_woo_short_description_footer' ) );
 		add_action( 'save_post', array( __CLASS__, 'fix_seopress' ), 9 );
@@ -44,6 +47,14 @@ final class FLBuilderCompatibility {
 		add_action( 'fl_theme_builder_after_render_header', array( __CLASS__, 'fix_lazyload_header_end' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'ee_remove_stylesheet' ), 99999 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'fix_woocommerce_products_filter' ), 12 );
+		add_action( 'pre_get_posts', array( __CLASS__, 'fix_woo_archive_loop' ), 99 );
+		add_action( 'pre_get_posts', array( __CLASS__, 'fix_tribe_events_hide_from_listings_archive' ) );
+		add_action( 'fl_builder_menu_module_before_render', array( __CLASS__, 'fix_menu_module_before_render' ) );
+		add_action( 'fl_builder_menu_module_after_render', array( __CLASS__, 'fix_menu_module_after_render' ) );
+		add_action( 'wp_before_admin_bar_render', array( __CLASS__, 'fix_dulicate_page' ), 11 );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'fix_3cx_live_chat' ) );
+		add_action( 'rest_api_init', array( __CLASS__, 'fix_rest_content' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'fix_signify_theme_media' ), 11 );
 
 		// Filters
 		add_filter( 'fl_builder_is_post_editable', array( __CLASS__, 'bp_pages_support' ), 11, 2 );
@@ -66,6 +77,17 @@ final class FLBuilderCompatibility {
 		add_filter( 'option_wp-smush-lazy_load', array( __CLASS__, 'fix_smush' ) );
 		add_filter( 'fl_row_bg_video_wrapper_class', array( __CLASS__, 'fix_twenty_twenty_video' ) );
 		add_filter( 'fl_builder_loop_rewrite_rules', array( __CLASS__, 'fix_wpseo_category_pagination_rule' ) );
+		add_filter( 'fl_builder_loop_rewrite_rules', array( __CLASS__, 'fix_seopress_category_pagination_rule' ) );
+		add_filter( 'fl_builder_loop_rewrite_rules', array( __CLASS__, 'fix_polylang_pagination_rule' ) );
+		add_filter( 'fl_builder_loop_query_args', array( __CLASS__, 'fix_tribe_events_hide_from_listings' ) );
+		add_filter( 'tribe_events_rewrite_rules_custom', array( __CLASS__, 'fix_tribe_events_pagination_rule' ), 10, 3 );
+		add_filter( 'aioseo_conflicting_shortcodes', array( __CLASS__, 'aioseo_conflicting_shortcodes' ) );
+		add_filter( 'fl_builder_responsive_ignore', array( __CLASS__, 'fix_real_media_library_lite' ) );
+		add_filter( 'duplicate_post_show_link', array( __CLASS__, 'fix_duplicate_post_show_link' ), 10, 2 );
+		add_filter( 'fl_builder_photo_crop_path', array( __CLASS__, 'fix_flywheel_crop_path' ), 10, 2 );
+		add_filter( 'post_row_actions', array( __CLASS__, 'fix_duplicate_post_admin_link' ), 12, 2 );
+		add_filter( 'page_row_actions', array( __CLASS__, 'fix_duplicate_post_admin_link' ), 12, 2 );
+		add_filter( 'get_the_excerpt', array( __CLASS__, 'fix_rest_excerpt_filter' ), 10, 2 );
 	}
 
 	/**
@@ -147,12 +169,13 @@ final class FLBuilderCompatibility {
 	 * @since 2.3
 	 */
 	public static function fa_kit_support() {
-		if ( FLBuilder::fa5_pro_enabled() && '' !== get_option( '_fl_builder_kit_fa_pro' ) ) {
+		$kit_url = FLBuilder::fa5_kit_url();
+		if ( FLBuilder::fa5_pro_enabled() && '' !== $kit_url && ! isset( $_GET['fl_builder'] ) && ! FLBuilderFontAwesome::is_installed() ) {
 			wp_dequeue_style( 'font-awesome' );
 			wp_dequeue_style( 'font-awesome-5' );
 			wp_deregister_style( 'font-awesome' );
 			wp_deregister_style( 'font-awesome-5' );
-			wp_enqueue_script( 'fa5-kit', get_option( '_fl_builder_kit_fa_pro' ) );
+			wp_enqueue_script( 'fa5-kit', $kit_url );
 		}
 	}
 
@@ -243,6 +266,22 @@ final class FLBuilderCompatibility {
 	}
 
 	/**
+	 * Fix broken Themer Header Layout when Klaviyo is active.
+	 * @since 2.4.1
+	 */
+	public static function fix_klaviyo_themer_layout() {
+		if ( is_admin() || ! class_exists( 'WPKlaviyoAnalytics' ) || ! class_exists( 'FLThemeBuilder' ) ) {
+			return;
+		}
+
+		global $klaviyowp_analytics, $wp_the_query;
+		if ( ! empty( $wp_the_query->post->post_type ) && 'fl-theme-layout' == $wp_the_query->post->post_type ) {
+			remove_action( 'wp_enqueue_scripts', array( $klaviyowp_analytics, 'insert_analytics' ), 0 );
+			remove_action( 'wp_enqueue_scripts', array( $klaviyowp_analytics, 'identify_browser' ) );
+		}
+	}
+
+	/**
 	 * Fix icon issues with Frontend Dashboard version 1.3.4+
 	 * @since 2.2.3
 	 */
@@ -325,6 +364,16 @@ final class FLBuilderCompatibility {
 			$content = strip_shortcodes( wp_strip_all_tags( $post->post_content ) );
 		}
 		return $content;
+	}
+
+	/**
+	 * Fix HappyFoxChat issue with the Text Editor image button.
+	 * @since 2.4.1
+	 */
+	public static function fix_happyfoxchat() {
+		if ( isset( $_GET['fl_builder'] ) ) {
+			remove_action( 'wp_footer', 'hfc_add_visitor_widget' );
+		}
 	}
 
 	/**
@@ -513,7 +562,7 @@ final class FLBuilderCompatibility {
 	/**
 	 * Disable support Buddypress pages since it's causing conflicts with `the_content` filter
 	 *
-	 * @param bool $is_editable Wether the post is editable or not
+	 * @param bool $is_editable Whether the post is editable or not
 	 * @param $post The post to check from
 	 * @return bool
 	 */
@@ -821,6 +870,61 @@ final class FLBuilderCompatibility {
 
 		return $rewrite_rules;
 	}
+
+	/**
+	 * Fix compatibility issue with SEOPress when category prefix is removed
+	 * in the settings.
+	 *
+	 * @since 2.4
+	 */
+	public static function fix_seopress_category_pagination_rule( $rewrite_rules ) {
+		if ( ! function_exists( 'seopress_filter_category_rewrite_rules' ) ) {
+			return $rewrite_rules;
+		}
+
+		$seopress_cat_rules = seopress_filter_category_rewrite_rules( array() );
+		$flpaged_rules      = array();
+
+		foreach ( $seopress_cat_rules as $regex => $redirect ) {
+			if ( strpos( $regex, '/page/' ) !== false ) {
+				if ( preg_match( '#\((.*?)\)#', $regex, $matches ) ) {
+					$flregex = $matches[0] . '/paged-[0-9]{1,}/([0-9]{1,})/?$';
+
+					// Adds our custom paged rule.
+					$flpaged_rules[ $flregex ] = 'index.php?category_name=$matches[1]&flpaged=$matches[2]';
+				}
+			}
+		}
+		$rewrite_rules = array_merge( $flpaged_rules, $rewrite_rules );
+
+		return $rewrite_rules;
+	}
+
+	/**
+	 * Fix pagination compatibility with Polylang pages.
+	 *
+	 * @since 2.4
+	 */
+	public static function fix_polylang_pagination_rule( $rewrite_rules ) {
+		if ( ! isset( $GLOBALS['polylang'] ) ) {
+			return $rewrite_rules;
+		}
+
+		if ( ! function_exists( 'pll_languages_list' ) ) {
+			return $rewrite_rules;
+		}
+
+		$langs = pll_languages_list();
+		if ( ! empty( $langs ) ) {
+			$lang_rules                = '(' . implode( '|', $langs ) . ')';
+			$paged_rules               = $lang_rules . '/(.?.+?)/paged-[0-9]{1,}/?([0-9]{1,})/?$';
+			$new_rules[ $paged_rules ] = 'index.php?lang=$matches[1]&pagename=$matches[2]&flpaged=$matches[3]';
+			$rewrite_rules             = array_merge( $new_rules, $rewrite_rules );
+		}
+
+		return $rewrite_rules;
+	}
+
 	/**
 	 * Fix compatibility issue Woocommerce Products Filter Add-on
 	 *
@@ -832,6 +936,237 @@ final class FLBuilderCompatibility {
 		&& class_exists( 'FLBuilderModel' )
 		&& ( FLBuilderModel::is_builder_active() ) ) {
 			wp_deregister_script( 'wcpf-plugin-polyfills-script' );
+		}
+	}
+
+	/**
+	 * Fix compatibility issue in Woo archive product sorting.
+	 *
+	 * @since 2.4
+	 */
+	public static function fix_woo_archive_loop( $q ) {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
+		if ( is_admin() || ! $q->get( 'fl_builder_loop' ) || 'product_query' != $q->get( 'wc_query' ) ) {
+			return;
+		}
+
+		if ( ! $q->is_post_type_archive( 'product' ) && ! $q->is_tax( get_object_taxonomies( 'product' ) ) ) {
+			return;
+		}
+
+		// Add woo sorting to posts module query.
+		$ordering = WC()->query->get_catalog_ordering_args();
+		$q->set( 'orderby', $ordering['orderby'] );
+		$q->set( 'order', $ordering['order'] );
+
+		if ( isset( $ordering['meta_key'] ) ) {
+			$q->set( 'meta_key', $ordering['meta_key'] );
+		}
+	}
+
+	/**
+	 * Fix compatibility when paginating TEC events archive.
+	 *
+	 * @since 2.4
+	 */
+	public static function fix_tribe_events_pagination_rule( $rules, $tribe_rewrite, $wp_rewrite ) {
+		$bases = $tribe_rewrite->get_bases();
+
+		// Archive
+		$tec_archive_rules           = $bases->archive . '/paged-[0-9]{1,}/?([0-9]{1,})/?$';
+		$rules[ $tec_archive_rules ] = 'index.php?post_type=tribe_events&eventDisplay=default&flpaged=$matches[1]';
+
+		// Category
+		$tec_cat_rules           = $bases->archive . '/(?:category)/(?:[^/]+/)*([^/]+)/paged-[0-9]{1,}/?([0-9]{1,})/?$';
+		$rules[ $tec_cat_rules ] = 'index.php?post_type=tribe_events&tribe_events_cat=$matches[1]&eventDisplay=list&flpaged=$matches[2]';
+
+		// Tag
+		$tec_tag_rules           = $bases->archive . '/(?:tag)/([^/]+)/paged-[0-9]{1,}/?([0-9]{1,})/?$';
+		$rules[ $tec_tag_rules ] = 'index.php?post_type=tribe_events&tag=$matches[1]&eventDisplay=list&flpaged=$matches[2]';
+
+		return $rules;
+	}
+	/**
+	 * Fix 'Hide From Event Listings' from the Event Options under the Event Edit Screen
+	 * not being picked up by the Posts Grid module such as when used in a Themer Archive Layout.
+	 *
+	 * @since 2.4.1
+	 */
+	public static function fix_tribe_events_hide_from_listings_archive( $query ) {
+		if ( ! class_exists( 'Tribe__Events__Query' ) || ! class_exists( 'FLThemeBuilder' ) || is_admin() ) {
+			return;
+		}
+
+		if ( ( $query->is_main_query() && is_post_type_archive( 'tribe_events' ) ) || ( 'fl-theme-layout' === get_post_type() ) ) {
+			$hide_upcoming_events = Tribe__Events__Query::getHideFromUpcomingEvents();
+			$current_post_not_in  = $query->get( 'post__not_in' );
+			$query->set( 'post__not_in', array_merge( $current_post_not_in, $hide_upcoming_events ) );
+		}
+	}
+
+	/**
+	 * Fix 'Hide From Event Listings' from the Event Options under the Event Edit Screen
+	 * not being picked up by the Posts Grid module set to 'custom_query'.
+	 *
+	 * @since 2.4.1
+	 */
+	public static function fix_tribe_events_hide_from_listings( $args ) {
+		if ( ! class_exists( 'Tribe__Events__Query' ) || is_admin() ) {
+			return $args;
+		}
+
+		if ( empty( $args['settings']->post_type ) || empty( $args['settings']->data_source ) ) {
+			return $args;
+		}
+
+		if ( 'tribe_events' !== $args['settings']->post_type || 'custom_query' !== $args['settings']->data_source ) {
+			return $args;
+		}
+
+		$hide_upcoming_events = Tribe__Events__Query::getHideFromUpcomingEvents();
+		if ( isset( $args['post__not_in'] ) ) {
+			$args['post__not_in'] = array_merge( $args['post__not_in'], $hide_upcoming_events );
+		} else {
+			$args['post__not_in'] = $hide_upcoming_events;
+		}
+
+		return $args;
+	}
+
+	/**
+	 * Fix nodes below Posts module not editable when it's set to the Products post type.
+	 * @since 2.4.1
+	 */
+	public static function fix_woof_posts_module() {
+		if ( class_exists( 'WOOF' ) && isset( $_GET['fl_builder'] ) ) {
+			remove_action( 'init', array( $GLOBALS['WOOF'], 'init' ), 1 );
+		}
+	}
+
+	/**
+	 * Fix submenu toggle button showing on menu module when using Twenty Twenty-one theme.
+	 * @since 2.4.1
+	 */
+	public static function fix_menu_module_before_render() {
+		if ( function_exists( 'twenty_twenty_one_add_sub_menu_toggle' ) ) {
+			remove_filter( 'walker_nav_menu_start_el', 'twenty_twenty_one_add_sub_menu_toggle', 10, 4 );
+		}
+	}
+	/**
+	 * Reset Twenty Twenty-one submenu toggle button filter.
+	 * @since 2.4.1
+	 */
+	public static function fix_menu_module_after_render() {
+		if ( function_exists( 'twenty_twenty_one_add_sub_menu_toggle' ) ) {
+			add_filter( 'walker_nav_menu_start_el', 'twenty_twenty_one_add_sub_menu_toggle', 10, 4 );
+		}
+	}
+
+	/**
+	 * AIOSEO tries to render the layout shortcode too early.
+	 * @since 2.4.2
+	 */
+	public static function aioseo_conflicting_shortcodes( $shortcodes ) {
+		$shortcodes['Beaver Builder'] = '[fl_builder_insert_layout';
+		return $shortcodes;
+	}
+	/**
+	 * @since 2.4.2
+	 */
+	public static function fix_real_media_library_lite( $ignore ) {
+		$ignore[] = 'real-media-library-lite';
+		return $ignore;
+	}
+
+	/**
+	 * Disable Yoast duplicate if BB layout is enabled.
+	 * @since 2.5
+	 */
+	public static function fix_duplicate_post_show_link( $enabled, $post ) {
+		if ( get_post_meta( $post->ID, '_fl_builder_enabled', true ) ) {
+			return false;
+		}
+		return $enabled;
+	}
+
+	/**
+	 * Disable duplicate page plugin link in adminbar for BB layouts
+	 * @since 2.5
+	 */
+	public static function fix_dulicate_page() {
+		global $wp_admin_bar, $post;
+		if ( ! is_admin() && $post instanceof WP_Post && get_post_meta( $post->ID, '_fl_builder_enabled', true ) ) {
+			$wp_admin_bar->remove_node( 'duplicate_this' );
+		}
+	}
+	/**
+	 * Disable duplicate page plugin link in admin pages list for BB layouts
+	 * @since 2.5
+	 */
+	public static function fix_duplicate_post_admin_link( $actions, $post ) {
+		if ( get_post_meta( $post->ID, '_fl_builder_enabled', true ) ) {
+			if ( isset( $actions['duplicate'] ) ) {
+				unset( $actions['duplicate'] );
+			}
+			if ( isset( $actions['duplicate_post'] ) ) {
+				unset( $actions['duplicate_post'] );
+			}
+		}
+		return $actions;
+	}
+
+	/**
+	 * @since 2.5
+	 */
+	public static function fix_3cx_live_chat() {
+		if ( class_exists( 'TCXSettings' ) && isset( $_GET['page'] ) && 'fl-builder-add-new' == $_GET['page'] ) {
+			remove_action( 'admin_enqueue_scripts', 'wplc_initiate_admin_js', 11 );
+		}
+	}
+
+	/**
+	 * @since 2.5
+	 */
+	public static function fix_flywheel_crop_path( $url_path, $original ) {
+		if ( defined( 'FLYWHEEL_CONFIG_DIR' ) ) {
+			return trailingslashit( WP_CONTENT_DIR ) . ltrim( str_replace( basename( WP_CONTENT_DIR ), '', wp_make_link_relative( $original ) ), '/' );
+		}
+		return $url_path;
+	}
+
+	/**
+	 * When in Rest, if its a BB layout use that data of wp_content
+	 */
+	public static function fix_rest_content() {
+		if ( is_admin() ) {
+			return false;
+		}
+		global $render_content_forced;
+		$render_content_forced = true;
+		add_filter( 'get_the_excerpt', 'FLBuilderCompatibility::fix_rest_excerpt_filter', 10, 2 );
+		add_filter( 'the_content', 'FLBuilder::render_content' );
+	}
+
+	public static function fix_rest_excerpt_filter( $excerpt, $post ) {
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+			remove_filter( 'get_the_excerpt', 'FLBuilderCompatibility::fix_rest_excerpt_filter' );
+			return FLBuilderLoop::get_the_excerpt( $post->ID );
+		}
+		return $excerpt;
+	}
+
+	/**
+	 * Fix compatibility issue with Signify Theme
+	 *
+	 * @since 2.5.1
+	 */
+	public static function fix_signify_theme_media() {
+		if ( function_exists( 'signify_setup' )
+		&& ( FLBuilderModel::is_builder_active() ) ) {
+			wp_enqueue_style( 'wp-mediaelement', includes_url( '/js/mediaelement/wp-mediaelement.min.css' ) );
 		}
 	}
 }

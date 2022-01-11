@@ -240,7 +240,7 @@ final class FLBuilderModel {
 		 * Use this filter to modify the upgrade URL in Beaver Builder Lite.
 		 * This can be used to add an affiliate ID.
 		 * @see fl_builder_upgrade_url
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		return apply_filters( 'fl_builder_upgrade_url', self::get_store_url( '', $params ) );
 	}
@@ -350,7 +350,7 @@ final class FLBuilderModel {
 		/**
 		 * Use this filter to modify the post types that the builder works with.
 		 * @see fl_builder_post_types
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		return apply_filters( 'fl_builder_post_types', $value );
 	}
@@ -365,7 +365,7 @@ final class FLBuilderModel {
 	static public function get_global_posts() {
 		/**
 		 * Use this filter to specify a post or posts whose CSS and JavaScript assets should be loaded globally.
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 * @see fl_builder_global_posts
 		 * @since 1.0
 		 */
@@ -736,7 +736,7 @@ final class FLBuilderModel {
 		/**
 		 * Use this filter to modify the upload directory path and URL that the builder uses to store things like the cache and custom icons.
 		 * @see fl_builder_get_upload_dir
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		return apply_filters( 'fl_builder_get_upload_dir', $dir_info );
 	}
@@ -775,7 +775,7 @@ final class FLBuilderModel {
 		}
 		/**
 		 * Use this filter to modify the cache directory path and URL that the builder uses to store cached images, JavaScript, and CSS files.
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 * @see fl_builder_get_cache_dir
 		 */
 		return apply_filters( 'fl_builder_get_cache_dir', $dir_info );
@@ -790,17 +790,18 @@ final class FLBuilderModel {
 	 * @since 1.0
 	 * @return string
 	 */
-	static public function get_asset_version() {
+	static public function get_asset_version( $path = false ) {
 		$post_id = self::get_post_id();
 		$active  = self::is_builder_active();
 		$preview = self::is_builder_draft_preview();
 
 		if ( $active || $preview ) {
-			return md5( uniqid() );
+			return md5( FLBuilderModel::uniqid() );
 		} else {
-			return md5( get_post_modified_time( 'U', false, $post_id ) );
+			return $path ? md5( file_get_contents( $path ) ) : md5( get_post_modified_time( 'U', false, $post_id ) );
 		}
 	}
+
 
 	/**
 	 * Returns an array of paths for the CSS and JS assets
@@ -971,7 +972,7 @@ final class FLBuilderModel {
 	 * @return string
 	 */
 	static public function generate_node_id() {
-		$node_id = uniqid();
+		$node_id = FLBuilderModel::uniqid();
 
 		if ( $node_id == self::$last_generated_node_id ) {
 			return self::generate_node_id();
@@ -1611,7 +1612,7 @@ final class FLBuilderModel {
 	 * @param object $data The data array to delete from.
 	 * @return void
 	 */
-	static public function delete_child_nodes_from_data( $parent = null, &$data ) {
+	static public function delete_child_nodes_from_data( $parent, &$data ) {
 		$children = self::get_nodes( null, $parent );
 
 		foreach ( $children as $child_id => $child ) {
@@ -1678,8 +1679,14 @@ final class FLBuilderModel {
 		array_splice( $nodes, $position, 0, $removed );
 
 		// Update the position data.
+		$updated_nodes = array();
 		foreach ( $nodes as $node ) {
 			$data[ $node->node ]->position = $new_pos;
+
+			// Get node fragments for redux
+			$updated_nodes[ $node->node ]           = new StdClass();
+			$updated_nodes[ $node->node ]->position = $new_pos;
+
 			$new_pos++;
 		}
 
@@ -1687,9 +1694,11 @@ final class FLBuilderModel {
 		self::update_layout_data( $data );
 
 		return array(
-			'nodeId'     => $node_id,
-			'nodeType'   => $data[ $node_id ]->type,
-			'moduleType' => 'module' === $data[ $node_id ]->type ? $data[ $node_id ]->settings->type : null,
+			'nodeId'       => $node_id,
+			'nodeType'     => $data[ $node_id ]->type,
+			'moduleType'   => 'module' === $data[ $node_id ]->type ? $data[ $node_id ]->settings->type : null,
+			'parent'       => $node->parent,
+			'updatedNodes' => $updated_nodes,
 		);
 	}
 
@@ -1725,12 +1734,20 @@ final class FLBuilderModel {
 		self::update_layout_data( $data );
 
 		// Set the node's new order.
-		self::reorder_node( $node_id, $position );
+		$reordered = self::reorder_node( $node_id, $position );
+
+		// Get updated node fragments for redux
+		$updated                       = $reordered['updatedNodes'];
+		$updated[ $node_id ]           = new StdClass();
+		$updated[ $node_id ]->position = intval( $position );
+		$updated[ $node_id ]->parent   = $new_parent_id;
 
 		return array(
-			'nodeId'     => $node_id,
-			'nodeType'   => $node->type,
-			'moduleType' => 'module' === $node->type ? $node->settings->type : null,
+			'nodeId'       => $node_id,
+			'nodeType'     => $node->type,
+			'moduleType'   => 'module' === $node->type ? $node->settings->type : null,
+			'parent'       => $new_parent_id,
+			'updatedNodes' => $updated,
 		);
 	}
 
@@ -1779,7 +1796,7 @@ final class FLBuilderModel {
 	}
 
 	/**
-	 * Copys a row and adds it to the current layout.
+	 * Copies a row and adds it to the current layout.
 	 *
 	 * @since 1.0
 	 * @param string $node_id Node ID of the row to copy.
@@ -2330,9 +2347,9 @@ final class FLBuilderModel {
 		$min_width      = 8;
 		$max_width      = 100 - $min_width;
 
-		// Don't resize if only one column or width isn't a number.
+		// Since version 2.5. Allow single column to be resized.
 		if ( 1 == $num_cols || ! is_numeric( $new_width ) ) {
-			return $col->settings->size;
+			return absint( $new_width );
 		}
 
 		// Find the sibling column to absorb this resize.
@@ -2393,7 +2410,7 @@ final class FLBuilderModel {
 	 * @param int $col_width New width of the column.
 	 * @param string $sibling_id Node ID of the sibling to resize.
 	 * @param int $sibling_width New width of the sibling.
-	 * @return void
+	 * @return Array affected node fragments
 	 */
 	static public function resize_cols( $col_id = null, $col_width = null, $sibling_id = null, $sibling_width = null ) {
 		$data = self::get_layout_data();
@@ -2406,6 +2423,23 @@ final class FLBuilderModel {
 
 		// Update the layout data.
 		self::update_layout_data( $data );
+
+		// Return node fragments for redux
+		$updated_nodes = array(
+			$col_id     => array(
+				'settings' => array(
+					'size' => $col_width,
+				),
+			),
+			$sibling_id => array(
+				'settings' => array(
+					'size' => $sibling_width,
+				),
+			),
+		);
+
+		// Passed in array for consistency with other responses
+		return array( 'updatedNodes' => $updated_nodes );
 	}
 
 	/**
@@ -2416,6 +2450,11 @@ final class FLBuilderModel {
 	 * @return void
 	 */
 	static public function reset_col_widths( $group_id = null ) {
+
+		if ( ! $group_id ) {
+			return;
+		}
+
 		if ( 'array' == gettype( $group_id ) ) {
 			foreach ( $group_id as $id ) {
 				self::reset_col_widths( $id );
@@ -2635,7 +2674,7 @@ final class FLBuilderModel {
 	}
 
 	/**
-	 * Copys a column and adds it to the current layout.
+	 * Copies a column and adds it to the current layout.
 	 *
 	 * @since 2.0
 	 * @param string $node_id Node ID of the column to copy.
@@ -2835,7 +2874,7 @@ final class FLBuilderModel {
 			/**
 			 * Use this filter to override the modules that are enabled in the builder.
 			 * @see fl_builder_register_module
-			 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+			 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 			 */
 			$instance->enabled = apply_filters( 'fl_builder_register_module', $instance->enabled, $instance );
 
@@ -2846,7 +2885,7 @@ final class FLBuilderModel {
 			/**
 			 * Use this filter to modify the config array for a settings form when it is registered.
 			 * @see fl_builder_register_module_settings_form
-			 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+			 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 			 */
 			self::$modules[ $instance->slug ]->form = apply_filters( 'fl_builder_register_module_settings_form', self::$modules[ $instance->slug ]->form, $instance->slug );
 		}
@@ -3050,7 +3089,7 @@ final class FLBuilderModel {
 		/**
 		 * Use this filter to add custom module categories that will show up before the default module categories in the builder’s UI.
 		 * @see fl_builder_module_categories
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		foreach ( apply_filters( 'fl_builder_module_categories', array() ) as $custom_category ) {
 			$categories[ $custom_category ] = array();
@@ -3210,7 +3249,7 @@ final class FLBuilderModel {
 				$data->id          = $widget->id;
 				$data->name        = $widget->name;
 				$data->class       = $widget->class;
-				$data->category    = $widget->category;
+				$data->category    = $widget->fl_category;
 				$data->kind        = 'module';
 				$data->isWidget = true; // @codingStandardsIgnoreLine
 				$data->isAlias = false; // @codingStandardsIgnoreLine
@@ -3643,7 +3682,7 @@ final class FLBuilderModel {
 			}
 			$widget->class            = $class;
 			$widget->isWidget         = true; // @codingStandardsIgnoreLine
-			$widget->category         = __( 'WordPress Widgets', 'fl-builder' );
+			$widget->fl_category      = __( 'WordPress Widgets', 'fl-builder' );
 			$widgets[ $widget->name ] = $widget;
 		}
 
@@ -3756,7 +3795,7 @@ final class FLBuilderModel {
 		/**
 		 * Use this filter to modify the config array for a settings form when it is registered.
 		 * @see fl_builder_register_settings_form
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		self::$settings_forms[ $id ] = apply_filters( 'fl_builder_register_settings_form', $form, $id );
 
@@ -3944,7 +3983,7 @@ final class FLBuilderModel {
 		/**
 		 * Use this filter to change the defaults for any of the settings forms in the builder including global, row, column and module settings.
 		 * @see fl_builder_settings_form_defaults
-		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		self::$settings_form_defaults[ $type ] = apply_filters( 'fl_builder_settings_form_defaults', $defaults, $form_type );
 
@@ -4045,6 +4084,77 @@ final class FLBuilderModel {
 			'layout'   => FLBuilderAJAXLayout::render(),
 		);
 	}
+
+	/**
+	 * Verify the settings for a node to make sure they
+	 * can be saved safely.
+	 *
+	 * @since 2.4.1
+	 * @param object $settings The settings to verify.
+	 * @return bool
+	 */
+	static public function verify_settings( $settings ) {
+		return self::verify_settings_kses( $settings );
+	}
+
+	/**
+	 * Verify the settings for a node by running them through wp_kses.
+	 * Any settings that have changed mean unallowed code was entered.
+	 *
+	 * @since 2.4.1
+	 * @param object $settings The settings to verify.
+	 * @return bool
+	 */
+	public static function verify_settings_kses( $settings ) {
+
+		if ( ! has_filter( 'safe_style_css', '__return_empty_array' ) ) {
+			add_filter( 'safe_style_css', '__return_empty_array' );
+		}
+
+		foreach ( $settings as $key => $value ) {
+			if ( is_string( $value ) ) {
+				$value     = stripslashes( $value );
+				$sanitized = wp_kses_post( $value );
+				if ( json_encode( $sanitized ) !== json_encode( self::fix_kses( $value ) ) ) {
+					remove_filter( 'safe_style_css', '__return_empty_array' );
+					$output = array(
+						'diff'   => wp_text_diff( $value, $sanitized, array( 'show_split_view' => false ) ),
+						'value'  => self::fix_kses( $value ),
+						'parsed' => $sanitized,
+						'key'    => $key,
+					);
+					return $output;
+				}
+			} else {
+				if ( is_object( $value ) || is_array( $value ) ) {
+					if ( ! self::verify_settings_kses( $value ) ) {
+						remove_filter( 'safe_style_css', '__return_empty_array' );
+						return false;
+					}
+				}
+			}
+		}
+
+		remove_filter( 'safe_style_css', '__return_empty_array' );
+		return true;
+	}
+
+	/**
+	 * Add a space to self closing tags and other things if there isn't one because kses will and checks will fail.
+	 * @since 2.4.2
+	 */
+	static public function fix_kses( $value ) {
+
+		// fix & -> &amp;
+		$value = preg_replace( '/&([a-z0-9#]+);/i', '&$1;', $value );
+		$value = preg_replace( '#(&)(?!(.*);)#i', '&amp;', $value );
+
+		// fix <br/> -> <br />
+		$value = preg_replace( '#(<[a-z]+)(\/>)#', '$1 $2', $value );
+
+		return $value;
+	}
+
 
 	/**
 	 * Sanitizes settings for a form.
@@ -4150,7 +4260,7 @@ final class FLBuilderModel {
 		self::delete_asset_cache_for_all_posts();
 		self::$global_settings = null;
 
-		update_option( '_fl_builder_settings', $new_settings );
+		FLBuilderUtils::update_option( '_fl_builder_settings', $new_settings );
 
 		return self::get_global_settings();
 	}
@@ -4179,10 +4289,10 @@ final class FLBuilderModel {
 	 * @since 1.0
 	 * @return int The new post ID.
 	 */
-	static public function duplicate_post() {
+	static public function duplicate_post( $post_id = false ) {
 		global $wpdb;
 
-		$post_id      = self::get_post_id();
+		$post_id      = ( ! $post_id ) ? self::get_post_id() : $post_id;
 		$post         = get_post( $post_id );
 		$current_user = wp_get_current_user();
 		$template_id  = false;
@@ -4320,7 +4430,7 @@ final class FLBuilderModel {
 
 		if ( 'fl-builder-template' == $post->post_type ) {
 			/**
-			 * Limit the ammount of revisions for the fl-builder-template type.
+			 * Limit the amount of revisions for the fl-builder-template type.
 			 * @see fl_builder_template_revisions
 			 */
 			$num = apply_filters( 'fl_builder_template_revisions', 25 );
@@ -4541,6 +4651,8 @@ final class FLBuilderModel {
 					} else {
 						$cleaned[ $node->node ] = $node;
 					}
+
+					$cleaned[ $node->node ]->global = self::is_node_global( $node );
 				}
 			}
 		}
@@ -4548,7 +4660,7 @@ final class FLBuilderModel {
 	}
 
 	/**
-	* Remove all empty values from the settings object recursivly to save ~60% db size
+	* Remove all empty values from the settings object recursively to save ~60% db size
 	* @since 2.3
 	* @param array $haystack
 	* @param array $values
@@ -4739,7 +4851,7 @@ final class FLBuilderModel {
 		/**
 		 * This action allows you to hook into before the data is saved for a layout.
 		 * @see fl_builder_before_save_layout
-		 * @link https://kb.wpbeaverbuilder.com/article/116-plugin-action-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		do_action( 'fl_builder_before_save_layout', $post_id, $publish, $data, $settings );
 
@@ -4787,7 +4899,7 @@ final class FLBuilderModel {
 		/**
 		 * This action allows you to hook into after the data is saved for a layout.
 		 * @see fl_builder_after_save_layout
-		 * @link https://kb.wpbeaverbuilder.com/article/116-plugin-action-reference
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/common-beaver-builder-filter-examples
 		 */
 		do_action( 'fl_builder_after_save_layout', $post_id, $publish, $data, $settings );
 	}
@@ -5029,7 +5141,11 @@ final class FLBuilderModel {
 		// Loop through templates and build the categorized array.
 		foreach ( $templates as $i => $template ) {
 
-			$cats = wp_get_post_terms( $template['postId'], 'fl-builder-template-category' );
+			$cats = get_the_terms( $template['postId'], 'fl-builder-template-category' );
+
+			if ( ! $cats ) {
+				$cats = array();
+			}
 
 			if ( 0 === count( $cats ) || is_wp_error( $cats ) ) {
 				$template['category']                        = array(
@@ -5088,7 +5204,11 @@ final class FLBuilderModel {
 			return '';
 		} else {
 
-			$terms = wp_get_post_terms( $post->ID, 'fl-builder-template-type' );
+			$terms = get_the_terms( $post->ID, 'fl-builder-template-type' );
+
+			if ( ! $terms ) {
+				$terms = array();
+			}
 
 			$type = ( is_wp_error( $terms ) || 0 === count( $terms ) ) ? 'layout' : $terms[0]->slug;
 
@@ -5120,6 +5240,8 @@ final class FLBuilderModel {
 	 * @return array
 	 */
 	static public function apply_user_template( $template = null, $append = false ) {
+
+		$data = array();
 		if ( $template ) {
 
 			// Delete existing nodes and settings?
@@ -5178,6 +5300,7 @@ final class FLBuilderModel {
 			'layout_css' => isset( $settings ) ? $settings->css : null,
 			'layout'     => FLBuilderAJAXLayout::render(),
 			'config'     => FLBuilderUISettingsForms::get_node_js_config(),
+			'newNodes'   => $data,
 		);
 	}
 
@@ -5308,7 +5431,14 @@ final class FLBuilderModel {
 	 * @return bool
 	 */
 	static public function node_has_visibility_rules( $node ) {
-		return isset( $node->settings->visibility_display ) && ( '' !== $node->settings->visibility_display );
+		$rules = false;
+		if ( isset( $node->settings->visibility_display ) && ( '' !== $node->settings->visibility_display ) ) {
+			$rules = true;
+		}
+		if ( isset( $node->settings->responsive_display ) && ( '' !== $node->settings->responsive_display ) ) {
+			$rules = true;
+		}
+		return $rules;
 	}
 
 	/**
@@ -5335,6 +5465,9 @@ final class FLBuilderModel {
 			case 'logic':
 				$text = __( 'Logic', 'fl-builder' );
 				break;
+
+			default:
+				$text = __( 'Breakpoint', 'fl-builder' );
 		}
 
 		return array(
@@ -5603,14 +5736,20 @@ final class FLBuilderModel {
 
 		// Return an array of template settings.
 		return array(
-			'id'     => $template_id,
-			'global' => $settings['global'] ? true : false,
-			'link'   => add_query_arg( 'fl_builder', '', get_permalink( $post_id ) ),
-			'name'   => $settings['name'],
-			'type'   => $root_node->type,
-			'layout' => $settings['global'] ? FLBuilderAJAXLayout::render( $root_node->node, $template_node_id ) : null,
-			'config' => $settings['global'] ? FLBuilderUISettingsForms::get_node_js_config() : null,
-			'postID' => $post_id,
+			'id'                 => $template_id,
+			'global'             => $settings['global'] ? true : false,
+			'link'               => add_query_arg( 'fl_builder', '', get_permalink( $post_id ) ),
+			'name'               => $settings['name'],
+			'type'               => $root_node->type,
+			'layout'             => $settings['global'] ? FLBuilderAJAXLayout::render( $root_node->node, $template_node_id ) : null,
+			'config'             => $settings['global'] ? FLBuilderUISettingsForms::get_node_js_config() : null,
+			'postID'             => $post_id,
+			'template_id'        => $template_id,
+			'template_node_id'   => $root_node->node,
+			'template_root_node' => true,
+			'parent'             => $original_parent,
+			'position'           => $original_position,
+			'settings'           => $root_node->settings,
 		);
 	}
 
@@ -5636,6 +5775,10 @@ final class FLBuilderModel {
 			return;
 		}
 		if ( isset( $post_data['fl_action'] ) && 'duplicate_post' == $post_data['fl_action'] ) {
+			return;
+		}
+
+		if ( isset( $_GET['duplicate_layout'] ) ) {
 			return;
 		}
 
@@ -5810,17 +5953,17 @@ final class FLBuilderModel {
 				// Unset this node in the layout data.
 				unset( $layout_data[ $node_id ] );
 
-				// Find sibiling nodes to update their position.
+				// Find sibling nodes to update their position.
 				foreach ( $layout_data as $i => $n ) {
 					if ( $n->parent == $node->parent ) {
 						$siblings[ $i ] = $n;
 					}
 				}
 
-				// Sort the sibiling nodes by position.
+				// Sort the sibling nodes by position.
 				uasort( $siblings, array( 'FLBuilderModel', 'order_nodes' ) );
 
-				// Update sibiling node positions.
+				// Update sibling node positions.
 				foreach ( $siblings as $i => $n ) {
 					$layout_data[ $i ]->position = $position;
 					$position++;
@@ -5881,6 +6024,9 @@ final class FLBuilderModel {
 			$type              = self::get_user_template_type( $template_post_id );
 			$global            = get_post_meta( $template_post_id, '_fl_builder_template_global', true );
 		}
+
+		// Filter the nodes for backwards compatibility with old settings.
+		$template_data = FLBuilderSettingsCompat::filter_layout_data( $template_data );
 
 		// Generate new node ids.
 		$template_data = self::generate_new_node_ids( $template_data );
@@ -6070,6 +6216,7 @@ final class FLBuilderModel {
 	static public function apply_core_template( $index = 0, $append = false, $type = 'layout' ) {
 		$template     = self::get_template( $index, $type );
 		$row_position = self::next_node_position( 'row' );
+		$data         = array();
 
 		// Delete existing nodes and settings?
 		if ( ! $append ) {
@@ -6117,8 +6264,9 @@ final class FLBuilderModel {
 
 		// Return the layout.
 		return array(
-			'layout' => FLBuilderAJAXLayout::render(),
-			'config' => FLBuilderUISettingsForms::get_node_js_config(),
+			'layout'   => FLBuilderAJAXLayout::render(),
+			'config'   => FLBuilderUISettingsForms::get_node_js_config(),
+			'newNodes' => $data,
 		);
 	}
 
@@ -6197,7 +6345,6 @@ final class FLBuilderModel {
 								$template_data[ $key ]->nodes = serialize( $template_data[ $key ]->nodes );
 							}
 						}
-
 						self::$template_data[ $template_type ] = array_merge( self::$template_data[ $template_type ], $template_data );
 					}
 				}
@@ -6205,6 +6352,8 @@ final class FLBuilderModel {
 		}
 
 		$templates = isset( self::$template_data[ $type ] ) ? self::$template_data[ $type ] : array();
+
+		ksort( $templates );
 
 		/**
 		 * @see fl_builder_get_templates
@@ -6272,6 +6421,7 @@ final class FLBuilderModel {
 				'tags'     => array(),
 				'group'    => $template->group,
 				'type'     => 'core',
+				'subtype'  => $type,
 				'kind'     => 'template',
 				'content'  => ! in_array( $type, array( 'row', 'column', 'module' ) ) ? 'layout' : $type,
 				'premium'  => isset( $template->premium ) ? ! ! $template->premium : false,
@@ -6429,7 +6579,7 @@ final class FLBuilderModel {
 	 * @return object
 	 */
 	static public function save_color_presets( $presets = array() ) {
-		return update_option( '_fl_builder_color_presets', $presets );
+		return FLBuilderUtils::update_option( '_fl_builder_color_presets', $presets );
 	}
 
 	/**
@@ -6492,7 +6642,8 @@ final class FLBuilderModel {
 			'enableBasicAutocompletion' => true,
 			'enableLiveAutocompletion'  => true,
 			'enableSnippets'            => false,
-			'showLineNumbers'           => false,
+			'showLineNumbers'           => true,
+			'wrap'                      => true,
 			'showFoldWidgets'           => false,
 		);
 		/**
@@ -6711,7 +6862,7 @@ final class FLBuilderModel {
 
 		$services[ $service ][ $account ] = $data;
 
-		update_option( '_fl_builder_services', $services );
+		FLBuilderUtils::update_option( '_fl_builder_services', $services );
 	}
 
 	/**
@@ -6732,7 +6883,7 @@ final class FLBuilderModel {
 			unset( $services[ $service ] );
 		}
 
-		update_option( '_fl_builder_services', $services );
+		FLBuilderUtils::update_option( '_fl_builder_services', $services );
 	}
 
 	/**
@@ -6781,7 +6932,7 @@ final class FLBuilderModel {
 			delete_option( $key );
 		} else {
 			// Update the option for single install or subsite.
-			update_option( $key, $value );
+			FLBuilderUtils::update_option( $key, $value );
 		}
 	}
 
@@ -6842,6 +6993,18 @@ final class FLBuilderModel {
 
 			exit;
 		}
+	}
+
+	/**
+	 * Be sure to return a unique string
+	 * @since 2.5
+	 */
+	static public function uniqid( $prefix = '', $length = 12 ) {
+		$id = substr( str_shuffle( '0123456789abcdefghijklmnopqrstuvwxyz' ), 0, $length );
+		if ( preg_match( '/^[0-9]+$/', $id ) ) {
+			$id = self::uniqid( $prefix, $length );
+		}
+		return ( $prefix ) ? $prefix . '-' . $id : $id;
 	}
 
 	/**

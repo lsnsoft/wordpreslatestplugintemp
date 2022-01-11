@@ -90,7 +90,7 @@ final class FLBuilderAdminSettings {
 		// Styles
 		wp_enqueue_style( 'fl-builder-admin-settings', FL_BUILDER_URL . 'css/fl-builder-admin-settings.css', array(), FL_BUILDER_VERSION );
 		wp_enqueue_style( 'jquery-multiselect', FL_BUILDER_URL . 'css/jquery.multiselect.css', array(), FL_BUILDER_VERSION );
-		wp_enqueue_style( 'jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), FL_BUILDER_VERSION );
+		wp_enqueue_style( 'fl-jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), FL_BUILDER_VERSION );
 
 		if ( FLBuilder::fa5_pro_enabled() ) {
 			if ( '' !== get_option( '_fl_builder_kit_fa_pro' ) ) {
@@ -101,10 +101,10 @@ final class FLBuilderAdminSettings {
 			}
 		}
 		// Scripts
-		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array( 'jquery-tiptip' ), FL_BUILDER_VERSION );
+		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array( 'fl-jquery-tiptip' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-actual', FL_BUILDER_URL . 'js/jquery.actual.min.js', array( 'jquery' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-multiselect', FL_BUILDER_URL . 'js/jquery.multiselect.js', array( 'jquery' ), FL_BUILDER_VERSION );
-		wp_enqueue_script( 'jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );
+		wp_enqueue_script( 'fl-jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );
 
 		// Media Uploader
 		wp_enqueue_media();
@@ -205,7 +205,7 @@ final class FLBuilderAdminSettings {
 			),
 			'license'     => array(
 				'title'    => __( 'License', 'fl-builder' ),
-				'show'     => FL_BUILDER_LITE !== true && ( is_network_admin() || ! self::multisite_support() ),
+				'show'     => ( is_network_admin() || ! self::multisite_support() ),
 				'priority' => 100,
 			),
 			'upgrade'     => array(
@@ -394,6 +394,7 @@ final class FLBuilderAdminSettings {
 		self::clear_cache();
 		self::debug();
 		self::global_edit();
+		self::beta();
 		self::uninstall();
 
 		/**
@@ -483,12 +484,23 @@ final class FLBuilderAdminSettings {
 
 			// Enable pro?
 			$enable_fa_pro = isset( $_POST['fl-enable-fa-pro'] ) ? true : false;
-			update_option( '_fl_builder_enable_fa_pro', $enable_fa_pro );
+			FLBuilderUtils::update_option( '_fl_builder_enable_fa_pro', $enable_fa_pro );
 			do_action( 'fl_builder_fa_pro_save', $enable_fa_pro );
 			// Update KIT url
 			$kit_url = isset( $_POST['fl-fa-pro-kit'] ) ? $_POST['fl-fa-pro-kit'] : '';
 
-			update_option( '_fl_builder_kit_fa_pro', $kit_url );
+			preg_match( '#https:\/\/.+\.js#', $kit_url, $match );
+
+			if ( $kit_url && isset( $match[0] ) ) {
+				FLBuilderUtils::update_option( '_fl_builder_kit_fa_pro', $match[0] );
+			} else {
+				if ( ! $kit_url ) {
+					FLBuilderUtils::update_option( '_fl_builder_kit_fa_pro', '' );
+				} else {
+					/* translators: %s: KIT url */
+					self::add_error( sprintf( __( 'Invalid Kit Url: we were unable to determine the URL, code entered was %s', 'fl-builder' ), '<code>' . esc_html( $kit_url ) . '</code>' ) );
+				}
+			}
 
 			// Delete a set?
 			if ( ! empty( $_POST['fl-delete-icon-set'] ) ) {
@@ -529,7 +541,7 @@ final class FLBuilderAdminSettings {
 				fl_builder_filesystem()->get_filesystem();
 
 				/**
-				 * Before set is unziped.
+				 * Before set is unzipped.
 				 * @see fl_builder_before_unzip_icon_set
 				 */
 				do_action( 'fl_builder_before_unzip_icon_set', $id, $path, $new_path );
@@ -718,7 +730,7 @@ final class FLBuilderAdminSettings {
 				$options      = get_option( '_fl_builder_settings' );
 				$options->css = $css;
 				$options->js  = $js;
-				update_option( '_fl_builder_settings', $options );
+				FLBuilderUtils::update_option( '_fl_builder_settings', $options );
 			}
 		}
 	}
@@ -782,6 +794,34 @@ final class FLBuilderAdminSettings {
 			}
 		}
 	}
+
+	/**
+	 * Enable/disable beta updates
+	 *
+	 * @since 2.4
+	 * @access private
+	 * @return void
+	 */
+	static private function beta() {
+
+		if ( ! current_user_can( 'delete_users' ) ) {
+			return;
+		} elseif ( isset( $_POST['fl-beta-nonce'] ) && wp_verify_nonce( $_POST['fl-beta-nonce'], 'beta' ) ) {
+
+			if ( isset( $_POST['beta-checkbox'] ) ) {
+				FLBuilderUtils::update_option( 'fl_beta_updates', true );
+			} else {
+				delete_option( 'fl_beta_updates' );
+			}
+
+			if ( isset( $_POST['alpha-checkbox'] ) ) {
+				FLBuilderUtils::update_option( 'fl_alpha_updates', true );
+			} else {
+				delete_option( 'fl_alpha_updates' );
+			}
+		}
+	}
+
 
 	/**
 	 * @since 1.0

@@ -361,7 +361,7 @@ final class FLBuilderLoop {
 		/**
 		 * Filter all the args passed to WP_Query.
 		 * @see fl_builder_loop_query_args
-		 * @link https://kb.wpbeaverbuilder.com/article/591-create-a-filter-to-customize-the-display-of-post-data
+		 * @link https://docs.wpbeaverbuilder.com/beaver-builder/developer/tutorials-guides/create-a-filter-to-customize-the-display-of-post-data
 		 */
 		$args = apply_filters( 'fl_builder_loop_query_args', $args );
 
@@ -511,10 +511,11 @@ final class FLBuilderLoop {
 			return;
 		}
 
-		$is_single = false;
+		$has_archive = is_string( $args->has_archive ) ? $args->has_archive : false;
+		$is_single   = false;
 
 		// Check if it's a CPT archive or CPT single.
-		if ( $custom_paged['current_page'] != $post_type ) {
+		if ( $custom_paged['current_page'] != $post_type && $has_archive != $custom_paged['current_page'] ) {
 
 			// Is a child post of the current post type?
 			$post_object = get_page_by_path( $custom_paged['current_page'], OBJECT, $post_type );
@@ -718,6 +719,7 @@ final class FLBuilderLoop {
 	 */
 	static public function pre_404_pagination( $prevent_404, $query ) {
 		global $wp_actions;
+		global $wp_the_query;
 
 		if ( ! class_exists( 'FLThemeBuilder' ) ) {
 			return $prevent_404;
@@ -759,7 +761,7 @@ final class FLBuilderLoop {
 			$is_global_hack = true;
 		}
 
-		if ( FLThemeBuilder::has_layout() ) {
+		if ( count( $wp_the_query->posts ) && FLThemeBuilder::has_layout() ) {
 
 			// Reset the hacks.
 			if ( $is_global_hack ) {
@@ -1127,6 +1129,34 @@ final class FLBuilderLoop {
 		}
 
 		include FL_BUILDER_DIR . 'includes/loop-settings-matching.php';
+	}
+
+	/**
+	 * Helper function to get the_excerpt
+	 */
+	static public function the_excerpt( $post_id = false ) {
+		echo self::get_the_excerpt( $post_id );
+	}
+
+	/**
+	 * Helper function for get_the_excerpt
+	 */
+	static public function get_the_excerpt( $post_id = false ) {
+		global $post;
+		if ( ! $post_id && isset( $post->ID ) ) {
+			$post_id = $post->ID;
+		}
+		if ( ! $post_id || ! is_object( $post ) ) {
+			return '';
+		}
+
+		ob_start();
+		the_excerpt();
+		/**
+		 * Filters the output of FLBuilderLoop::get_the_excerpt
+		 * @see fl_builder_loop_get_the_excerpt
+		 */
+		return apply_filters( 'fl_builder_loop_get_the_excerpt', ob_get_clean() );
 	}
 }
 

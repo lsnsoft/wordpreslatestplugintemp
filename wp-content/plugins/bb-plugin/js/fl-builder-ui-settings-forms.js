@@ -117,10 +117,28 @@
 			}
 
 			// Clear any visible registered panels
-            if ( 'Builder' in FL && 'data' in FL.Builder ) {
-                const actions = FL.Builder.data.getSystemActions()
-                actions.hideCurrentPanel()
-            }
+			const panel = FL.Builder.data.getSystemState().currentPanel
+			if ( null !== panel && 'outline' !== panel ) {
+				const actions = FL.Builder.data.getSystemActions()
+				actions.hideCurrentPanel()
+			}
+		},
+
+		/**
+		 * Cache current settings
+		 *
+		 * @method cacheCurrentSettings
+		 */
+		cacheCurrentSettings: function() {
+			var form = $('.fl-builder-settings:visible');
+
+			if (!form.closest('.fl-lightbox-wrap[data-parent]').length) {
+				this.settings = FLBuilder._getSettingsForChangedCheck(this.config.nodeId, form);
+
+				if (FLBuilder.preview) {
+					FLBuilder.preview._savedSettings = this.settings;
+				}
+			}
 		},
 
 		/**
@@ -140,6 +158,7 @@
 				node_id  : config.nodeId,
 			}, function( response ) {
 				config.settings = FLBuilder._jsonParse( response );
+
 				FLBuilderSettingsConfig.nodes[ config.nodeId ] = config.settings;
 				FLBuilderSettingsForms.render( config, callback );
 				FLBuilder.hideAjaxLoader();
@@ -215,8 +234,6 @@
 		 * @param {Function} callback
 		 */
 		renderComplete: function( config, callback ) {
-			var form = $( '.fl-builder-settings:visible' );
-
 			// This is done on a timeout to keep it from delaying painting
 			// of the settings form in the DOM by a fraction of a second.
 			setTimeout( function() {
@@ -238,10 +255,8 @@
 					config.helper.init();
 				}
 
-				// Cache the original settings.
-				if ( ! form.closest( '.fl-lightbox-wrap[data-parent]' ).length ) {
-					this.settings = FLBuilder._getSettingsForChangedCheck( this.config.nodeId, form );
-				}
+				// Cache current settings.
+				this.cacheCurrentSettings();
 
 			}.bind( this ), 1 );
 		},
@@ -975,6 +990,10 @@
 
 			var nodeId  = '',
 				content = $( FLBuilder._contentClass ).html();
+
+			if ( ! content ) {
+				return
+			}
 
 			for ( nodeId in this.nodes ) {
 				if ( content.indexOf( nodeId ) === -1 ) {

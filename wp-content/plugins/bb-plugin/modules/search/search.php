@@ -5,18 +5,21 @@
  */
 class FLSearchModule extends FLBuilderModule {
 
+
 	/**
 	 * @method __construct
 	 */
 	public function __construct() {
-		parent::__construct(array(
-			'name'            => __( 'Search', 'fl-builder' ),
-			'description'     => __( 'Display a grid of your WordPress posts.', 'fl-builder' ),
-			'category'        => __( 'Actions', 'fl-builder' ),
-			'editor_export'   => false,
-			'partial_refresh' => true,
-			'icon'            => 'search.svg',
-		));
+		parent::__construct(
+			array(
+				'name'            => __( 'Search', 'fl-builder' ),
+				'description'     => __( 'Display a grid of your WordPress posts.', 'fl-builder' ),
+				'category'        => __( 'Actions', 'fl-builder' ),
+				'editor_export'   => false,
+				'partial_refresh' => true,
+				'icon'            => 'search.svg',
+			)
+		);
 
 		// Actions
 		add_action( 'wp_ajax_fl_search_query', array( $this, 'search_query' ) );
@@ -54,6 +57,7 @@ class FLSearchModule extends FLBuilderModule {
 		if ( $template_id ) {
 			$post_id  = FLBuilderModel::get_node_template_post_id( $template_id );
 			$data     = FLBuilderModel::get_layout_data( 'published', $post_id );
+			$module   = FLBuilderModel::get_module( $data[ $template_node_id ] );
 			$settings = $data[ $template_node_id ]->settings;
 		} else {
 			$module   = FLBuilderModel::get_module( $node_id );
@@ -67,6 +71,7 @@ class FLSearchModule extends FLBuilderModule {
 		$args->keyword     = $s;
 		$args->post_type   = 'any';
 		$args->post_status = 'publish';
+		$args->settings    = $settings;
 
 		// Remove paged & offset parameters
 		add_filter( 'fl_builder_loop_query_args', array( $this, 'remove_pagination_args' ), 10 );
@@ -100,7 +105,7 @@ class FLSearchModule extends FLBuilderModule {
 	/**
 	 * Remove pagination parameters
 	 *
-	 * @param array $query_args     Generated query args to override
+	 * @param  array $query_args Generated query args to override
 	 * @return array                Updated query args
 	 */
 	public function remove_pagination_args( $query_args ) {
@@ -112,10 +117,10 @@ class FLSearchModule extends FLBuilderModule {
 	/**
 	 * Render thumbnail for a post.
 	 *
-	 * Get's the post ID and renders the html markup for the featured image
+	 * Gets the post ID and renders the html markup for the featured image
 	 * in the desired cropped size.
 	 *
-	 * @param  int $id    The post ID.
+	 * @param  int $id The post ID.
 	 * @return void
 	 */
 	public function render_featured_image( $id = null ) {
@@ -150,7 +155,8 @@ class FLSearchModule extends FLBuilderModule {
 
 			} elseif ( ! empty( $this->settings->image_fallback ) ) {
 				// Render fallback
-				printf( '<a href="%s" rel="bookmark" title="%s">%s</a>',
+				printf(
+					'<a href="%s" rel="bookmark" title="%s">%s</a>',
 					get_the_permalink(),
 					the_title_attribute( 'echo=0' ),
 					wp_get_attachment_image( $this->settings->image_fallback, $this->settings->image_size )
@@ -166,7 +172,7 @@ class FLSearchModule extends FLBuilderModule {
 	 * Gets a post ID and returns the url for the 'full' size of the attachment
 	 * set as featured image.
 	 *
-	 * @param  int $id   The post ID.
+	 * @param  int $id The post ID.
 	 * @return string    The featured image url for the 'full' size.
 	 */
 	protected function _get_uncropped_url( $id ) {
@@ -181,7 +187,7 @@ class FLSearchModule extends FLBuilderModule {
 	 *
 	 * Gets a post ID and returns an array containing the featured image data.
 	 *
-	 * @param  int $id   The post ID.
+	 * @param  int $id The post ID.
 	 * @return array    The image data.
 	 */
 	protected function _get_img_data( $id ) {
@@ -311,7 +317,7 @@ FLBuilder::register_module('FLSearchModule', array(
 					),
 					'placeholder'     => array(
 						'type'    => 'text',
-						'label'   => 'Placeholder Text',
+						'label'   => __( 'Placeholder Text', 'fl-builder' ),
 						'default' => __( 'Search...', 'fl-builder' ),
 						'preview' => array(
 							'type'      => 'attribute',
@@ -549,20 +555,57 @@ FLBuilder::register_module('FLSearchModule', array(
 				),
 			),
 			'input_style'       => array(
-				'title'  => 'Input Text',
+				'title'  => __( 'Input Text', 'fl-builder' ),
 				'fields' => array(
-					'input_color'        => array(
-						'type'       => 'color',
-						'label'      => __( 'Color', 'fl-builder' ),
-						'show_reset' => true,
-						'show_alpha' => true,
-						'preview'    => array(
+					'input_color'          => array(
+						'type'        => 'color',
+						'label'       => __( 'Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'connections' => array( 'color' ),
+						'preview'     => array(
 							'type'     => 'css',
 							'selector' => '{node}.fl-module-search .fl-search-text, {node}.fl-module-search .fl-search-text::placeholder',
 							'property' => 'color',
 						),
 					),
-					'input_typography'   => array(
+					'input_hover_color'    => array(
+						'type'        => 'color',
+						'label'       => __( 'Hover Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'connections' => array( 'color' ),
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '{node}.fl-module-search .fl-search-text:hover, {node}.fl-module-search .fl-search-text:focus, {node}.fl-module-search .fl-search-text:hover::placeholder, {node}.fl-module-search .fl-search-text:focus::placeholder',
+							'property' => 'color',
+						),
+					),
+					'input_bg_color'       => array(
+						'type'        => 'color',
+						'label'       => __( 'Background Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'connections' => array( 'color' ),
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '{node}.fl-module-search .fl-search-text',
+							'property' => 'background-color',
+						),
+					),
+					'input_bg_hover_color' => array(
+						'type'        => 'color',
+						'label'       => __( 'Background Hover Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'connections' => array( 'color' ),
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '{node}.fl-module-search .fl-search-text:hover, {node}.fl-module-search .fl-search-text:focus',
+							'property' => 'background-color',
+						),
+					),
+					'input_typography'     => array(
 						'type'       => 'typography',
 						'label'      => __( 'Typography', 'fl-builder' ),
 						'responsive' => true,
@@ -572,7 +615,7 @@ FLBuilder::register_module('FLSearchModule', array(
 							'important' => true,
 						),
 					),
-					'input_border'       => array(
+					'input_border'         => array(
 						'type'    => 'border',
 						'label'   => __( 'Border', 'fl-builder' ),
 						'preview' => array(
@@ -581,14 +624,14 @@ FLBuilder::register_module('FLSearchModule', array(
 							'important' => true,
 						),
 					),
-					'input_border_hover' => array(
+					'input_border_hover'   => array(
 						'type'    => 'border',
 						'label'   => __( 'Border Hover', 'fl-builder' ),
 						'preview' => array(
 							'type' => 'none',
 						),
 					),
-					'input_padding'      => array(
+					'input_padding'        => array(
 						'type'       => 'dimension',
 						'label'      => __( 'Padding', 'fl-builder' ),
 						'default'    => '12',

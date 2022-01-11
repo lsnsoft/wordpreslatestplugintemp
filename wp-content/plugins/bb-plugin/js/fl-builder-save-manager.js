@@ -193,7 +193,7 @@
          */
         onPublishAndRemain: function() {
 			FLBuilder.MainMenu.hide();
-            if (this.layoutNeedsPublish) {
+            if (this.layoutNeedsPublish || FLBuilderSettingsForms.settingsHaveChanged()) {
                 FLBuilder._publishLayout(false, true);
             } else {
                 this.showStatusMessage(this.messages.noChanges);

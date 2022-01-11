@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) or die( "You can't access this file directly." );
 ?>
 <form role="search" aria-label="Search form" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 	<div class="fl-form-field">
-		<input type="search" aria-label="Search input" class="fl-search-text" placeholder="<?php echo esc_attr( $settings->placeholder ); ?>" value="<?php get_search_query(); ?>" name="s" />
+		<input type="search" aria-label="Search input" class="fl-search-text" placeholder="<?php echo esc_attr( $settings->placeholder ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
 
 		<?php if ( 'ajax' == $settings->result ) : ?>
 		<div class="fl-search-loader-wrap">

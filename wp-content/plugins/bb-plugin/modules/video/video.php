@@ -91,10 +91,11 @@ class FLVideoModule extends FLBuilderModule {
 		} elseif ( 'embed' === $this->settings->video_type ) {
 			global $wp_embed;
 
-			$video_embed = sprintf( '%s', __( 'Video embed code not specified.', 'fl-builder' ) );
-
+			$video_embed = '';
 			if ( ! empty( $this->settings->embed_code ) ) {
 				$video_embed = $wp_embed->autoembed( do_shortcode( $this->settings->embed_code ) );
+			} elseif ( ! isset( $this->settings->connections ) ) {
+				$video_embed = sprintf( '%s', __( 'Video embed code not specified.', 'fl-builder' ) );
 			}
 
 			if ( 'yes' == $this->settings->video_lightbox ) {
@@ -115,16 +116,17 @@ class FLVideoModule extends FLBuilderModule {
 	 */
 	public function render_poster_html() {
 		$poster_html = '';
-
 		if ( 'yes' === $this->settings->video_lightbox ) {
-			if ( empty( $this->get_poster_url() ) ) {
+			$poster_url = $this->get_poster_url();
+			if ( empty( $poster_url ) ) {
 				$poster_html .= '<div class="fl-video-poster">';
 				$poster_html .= sprintf( '%s', __( 'Please specify a poster image if Video Lightbox is enabled.', 'fl-builder' ) );
 				$poster_html .= '</div>';
 			} else {
 				$video_url    = $this->get_video_url();
+				$size         = isset( $this->settings->poster_size ) && ! empty( $this->settings->poster_size ) ? $this->settings->poster_size : 'large';
 				$poster_html .= '<div class="fl-video-poster" data-mfp-src="' . $video_url . '">';
-				$poster_html .= wp_get_attachment_image( $this->settings->poster, 'large', '', array( 'class' => 'img-responsive' ) );
+				$poster_html .= wp_get_attachment_image( $this->settings->poster, $size, '', array( 'class' => 'img-responsive' ) );
 				$poster_html .= '</div>';
 			}
 		}
@@ -255,17 +257,30 @@ class FLVideoModule extends FLBuilderModule {
 	 */
 	public function get_structured_data() {
 		$settings = $this->settings;
-		$markup   = '';
+
 		if ( 'yes' != $settings->schema_enabled ) {
 			return false;
 		}
-		if ( '' == $settings->name || '' == $settings->description || '' == $settings->thumbnail || '' == $settings->up_date ) {
-			return false;
+
+		$markup = '';
+		if ( ! empty( $settings->name ) ) {
+			$markup .= sprintf( '<meta itemprop="name" content="%s" />', esc_attr( $settings->name ) );
 		}
-		$markup .= sprintf( '<meta itemprop="name" content="%s" />', esc_attr( $settings->name ) );
-		$markup .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $settings->up_date ) );
-		$markup .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', $settings->thumbnail_src );
-		$markup .= sprintf( '<meta itemprop="description" content="%s" />', esc_attr( $settings->description ) );
+		if ( ! empty( $settings->up_date ) ) {
+			$markup .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $settings->up_date ) );
+		}
+		if ( ! empty( $settings->thumbnail_src ) ) {
+			$markup .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', $settings->thumbnail_src );
+		}
+		if ( ! empty( $settings->description ) ) {
+			$markup .= sprintf( '<meta itemprop="description" content="%s" />', esc_attr( $settings->description ) );
+		}
+		if ( ! empty( $settings->content_url ) ) {
+			$markup .= sprintf( '<meta itemprop="contentUrl" content="%s" />', esc_attr( $settings->content_url ) );
+		}
+		if ( ! empty( $settings->embed_url ) ) {
+			$markup .= sprintf( '<meta itemprop="embedUrl" content="%s" />', esc_attr( $settings->embed_url ) );
+		}
 
 		return $markup;
 	}
@@ -462,7 +477,7 @@ FLBuilder::register_module('FLVideoModule', array(
 						),
 						'toggle'  => array(
 							'yes' => array(
-								'fields' => array( 'name', 'description', 'thumbnail', 'up_date' ),
+								'fields' => array( 'name', 'description', 'thumbnail', 'up_date', 'content_url', 'embed_url' ),
 							),
 						),
 						'options' => array(
@@ -471,31 +486,51 @@ FLBuilder::register_module('FLVideoModule', array(
 						),
 					),
 					'name'           => array(
-						'type'    => 'text',
-						'label'   => __( 'Video Name', 'fl-builder' ),
-						'preview' => array(
+						'type'        => 'text',
+						'label'       => __( 'Video Name', 'fl-builder' ),
+						'connections' => array( 'string' ),
+						'preview'     => array(
 							'type' => 'none',
 						),
 					),
 					'description'    => array(
-						'type'    => 'text',
-						'label'   => __( 'Video Description', 'fl-builder' ),
-						'preview' => array(
+						'type'        => 'text',
+						'label'       => __( 'Video Description', 'fl-builder' ),
+						'connections' => array( 'string' ),
+						'preview'     => array(
+							'type' => 'none',
+						),
+					),
+					'content_url'    => array(
+						'type'        => 'text',
+						'label'       => __( 'Content URL', 'fl-builder' ),
+						'connections' => array( 'url' ),
+						'preview'     => array(
+							'type' => 'none',
+						),
+					),
+					'embed_url'      => array(
+						'type'        => 'text',
+						'label'       => __( 'Embed URL', 'fl-builder' ),
+						'connections' => array( 'url' ),
+						'preview'     => array(
 							'type' => 'none',
 						),
 					),
 					'thumbnail'      => array(
 						'type'        => 'photo',
 						'label'       => __( 'Video Thumbnail', 'fl-builder' ),
+						'connections' => array( 'photo', 'url' ),
 						'show_remove' => true,
 						'preview'     => array(
 							'type' => 'none',
 						),
 					),
 					'up_date'        => array(
-						'type'    => 'date',
-						'label'   => __( 'Upload Date', 'fl-builder' ),
-						'preview' => array(
+						'type'        => 'date',
+						'label'       => __( 'Upload Date', 'fl-builder' ),
+						'connections' => array( 'string' ),
+						'preview'     => array(
 							'type' => 'none',
 						),
 					),

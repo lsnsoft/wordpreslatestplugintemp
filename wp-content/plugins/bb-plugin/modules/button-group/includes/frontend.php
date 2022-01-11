@@ -1,5 +1,5 @@
 <div class="fl-button-group fl-button-group-layout-<?php echo $settings->layout; ?> fl-button-group-width-<?php echo $settings->width; ?> fl-button-group-align-<?php echo $settings->align; ?>">
-	<div class="fl-button-group-buttons" role="group">
+	<div class="fl-button-group-buttons" role="group" aria-label="<?php echo esc_attr( $settings->button_group_label ); ?>">
 		<?php
 		$button_group_node = "fl-node-$id";
 
@@ -10,7 +10,7 @@
 
 			$button_settings = array(
 				'id'                    => "fl-node-$id-$i",
-				'width'                 => isset( $settings->width ) ? $settings->width : 'full',
+				'width'                 => empty( $settings->width ) ? 'full' : $settings->width,
 				'align'                 => isset( $settings->align ) ? $settings->align : 'left',
 				'text'                  => isset( $settings->items[ $i ]->text ) ? $settings->items[ $i ]->text : '',
 				'icon'                  => isset( $settings->items[ $i ]->icon ) ? $settings->items[ $i ]->icon : '',

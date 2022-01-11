@@ -12,12 +12,14 @@ final class FLBuilderWPBlocksLayout {
 	 * @return void
 	 */
 	static public function init() {
+		global $wp_version;
 		// Actions
 		add_action( 'current_screen', __CLASS__ . '::init_template' );
 		add_action( 'pre_post_update', __CLASS__ . '::disable_builder_on_post_update', 10, 2 );
 
+		$hook = version_compare( $wp_version, '5.8-alpha', '<' ) ? 'block_editor_preload_paths' : 'block_editor_rest_api_preload_paths';
 		// Filters
-		add_action( 'block_editor_preload_paths', __CLASS__ . '::update_legacy_post', 10, 2 );
+		add_action( $hook, __CLASS__ . '::update_legacy_post', 10, 2 );
 		add_filter( 'fl_builder_editor_content', __CLASS__ . '::filter_editor_content' );
 		add_filter( 'fl_builder_migrated_post_content', __CLASS__ . '::filter_migrated_post_content' );
 	}
@@ -42,6 +44,11 @@ final class FLBuilderWPBlocksLayout {
 			$unrestricted = FLBuilderUserAccess::current_user_can( 'unrestricted_editing' );
 
 			if ( $render_ui && in_array( $screen->post_type, $post_types ) ) {
+
+				if ( $enabled ) {
+					add_filter( 'user_can_richedit', '__return_true' ); // WP 5.5
+				}
+
 				$post_type = get_post_type_object( $screen->post_type );
 
 				if ( $post_type && ( $enabled || ( $user_access && $unrestricted ) ) ) {
@@ -70,8 +77,17 @@ final class FLBuilderWPBlocksLayout {
 	 * @param object $post
 	 * @return array
 	 */
-	static public function update_legacy_post( $paths, $post ) {
-		if ( is_object( $post ) ) {
+	static public function update_legacy_post( $paths, $context ) {
+
+		if ( is_object( $context ) ) {
+			$post = ( $context instanceof WP_Block_Editor_Context ) ? $context->post : $context;
+
+			/**
+			 * Fix for widgets page.
+			 */
+			if ( ! is_object( $post ) ) {
+				return $paths;
+			}
 			$enabled = FLBuilderModel::is_builder_enabled( $post->ID );
 			$blocks  = preg_match( '/<!-- wp:(.*) \/?-->/', $post->post_content );
 
@@ -130,9 +146,9 @@ final class FLBuilderWPBlocksLayout {
 		$post_id = FLBuilderModel::get_post_id();
 		$post    = get_post( $post_id );
 
-		$block  = '<!-- wp:fl-builder/layout -->';
+		$block  = "<!-- wp:fl-builder/layout -->\n";
 		$block .= self::remove_broken_p_tags( $content );
-		$block .= '<!-- /wp:fl-builder/layout -->';
+		$block .= "\n<!-- /wp:fl-builder/layout -->";
 
 		return $block;
 	}
@@ -161,9 +177,24 @@ final class FLBuilderWPBlocksLayout {
 	 * @return string
 	 */
 	static public function remove_broken_p_tags( $content ) {
+		// Convert microsoft special characters
+		$replace = array(
+			'‘' => "'",
+			'’' => "'",
+			'”' => '"',
+			'“' => '"',
+			'–' => '-',
+			'—' => '-',
+			'…' => '&#8230;',
+		);
+		$content = preg_replace( '@<([^>]+)\s*>\s*<\/\1\s*>@m', '', $content );
 		$content = preg_replace( '/<p>(.*)<\/p>/i', '<fl-p-placeholder>$1</fl-p-placeholder>', $content );
 		$content = preg_replace( '/<\/?p[^>]*\>/i', '', $content );
 		$content = preg_replace( '/fl-p-placeholder/i', 'p', $content );
+		foreach ( $replace as $k => $v ) {
+			$content = str_replace( $k, $v, $content );
+		}
+		$content = force_balance_tags( $content );
 		return $content;
 	}
 }
